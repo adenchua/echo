@@ -43,6 +43,11 @@ module.exports.endSprint = async (req, res) => {
 
   try {
     const sprint = await Sprint.findById(sprintId);
+
+    if (sprint.hasEnded) {
+      res.status(400).send({ message: "Sprint has already ended" });
+      return;
+    }
     const project = await Project.findById(projectId);
     for (const storyId of sprint.stories) {
       const story = await Story.findById(storyId);

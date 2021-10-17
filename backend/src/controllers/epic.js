@@ -107,3 +107,20 @@ module.exports.removeStoryFromEpic = async (req, res) => {
     res.status(500).send();
   }
 };
+
+module.exports.deleteEpic = async (req, res) => {
+  const { epicId } = req.params;
+
+  if (!epicId) {
+    res.status(400).send();
+    return;
+  }
+
+  try {
+    await Epic.findByIdAndDelete(epicId);
+    res.status(204).send();
+  } catch (error) {
+    console.error("deleteEpic", error);
+    res.status(500).send();
+  }
+};

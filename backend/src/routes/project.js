@@ -10,6 +10,7 @@ const {
   getAllProjects,
   promoteMemberToAdministrator,
   demoteAdmintoMember,
+  deleteProject,
 } = require("../controllers/project");
 
 const router = Router();
@@ -17,6 +18,7 @@ const router = Router();
 router.route("/").post(createProject);
 router.route("/id/:projectId").get(getProject);
 router.route("/id/:projectId").patch(updateProject);
+router.route("/id/:projectId").delete(deleteProject);
 router.route("/members/:projectId").post(addMemberToProject);
 router.route("/members/:projectId").delete(removeMemberFromProject);
 router.route("/user/:userId").get(getProjectsOfUser);

@@ -192,3 +192,15 @@ module.exports.demoteAdmintoMember = async (req, res) => {
     res.status(500).send();
   }
 };
+
+module.exports.deleteProject = async (req, res) => {
+  const { projectId } = req.params;
+
+  try {
+    await Project.findByIdAndDelete(projectId);
+    res.status(204).send();
+  } catch (error) {
+    console.error("deleteProject", error);
+    res.status(500).send();
+  }
+};
