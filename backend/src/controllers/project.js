@@ -127,3 +127,13 @@ module.exports.getProjectsOfUser = async (req, res) => {
     res.status(500).send();
   }
 };
+
+module.exports.getAllProjects = async (req, res) => {
+  try {
+    const projects = await Project.find();
+    res.status(200).send(projects);
+  } catch (error) {
+    console.error("getAllProjects", error);
+    res.status(500).send();
+  }
+};

@@ -64,3 +64,103 @@ module.exports.deleteStory = async (req, res) => {
     res.status(500).send();
   }
 };
+
+module.exports.addAssigneeToStory = async (req, res) => {
+  const { storyId } = req.params;
+  const { memberId } = req.params;
+
+  if (!storyId) {
+    res.status(400).send();
+    return;
+  }
+
+  try {
+    const story = await Story.findById(storyId);
+    if (!story) {
+      res.status(404).send();
+      return;
+    }
+
+    if (!story.assignees.includes(memberId)) {
+      story.assignees.push(memberId);
+    }
+
+    await story.save();
+    res.status(204).send();
+  } catch (error) {
+    console.error("addAssigneeToStory", error);
+    res.status(500).send();
+  }
+};
+
+module.exports.removeAssigneeFromStory = async (req, res) => {
+  const { storyId } = req.params;
+  const { memberId } = req.params;
+
+  if (!storyId) {
+    res.status(400).send();
+    return;
+  }
+
+  try {
+    const story = await Story.findById(storyId);
+    if (!story) {
+      res.status(404).send();
+      return;
+    }
+
+    if (story.assignees.includes(memberId)) {
+      story.assignees.pull(memberId);
+    }
+
+    await story.save();
+    res.status(204).send();
+  } catch (error) {
+    console.error("removeAssigneeFromStory", error);
+    res.status(500).send();
+  }
+};
+
+module.exports.getStories = async (req, res) => {
+  const { storyIds } = req.body;
+  const stories = [];
+
+  if (!storyIds || !Array.isArray(storyIds)) {
+    res.status(400).send();
+    return;
+  }
+
+  try {
+    for (const storyId of storyIds) {
+      const story = await Story.findById(storyId);
+      stories.push(story);
+    }
+
+    res.status(200).send(stories);
+  } catch (error) {
+    console.error("getStories", error);
+    res.status(500).send();
+  }
+};
+
+module.exports.getStory = async (req, res) => {
+  const { storyId } = req.params;
+
+  if (!storyId) {
+    res.status(400).send();
+    return;
+  }
+
+  try {
+    const story = await Story.findById(storyId);
+    if (!story) {
+      res.status(404).send();
+      return;
+    }
+
+    res.status(200).send(story);
+  } catch (error) {
+    console.error("getStory", error);
+    res.status(500).send();
+  }
+};

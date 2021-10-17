@@ -62,3 +62,35 @@ module.exports.getUserById = async (req, res) => {
     res.status(500).send();
   }
 };
+
+module.exports.getUsers = async (req, res) => {
+  const { userIds } = req.body;
+  const users = [];
+
+  if (!userIds || !Array.isArray(userIds)) {
+    res.status(400).send();
+    return;
+  }
+
+  try {
+    for (const userId of userIds) {
+      const user = await User.findById(userId);
+      users.push(user);
+    }
+
+    res.status(200).send(users);
+  } catch (error) {
+    console.error("getUsers", error);
+    res.status(500).send();
+  }
+};
+
+module.exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).send(users);
+  } catch (error) {
+    console.error("getAllUsers", error);
+    res.status(500).send();
+  }
+};
