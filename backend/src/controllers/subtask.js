@@ -1,6 +1,6 @@
 const Subtask = require("../models/subtask");
 const Story = require("../models/story");
-const removeUndefinedKeysFromObject = require("../utils/removeUndefinedKeysFromObject");
+const { removeUndefinedKeysFromObject } = require("../utils/removeUndefinedKeysFromObject");
 
 module.exports.createSubtask = async (req, res) => {
   const { storyId, title } = req.body;
@@ -55,6 +55,28 @@ module.exports.deleteSubtask = async (req, res) => {
     res.status(204).send();
   } catch (error) {
     console.error("deletesubtask", error);
+    res.status(500).send();
+  }
+};
+
+module.exports.getSubtasks = async (req, res) => {
+  const { subtaskIds } = req.body;
+  const subtasks = [];
+
+  if (!subtaskIds || !Array.isArray(subtaskIds)) {
+    res.status(400).send();
+    return;
+  }
+
+  try {
+    for (const subtaskId of subtaskIds) {
+      const subtask = await Subtask.findById(subtaskId);
+      subtasks.push(subtask);
+    }
+
+    res.status(200).send(subtasks);
+  } catch (error) {
+    console.error("getSubtasks", error);
     res.status(500).send();
   }
 };

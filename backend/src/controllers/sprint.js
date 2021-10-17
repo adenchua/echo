@@ -7,6 +7,12 @@ module.exports.startSprint = async (req, res) => {
 
   if (!storyIds || projectId || !Array.isArray(storyIds)) {
     res.status(400).send();
+    return;
+  }
+
+  if (storyIds.length === 0) {
+    res.status(400).send({ message: "unable to start sprint without a story" });
+    return;
   }
 
   try {
@@ -16,8 +22,7 @@ module.exports.startSprint = async (req, res) => {
     await newSprint.save();
     project.sprints.push(newSprint._id);
 
-    const updatedBacklog = project.backlog.filter((backlogId) => !storyIds.includes(backlogId));
-    project.backlog = updatedBacklog;
+    project.backlog = project.backlog.filter((backlogId) => !storyIds.includes(backlogId));
     await project.save();
     res.status(201).send(newSprint);
   } catch (error) {
@@ -53,7 +58,7 @@ module.exports.endSprint = async (req, res) => {
     project.backlog = [...project.backlog, ...incompleteStoryIds];
     await sprint.save();
     await project.save();
-    res.status(204).send();
+    res.status(200).send(sprint);
   } catch (error) {
     console.error("endSprint", error);
     res.status(500).send();
@@ -92,14 +97,39 @@ module.exports.getSprint = async (req, res) => {
 
   try {
     const sprint = await Sprint.findById(sprintId);
-    if (!sprint) {
-      res.status(404).send();
-      return;
-    }
-
     res.status(200).send(sprint);
   } catch (error) {
     console.error("getSprint", error);
+    res.status(500).send();
+  }
+};
+
+module.exports.addBacklogToSprint = async (req, res) => {
+  const { sprintId } = req.params;
+  const { projectId, storyId } = req.body;
+
+  if (!sprintId || !projectId || !storyId) {
+    res.status(400).send();
+    return;
+  }
+
+  try {
+    const project = await Project.findById(projectId);
+    const sprint = await Sprint.findById(sprintId);
+
+    if (project.backlog.includes(storyId)) {
+      project.backlog.pull(storyId);
+    }
+
+    if (!sprint.stories.includes(storyId)) {
+      sprint.stories.push(storyId);
+    }
+
+    await project.save();
+    await sprint.save();
+    res.status(204).send();
+  } catch (error) {
+    console.error("addBacklogToSprint", error);
     res.status(500).send();
   }
 };

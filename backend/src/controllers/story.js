@@ -1,6 +1,6 @@
 const Story = require("../models/story");
 const Project = require("../models/project");
-const removeUndefinedKeysFromObject = require("../utils/removeUndefinedKeysFromObject");
+const { removeUndefinedKeysFromObject } = require("../utils/removeUndefinedKeysFromObject");
 
 module.exports.createStory = async (req, res) => {
   const { title, projectId } = req.body;
@@ -12,12 +12,6 @@ module.exports.createStory = async (req, res) => {
 
   try {
     const project = await Project.findById(projectId);
-
-    if (!project) {
-      res.status(404).send();
-      return;
-    }
-
     const newStory = new Story({ title });
     await newStory.save();
     project.backlog.push(newStory._id);
@@ -67,22 +61,17 @@ module.exports.deleteStory = async (req, res) => {
 
 module.exports.addAssigneeToStory = async (req, res) => {
   const { storyId } = req.params;
-  const { memberId } = req.params;
+  const { userId } = req.body;
 
-  if (!storyId) {
+  if (!storyId || !userId) {
     res.status(400).send();
     return;
   }
 
   try {
     const story = await Story.findById(storyId);
-    if (!story) {
-      res.status(404).send();
-      return;
-    }
-
-    if (!story.assignees.includes(memberId)) {
-      story.assignees.push(memberId);
+    if (!story.assignees.includes(userId)) {
+      story.assignees.push(userId);
     }
 
     await story.save();
@@ -95,22 +84,17 @@ module.exports.addAssigneeToStory = async (req, res) => {
 
 module.exports.removeAssigneeFromStory = async (req, res) => {
   const { storyId } = req.params;
-  const { memberId } = req.params;
+  const { userId } = req.body;
 
-  if (!storyId) {
+  if (!storyId || !userId) {
     res.status(400).send();
     return;
   }
 
   try {
     const story = await Story.findById(storyId);
-    if (!story) {
-      res.status(404).send();
-      return;
-    }
-
-    if (story.assignees.includes(memberId)) {
-      story.assignees.pull(memberId);
+    if (story.assignees.includes(userId)) {
+      story.assignees.pull(userId);
     }
 
     await story.save();
@@ -153,11 +137,6 @@ module.exports.getStory = async (req, res) => {
 
   try {
     const story = await Story.findById(storyId);
-    if (!story) {
-      res.status(404).send();
-      return;
-    }
-
     res.status(200).send(story);
   } catch (error) {
     console.error("getStory", error);

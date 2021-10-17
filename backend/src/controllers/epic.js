@@ -1,6 +1,6 @@
 const Epic = require("../models/epic");
 const Project = require("../models/project");
-const removeUndefinedKeysFromObject = require("../utils/removeUndefinedKeysFromObject");
+const { removeUndefinedKeysFromObject } = require("../utils/removeUndefinedKeysFromObject");
 
 module.exports.createEpic = async (req, res) => {
   const { title, projectId } = req.body;
