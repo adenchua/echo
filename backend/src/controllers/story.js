@@ -25,7 +25,7 @@ module.exports.createStory = async (req, res) => {
 
 module.exports.updateStory = async (req, res) => {
   const { storyId } = req.params;
-  const { title, description, status, weight, priority, type } = req.body;
+  const { title, description, status, weight, priority, type, dueDate } = req.body;
 
   if (!storyId) {
     res.status(400).send();
@@ -33,7 +33,7 @@ module.exports.updateStory = async (req, res) => {
   }
 
   try {
-    const keysToUpdate = removeUndefinedKeysFromObject({ title, description, status, weight, priority, type });
+    const keysToUpdate = removeUndefinedKeysFromObject({ title, description, status, weight, priority, type, dueDate });
     await Story.findByIdAndUpdate(storyId, { ...keysToUpdate });
     res.status(204).send();
   } catch (error) {

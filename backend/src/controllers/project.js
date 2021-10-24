@@ -2,15 +2,15 @@ const Project = require("../models/project");
 const { removeUndefinedKeysFromObject } = require("../utils/removeUndefinedKeysFromObject");
 
 module.exports.createProject = async (req, res) => {
-  const { title, adminId } = req.body;
+  const { title, adminId, type } = req.body;
 
-  if (!title || !adminId) {
+  if (!title || !adminId || !type) {
     res.status(400).send();
     return;
   }
 
   try {
-    const newProject = new Project({ title, admins: [adminId] });
+    const newProject = new Project({ title, admins: [adminId], type });
     await newProject.save();
     res.status(201).send(newProject);
   } catch (error) {
@@ -88,14 +88,14 @@ module.exports.removeMemberFromProject = async (req, res) => {
 
 module.exports.updateProject = async (req, res) => {
   const { projectId } = req.params;
-  const { title, description, announcement, picture } = req.body;
+  const { title, description, announcement, picture, type } = req.body;
   if (!projectId) {
     res.status(400).send();
     return;
   }
 
   try {
-    const keysToUpdate = removeUndefinedKeysFromObject({ title, description, announcement, picture });
+    const keysToUpdate = removeUndefinedKeysFromObject({ title, description, announcement, picture, type });
     await Project.findByIdAndUpdate(projectId, { ...keysToUpdate });
     res.status(204).send();
   } catch (error) {

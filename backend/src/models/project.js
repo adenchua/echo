@@ -6,12 +6,20 @@ const projectSchema = new Schema(
     title: {
       type: String,
       required: true,
+      trim: true,
+    },
+    type: {
+      type: String,
+      required: true,
+      trim: true,
     },
     description: {
       type: String,
+      trim: true,
     },
     announcement: {
       type: String,
+      trim: true,
     },
     admins: {
       type: [Schema.Types.ObjectId],

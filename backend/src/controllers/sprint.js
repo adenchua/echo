@@ -18,7 +18,7 @@ module.exports.startSprint = async (req, res) => {
   try {
     const project = await Project.findById(projectId);
     const sprintNumber = project.sprints.length + 1;
-    const newSprint = new Sprint({ number: sprintNumber, stories: storyIds });
+    const newSprint = new Sprint({ number: sprintNumber, incompletedStories: storyIds });
     await newSprint.save();
     project.sprints.push(newSprint._id);
 
@@ -49,7 +49,7 @@ module.exports.endSprint = async (req, res) => {
       return;
     }
     const project = await Project.findById(projectId);
-    for (const storyId of sprint.stories) {
+    for (const storyId of sprint.incompleteStories) {
       const story = await Story.findById(storyId);
       if (story.status === "completed") {
         completedStoryIds.push(story._id);
@@ -59,7 +59,8 @@ module.exports.endSprint = async (req, res) => {
     }
 
     sprint.hasEnded = true;
-    sprint.stories = completedStoryIds;
+    sprint.completedStories = completedStoryIds;
+    sprint.incompleteStories = incompleteStoryIds;
     project.backlog = [...project.backlog, ...incompleteStoryIds];
     await sprint.save();
     await project.save();
@@ -126,8 +127,8 @@ module.exports.addBacklogToSprint = async (req, res) => {
       project.backlog.pull(storyId);
     }
 
-    if (!sprint.stories.includes(storyId)) {
-      sprint.stories.push(storyId);
+    if (!sprint.incompleteStories.includes(storyId)) {
+      sprint.incompleteStories.push(storyId);
     }
 
     await project.save();

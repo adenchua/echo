@@ -6,9 +6,11 @@ const storySchema = new Schema(
     title: {
       type: String,
       required: true,
+      trim: true,
     },
     description: {
       type: String,
+      trim: true,
     },
     assignees: {
       type: [Schema.Types.ObjectId],
@@ -18,9 +20,12 @@ const storySchema = new Schema(
       type: Date,
       default: Date.now,
     },
+    dueDate: {
+      type: Date,
+    },
     status: {
       type: String,
-      enum: ["todo", "progress", "review", "completed", "stuck"],
+      enum: ["todo", "progress", "review", "completed", "stuck", "hold"],
       default: "todo",
     },
     weight: {

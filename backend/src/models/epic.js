@@ -6,6 +6,7 @@ const epicSchema = new Schema(
     title: {
       type: String,
       required: true,
+      trim: true,
     },
     stories: {
       type: [Schema.Types.ObjectId],
@@ -13,6 +14,7 @@ const epicSchema = new Schema(
     },
     description: {
       type: String,
+      trim: true,
     },
     createdDate: {
       type: Date,
