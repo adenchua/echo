@@ -5,7 +5,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import Avatar from "@mui/material/Avatar";
 import ListItemText from "@mui/material/ListItemText";
-import ProjectsIcon from "@mui/icons-material/Folder";
+import ProjectsIcon from "@mui/icons-material/GitHub";
 import HomeIcon from "@mui/icons-material/Home";
 import MyTasksIcon from "@mui/icons-material/TaskAlt";
 import ListItemAvatar from "@mui/material/ListItemAvatar";

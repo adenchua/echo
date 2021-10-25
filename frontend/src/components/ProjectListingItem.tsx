@@ -5,7 +5,7 @@ import Paper from "@mui/material/Paper";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Hidden from "@mui/material/Hidden";
-import ProjectIcon from "@mui/icons-material/Folder";
+import ProjectIcon from "@mui/icons-material/GitHub";
 import _ from "lodash";
 
 import ProjectInterface from "../types/ProjectInterface";

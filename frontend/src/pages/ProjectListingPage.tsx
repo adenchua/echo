@@ -84,7 +84,7 @@ const ProjectListingPage = (): JSX.Element => {
       {projects.length > 0 && renderTitleHeaders()}
       {projects.length === 0 && renderNoProjectsMessage()}
       {projects.map((project: ProjectInterface) => {
-        if (project.title.toLowerCase().includes(searchInput)) {
+        if (project.title.toLowerCase().includes(searchInput.toLowerCase())) {
           return <ProjectListingItem project={project} key={project._id} />;
         }
         return null;
