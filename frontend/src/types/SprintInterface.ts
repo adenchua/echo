@@ -1,11 +1,10 @@
-import StoryInterface from "./StoryInterface";
-
 interface SprintInterface {
+  _id: string;
   number: number;
   startDate: string;
   endDate: string;
-  incompleteStories: StoryInterface[];
-  completedStories: StoryInterface[];
+  incompleteStoryIds: string[];
+  completedStoryIds: string[];
   hasEnded: boolean;
 }
 

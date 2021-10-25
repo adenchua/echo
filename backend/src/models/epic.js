@@ -8,7 +8,7 @@ const epicSchema = new Schema(
       required: true,
       trim: true,
     },
-    stories: {
+    storyIds: {
       type: [Schema.Types.ObjectId],
       ref: "Story",
     },

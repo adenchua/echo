@@ -14,7 +14,7 @@ module.exports.createStory = async (req, res) => {
     const project = await Project.findById(projectId);
     const newStory = new Story({ title });
     await newStory.save();
-    project.backlog.push(newStory._id);
+    project.backlogIds.push(newStory._id);
     await project.save();
     res.status(201).send(newStory);
   } catch (error) {
@@ -70,8 +70,8 @@ module.exports.addAssigneeToStory = async (req, res) => {
 
   try {
     const story = await Story.findById(storyId);
-    if (!story.assignees.includes(userId)) {
-      story.assignees.push(userId);
+    if (!story.assigneeIds.includes(userId)) {
+      story.assigneeIds.push(userId);
     }
 
     await story.save();
@@ -93,8 +93,8 @@ module.exports.removeAssigneeFromStory = async (req, res) => {
 
   try {
     const story = await Story.findById(storyId);
-    if (story.assignees.includes(userId)) {
-      story.assignees.pull(userId);
+    if (story.assigneeIds.includes(userId)) {
+      story.assigneeIds.pull(userId);
     }
 
     await story.save();

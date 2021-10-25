@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -12,25 +12,39 @@ import Hidden from "@mui/material/Hidden";
 import PageLayoutWrapper from "../components/PageLayoutWrapper";
 import ProjectInterface from "../types/ProjectInterface";
 import ProjectListingItem from "../components/ProjectListingItem";
+import fetchAllProjects from "../api/projects/fetchAllProjects";
 
 const ProjectListingPage = (): JSX.Element => {
-  const [projects] = useState<ProjectInterface[]>([]);
+  const [projects, setProjects] = useState<ProjectInterface[]>([]);
+  const [searchInput, setSearchInput] = useState<string>("");
+
+  useEffect(() => {
+    const getProjects = async () => {
+      try {
+        const projectsResponse = await fetchAllProjects();
+        setProjects(projectsResponse);
+      } catch (error) {
+        alert("Something went wrong. Please try again later.");
+      }
+    };
+
+    getProjects();
+  }, []);
 
   const renderTitleHeaders = (): JSX.Element => {
     return (
-      <Box mb={1} p={1} display='flex' alignItems='center' gap={2}>
-        <Typography variant='body2' sx={{ width: "236px" }}>
+      <Box mb={1} p={1} display='flex' alignItems='center' gap={8}>
+        <Typography variant='body2' sx={{ width: "264px" }}>
           Project
         </Typography>
-        <Typography variant='body2' sx={{ width: "82px" }} noWrap>
+        <Typography variant='body2' sx={{ width: "64px" }} noWrap>
           Sprint
         </Typography>
         <Hidden smDown>
-          <Typography variant='body2'>Current Tasks</Typography>
-          <Box flexGrow={1} />
-          <Typography variant='body2' mr={11}>
-            Members
+          <Typography variant='body2' sx={{ width: "160px" }}>
+            Current Tasks
           </Typography>
+          <Typography variant='body2'>Members</Typography>
         </Hidden>
       </Box>
     );
@@ -55,6 +69,8 @@ const ProjectListingPage = (): JSX.Element => {
           size='small'
           margin='none'
           placeholder='Search'
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
           InputProps={{
             startAdornment: (
               <InputAdornment position='start'>
@@ -68,7 +84,10 @@ const ProjectListingPage = (): JSX.Element => {
       {projects.length > 0 && renderTitleHeaders()}
       {projects.length === 0 && renderNoProjectsMessage()}
       {projects.map((project: ProjectInterface) => {
-        return <ProjectListingItem project={project} />;
+        if (project.title.toLowerCase().includes(searchInput)) {
+          return <ProjectListingItem project={project} key={project._id} />;
+        }
+        return null;
       })}
     </PageLayoutWrapper>
   );

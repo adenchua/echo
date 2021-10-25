@@ -1,16 +1,15 @@
-import SprintInterface from "./SprintInterface";
-
 interface ProjectInterface {
+  _id: string;
   title: string;
   description: string;
   announcement: string;
   type: ProjectTypeInterface;
-  admins: string[];
-  members: string[];
+  adminIds: string[];
+  memberIds: string[];
   createdDate: string;
-  epics: string[];
-  backlog: string[];
-  sprints: SprintInterface[];
+  epicIds: string[];
+  backlogIds: string[];
+  sprintIds: string[];
   picture: number;
 }
 

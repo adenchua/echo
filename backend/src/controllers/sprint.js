@@ -17,12 +17,12 @@ module.exports.startSprint = async (req, res) => {
 
   try {
     const project = await Project.findById(projectId);
-    const sprintNumber = project.sprints.length + 1;
-    const newSprint = new Sprint({ number: sprintNumber, incompletedStories: storyIds });
+    const sprintNumber = project.sprintIds.length + 1;
+    const newSprint = new Sprint({ number: sprintNumber, incompleteStoryIds: storyIds });
     await newSprint.save();
-    project.sprints.push(newSprint._id);
+    project.sprintIds.push(newSprint._id);
 
-    project.backlog = project.backlog.filter((backlogId) => !storyIds.includes(backlogId));
+    project.backlogIds = project.backlogIds.filter((backlogId) => !storyIds.includes(backlogId));
     await project.save();
     res.status(201).send(newSprint);
   } catch (error) {
@@ -49,7 +49,7 @@ module.exports.endSprint = async (req, res) => {
       return;
     }
     const project = await Project.findById(projectId);
-    for (const storyId of sprint.incompleteStories) {
+    for (const storyId of sprint.incompleteStoryIds) {
       const story = await Story.findById(storyId);
       if (story.status === "completed") {
         completedStoryIds.push(story._id);
@@ -59,9 +59,9 @@ module.exports.endSprint = async (req, res) => {
     }
 
     sprint.hasEnded = true;
-    sprint.completedStories = completedStoryIds;
-    sprint.incompleteStories = incompleteStoryIds;
-    project.backlog = [...project.backlog, ...incompleteStoryIds];
+    sprint.completedStoryIds = completedStoryIds;
+    sprint.incompleteStoryIds = incompleteStoryIds;
+    project.backlogIds = [...project.backlogIds, ...incompleteStoryIds];
     await sprint.save();
     await project.save();
     res.status(200).send(sprint);
@@ -123,12 +123,12 @@ module.exports.addBacklogToSprint = async (req, res) => {
     const project = await Project.findById(projectId);
     const sprint = await Sprint.findById(sprintId);
 
-    if (project.backlog.includes(storyId)) {
-      project.backlog.pull(storyId);
+    if (project.backlogIds.includes(storyId)) {
+      project.backlogIds.pull(storyId);
     }
 
-    if (!sprint.incompleteStories.includes(storyId)) {
-      sprint.incompleteStories.push(storyId);
+    if (!sprint.incompleteStoryIds.includes(storyId)) {
+      sprint.incompleteStoryIds.push(storyId);
     }
 
     await project.save();

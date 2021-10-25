@@ -1,14 +1,15 @@
 interface StoryInterface {
+  _id: string;
   title: string;
   description: string;
-  assignees: string[];
+  assigneeIds: string[];
   createdDate: string;
   dueDate: string;
   status: "todo" | "progress" | "review" | "completed" | "stuck" | "hold";
   weight: number;
   priority: "low" | "medium" | "high" | "highest";
   type: "story" | "task" | "bug";
-  subtasks: string[];
+  subtaskIds: string[];
 }
 
 export default StoryInterface;

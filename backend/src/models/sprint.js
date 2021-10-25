@@ -13,11 +13,11 @@ const sprintSchema = new Schema(
     endDate: {
       type: Date,
     },
-    incompleteStories: {
+    incompleteStoryIds: {
       type: [Schema.Types.ObjectId],
       ref: "Story",
     },
-    completedStories: {
+    completedStoryIds: {
       type: [Schema.Types.ObjectId],
       ref: "Story",
     },

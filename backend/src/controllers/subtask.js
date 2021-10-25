@@ -14,7 +14,7 @@ module.exports.createSubtask = async (req, res) => {
     const subtask = new Subtask({ title });
     await subtask.save();
     const story = await Story.findById(storyId);
-    story.subtasks.push(subtask._id);
+    story.subtaskIds.push(subtask._id);
     await story.save();
     res.status(201).send(subtask);
   } catch (error) {

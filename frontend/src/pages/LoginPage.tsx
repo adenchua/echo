@@ -20,7 +20,7 @@ const LoginPage = (): JSX.Element => {
         }}
       >
         <Typography variant='h6' sx={{ mb: 8 }}>
-          Login
+          Login to Echo
         </Typography>
         <TextField fullWidth size='small' label='Username' sx={{ mb: 3 }} autoFocus />
         <TextField fullWidth size='small' label='Password' type='password' sx={{ mb: 6 }} />

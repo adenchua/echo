@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -6,10 +6,16 @@ import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Hidden from "@mui/material/Hidden";
 import ProjectIcon from "@mui/icons-material/Folder";
+import _ from "lodash";
 
 import ProjectInterface from "../types/ProjectInterface";
 import ProgressBarWithPercentage from "./ProgressBarWithPercentage";
 import SprintInterface from "../types/SprintInterface";
+import getUserAvatarSVG from "./getUserAvatarSVG";
+import UserInterface from "../types/UserInterface";
+import fetchSprintsByIds from "../api/sprints/fetchSprintsByIds";
+import fetchUsersByIds from "../api/users/fetchUsersByIds";
+import fetchStoriesByIds from "../api/stories/fetchStoriesByIds";
 
 interface ProjectListingItemProps {
   project: ProjectInterface;
@@ -17,67 +23,108 @@ interface ProjectListingItemProps {
 
 const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
   const { project } = props;
-  const { title, type, sprints } = project;
+  const { _id: projectId, title, type, sprintIds, adminIds, memberIds } = project;
+  const [sprints, setSprints] = useState<SprintInterface[]>([]);
+  const [users, setUsers] = useState<UserInterface[]>([]);
+  const [activeSprintProgressPercentage, setActiveSprintProgressPercentage] = useState<number>(0);
 
-  const getSprintStatus = (sprints: SprintInterface[]): string => {
-    let status = "--"; // if no active sprint
+  useEffect(() => {
+    const getSprintsAndProgress = async () => {
+      try {
+        const response = await fetchSprintsByIds(sprintIds);
+        setSprints(response);
+        getActiveSprintProgressPercentage(response);
+      } catch (error) {}
+    };
+
+    const getUsers = async () => {
+      try {
+        const response = await fetchUsersByIds([...adminIds, ...memberIds]);
+        setUsers(response);
+      } catch (error) {}
+    };
+
+    const getActiveSprintProgressPercentage = async (sprints: SprintInterface[]) => {
+      try {
+        const [activeSprint] = sprints.filter((sprint) => (sprint.hasEnded = false));
+        if (!activeSprint) {
+          setActiveSprintProgressPercentage(0);
+          return;
+        }
+        let completedStoryCount = 0;
+        const stories = await fetchStoriesByIds(activeSprint.incompleteStoryIds);
+        stories.forEach((story) => {
+          if (story.status === "completed") {
+            completedStoryCount += 1;
+          }
+        });
+        const result = Number(Math.floor((completedStoryCount / stories.length) * 100).toFixed());
+        setActiveSprintProgressPercentage(result);
+      } catch (error) {}
+    };
+
+    getSprintsAndProgress();
+    getUsers();
+  }, [sprintIds, adminIds, memberIds]);
+
+  const renderSprintStatusSpan = (sprints: SprintInterface[]): JSX.Element => {
+    let span = (
+      <Typography component='span' fontSize='inherit' sx={{ color: "warning.main" }}>
+        Stopped
+      </Typography>
+    ); // if no active sprint
     sprints.forEach((sprint) => {
       if (sprint.hasEnded === false) {
-        status = "Ongoing";
+        span = (
+          <Typography component='span' fontSize='inherit' sx={{ color: "primary.main" }}>
+            Ongoing
+          </Typography>
+        );
       }
     });
-    return status;
+    return span;
   };
 
-  const getSprintProgressPercentage = useCallback((sprints: SprintInterface[]): number => {
-    const [activeSprint] = sprints.filter((sprint) => (sprint.hasEnded = false));
-
-    // no active sprint, return 0 progress as default
-    if (!activeSprint) {
-      return 0;
-    }
-    let completedStoryCount = 0;
-    const totalStoriesCount = activeSprint.incompleteStories.length;
-
-    activeSprint.incompleteStories.forEach((story) => {
-      if (story.status === "completed") {
-        completedStoryCount += 1;
-      }
-    });
-
-    const result = Number(Math.floor((completedStoryCount / totalStoriesCount) * 100).toFixed());
-
-    return result;
-  }, []);
+  const renderAvatarGroups = (users: UserInterface[]): JSX.Element => {
+    const shuffledUsers = _.shuffle(users); // so that same members do not always appear first
+    return (
+      <AvatarGroup max={4} sx={{ flexShrink: 1 }}>
+        {shuffledUsers.map((user) => {
+          const { username, _id: userId } = user;
+          return <Avatar key={userId} src={getUserAvatarSVG(username)}></Avatar>;
+        })}
+      </AvatarGroup>
+    );
+  };
 
   return (
-    <Paper sx={{ padding: 1, mb: 0.5, display: "flex", alignItems: "center", gap: 2 }} square elevation={0}>
-      <Avatar sx={{ height: "48px", width: "48px" }} variant='rounded'>
-        <ProjectIcon />
-      </Avatar>
-      <Box sx={{ mr: 4, maxWidth: "140px" }}>
-        <Typography variant='subtitle2' noWrap>
-          {title}
-        </Typography>
-        <Typography variant='caption' sx={{ color: "GrayText" }} noWrap>
-          {type}
-        </Typography>
+    <Paper
+      sx={{ padding: 1, mb: 0.5, display: "flex", alignItems: "center", gap: 8, overflowX: "hidden" }}
+      square
+      elevation={0}
+      key={projectId}
+    >
+      <Box display='flex' gap={2}>
+        <Avatar sx={{ height: "48px", width: "48px" }} variant='rounded'>
+          <ProjectIcon />
+        </Avatar>
+        <Box sx={{ width: "200px" }}>
+          <Typography variant='subtitle2' noWrap>
+            {title}
+          </Typography>
+          <Typography variant='caption' sx={{ color: "GrayText" }} noWrap>
+            {type}
+          </Typography>
+        </Box>
       </Box>
-      <Typography variant='body2' mr={4} sx={{ color: "primary.main" }}>
-        {getSprintStatus(sprints)}
+      <Typography variant='body2' sx={{ width: "64px" }} noWrap>
+        {renderSprintStatusSpan(sprints)}
       </Typography>
       <Hidden smDown>
         <Box sx={{ width: "160px" }}>
-          <ProgressBarWithPercentage value={getSprintProgressPercentage(sprints)} />
+          <ProgressBarWithPercentage value={activeSprintProgressPercentage} />
         </Box>
-        <Box flexGrow={1} />
-        <AvatarGroup max={4}>
-          <Avatar />
-          <Avatar />
-          <Avatar />
-          <Avatar />
-          <Avatar />
-        </AvatarGroup>
+        {renderAvatarGroups(users)}
       </Hidden>
     </Paper>
   );

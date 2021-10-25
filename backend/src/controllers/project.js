@@ -10,7 +10,7 @@ module.exports.createProject = async (req, res) => {
   }
 
   try {
-    const newProject = new Project({ title, admins: [adminId], type });
+    const newProject = new Project({ title, adminIds: [adminId], type });
     await newProject.save();
     res.status(201).send(newProject);
   } catch (error) {
@@ -48,13 +48,13 @@ module.exports.addMemberToProject = async (req, res) => {
   try {
     const project = await Project.findById(projectId);
 
-    if (project.admins.includes(userId)) {
+    if (project.adminIds.includes(userId)) {
       res.status(400).send({ message: "member is already an administrator" });
       return;
     }
 
-    if (!project.members.includes(userId)) {
-      project.members.push(userId);
+    if (!project.memberIds.includes(userId)) {
+      project.memberIds.push(userId);
     }
     await project.save();
     res.status(204).send();
@@ -75,8 +75,8 @@ module.exports.removeMemberFromProject = async (req, res) => {
 
   try {
     const project = await Project.findById(projectId);
-    if (project.members.includes(userId)) {
-      project.members.pull(userId);
+    if (project.memberIds.includes(userId)) {
+      project.memberIds.pull(userId);
     }
     await project.save();
     res.status(204).send();
@@ -112,8 +112,8 @@ module.exports.getProjectsOfUser = async (req, res) => {
   }
 
   try {
-    const projectsWithUsersAsAdmins = await Project.find({ admins: userId });
-    const projectsWithUsersAsMembers = await Project.find({ members: userId });
+    const projectsWithUsersAsAdmins = await Project.find({ adminIds: userId });
+    const projectsWithUsersAsMembers = await Project.find({ memberIds: userId });
     const projects = [...projectsWithUsersAsAdmins, ...projectsWithUsersAsMembers];
     res.status(200).send(projects);
   } catch (error) {
@@ -144,12 +144,12 @@ module.exports.promoteMemberToAdministrator = async (req, res) => {
   try {
     const project = await Project.findById(projectId);
 
-    if (!project.admins.includes(userId)) {
-      project.admins.push(userId);
+    if (!project.adminIds.includes(userId)) {
+      project.adminIds.push(userId);
     }
 
-    if (project.members.includes(userId)) {
-      project.members.pull(userId);
+    if (project.memberIds.includes(userId)) {
+      project.memberIds.pull(userId);
     }
 
     await project.save();
@@ -172,17 +172,17 @@ module.exports.demoteAdmintoMember = async (req, res) => {
   try {
     const project = await Project.findById(projectId);
 
-    if (project.admins.length === 1 && project.admins.includes(userId)) {
+    if (project.adminIds.length === 1 && project.adminIds.includes(userId)) {
       res.status(400).send({ message: "unable to remove the only administrator" });
       return;
     }
 
-    if (project.admins.includes(userId)) {
-      project.admins.pull(userId);
+    if (project.adminIds.includes(userId)) {
+      project.adminIds.pull(userId);
     }
 
-    if (!project.members.includes(userId)) {
-      project.members.push(userId);
+    if (!project.memberIds.includes(userId)) {
+      project.memberIds.push(userId);
     }
 
     await project.save();

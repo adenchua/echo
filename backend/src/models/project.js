@@ -21,12 +21,12 @@ const projectSchema = new Schema(
       type: String,
       trim: true,
     },
-    admins: {
+    adminIds: {
       type: [Schema.Types.ObjectId],
       ref: "User",
       required: true,
     },
-    members: {
+    memberIds: {
       type: [Schema.Types.ObjectId],
       ref: "User",
     },
@@ -34,15 +34,15 @@ const projectSchema = new Schema(
       type: Date,
       default: Date.now,
     },
-    epics: {
+    epicIds: {
       type: [Schema.Types.ObjectId],
       ref: "Epic",
     },
-    backlog: {
+    backlogIds: {
       type: [Schema.Types.ObjectId],
       ref: "Story",
     },
-    sprints: {
+    sprintIds: {
       type: [Schema.Types.ObjectId],
       ref: "Sprint",
     },

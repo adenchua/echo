@@ -12,7 +12,7 @@ const storySchema = new Schema(
       type: String,
       trim: true,
     },
-    assignees: {
+    assigneeIds: {
       type: [Schema.Types.ObjectId],
       ref: "User",
     },
@@ -42,7 +42,7 @@ const storySchema = new Schema(
       enum: ["story", "task", "bug"],
       default: "story",
     },
-    subtasks: {
+    subtaskIds: {
       type: [Schema.Types.ObjectId],
       ref: "Subtask",
     },

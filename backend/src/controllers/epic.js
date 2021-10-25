@@ -14,7 +14,7 @@ module.exports.createEpic = async (req, res) => {
     const project = await Project.findById(projectId);
     const epic = new Epic({ title });
     await epic.save();
-    project.epics.push(epic._id);
+    project.epicIds.push(epic._id);
     await project.save();
     res.status(201).send(epic);
   } catch (error) {
@@ -75,8 +75,8 @@ module.exports.addStoryToEpic = async (req, res) => {
 
   try {
     const epic = await Epic.findById(epicId);
-    if (!epic.stories.includes(storyId)) {
-      epic.stories.push(storyId);
+    if (!epic.storyIds.includes(storyId)) {
+      epic.storyIds.push(storyId);
     }
     await epic.save();
     res.status(204).send();
@@ -97,8 +97,8 @@ module.exports.removeStoryFromEpic = async (req, res) => {
 
   try {
     const epic = await Epic.findById(epicId);
-    if (epic.stories.includes(storyId)) {
-      epic.stories.pull(storyId);
+    if (epic.storyIds.includes(storyId)) {
+      epic.storyIds.pull(storyId);
     }
     await epic.save();
     res.status(204).send();
