@@ -11,7 +11,7 @@ import _ from "lodash";
 import ProjectInterface from "../types/ProjectInterface";
 import ProgressBarWithPercentage from "./ProgressBarWithPercentage";
 import SprintInterface from "../types/SprintInterface";
-import getUserAvatarSVG from "./getUserAvatarSVG";
+import getUserAvatarSVG from "../utils/getUserAvatarSVG";
 import UserInterface from "../types/UserInterface";
 import fetchSprintsByIds from "../api/sprints/fetchSprintsByIds";
 import fetchUsersByIds from "../api/users/fetchUsersByIds";

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -11,7 +10,8 @@ import AddIcon from "@mui/icons-material/Add";
 import ProjectInterface from "../../types/ProjectInterface";
 import UserInterface from "../../types/UserInterface";
 import fetchUsersByIds from "../../api/users/fetchUsersByIds";
-import getUserAvatarSVG from "../getUserAvatarSVG";
+import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
+import ContainerWrapper from "../ContainerWrapper";
 
 interface OverviewTabProps {
   project: ProjectInterface;
@@ -53,7 +53,7 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
   };
 
   return (
-    <Container disableGutters sx={{ marginLeft: 0 }} maxWidth='md'>
+    <ContainerWrapper>
       <Typography variant='h5' paragraph>
         Description
       </Typography>
@@ -74,7 +74,7 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
           </Grid>
         ))}
       </Grid>
-    </Container>
+    </ContainerWrapper>
   );
 };
 
