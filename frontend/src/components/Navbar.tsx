@@ -1,7 +1,6 @@
 import React from "react";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import Avatar from "@mui/material/Avatar";
 import ListItemText from "@mui/material/ListItemText";
@@ -51,7 +50,7 @@ const Navbar = (): JSX.Element => {
       </List>{" "}
       <Divider />
       <List subheader={<ListSubheader component='div'>My Projects</ListSubheader>}>
-        {navigationItems.map(({ icon, text, link }) => (
+        {/* {navigationItems.map(({ icon, text, link }) => (
           <ListItem button key={text} dense>
             <ListItemAvatar>
               <Avatar variant='rounded' sx={{ bgcolor: "primary.main", height: 24, width: 24 }}>
@@ -60,7 +59,7 @@ const Navbar = (): JSX.Element => {
             </ListItemAvatar>
             <ListItemText primary={text} sx={{ color: "primary.main" }} />
           </ListItem>
-        ))}
+        ))} */}
       </List>
     </>
   );

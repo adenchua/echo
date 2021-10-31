@@ -6,20 +6,57 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+
 import Navbar from "./Navbar";
 
 const DRAWER_WIDTH = 240;
 
 interface PageLayoutWrapperProps {
   children: React.ReactNode;
+  disablePadding?: boolean;
+  toolbarContent?: React.ReactNode;
 }
 
 const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
-  const { children } = props;
+  const { children, toolbarContent, disablePadding = false } = props;
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
+  };
+
+  const renderHamburgerIcon = (): JSX.Element => {
+    return (
+      <IconButton
+        color='inherit'
+        aria-label='open drawer'
+        edge='start'
+        onClick={handleDrawerToggle}
+        sx={{ mr: 2, display: { md: "none" } }}
+      >
+        <MenuIcon />
+      </IconButton>
+    );
+  };
+
+  const renderToolbarContent = (): JSX.Element => {
+    if (toolbarContent) {
+      return (
+        <>
+          {renderHamburgerIcon()}
+          {toolbarContent}
+        </>
+      );
+    }
+
+    return (
+      <>
+        {renderHamburgerIcon()}
+        <Typography variant='h6' noWrap component='div'>
+          Echo
+        </Typography>
+      </>
+    );
   };
 
   return (
@@ -35,20 +72,7 @@ const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
         color='inherit'
         elevation={0}
       >
-        <Toolbar>
-          <IconButton
-            color='inherit'
-            aria-label='open drawer'
-            edge='start'
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant='h6' noWrap component='div'>
-            Echo
-          </Typography>
-        </Toolbar>
+        <Toolbar>{renderToolbarContent()}</Toolbar>
       </AppBar>
       <Box component='nav' sx={{ width: { md: DRAWER_WIDTH }, flexShrink: { md: 0 } }}>
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
@@ -77,7 +101,10 @@ const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
           <Navbar />
         </Drawer>
       </Box>
-      <Box component='main' sx={{ flexGrow: 1, p: 3, width: { md: `calc(100% - ${DRAWER_WIDTH}px)` } }}>
+      <Box
+        component='main'
+        sx={{ flexGrow: 1, p: disablePadding ? 0 : 3, width: { md: `calc(100% - ${DRAWER_WIDTH}px)` } }}
+      >
         <Toolbar />
         {children}
       </Box>

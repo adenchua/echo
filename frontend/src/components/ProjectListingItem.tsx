@@ -90,8 +90,12 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
     return (
       <AvatarGroup max={4} sx={{ flexShrink: 1 }}>
         {shuffledUsers.map((user) => {
-          const { username, _id: userId } = user;
-          return <Avatar key={userId} src={getUserAvatarSVG(username)}></Avatar>;
+          const { username, _id: userId, displayName } = user;
+          return (
+            <Avatar key={userId} src={getUserAvatarSVG(username)}>
+              {displayName}
+            </Avatar>
+          );
         })}
       </AvatarGroup>
     );

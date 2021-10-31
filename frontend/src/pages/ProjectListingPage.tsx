@@ -8,6 +8,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import Divider from "@mui/material/Divider";
 import Hidden from "@mui/material/Hidden";
+import Link from "@mui/material/Link";
+import { Link as RouterLink } from "react-router-dom";
 
 import PageLayoutWrapper from "../components/PageLayoutWrapper";
 import ProjectInterface from "../types/ProjectInterface";
@@ -85,7 +87,16 @@ const ProjectListingPage = (): JSX.Element => {
       {projects.length === 0 && renderNoProjectsMessage()}
       {projects.map((project: ProjectInterface) => {
         if (project.title.toLowerCase().includes(searchInput.toLowerCase())) {
-          return <ProjectListingItem project={project} key={project._id} />;
+          return (
+            <Link
+              component={RouterLink}
+              to={`/projects/id/${project._id}?tab=overview`}
+              key={project._id}
+              underline='none'
+            >
+              <ProjectListingItem project={project} />
+            </Link>
+          );
         }
         return null;
       })}

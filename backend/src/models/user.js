@@ -23,6 +23,10 @@ const userSchema = new Schema(
     bio: {
       type: String,
     },
+    title: {
+      type: String,
+      default: "Employee",
+    },
     joinedDate: {
       type: Date,
       default: Date.now,

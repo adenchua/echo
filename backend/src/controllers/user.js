@@ -99,7 +99,7 @@ module.exports.getAllUsers = async (req, res) => {
 
 module.exports.updateUser = async (req, res) => {
   const { userId } = req.params;
-  const { displayName, bio } = req.body;
+  const { displayName, bio, title } = req.body;
 
   if (!userId) {
     res.status(400).send();
@@ -107,7 +107,7 @@ module.exports.updateUser = async (req, res) => {
   }
 
   try {
-    const keysToUpdate = removeUndefinedKeysFromObject({ displayName, bio });
+    const keysToUpdate = removeUndefinedKeysFromObject({ displayName, bio, title });
     await User.findByIdAndUpdate(userId, { ...keysToUpdate });
     res.status(204).send();
   } catch (error) {

@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import DetailedProjectPage from "./pages/DetailedProjectPage";
 
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
@@ -17,8 +18,11 @@ function App() {
         <Route path='/home'>
           <HomePage />
         </Route>
-        <Route path='/projects'>
+        <Route exact path='/projects'>
           <ProjectListingPage />
+        </Route>
+        <Route path='/projects/id/:id'>
+          <DetailedProjectPage />
         </Route>
         <Route path='/user-profile'>
           <UserProfilePage />
