@@ -11,6 +11,7 @@ import ToolbarContent from "../components/DetailedProject/ToolbarContent";
 import useQuery from "../hooks/useQuery";
 import OverviewTab from "../components/DetailedProject/OverviewTab";
 import ProductBacklogTab from "../components/DetailedProject/ProductBacklogTab";
+import SprintBacklogTab from "../components/DetailedProject/SprintBacklogTab";
 
 const DetailedProjectPage = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
@@ -54,6 +55,7 @@ const DetailedProjectPage = (): JSX.Element => {
     const availableTabs = [
       { tabKey: "overview", component: <OverviewTab project={project} /> },
       { tabKey: "product-backlog", component: <ProductBacklogTab project={project} /> },
+      { tabKey: "sprint-backlog", component: <SprintBacklogTab project={project} /> },
     ];
     const selectedTab = availableTabs.find((element) => element.tabKey === currentTabKey);
 

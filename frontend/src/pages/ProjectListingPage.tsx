@@ -65,7 +65,7 @@ const ProjectListingPage = (): JSX.Element => {
       </Typography>
       <Box display='flex' gap={2}>
         <Button startIcon={<AddIcon />} variant='outlined'>
-          Add Project
+          New Project
         </Button>
         <TextField
           size='small'

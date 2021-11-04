@@ -1,3 +1,4 @@
+export type StatusType = "todo" | "progress" | "review" | "completed" | "stuck" | "hold";
 interface StoryInterface {
   _id: string;
   title: string;
@@ -5,7 +6,7 @@ interface StoryInterface {
   assigneeIds: string[];
   createdDate: string;
   dueDate: string;
-  status: "todo" | "progress" | "review" | "completed" | "stuck" | "hold";
+  status: StatusType;
   weight: number;
   priority: "low" | "medium" | "high" | "highest";
   type: "story" | "task" | "bug";
