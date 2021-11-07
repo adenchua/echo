@@ -10,9 +10,6 @@ let theme = createTheme({
     primary: {
       main: teal[500],
     },
-    secondary: {
-      main: teal[200],
-    },
     background: {
       default: "#F0F0F0",
     },

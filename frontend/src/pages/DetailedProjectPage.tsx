@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { LinearProgress } from "@mui/material";
-
 import PageLayoutWrapper from "../components/PageLayoutWrapper";
 import ProjectInterface from "../types/ProjectInterface";
 import fetchProject from "../api/projects/fetchProject";
@@ -12,6 +10,7 @@ import useQuery from "../hooks/useQuery";
 import OverviewTab from "../components/DetailedProject/OverviewTab";
 import ProductBacklogTab from "../components/DetailedProject/ProductBacklogTab";
 import SprintBacklogTab from "../components/DetailedProject/SprintBacklogTab";
+import Loading from "../components/Loading";
 
 const DetailedProjectPage = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
@@ -35,11 +34,7 @@ const DetailedProjectPage = (): JSX.Element => {
   }, [id]);
 
   if (isLoading) {
-    return (
-      <PageLayoutWrapper disablePadding>
-        <LinearProgress />
-      </PageLayoutWrapper>
-    );
+    return <Loading />;
   }
 
   if (!project) {

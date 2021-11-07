@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
@@ -14,24 +12,13 @@ import { Link as RouterLink } from "react-router-dom";
 import PageLayoutWrapper from "../components/PageLayoutWrapper";
 import ProjectInterface from "../types/ProjectInterface";
 import ProjectListingItem from "../components/ProjectListingItem";
-import fetchAllProjects from "../api/projects/fetchAllProjects";
+import CreateProjectButtonWithDialog from "../components/CreateProjectButtonWithDialog";
+import useProjects from "../hooks/useProjects";
+import Loading from "../components/Loading";
 
 const ProjectListingPage = (): JSX.Element => {
-  const [projects, setProjects] = useState<ProjectInterface[]>([]);
+  const { projects, isLoading, handleAddProject } = useProjects();
   const [searchInput, setSearchInput] = useState<string>("");
-
-  useEffect(() => {
-    const getProjects = async () => {
-      try {
-        const projectsResponse = await fetchAllProjects();
-        setProjects(projectsResponse);
-      } catch (error) {
-        alert("Something went wrong. Please try again later.");
-      }
-    };
-
-    getProjects();
-  }, []);
 
   const renderTitleHeaders = (): JSX.Element => {
     return (
@@ -58,15 +45,17 @@ const ProjectListingPage = (): JSX.Element => {
     </Typography>
   );
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <PageLayoutWrapper>
       <Typography variant='h5' paragraph>
         Projects
       </Typography>
       <Box display='flex' gap={2}>
-        <Button startIcon={<AddIcon />} variant='outlined'>
-          New Project
-        </Button>
+        <CreateProjectButtonWithDialog onAddProject={handleAddProject} />
         <TextField
           size='small'
           margin='none'

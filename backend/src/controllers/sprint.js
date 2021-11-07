@@ -3,26 +3,19 @@ const Sprint = require("../models/sprint");
 const Story = require("../models/story");
 
 module.exports.startSprint = async (req, res) => {
-  const { storyIds, projectId } = req.body;
+  const { projectId } = req.body;
 
-  if (!storyIds || projectId || !Array.isArray(storyIds)) {
+  if (!projectId) {
     res.status(400).send();
-    return;
-  }
-
-  if (storyIds.length === 0) {
-    res.status(400).send({ message: "unable to start sprint without a story" });
     return;
   }
 
   try {
     const project = await Project.findById(projectId);
     const sprintNumber = project.sprintIds.length + 1;
-    const newSprint = new Sprint({ number: sprintNumber, incompleteStoryIds: storyIds });
+    const newSprint = new Sprint({ number: sprintNumber });
     await newSprint.save();
     project.sprintIds.push(newSprint._id);
-
-    project.backlogIds = project.backlogIds.filter((backlogId) => !storyIds.includes(backlogId));
     await project.save();
     res.status(201).send(newSprint);
   } catch (error) {
@@ -48,12 +41,15 @@ module.exports.endSprint = async (req, res) => {
       res.status(400).send({ message: "Sprint has already ended" });
       return;
     }
+
     const project = await Project.findById(projectId);
-    for (const storyId of sprint.incompleteStoryIds) {
+    for (const storyId of project.backlogIds) {
       const story = await Story.findById(storyId);
-      if (story.status === "completed") {
+      if (story.isInSprint && story.status === "completed") {
+        project.backlogIds.pull(story._id); // remove completed tickets from product backlog
         completedStoryIds.push(story._id);
-      } else {
+      }
+      if (story.isInSprint && story.status !== "completed") {
         incompleteStoryIds.push(story._id);
       }
     }
@@ -61,7 +57,6 @@ module.exports.endSprint = async (req, res) => {
     sprint.hasEnded = true;
     sprint.completedStoryIds = completedStoryIds;
     sprint.incompleteStoryIds = incompleteStoryIds;
-    project.backlogIds = [...project.backlogIds, ...incompleteStoryIds];
     await sprint.save();
     await project.save();
     res.status(200).send(sprint);
@@ -106,36 +101,6 @@ module.exports.getSprint = async (req, res) => {
     res.status(200).send(sprint);
   } catch (error) {
     console.error("getSprint", error);
-    res.status(500).send();
-  }
-};
-
-module.exports.addBacklogToSprint = async (req, res) => {
-  const { sprintId } = req.params;
-  const { projectId, storyId } = req.body;
-
-  if (!sprintId || !projectId || !storyId) {
-    res.status(400).send();
-    return;
-  }
-
-  try {
-    const project = await Project.findById(projectId);
-    const sprint = await Sprint.findById(sprintId);
-
-    if (project.backlogIds.includes(storyId)) {
-      project.backlogIds.pull(storyId);
-    }
-
-    if (!sprint.incompleteStoryIds.includes(storyId)) {
-      sprint.incompleteStoryIds.push(storyId);
-    }
-
-    await project.save();
-    await sprint.save();
-    res.status(204).send();
-  } catch (error) {
-    console.error("addBacklogToSprint", error);
     res.status(500).send();
   }
 };

@@ -2,14 +2,29 @@ import React from "react";
 import Paper from "@mui/material/Paper";
 import Hidden from "@mui/material/Hidden";
 import Typography from "@mui/material/Typography";
-import BugIcon from "@mui/icons-material/BugReport";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import HighPriorityIcon from "@mui/icons-material/KeyboardArrowUp";
 import Checkbox from "@mui/material/Checkbox";
 import Chip from "@mui/material/Chip";
 
-const ProductBacklogTicket = (): JSX.Element => {
+import StoryInterface, { TicketUpdateFieldsType } from "../types/StoryInterface";
+import PriorityIcon from "./PriorityIcon";
+import TicketTypeIcon from "./TicketTypeIcon";
+
+interface ProductBacklogTicketProps {
+  ticket: StoryInterface;
+  onUpdateTicket: (ticketId: string, updatedFields: TicketUpdateFieldsType) => Promise<void>;
+}
+
+const ProductBacklogTicket = (props: ProductBacklogTicketProps): JSX.Element => {
+  const { ticket, onUpdateTicket } = props;
+  const { priority, title, type, isInSprint, _id: id } = ticket;
+
+  const handleToggleTicketInSprint = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const updatedIsInSprintStatus = event.target.checked;
+    onUpdateTicket(id, { isInSprint: updatedIsInSprintStatus });
+  };
+
   const renderDesktopTicket = (): JSX.Element => {
     return (
       <Paper
@@ -27,16 +42,15 @@ const ProductBacklogTicket = (): JSX.Element => {
         square
         elevation={0}
       >
-        <Checkbox defaultChecked size='small' />
-        <IconButton size='small' color='error'>
-          <HighPriorityIcon />
+        <Checkbox size='small' checked={isInSprint} onChange={handleToggleTicketInSprint} />
+        <IconButton size='small'>
+          <PriorityIcon priority={priority} />
         </IconButton>
         <IconButton size='small' color='error' disabled>
-          <BugIcon color='error' fontSize='small' />
+          <TicketTypeIcon type={type} />
         </IconButton>
         <Typography variant='body2' noWrap>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-          standard dummy text ever since the 1500s,
+          {title}
         </Typography>
       </Paper>
     );
@@ -46,15 +60,12 @@ const ProductBacklogTicket = (): JSX.Element => {
     return (
       <Paper sx={{ marginBottom: 1, padding: 1 }} elevation={0}>
         <Box display='flex' alignItems='center' gap={1} mb={1}>
-          <HighPriorityIcon color='error' />
-          <BugIcon color='error' fontSize='small' />
+          <PriorityIcon priority={priority} />
+          <TicketTypeIcon type={type} />
           <Box flexGrow={1} />
           <Chip label='In Sprint' size='small' />
         </Box>
-        <Typography variant='body2'>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-          standard dummy text ever since the 1500s,
-        </Typography>
+        <Typography variant='body2'>{title}</Typography>
       </Paper>
     );
   };

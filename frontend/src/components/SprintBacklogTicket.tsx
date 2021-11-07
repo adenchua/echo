@@ -3,18 +3,25 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
-import HighPriorityIcon from "@mui/icons-material/KeyboardArrowUp";
-import BugIcon from "@mui/icons-material/BugReport";
 import Chip from "@mui/material/Chip";
 import Hidden from "@mui/material/Hidden";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 
-import { StatusType } from "../types/StoryInterface";
+import StoryInterface, { StatusType } from "../types/StoryInterface";
+import PriorityIcon from "./PriorityIcon";
+import TicketTypeIcon from "./TicketTypeIcon";
 
 type MuiChipSizeType = "small" | "medium" | undefined;
 
-const SprintBacklogTicket = (): JSX.Element => {
+interface SprintBacklogTicketProps {
+  ticket: StoryInterface;
+}
+
+const SprintBacklogTicket = (props: SprintBacklogTicketProps): JSX.Element => {
+  const { ticket } = props;
+  const { title, priority, type, status, dueDate, assigneeId } = ticket;
+
   const renderStatusChip = (status: StatusType, size: MuiChipSizeType = "medium"): JSX.Element => {
     const CHIP_MIN_WIDTH = "92px";
 
@@ -50,23 +57,19 @@ const SprintBacklogTicket = (): JSX.Element => {
     return (
       <Paper sx={{ p: 1, mb: 2 }}>
         <Box display='flex' alignItems='center' mb={1}>
-          <IconButton size='small' color='error' edge='start'>
-            <HighPriorityIcon color='error' />
+          <IconButton size='small' edge='start'>
+            <PriorityIcon priority={priority} />
           </IconButton>
-          <BugIcon color='error' fontSize='small' />
+          <TicketTypeIcon type={type} />
           <Box flexGrow={1} />
-          <Chip label='Dec 13' size='small' />
+          <Chip label='-' size='small' sx={{ display: dueDate ? "" : "none" }} />
         </Box>
-        <Typography variant='body2'>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
-          make a type specimen book.
-        </Typography>
+        <Typography variant='body2'>{title}</Typography>
         <Divider sx={{ mt: 1, mb: 1 }} light />
         <Box display='flex' alignItems='center' justifyContent='space-between'>
-          <Avatar style={{ height: 32, width: 32 }}></Avatar>
+          <Avatar style={{ height: 32, width: 32, display: assigneeId ? "" : "none" }}>?</Avatar>
           <Box flexGrow={1} />
-          {renderStatusChip("completed")}
+          {renderStatusChip(status)}
         </Box>
       </Paper>
     );
@@ -84,32 +87,28 @@ const SprintBacklogTicket = (): JSX.Element => {
           display: "flex",
           alignItems: "center",
           gap: 4,
-          padding: 1,
+          py: 1,
+          px: 2,
           overflowX: "hidden",
         }}
         square
         elevation={0}
       >
         <Box display='flex' alignItems='center' gap={0.5}>
-          <IconButton size='small' color='error'>
-            <HighPriorityIcon color='error' />
+          <IconButton size='small'>
+            <PriorityIcon priority={priority} />
           </IconButton>
-          <BugIcon color='error' fontSize='small' />
+          <TicketTypeIcon type={type} />
         </Box>
-        <Box flexGrow={1} sx={{ maxWidth: { xl: "1220px", lg: "700px", md: "320px" }, flexShrink: 1 }}>
+        <Box sx={{ maxWidth: { xl: "1220px", lg: "700px", md: "320px" }, flexShrink: 1 }}>
           <Typography variant='body2' noWrap>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-            industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-            scrambled it to make a type specimen book.
+            {title}
           </Typography>
         </Box>
-        <Box>
-          <Avatar style={{ height: 32, width: 32 }}></Avatar>
-        </Box>
-        <Box>
-          <Chip label='Dec 13' />
-        </Box>
-        <Box>{renderStatusChip("todo")}</Box>
+        <Box flexGrow={1} />
+        <Avatar style={{ height: 32, width: 32, display: assigneeId ? "" : "none" }}>?</Avatar>
+        <Chip label='-' sx={{ display: dueDate ? "" : "none" }} />
+        {renderStatusChip(status)}
       </Paper>
     );
   };

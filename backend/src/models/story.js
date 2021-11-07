@@ -12,8 +12,8 @@ const storySchema = new Schema(
       type: String,
       trim: true,
     },
-    assigneeIds: {
-      type: [Schema.Types.ObjectId],
+    assigneeId: {
+      type: Schema.Types.ObjectId,
       ref: "User",
     },
     createdDate: {
@@ -28,10 +28,6 @@ const storySchema = new Schema(
       enum: ["todo", "progress", "review", "completed", "stuck", "hold"],
       default: "todo",
     },
-    weight: {
-      type: Number,
-      default: 1,
-    },
     priority: {
       type: String,
       enum: ["low", "medium", "high", "highest"],
@@ -45,6 +41,10 @@ const storySchema = new Schema(
     subtaskIds: {
       type: [Schema.Types.ObjectId],
       ref: "Subtask",
+    },
+    isInSprint: {
+      type: Boolean,
+      default: false,
     },
   },
   { versionKey: false }
