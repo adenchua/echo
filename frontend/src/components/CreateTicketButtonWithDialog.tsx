@@ -10,20 +10,12 @@ import TicketIcon from "@mui/icons-material/TaskAlt";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import ToggleButton from "@mui/material/ToggleButton";
 import Box from "@mui/material/Box";
-import TaskIcon from "@mui/icons-material/Task";
-import BugIcon from "@mui/icons-material/BugReport";
-import UserStoryIcon from "@mui/icons-material/AutoStories";
 import CircularProgress from "@mui/material/CircularProgress";
-import LowPriorityIcon from "@mui/icons-material/KeyboardArrowDown";
-import MediumPriorityIcon from "@mui/icons-material/Remove";
-import HighPriorityIcon from "@mui/icons-material/KeyboardArrowUp";
 
-import HighestPriorityIcon from "./HighestPriorityIcon";
-import { Tooltip } from "@mui/material";
 import { PriorityType, StoryType } from "../types/StoryInterface";
+import FormPriorityToggleButtons from "./FormPriorityToggleButtons";
+import FormTicketTypeToggleButtons from "./FormTicketTypeToggleButtonts";
 
 type ScreenType = "desktop" | "mobile";
 
@@ -65,10 +57,16 @@ const CreateTicketButtonWithDialog = (props: CreateTicketButtonWithDialogProps):
   };
 
   const handleChangeTicketType = (event: React.MouseEvent<HTMLElement>, newType: StoryType) => {
+    if (!newType) {
+      return; // prevent deselecting a button
+    }
     setTicketType(newType);
   };
 
   const handleChangePriority = (event: React.MouseEvent<HTMLElement>, newPriority: PriorityType) => {
+    if (!newPriority) {
+      return; // prevent deselecting a button
+    }
     setPriority(newPriority);
   };
 
@@ -104,56 +102,11 @@ const CreateTicketButtonWithDialog = (props: CreateTicketButtonWithDialogProps):
         </Box>
         <Box display='flex' alignItems='center' gap={4} mb={4}>
           <Typography>Type: </Typography>
-          <ToggleButtonGroup
-            value={ticketType}
-            color='primary'
-            exclusive
-            onChange={handleChangeTicketType}
-            size='small'
-          >
-            <ToggleButton value={"task"}>
-              <Tooltip title={"Task"}>
-                <TaskIcon fontSize='small' />
-              </Tooltip>
-            </ToggleButton>
-            <ToggleButton value={"story"}>
-              <Tooltip title={"Story"}>
-                <UserStoryIcon fontSize='small' />
-              </Tooltip>
-            </ToggleButton>
-            <ToggleButton value={"bug"}>
-              <Tooltip title={"Bug"}>
-                <BugIcon fontSize='small' />
-              </Tooltip>
-            </ToggleButton>
-          </ToggleButtonGroup>
+          <FormTicketTypeToggleButtons value={ticketType} onChangeHandler={handleChangeTicketType} />
         </Box>
         <Box display='flex' alignItems='center' gap={2}>
           <Typography>Priority: </Typography>
-          <ToggleButtonGroup value={priority} color='primary' exclusive onChange={handleChangePriority} size='small'>
-            <ToggleButton value={"low"}>
-              <Tooltip title={"Low"}>
-                <LowPriorityIcon fontSize='small' />
-              </Tooltip>
-            </ToggleButton>
-            <ToggleButton value={"medium"}>
-              <Tooltip title={"Medium"}>
-                <MediumPriorityIcon fontSize='small' />
-              </Tooltip>
-            </ToggleButton>
-            <ToggleButton value={"high"}>
-              <Tooltip title={"High"}>
-                <HighPriorityIcon fontSize='small' />
-              </Tooltip>
-            </ToggleButton>
-            <ToggleButton value={"highest"}>
-              <Tooltip title={"Highest"}>
-                <div>
-                  <HighestPriorityIcon />
-                </div>
-              </Tooltip>
-            </ToggleButton>
-          </ToggleButtonGroup>
+          <FormPriorityToggleButtons value={priority} onChangeHandler={handleChangePriority} />
         </Box>
         {showError && (
           <Typography color='error' variant='caption'>

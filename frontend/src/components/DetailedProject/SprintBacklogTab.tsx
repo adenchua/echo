@@ -17,7 +17,7 @@ interface SprintBacklogTabProps {
 const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   const { project } = props;
   const { backlogIds, sprintIds } = project;
-  const { tickets, isLoading, sprint } = useSprintBacklog(backlogIds, sprintIds);
+  const { tickets, isLoading, sprint, onUpdateTicket } = useSprintBacklog(backlogIds, sprintIds);
   const [searchInput, setSearchInput] = useState<string>("");
 
   const renderStartSprintButton = (): JSX.Element => (
@@ -75,7 +75,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
       {tickets?.map((ticket) => {
         const { _id: id, title } = ticket;
         if (title.toLowerCase().includes(searchInput.toLowerCase())) {
-          return <SprintBacklogTicket key={id} ticket={ticket} />;
+          return <SprintBacklogTicket key={id} ticket={ticket} onUpdateTicket={onUpdateTicket} />;
         }
         return null;
       })}

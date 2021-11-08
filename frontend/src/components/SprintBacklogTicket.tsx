@@ -7,20 +7,24 @@ import Chip from "@mui/material/Chip";
 import Hidden from "@mui/material/Hidden";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
+import { format } from "date-fns";
 
-import StoryInterface, { StatusType } from "../types/StoryInterface";
+import StoryInterface, { StatusType, TicketUpdateFieldsType } from "../types/StoryInterface";
 import PriorityIcon from "./PriorityIcon";
 import TicketTypeIcon from "./TicketTypeIcon";
+import UpdateTicketButtonWithDialog from "./UpdateTicketButtonWithDialog";
 
 type MuiChipSizeType = "small" | "medium" | undefined;
 
 interface SprintBacklogTicketProps {
   ticket: StoryInterface;
+  onUpdateTicket: (ticketId: string, updatedFields: TicketUpdateFieldsType) => Promise<void>;
 }
 
 const SprintBacklogTicket = (props: SprintBacklogTicketProps): JSX.Element => {
-  const { ticket } = props;
+  const { ticket, onUpdateTicket } = props;
   const { title, priority, type, status, dueDate, assigneeId } = ticket;
+  const formattedDueDate = dueDate ? format(new Date(dueDate), "LLL dd") : "";
 
   const renderStatusChip = (status: StatusType, size: MuiChipSizeType = "medium"): JSX.Element => {
     const CHIP_MIN_WIDTH = "92px";
@@ -62,14 +66,14 @@ const SprintBacklogTicket = (props: SprintBacklogTicketProps): JSX.Element => {
           </IconButton>
           <TicketTypeIcon type={type} />
           <Box flexGrow={1} />
-          <Chip label='-' size='small' sx={{ display: dueDate ? "" : "none" }} />
+          <Chip label={formattedDueDate} size='small' sx={{ display: dueDate ? "" : "none" }} />
         </Box>
         <Typography variant='body2'>{title}</Typography>
         <Divider sx={{ mt: 1, mb: 1 }} light />
         <Box display='flex' alignItems='center' justifyContent='space-between'>
           <Avatar style={{ height: 32, width: 32, display: assigneeId ? "" : "none" }}>?</Avatar>
           <Box flexGrow={1} />
-          {renderStatusChip(status)}
+          {renderStatusChip(status, "small")}
         </Box>
       </Paper>
     );
@@ -86,29 +90,26 @@ const SprintBacklogTicket = (props: SprintBacklogTicketProps): JSX.Element => {
           borderColor: "grey.200",
           display: "flex",
           alignItems: "center",
-          gap: 4,
-          py: 1,
-          px: 2,
+          gap: 1.5,
+          py: 0.5,
+          px: 1,
           overflowX: "hidden",
         }}
         square
         elevation={0}
       >
-        <Box display='flex' alignItems='center' gap={0.5}>
-          <IconButton size='small'>
-            <PriorityIcon priority={priority} />
-          </IconButton>
-          <TicketTypeIcon type={type} />
-        </Box>
-        <Box sx={{ maxWidth: { xl: "1220px", lg: "700px", md: "320px" }, flexShrink: 1 }}>
-          <Typography variant='body2' noWrap>
-            {title}
-          </Typography>
-        </Box>
+        <IconButton size='small'>
+          <PriorityIcon priority={priority} />
+        </IconButton>
+        <TicketTypeIcon type={type} />
+        <Typography variant='body2' noWrap>
+          {title}
+        </Typography>
         <Box flexGrow={1} />
         <Avatar style={{ height: 32, width: 32, display: assigneeId ? "" : "none" }}>?</Avatar>
-        <Chip label='-' sx={{ display: dueDate ? "" : "none" }} />
+        <Chip label={formattedDueDate} sx={{ display: dueDate ? "" : "none" }} size='small' />
         {renderStatusChip(status)}
+        <UpdateTicketButtonWithDialog ticket={ticket} onUpdateTicket={onUpdateTicket} showStatusButtons />
       </Paper>
     );
   };

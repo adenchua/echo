@@ -31,6 +31,15 @@ let theme = createTheme({
         },
       },
     },
+    MuiTextField: {
+      defaultProps: {
+        inputProps: {
+          style: {
+            fontSize: 14,
+          },
+        },
+      },
+    },
   },
 });
 
