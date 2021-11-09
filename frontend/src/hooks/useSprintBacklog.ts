@@ -6,6 +6,7 @@ import updateTicket from "../api/stories/updateTicket";
 import StoryInterface, { TicketUpdateFieldsType } from "../types/StoryInterface";
 import SprintInterface from "../types/SprintInterface";
 import fetchSprintsByIds from "../api/sprints/fetchSprintsByIds";
+import startSprint from "../api/sprints/startSprint";
 
 const useSprintBacklog = (storyIds: string[] = [], sprintIds: string[] = []) => {
   const [tickets, setTickets] = useState<StoryInterface[]>([]);
@@ -66,7 +67,19 @@ const useSprintBacklog = (storyIds: string[] = [], sprintIds: string[] = []) => 
     }
   };
 
-  return { tickets, isLoading, onUpdateTicket, sprint };
+  const onStartSprint = async (projectId: string, endDate: Date | null): Promise<void> => {
+    try {
+      if (!endDate) {
+        throw new Error("No end date specified");
+      }
+      const newSprint = await startSprint(projectId, endDate.toISOString());
+      setSprint(newSprint);
+    } catch (error) {
+      throw new Error("Failed to start sprint");
+    }
+  };
+
+  return { tickets, isLoading, onUpdateTicket, sprint, onStartSprint };
 };
 
 export default useSprintBacklog;

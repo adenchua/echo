@@ -12,6 +12,7 @@ const sprintSchema = new Schema(
     },
     endDate: {
       type: Date,
+      required: true,
     },
     incompleteStoryIds: {
       type: [Schema.Types.ObjectId],

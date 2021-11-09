@@ -23,7 +23,7 @@ interface ProjectListingItemProps {
 
 const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
   const { project } = props;
-  const { _id: projectId, title, type, sprintIds, adminIds, memberIds } = project;
+  const { _id: projectId, title, type, sprintIds, adminIds, memberIds, backlogIds } = project;
   const [sprints, setSprints] = useState<SprintInterface[]>([]);
   const [users, setUsers] = useState<UserInterface[]>([]);
   const [activeSprintProgressPercentage, setActiveSprintProgressPercentage] = useState<number>(0);
@@ -46,26 +46,28 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
 
     const getActiveSprintProgressPercentage = async (sprints: SprintInterface[]) => {
       try {
-        const [activeSprint] = sprints.filter((sprint) => (sprint.hasEnded = false));
+        const activeSprint = sprints.find((sprint) => sprint.hasEnded === false);
         if (!activeSprint) {
           setActiveSprintProgressPercentage(0);
           return;
         }
         let completedStoryCount = 0;
-        const stories = await fetchStoriesByIds(activeSprint.incompleteStoryIds);
-        stories.forEach((story) => {
-          if (story.status === "completed") {
+        const stories = await fetchStoriesByIds(backlogIds);
+        const ticketsInSprint = stories.filter((story) => story.isInSprint === true);
+        ticketsInSprint.forEach((ticket) => {
+          const { status } = ticket;
+          if (status === "completed") {
             completedStoryCount += 1;
           }
         });
-        const result = Number(Math.floor((completedStoryCount / stories.length) * 100).toFixed());
+        const result = Number(Math.floor((completedStoryCount / ticketsInSprint.length) * 100).toFixed());
         setActiveSprintProgressPercentage(result);
       } catch (error) {}
     };
 
     getSprintsAndProgress();
     getUsers();
-  }, [sprintIds, adminIds, memberIds]);
+  }, [backlogIds, sprintIds, adminIds, memberIds]);
 
   const renderSprintStatusSpan = (sprints: SprintInterface[]): JSX.Element => {
     let span = (

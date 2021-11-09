@@ -3,9 +3,9 @@ const Sprint = require("../models/sprint");
 const Story = require("../models/story");
 
 module.exports.startSprint = async (req, res) => {
-  const { projectId } = req.body;
+  const { projectId, endDateISOString } = req.body;
 
-  if (!projectId) {
+  if (!projectId || !endDateISOString) {
     res.status(400).send();
     return;
   }
@@ -13,7 +13,7 @@ module.exports.startSprint = async (req, res) => {
   try {
     const project = await Project.findById(projectId);
     const sprintNumber = project.sprintIds.length + 1;
-    const newSprint = new Sprint({ number: sprintNumber });
+    const newSprint = new Sprint({ number: sprintNumber, endDate: endDateISOString });
     await newSprint.save();
     project.sprintIds.push(newSprint._id);
     await project.save();

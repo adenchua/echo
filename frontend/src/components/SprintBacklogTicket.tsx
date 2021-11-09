@@ -9,12 +9,11 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { format } from "date-fns";
 
-import StoryInterface, { StatusType, TicketUpdateFieldsType } from "../types/StoryInterface";
+import StoryInterface, { TicketUpdateFieldsType } from "../types/StoryInterface";
 import PriorityIcon from "./PriorityIcon";
 import TicketTypeIcon from "./TicketTypeIcon";
 import UpdateTicketButtonWithDialog from "./UpdateTicketButtonWithDialog";
-
-type MuiChipSizeType = "small" | "medium" | undefined;
+import StatusChipButton from "./StatusChipButton";
 
 interface SprintBacklogTicketProps {
   ticket: StoryInterface;
@@ -25,37 +24,6 @@ const SprintBacklogTicket = (props: SprintBacklogTicketProps): JSX.Element => {
   const { ticket, onUpdateTicket } = props;
   const { title, priority, type, status, dueDate, assigneeId } = ticket;
   const formattedDueDate = dueDate ? format(new Date(dueDate), "LLL dd") : "";
-
-  const renderStatusChip = (status: StatusType, size: MuiChipSizeType = "medium"): JSX.Element => {
-    const CHIP_MIN_WIDTH = "92px";
-
-    switch (status) {
-      case "todo":
-        return <Chip label='To Do' sx={{ minWidth: CHIP_MIN_WIDTH }} size={size} />;
-      case "progress":
-        return (
-          <Chip
-            label='In Progress'
-            sx={{ minWidth: CHIP_MIN_WIDTH, bgcolor: "warning.light", color: "#FFF" }}
-            size={size}
-          />
-        );
-      case "review":
-        return <Chip label='Review' sx={{ minWidth: CHIP_MIN_WIDTH, bgcolor: "#ba68c8", color: "#FFF" }} size={size} />;
-      case "stuck":
-        return (
-          <Chip label='Stuck' sx={{ minWidth: CHIP_MIN_WIDTH, bgcolor: "error.light", color: "#FFF" }} size={size} />
-        );
-      case "hold":
-        return <Chip label='Hold' sx={{ minWidth: CHIP_MIN_WIDTH, bgcolor: "grey.600", color: "#FFF" }} size={size} />;
-      case "completed":
-        return (
-          <Chip label='Done' sx={{ minWidth: CHIP_MIN_WIDTH, bgcolor: "success.light", color: "#FFF" }} size={size} />
-        );
-      default:
-        return <Chip label='Unknown' sx={{ minWidth: CHIP_MIN_WIDTH }} size={size} />;
-    }
-  };
 
   const renderMobileTicket = (): JSX.Element => {
     return (
@@ -73,7 +41,7 @@ const SprintBacklogTicket = (props: SprintBacklogTicketProps): JSX.Element => {
         <Box display='flex' alignItems='center' justifyContent='space-between'>
           <Avatar style={{ height: 32, width: 32, display: assigneeId ? "" : "none" }}>?</Avatar>
           <Box flexGrow={1} />
-          {renderStatusChip(status, "small")}
+          <StatusChipButton status={status} size='small' />
         </Box>
       </Paper>
     );
@@ -108,7 +76,7 @@ const SprintBacklogTicket = (props: SprintBacklogTicketProps): JSX.Element => {
         <Box flexGrow={1} />
         <Avatar style={{ height: 32, width: 32, display: assigneeId ? "" : "none" }}>?</Avatar>
         <Chip label={formattedDueDate} sx={{ display: dueDate ? "" : "none" }} size='small' />
-        {renderStatusChip(status)}
+        <StatusChipButton status={status} size='medium' />
         <UpdateTicketButtonWithDialog ticket={ticket} onUpdateTicket={onUpdateTicket} showStatusButtons />
       </Paper>
     );

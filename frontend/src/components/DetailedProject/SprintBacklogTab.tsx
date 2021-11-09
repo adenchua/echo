@@ -3,10 +3,11 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import SprintEndIcon from "@mui/icons-material/RunningWithErrors";
-import SprintIcon from "@mui/icons-material/Timelapse";
 import TextField from "@mui/material/TextField";
+import { format, differenceInBusinessDays } from "date-fns";
 
 import ProjectInterface from "../../types/ProjectInterface";
+import StartSprintButtonWithDialog from "../StartSprintButtonWithDialog";
 import SprintBacklogTicket from "../SprintBacklogTicket";
 import useSprintBacklog from "../../hooks/useSprintBacklog";
 
@@ -16,38 +17,31 @@ interface SprintBacklogTabProps {
 
 const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   const { project } = props;
-  const { backlogIds, sprintIds } = project;
-  const { tickets, isLoading, sprint, onUpdateTicket } = useSprintBacklog(backlogIds, sprintIds);
+  const { backlogIds, sprintIds, _id: projectId } = project;
+  const { tickets, isLoading, sprint, onUpdateTicket, onStartSprint } = useSprintBacklog(backlogIds, sprintIds);
   const [searchInput, setSearchInput] = useState<string>("");
 
-  const renderStartSprintButton = (): JSX.Element => (
-    <Button variant='contained' startIcon={<SprintIcon />} sx={{ whiteSpace: "nowrap" }}>
-      Start Sprint
-    </Button>
-  );
-
   const renderEndSprintButton = (): JSX.Element => (
-    <Button
-      variant='outlined'
-      startIcon={<SprintEndIcon />}
-      color='error'
-      sx={{ minWidth: "132px", whiteSpace: "nowrap" }}
-    >
+    <Button variant='outlined' startIcon={<SprintEndIcon />} sx={{ minWidth: "132px", whiteSpace: "nowrap" }}>
       End Sprint
     </Button>
   );
 
   const renderSprintDetails = (): JSX.Element => {
     if (!sprint) {
-      return <div />;
+      return <Typography variant='h5'>Sprint Backlog</Typography>;
     }
 
     const { number, startDate, endDate } = sprint;
+    const formattedStartDate = startDate ? format(new Date(startDate), "LLL dd") : "Invalid Date";
+    const formattedEndDate = endDate ? format(new Date(endDate), "LLL dd") : "Invalid Date";
+    const dayDifference = differenceInBusinessDays(new Date(endDate), new Date(startDate));
+
     return (
       <div>
         <Typography variant='h5'>Sprint {number}</Typography>
-        <Typography variant='caption' color='grey.600' paragraph>
-          {startDate} - {endDate} <span>&#183;</span> 14 days remaining
+        <Typography variant='caption' color={dayDifference > 0 ? "grey.600" : "error"} paragraph>
+          {formattedStartDate} - {formattedEndDate} <span>&#8729;</span> {dayDifference} business days remaining
         </Typography>
       </div>
     );
@@ -61,7 +55,13 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
     <div>
       <Box display='flex' alignItems='flex-start' justifyContent='space-between' mb={3}>
         {renderSprintDetails()}
-        {(!sprint || sprint.hasEnded) && renderStartSprintButton()}
+        {(!sprint || sprint.hasEnded) && (
+          <StartSprintButtonWithDialog
+            onStartSprint={onStartSprint}
+            projectId={projectId}
+            sprintTicketsCount={tickets?.length}
+          />
+        )}
         {sprint && !sprint.hasEnded && renderEndSprintButton()}
       </Box>
       <Box display='flex' alignItems='center' gap={2} mb={3}>
@@ -72,6 +72,11 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
           onChange={(e) => setSearchInput(e.target.value)}
         />
       </Box>
+      {tickets && tickets.length === 0 && (
+        <Typography variant='body2' color='GrayText'>
+          There are no tickets in the backlog.
+        </Typography>
+      )}
       {tickets?.map((ticket) => {
         const { _id: id, title } = ticket;
         if (title.toLowerCase().includes(searchInput.toLowerCase())) {
