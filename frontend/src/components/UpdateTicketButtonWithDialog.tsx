@@ -51,6 +51,9 @@ const UpdateTicketButtonWithDialog = (props: UpdateTicketButtonWithDialogProps):
 
   const handleCloseDialog = (): void => {
     setIsDialogOpen(false);
+  };
+
+  const clearFields = (): void => {
     setTitleInput(title);
     setDescriptionInput(description);
     setTicketType(type);
@@ -139,7 +142,7 @@ const UpdateTicketButtonWithDialog = (props: UpdateTicketButtonWithDialogProps):
           {showStatusButtons && (
             <>
               <Typography sx={{ mb: 1, fontSize: 12 }} color='grey.600'>
-                Type
+                Status
               </Typography>
               <Box mb={2}>
                 <FormTicketStatusToggleButton value={statusInput} onChangeHandler={handleChangeStatus} />
@@ -164,7 +167,13 @@ const UpdateTicketButtonWithDialog = (props: UpdateTicketButtonWithDialogProps):
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button sx={{ color: "grey.500" }} onClick={handleCloseDialog}>
+          <Button
+            sx={{ color: "grey.500" }}
+            onClick={() => {
+              clearFields();
+              handleCloseDialog();
+            }}
+          >
             Cancel
           </Button>
           <Button onClick={handleUpdateTicket} disabled={titleInput.length === 0}>

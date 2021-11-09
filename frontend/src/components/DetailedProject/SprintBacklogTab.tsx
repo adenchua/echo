@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import SprintEndIcon from "@mui/icons-material/RunningWithErrors";
 import TextField from "@mui/material/TextField";
 import { format, differenceInBusinessDays } from "date-fns";
 
@@ -10,6 +8,7 @@ import ProjectInterface from "../../types/ProjectInterface";
 import StartSprintButtonWithDialog from "../StartSprintButtonWithDialog";
 import SprintBacklogTicket from "../SprintBacklogTicket";
 import useSprintBacklog from "../../hooks/useSprintBacklog";
+import EndSprintButtonWithDialog from "../EndSprintButtonWithDialog";
 
 interface SprintBacklogTabProps {
   project: ProjectInterface;
@@ -18,21 +17,18 @@ interface SprintBacklogTabProps {
 const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   const { project } = props;
   const { backlogIds, sprintIds, _id: projectId } = project;
-  const { tickets, isLoading, sprint, onUpdateTicket, onStartSprint } = useSprintBacklog(backlogIds, sprintIds);
+  const { tickets, isLoading, activeSprint, onUpdateTicket, onStartSprint, onEndSprint } = useSprintBacklog(
+    backlogIds,
+    sprintIds
+  );
   const [searchInput, setSearchInput] = useState<string>("");
 
-  const renderEndSprintButton = (): JSX.Element => (
-    <Button variant='outlined' startIcon={<SprintEndIcon />} sx={{ minWidth: "132px", whiteSpace: "nowrap" }}>
-      End Sprint
-    </Button>
-  );
-
   const renderSprintDetails = (): JSX.Element => {
-    if (!sprint) {
+    if (!activeSprint) {
       return <Typography variant='h5'>Sprint Backlog</Typography>;
     }
 
-    const { number, startDate, endDate } = sprint;
+    const { number, startDate, endDate } = activeSprint;
     const formattedStartDate = startDate ? format(new Date(startDate), "LLL dd") : "Invalid Date";
     const formattedEndDate = endDate ? format(new Date(endDate), "LLL dd") : "Invalid Date";
     const dayDifference = differenceInBusinessDays(new Date(endDate), new Date(startDate));
@@ -53,16 +49,23 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
 
   return (
     <div>
-      <Box display='flex' alignItems='flex-start' justifyContent='space-between' mb={3}>
+      <Box display='flex' alignItems='flex-start' justifyContent='space-between' mb={1}>
         {renderSprintDetails()}
-        {(!sprint || sprint.hasEnded) && (
+        {(!activeSprint || activeSprint.hasEnded) && (
           <StartSprintButtonWithDialog
             onStartSprint={onStartSprint}
             projectId={projectId}
             sprintTicketsCount={tickets?.length}
           />
         )}
-        {sprint && !sprint.hasEnded && renderEndSprintButton()}
+        {activeSprint && !activeSprint.hasEnded && (
+          <EndSprintButtonWithDialog
+            projectId={projectId}
+            sprintTickets={tickets}
+            sprintId={activeSprint._id}
+            onEndSprint={onEndSprint}
+          />
+        )}
       </Box>
       <Box display='flex' alignItems='center' gap={2} mb={3}>
         <TextField

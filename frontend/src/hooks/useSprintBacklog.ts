@@ -7,10 +7,11 @@ import StoryInterface, { TicketUpdateFieldsType } from "../types/StoryInterface"
 import SprintInterface from "../types/SprintInterface";
 import fetchSprintsByIds from "../api/sprints/fetchSprintsByIds";
 import startSprint from "../api/sprints/startSprint";
+import endSprint from "../api/sprints/endSprint";
 
 const useSprintBacklog = (storyIds: string[] = [], sprintIds: string[] = []) => {
   const [tickets, setTickets] = useState<StoryInterface[]>([]);
-  const [sprint, setSprint] = useState<SprintInterface | null>(null);
+  const [activeSprint, setActiveSprint] = useState<SprintInterface | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -29,13 +30,15 @@ const useSprintBacklog = (storyIds: string[] = [], sprintIds: string[] = []) => 
       }
     };
 
-    const getSprints = async (): Promise<void> => {
+    const getActiveSprint = async (): Promise<void> => {
       try {
         setIsLoading(true);
         const response = await fetchSprintsByIds(sprintIds);
-        const [currentSprint] = response.sort((a, b) => a.number - b.number);
+        const activeSprint = response.find((sprint) => sprint.hasEnded === false);
         if (isMounted) {
-          setSprint(currentSprint);
+          if (activeSprint) {
+            setActiveSprint(activeSprint);
+          }
           setIsLoading(false);
         }
       } catch (error) {
@@ -44,7 +47,7 @@ const useSprintBacklog = (storyIds: string[] = [], sprintIds: string[] = []) => 
     };
 
     getTickets();
-    getSprints();
+    getActiveSprint();
 
     return () => {
       isMounted = false;
@@ -73,13 +76,24 @@ const useSprintBacklog = (storyIds: string[] = [], sprintIds: string[] = []) => 
         throw new Error("No end date specified");
       }
       const newSprint = await startSprint(projectId, endDate.toISOString());
-      setSprint(newSprint);
+      setActiveSprint(newSprint);
     } catch (error) {
       throw new Error("Failed to start sprint");
     }
   };
 
-  return { tickets, isLoading, onUpdateTicket, sprint, onStartSprint };
+  const onEndSprint = async (projectId: string, sprintId: string): Promise<void> => {
+    try {
+      await endSprint(projectId, sprintId);
+      setActiveSprint(null);
+      const incompleteTickets = tickets.filter((ticket) => ticket.status !== "completed");
+      setTickets(incompleteTickets);
+    } catch (error) {
+      throw new Error("Failed to end sprint");
+    }
+  };
+
+  return { tickets, isLoading, onUpdateTicket, activeSprint, onStartSprint, onEndSprint };
 };
 
 export default useSprintBacklog;
