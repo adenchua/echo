@@ -4,10 +4,11 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SprintEndIcon from "@mui/icons-material/RunningWithErrors";
+import SprintStartIcon from "@mui/icons-material/Timelapse";
 import { format, differenceInBusinessDays } from "date-fns";
 
 import ProjectInterface from "../../types/ProjectInterface";
-import StartSprintButtonWithDialog from "../StartSprintButtonWithDialog";
+import SprintStartDialog from "../SprintStartDialog";
 import SprintBacklogTicket from "../SprintBacklogTicket";
 import useSprintBacklog from "../../hooks/useSprintBacklog";
 import SprintEndDialog from "../SprintEndDialog";
@@ -25,6 +26,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   );
   const [searchInput, setSearchInput] = useState<string>("");
   const [showEndSprintDialog, setShowEndSprintDialog] = useState<boolean>(false);
+  const [showStartSprintDialog, setShowStartSprintDialog] = useState<boolean>(false);
 
   const renderSprintDetails = (): JSX.Element => {
     if (!activeSprint) {
@@ -55,11 +57,14 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
       <Box display='flex' alignItems='flex-start' justifyContent='space-between' mb={1}>
         {renderSprintDetails()}
         {(!activeSprint || activeSprint.hasEnded) && (
-          <StartSprintButtonWithDialog
-            onStartSprint={onStartSprint}
-            projectId={projectId}
-            sprintTicketsCount={tickets?.length}
-          />
+          <Button
+            variant='contained'
+            startIcon={<SprintStartIcon />}
+            sx={{ whiteSpace: "nowrap" }}
+            onClick={() => setShowStartSprintDialog(true)}
+          >
+            Start Sprint
+          </Button>
         )}
         {activeSprint && !activeSprint.hasEnded && (
           <Button
@@ -99,6 +104,13 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
         sprintTickets={tickets}
         sprintId={activeSprint?._id}
         onEndSprint={onEndSprint}
+      />
+      <SprintStartDialog
+        showStartSprintDialog={showStartSprintDialog}
+        onClose={() => setShowStartSprintDialog(false)}
+        onStartSprint={onStartSprint}
+        projectId={projectId}
+        sprintTicketsCount={tickets?.length}
       />
     </div>
   );

@@ -88,8 +88,8 @@ const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
         </DialogTitle>
         <DialogContent dividers>
           <DialogContentText sx={{ fontSize: 14 }}>
-            Congratulations on ending the sprint {completedSprint?.number}! Here's a quick breakdown on the sprint:{" "}
-            <br /> <br />
+            Congratulations on ending sprint {completedSprint?.number}! Here's a quick breakdown on the sprint: <br />{" "}
+            <br />
             Completed Tickets:{" "}
             <b>
               {numberOfCompletedTickets} ({completionRate.toFixed(1)}%)

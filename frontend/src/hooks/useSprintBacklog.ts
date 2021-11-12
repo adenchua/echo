@@ -70,13 +70,14 @@ const useSprintBacklog = (storyIds: string[] = [], sprintIds: string[] = []) => 
     }
   };
 
-  const onStartSprint = async (projectId: string, endDate: Date | null): Promise<void> => {
+  const onStartSprint = async (projectId: string, endDate: Date | null): Promise<SprintInterface> => {
     try {
       if (!endDate) {
         throw new Error("No end date specified");
       }
       const newSprint = await startSprint(projectId, endDate.toISOString());
       setActiveSprint(newSprint);
+      return newSprint;
     } catch (error) {
       throw new Error("Failed to start sprint");
     }
