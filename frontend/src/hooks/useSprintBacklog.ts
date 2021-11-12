@@ -82,12 +82,13 @@ const useSprintBacklog = (storyIds: string[] = [], sprintIds: string[] = []) => 
     }
   };
 
-  const onEndSprint = async (projectId: string, sprintId: string): Promise<void> => {
+  const onEndSprint = async (projectId: string, sprintId: string): Promise<SprintInterface> => {
     try {
-      await endSprint(projectId, sprintId);
+      const completedSprint = await endSprint(projectId, sprintId);
       setActiveSprint(null);
       const incompleteTickets = tickets.filter((ticket) => ticket.status !== "completed");
       setTickets(incompleteTickets);
+      return completedSprint;
     } catch (error) {
       throw new Error("Failed to end sprint");
     }

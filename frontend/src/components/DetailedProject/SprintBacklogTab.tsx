@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import SprintEndIcon from "@mui/icons-material/RunningWithErrors";
 import { format, differenceInBusinessDays } from "date-fns";
 
 import ProjectInterface from "../../types/ProjectInterface";
 import StartSprintButtonWithDialog from "../StartSprintButtonWithDialog";
 import SprintBacklogTicket from "../SprintBacklogTicket";
 import useSprintBacklog from "../../hooks/useSprintBacklog";
-import EndSprintButtonWithDialog from "../EndSprintButtonWithDialog";
+import SprintEndDialog from "../SprintEndDialog";
 
 interface SprintBacklogTabProps {
   project: ProjectInterface;
@@ -22,6 +24,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
     sprintIds
   );
   const [searchInput, setSearchInput] = useState<string>("");
+  const [showEndSprintDialog, setShowEndSprintDialog] = useState<boolean>(false);
 
   const renderSprintDetails = (): JSX.Element => {
     if (!activeSprint) {
@@ -59,12 +62,14 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
           />
         )}
         {activeSprint && !activeSprint.hasEnded && (
-          <EndSprintButtonWithDialog
-            projectId={projectId}
-            sprintTickets={tickets}
-            sprintId={activeSprint._id}
-            onEndSprint={onEndSprint}
-          />
+          <Button
+            variant='contained'
+            startIcon={<SprintEndIcon />}
+            sx={{ minWidth: "132px", whiteSpace: "nowrap" }}
+            onClick={() => setShowEndSprintDialog(true)}
+          >
+            End Sprint
+          </Button>
         )}
       </Box>
       <Box display='flex' alignItems='center' gap={2} mb={3}>
@@ -87,6 +92,14 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
         }
         return null;
       })}
+      <SprintEndDialog
+        showEndSprintDialog={showEndSprintDialog}
+        onClose={() => setShowEndSprintDialog(false)}
+        projectId={projectId}
+        sprintTickets={tickets}
+        sprintId={activeSprint?._id}
+        onEndSprint={onEndSprint}
+      />
     </div>
   );
 };

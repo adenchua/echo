@@ -88,7 +88,15 @@ const UpdateTicketButtonWithDialog = (props: UpdateTicketButtonWithDialogProps):
       <IconButton size='small' onClick={() => setIsDialogOpen(true)}>
         <MoreIcon />
       </IconButton>
-      <Dialog open={isDialogOpen} onClose={handleCloseDialog} maxWidth='md' fullWidth>
+      <Dialog
+        open={isDialogOpen}
+        onClose={() => {
+          clearFields();
+          handleCloseDialog();
+        }}
+        maxWidth='md'
+        fullWidth
+      >
         <DialogTitle
           sx={{
             borderTop: "8px solid",

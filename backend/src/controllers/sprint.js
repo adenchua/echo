@@ -46,13 +46,14 @@ module.exports.endSprint = async (req, res) => {
     for (const storyId of project.backlogIds) {
       const story = await Story.findById(storyId);
       if (story.isInSprint && story.status === "completed") {
-        project.backlogIds.pull(story._id); // remove completed tickets from product backlog
         completedStoryIds.push(story._id);
       }
       if (story.isInSprint && story.status !== "completed") {
         incompleteStoryIds.push(story._id);
       }
     }
+
+    completedStoryIds.forEach((storyId) => project.backlogIds.pull(storyId)); // remove completed tickets from product backlog
 
     sprint.hasEnded = true;
     sprint.completedStoryIds = completedStoryIds;
