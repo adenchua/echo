@@ -11,7 +11,6 @@ import { format } from "date-fns";
 import StoryInterface, { TicketUpdateFieldsType } from "../types/StoryInterface";
 import PriorityIcon from "./PriorityIcon";
 import TicketTypeIcon from "./TicketTypeIcon";
-import UpdateTicketButtonWithDialog from "./UpdateTicketButtonWithDialog";
 
 interface ProductBacklogTicketProps {
   ticket: StoryInterface;
@@ -57,7 +56,6 @@ const ProductBacklogTicket = (props: ProductBacklogTicketProps): JSX.Element => 
         </Typography>
         <Box flexGrow={1} />
         <Chip label={formattedDueDate} size='small' sx={{ display: dueDate ? "" : "none" }} />
-        <UpdateTicketButtonWithDialog ticket={ticket} onUpdateTicket={onUpdateTicket} showStatusButtons={false} />
       </Paper>
     );
   };

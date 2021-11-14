@@ -8,20 +8,21 @@ import HighestPriorityIcon from "./HighestPriorityIcon";
 
 interface PriorityIconProps {
   priority: PriorityType;
+  fontSize?: "medium" | "small" | "inherit" | "large";
 }
 
 const PriorityIcon = (props: PriorityIconProps): JSX.Element => {
-  const { priority } = props;
+  const { priority, fontSize = "small" } = props;
 
   switch (priority) {
     case "low":
-      return <LowPriorityIcon fontSize='small' color='success' />;
+      return <LowPriorityIcon fontSize={fontSize} color='success' />;
     case "medium":
-      return <MediumPriorityIcon fontSize='small' color='warning' />;
+      return <MediumPriorityIcon fontSize={fontSize} color='warning' />;
     case "high":
-      return <HighPriorityIcon fontSize='small' color='error' />;
+      return <HighPriorityIcon fontSize={fontSize} color='error' />;
     case "highest":
-      return <HighestPriorityIcon color='error' />;
+      return <HighestPriorityIcon fontSize={fontSize} color='error' />;
     default:
       return <div />;
   }

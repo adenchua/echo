@@ -7,18 +7,19 @@ import { StoryType } from "../types/StoryInterface";
 
 interface TicketTypeIconProps {
   type: StoryType;
+  fontSize?: "small" | "inherit" | "large" | "medium";
 }
 
 const TicketTypeIcon = (props: TicketTypeIconProps): JSX.Element => {
-  const { type } = props;
+  const { type, fontSize = "small" } = props;
 
   switch (type) {
     case "bug":
-      return <BugIcon fontSize='small' color='error' />;
+      return <BugIcon fontSize={fontSize} color='error' />;
     case "story":
-      return <UserStoryIcon fontSize='small' color='info' />;
+      return <UserStoryIcon fontSize={fontSize} color='info' />;
     case "task":
-      return <TaskIcon fontSize='small' color='secondary' />;
+      return <TaskIcon fontSize={fontSize} color='secondary' />;
     default:
       return <div />;
   }
