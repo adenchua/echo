@@ -12,7 +12,6 @@ import { format } from "date-fns";
 import StoryInterface from "../types/StoryInterface";
 import PriorityIcon from "./PriorityIcon";
 import TicketTypeIcon from "./TicketTypeIcon";
-import UpdateTicketButtonWithDialog from "./UpdateTicketButtonWithDialog";
 import StatusChipButton from "./StatusChipButton";
 
 interface SprintBacklogTicketProps {
@@ -76,7 +75,6 @@ const SprintBacklogTicket = (props: SprintBacklogTicketProps): JSX.Element => {
         <Avatar style={{ height: 32, width: 32, display: assigneeId ? "" : "none" }}>?</Avatar>
         <Chip label={formattedDueDate} sx={{ display: dueDate ? "" : "none" }} size='small' />
         <StatusChipButton status={status} size='medium' />
-        <UpdateTicketButtonWithDialog ticket={ticket} showStatusButtons />
       </Paper>
     );
   };

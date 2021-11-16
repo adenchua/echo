@@ -13,6 +13,7 @@ import SprintBacklogTicket from "../SprintBacklogTicket";
 import useSprintBacklog from "../../hooks/useSprintBacklog";
 import SprintEndDialog from "../SprintEndDialog";
 import { TicketsContext } from "../TicketsContextProvider";
+import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
 
 interface SprintBacklogTabProps {
   project: ProjectInterface;
@@ -20,14 +21,28 @@ interface SprintBacklogTabProps {
 
 const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   const { project } = props;
-  const { backlogIds, sprintIds, _id: projectId } = project;
+  const { sprintIds, _id: projectId } = project;
   const { tickets } = useContext(TicketsContext);
-  const { activeSprint, onStartSprint, onEndSprint } = useSprintBacklog(backlogIds, sprintIds);
+  const { activeSprint, onStartSprint, onEndSprint } = useSprintBacklog(sprintIds);
   const [searchInput, setSearchInput] = useState<string>("");
   const [showEndSprintDialog, setShowEndSprintDialog] = useState<boolean>(false);
   const [showStartSprintDialog, setShowStartSprintDialog] = useState<boolean>(false);
+  const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
 
   const sprintTickets = tickets.filter((ticket) => ticket.isInSprint === true);
+
+  const handleSetSelectedTicket = (ticketId: string) => {
+    if (!selectedTicketId) {
+      setSelectedTicketId(ticketId);
+      return;
+    }
+    if (selectedTicketId === ticketId) {
+      setSelectedTicketId(null); //de select
+      return;
+    }
+
+    setSelectedTicketId(ticketId);
+  };
 
   const renderSprintDetails = (): JSX.Element => {
     if (!activeSprint) {
@@ -49,8 +64,24 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
     );
   };
 
+  const renderDrawer = () => {
+    if (!selectedTicketId) {
+      return null;
+    }
+
+    const ticket = tickets.find((ticket) => ticket._id === selectedTicketId);
+
+    if (!ticket) {
+      return null;
+    }
+
+    return (
+      <TicketDetailsRightDrawer ticket={ticket} onClose={() => setSelectedTicketId(null)} isOpen={!!selectedTicketId} />
+    );
+  };
+
   return (
-    <div>
+    <Box sx={{ marginRight: selectedTicketId ? "240px" : 0 }}>
       <Box display='flex' alignItems='flex-start' justifyContent='space-between' mb={1}>
         {renderSprintDetails()}
         {(!activeSprint || activeSprint.hasEnded) && (
@@ -90,7 +121,11 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
       {sprintTickets?.map((ticket) => {
         const { _id: id, title } = ticket;
         if (title.toLowerCase().includes(searchInput.toLowerCase())) {
-          return <SprintBacklogTicket key={id} ticket={ticket} />;
+          return (
+            <Box key={id} onClick={() => handleSetSelectedTicket(id)}>
+              <SprintBacklogTicket ticket={ticket} />
+            </Box>
+          );
         }
         return null;
       })}
@@ -109,7 +144,8 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
         projectId={projectId}
         sprintTicketsCount={tickets?.length}
       />
-    </div>
+      {renderDrawer()}
+    </Box>
   );
 };
 

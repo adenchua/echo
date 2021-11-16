@@ -6,7 +6,7 @@ import startSprint from "../api/sprints/startSprint";
 import endSprint from "../api/sprints/endSprint";
 import { TicketsContext } from "../components/TicketsContextProvider";
 
-const useSprintBacklog = (storyIds: string[] = [], sprintIds: string[] = []) => {
+const useSprintBacklog = (sprintIds: string[] = []) => {
   const [activeSprint, setActiveSprint] = useState<SprintInterface | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { removeCompletedTickets } = useContext(TicketsContext);
@@ -35,7 +35,7 @@ const useSprintBacklog = (storyIds: string[] = [], sprintIds: string[] = []) => 
     return () => {
       isMounted = false;
     };
-  }, [storyIds, sprintIds]);
+  }, [sprintIds]);
 
   const onStartSprint = async (projectId: string, endDate: Date | null): Promise<SprintInterface> => {
     try {

@@ -6,7 +6,6 @@ import Box from "@mui/material/Box";
 import ProjectInterface from "../../types/ProjectInterface";
 import ProductBacklogTicket from "../ProductBacklogTicket";
 import CreateTicketButtonWithDialog from "../CreateTicketButtonWithDialog";
-import StoryInterface from "../../types/StoryInterface";
 import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
 import { TicketsContext } from "../TicketsContextProvider";
 
@@ -19,7 +18,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
   const { _id: projectId } = project;
   const { tickets } = useContext(TicketsContext);
   const [searchInput, setSearchInput] = useState<string>("");
-  const [selectedTicket, setSelectedTicket] = useState<StoryInterface | null>(null);
+  const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
 
   const renderMobileHeaderButtons = (): JSX.Element => {
     return <CreateTicketButtonWithDialog projectId={projectId} variant='mobile' />;
@@ -29,22 +28,38 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
     return <CreateTicketButtonWithDialog projectId={projectId} variant='desktop' />;
   };
 
-  const handleSetSelectedTicket = (ticket: StoryInterface) => {
-    if (!selectedTicket) {
-      setSelectedTicket(ticket);
+  const handleSetSelectedTicket = (ticketId: string) => {
+    if (!selectedTicketId) {
+      setSelectedTicketId(ticketId);
       return;
     }
-    if (ticket._id === selectedTicket._id) {
-      setSelectedTicket(null); //de select
+    if (selectedTicketId === ticketId) {
+      setSelectedTicketId(null); //de select
       return;
     }
 
-    setSelectedTicket(ticket);
+    setSelectedTicketId(ticketId);
+  };
+
+  const renderDrawer = () => {
+    if (!selectedTicketId) {
+      return null;
+    }
+
+    const ticket = tickets.find((ticket) => ticket._id === selectedTicketId);
+
+    if (!ticket) {
+      return null;
+    }
+
+    return (
+      <TicketDetailsRightDrawer ticket={ticket} onClose={() => setSelectedTicketId(null)} isOpen={!!selectedTicketId} />
+    );
   };
 
   return (
     <>
-      <Box sx={{ marginRight: selectedTicket ? "240px" : 0 }}>
+      <Box sx={{ marginRight: selectedTicketId ? "240px" : 0 }}>
         <Typography variant='h5' paragraph>
           Product Backlog
         </Typography>
@@ -62,7 +77,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
         {tickets.map((ticket) => {
           if (ticket.title.toLowerCase().includes(searchInput.toLowerCase())) {
             return (
-              <Box key={ticket._id} onClick={() => handleSetSelectedTicket(ticket)}>
+              <Box key={ticket._id} onClick={() => handleSetSelectedTicket(ticket._id)}>
                 <ProductBacklogTicket ticket={ticket} />
               </Box>
             );
@@ -75,13 +90,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
           </Typography>
         )}
       </Box>
-      {selectedTicket && (
-        <TicketDetailsRightDrawer
-          ticket={selectedTicket}
-          onClose={() => setSelectedTicket(null)}
-          isOpen={!!selectedTicket}
-        />
-      )}
+      {renderDrawer()}
     </>
   );
 };

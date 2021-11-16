@@ -10,6 +10,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import DatePicker from "@mui/lab/DatePicker";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 import Chip from "@mui/material/Chip";
 import { format, isValid } from "date-fns";
 
@@ -20,6 +22,7 @@ import TicketTypeIcon from "./TicketTypeIcon";
 import FormPriorityToggleButtons from "./FormPriorityToggleButtons";
 import FormTicketTypeToggleButtons from "./FormTicketTypeToggleButtonts";
 import useProductBacklog from "../hooks/useProductBacklog";
+import StatusChipButton from "./StatusChipButton";
 
 interface TicketDetailsRightDrawerProps {
   ticket: StoryInterface;
@@ -42,6 +45,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
   const [isPriorityEditModeOn, setIsPriorityEditModeOn] = useState<boolean>(false);
   const [isTypeEditModeOn, setIsTypeEditModeOn] = useState<boolean>(false);
   const [isDueDateEditModeOn, setDueDateEditModeOn] = useState<boolean>(false);
+  const [isStatusEditModeOn, setIsStatusEditModeOn] = useState<boolean>(false);
 
   const closeAllEditModes = (): void => {
     setIsTitleEditModeOn(false);
@@ -49,6 +53,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
     setIsPriorityEditModeOn(false);
     setIsTypeEditModeOn(false);
     setDueDateEditModeOn(false);
+    setIsStatusEditModeOn(false);
   };
 
   useEffect(() => {
@@ -110,6 +115,10 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
 
   const handleDueDateEditMode = (): void => {
     setDueDateEditModeOn(!isDueDateEditModeOn);
+  };
+
+  const handleStatusEditMode = (): void => {
+    setIsStatusEditModeOn(!isStatusEditModeOn);
   };
 
   const renderEditButton = (onStartEdit: any): JSX.Element => (
@@ -316,6 +325,57 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
     </ListItem>
   );
 
+  const renderStatusListItem = (): JSX.Element => (
+    <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+      <Box display='flex' justifyContent='space-between' width='100%' mb={1}>
+        <Typography variant='body2'>Status</Typography>
+        {renderEditButton(handleStatusEditMode)}
+      </Box>
+      <Box mb={2}>
+        <StatusChipButton status={status} size='small' />
+      </Box>
+      <Divider flexItem />
+    </ListItem>
+  );
+
+  const renderStatusListItemEdit = (): JSX.Element => (
+    <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+      <Box display='flex' width='100%' mb={1.5} gap={2}>
+        <Typography variant='body2'>Status</Typography>
+        <Box flexGrow={1} />
+        {renderUpdateButtons(handleUpdateTicket, handleStatusEditMode)}
+      </Box>
+      <Box mb={2} width='100%'>
+        <Select
+          size='small'
+          value={statusInput}
+          onChange={(e: SelectChangeEvent) => setStatusInput(e.target.value as StatusType)}
+          fullWidth
+        >
+          <MenuItem value='todo' dense sx={{ display: "flex", justifyContent: "center" }}>
+            <StatusChipButton status='todo' size='small' />
+          </MenuItem>
+          <MenuItem value='progress' dense sx={{ display: "flex", justifyContent: "center" }}>
+            <StatusChipButton status='progress' size='small' />
+          </MenuItem>
+          <MenuItem value='review' dense sx={{ display: "flex", justifyContent: "center" }}>
+            <StatusChipButton status='review' size='small' />
+          </MenuItem>
+          <MenuItem value='completed' dense sx={{ display: "flex", justifyContent: "center" }}>
+            <StatusChipButton status='completed' size='small' />
+          </MenuItem>
+          <MenuItem value='stuck' dense sx={{ display: "flex", justifyContent: "center" }}>
+            <StatusChipButton status='stuck' size='small' />
+          </MenuItem>
+          <MenuItem value='hold' dense sx={{ display: "flex", justifyContent: "center" }}>
+            <StatusChipButton status='hold' size='small' />
+          </MenuItem>
+        </Select>
+      </Box>
+      <Divider flexItem />
+    </ListItem>
+  );
+
   return (
     <Drawer
       anchor='right'
@@ -341,6 +401,9 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
 
         {!isTypeEditModeOn && renderTicketTypeListItem()}
         {isTypeEditModeOn && renderTicketTypeListItemEdit()}
+
+        {!isStatusEditModeOn && renderStatusListItem()}
+        {isStatusEditModeOn && renderStatusListItemEdit()}
 
         {!isDueDateEditModeOn && renderDueDateListItem()}
         {isDueDateEditModeOn && renderDueDateListItemEdit()}

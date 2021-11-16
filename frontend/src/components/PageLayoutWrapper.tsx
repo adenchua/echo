@@ -103,7 +103,7 @@ const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
       </Box>
       <Box
         component='main'
-        sx={{ flexGrow: 1, p: disablePadding ? 0 : 3, width: { md: `calc(100% - ${DRAWER_WIDTH}px)` } }}
+        sx={{ flexGrow: 1, p: disablePadding ? 0 : 3, width: { md: `calc(100% - ${DRAWER_WIDTH}px)` }, mb: 10 }}
       >
         <Toolbar />
         {children}
