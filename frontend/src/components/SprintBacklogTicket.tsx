@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { format } from "date-fns";
 
-import StoryInterface, { TicketUpdateFieldsType } from "../types/StoryInterface";
+import StoryInterface from "../types/StoryInterface";
 import PriorityIcon from "./PriorityIcon";
 import TicketTypeIcon from "./TicketTypeIcon";
 import UpdateTicketButtonWithDialog from "./UpdateTicketButtonWithDialog";
@@ -17,11 +17,10 @@ import StatusChipButton from "./StatusChipButton";
 
 interface SprintBacklogTicketProps {
   ticket: StoryInterface;
-  onUpdateTicket: (ticketId: string, updatedFields: TicketUpdateFieldsType) => Promise<void>;
 }
 
 const SprintBacklogTicket = (props: SprintBacklogTicketProps): JSX.Element => {
-  const { ticket, onUpdateTicket } = props;
+  const { ticket } = props;
   const { title, priority, type, status, dueDate, assigneeId } = ticket;
   const formattedDueDate = dueDate ? format(new Date(dueDate), "LLL dd") : "";
 
@@ -77,7 +76,7 @@ const SprintBacklogTicket = (props: SprintBacklogTicketProps): JSX.Element => {
         <Avatar style={{ height: 32, width: 32, display: assigneeId ? "" : "none" }}>?</Avatar>
         <Chip label={formattedDueDate} sx={{ display: dueDate ? "" : "none" }} size='small' />
         <StatusChipButton status={status} size='medium' />
-        <UpdateTicketButtonWithDialog ticket={ticket} onUpdateTicket={onUpdateTicket} showStatusButtons />
+        <UpdateTicketButtonWithDialog ticket={ticket} showStatusButtons />
       </Paper>
     );
   };

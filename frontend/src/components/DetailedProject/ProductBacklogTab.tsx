@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 
 import ProjectInterface from "../../types/ProjectInterface";
 import ProductBacklogTicket from "../ProductBacklogTicket";
-import useProductBacklog from "../../hooks/useProductBacklog";
 import CreateTicketButtonWithDialog from "../CreateTicketButtonWithDialog";
 import StoryInterface from "../../types/StoryInterface";
 import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
+import { TicketsContext } from "../TicketsContextProvider";
 
 interface ProductBacklogTabProps {
   project: ProjectInterface;
@@ -16,17 +16,17 @@ interface ProductBacklogTabProps {
 
 const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
   const { project } = props;
-  const { backlogIds, _id: projectId } = project;
-  const { tickets, isLoading, onAddTicket, onUpdateTicket } = useProductBacklog(backlogIds);
+  const { _id: projectId } = project;
+  const { tickets } = useContext(TicketsContext);
   const [searchInput, setSearchInput] = useState<string>("");
   const [selectedTicket, setSelectedTicket] = useState<StoryInterface | null>(null);
 
   const renderMobileHeaderButtons = (): JSX.Element => {
-    return <CreateTicketButtonWithDialog projectId={projectId} variant='mobile' onAddTicket={onAddTicket} />;
+    return <CreateTicketButtonWithDialog projectId={projectId} variant='mobile' />;
   };
 
   const renderDesktopHeaderButtons = (): JSX.Element => {
-    return <CreateTicketButtonWithDialog projectId={projectId} variant='desktop' onAddTicket={onAddTicket} />;
+    return <CreateTicketButtonWithDialog projectId={projectId} variant='desktop' />;
   };
 
   const handleSetSelectedTicket = (ticket: StoryInterface) => {
@@ -41,10 +41,6 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
 
     setSelectedTicket(ticket);
   };
-
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
 
   return (
     <>
@@ -67,7 +63,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
           if (ticket.title.toLowerCase().includes(searchInput.toLowerCase())) {
             return (
               <Box key={ticket._id} onClick={() => handleSetSelectedTicket(ticket)}>
-                <ProductBacklogTicket ticket={ticket} onUpdateTicket={onUpdateTicket} />
+                <ProductBacklogTicket ticket={ticket} />
               </Box>
             );
           }
@@ -83,7 +79,6 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
         <TicketDetailsRightDrawer
           ticket={selectedTicket}
           onClose={() => setSelectedTicket(null)}
-          onUpdateTicket={onUpdateTicket}
           isOpen={!!selectedTicket}
         />
       )}

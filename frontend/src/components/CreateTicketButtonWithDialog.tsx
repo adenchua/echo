@@ -16,17 +16,18 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { PriorityType, StoryType } from "../types/StoryInterface";
 import FormPriorityToggleButtons from "./FormPriorityToggleButtons";
 import FormTicketTypeToggleButtons from "./FormTicketTypeToggleButtonts";
+import useProductBacklog from "../hooks/useProductBacklog";
 
 type ScreenType = "desktop" | "mobile";
 
 interface CreateTicketButtonWithDialogProps {
-  onAddTicket: (title: string, projectId: string, priority: PriorityType, type: StoryType) => Promise<void>;
   projectId: string;
   variant: ScreenType;
 }
 
 const CreateTicketButtonWithDialog = (props: CreateTicketButtonWithDialogProps): JSX.Element => {
-  const { onAddTicket, projectId, variant } = props;
+  const { onAddTicket } = useProductBacklog();
+  const { projectId, variant } = props;
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [titleInput, setTitleInput] = useState<string>("");
   const [ticketType, setTicketType] = useState<StoryType>("task");

@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import DetailedProjectPage from "./pages/DetailedProjectPage";
+import DetailedProjectPageWrapper from "./pages/DetailedProjectPageWrapper";
 
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
@@ -22,7 +22,7 @@ function App() {
           <ProjectListingPage />
         </Route>
         <Route path='/projects/id/:id'>
-          <DetailedProjectPage />
+          <DetailedProjectPageWrapper />
         </Route>
         <Route path='/user-profile'>
           <UserProfilePage />

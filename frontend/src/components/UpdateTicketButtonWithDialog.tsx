@@ -14,20 +14,21 @@ import TicketIcon from "@mui/icons-material/TaskAlt";
 import Avatar from "@mui/material/Avatar";
 import { isValid } from "date-fns";
 
-import StoryInterface, { PriorityType, StatusType, StoryType, TicketUpdateFieldsType } from "../types/StoryInterface";
+import StoryInterface, { PriorityType, StatusType, StoryType } from "../types/StoryInterface";
 import FormPriorityToggleButtons from "./FormPriorityToggleButtons";
 import FormTicketTypeToggleButtons from "./FormTicketTypeToggleButtonts";
 import FormTicketStatusToggleButton from "./FormTicketStatusToggleButtons";
+import useProductBacklog from "../hooks/useProductBacklog";
 
 interface UpdateTicketButtonWithDialogProps {
   ticket: StoryInterface;
   showStatusButtons: boolean;
-  onUpdateTicket: (ticketId: string, updatedFields: TicketUpdateFieldsType) => Promise<void>;
 }
 
 const UpdateTicketButtonWithDialog = (props: UpdateTicketButtonWithDialogProps): JSX.Element => {
-  const { ticket, onUpdateTicket, showStatusButtons } = props;
+  const { ticket, showStatusButtons } = props;
   const { title, description, type, priority, _id: id, dueDate, status } = ticket;
+  const { onUpdateTicket } = useProductBacklog();
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [titleInput, setTitleInput] = useState<string>(title);
   const [descriptionInput, setDescriptionInput] = useState<string>(description ?? "");

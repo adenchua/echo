@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -12,6 +12,7 @@ import SprintStartDialog from "../SprintStartDialog";
 import SprintBacklogTicket from "../SprintBacklogTicket";
 import useSprintBacklog from "../../hooks/useSprintBacklog";
 import SprintEndDialog from "../SprintEndDialog";
+import { TicketsContext } from "../TicketsContextProvider";
 
 interface SprintBacklogTabProps {
   project: ProjectInterface;
@@ -20,13 +21,13 @@ interface SprintBacklogTabProps {
 const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   const { project } = props;
   const { backlogIds, sprintIds, _id: projectId } = project;
-  const { tickets, isLoading, activeSprint, onUpdateTicket, onStartSprint, onEndSprint } = useSprintBacklog(
-    backlogIds,
-    sprintIds
-  );
+  const { tickets } = useContext(TicketsContext);
+  const { activeSprint, onStartSprint, onEndSprint } = useSprintBacklog(backlogIds, sprintIds);
   const [searchInput, setSearchInput] = useState<string>("");
   const [showEndSprintDialog, setShowEndSprintDialog] = useState<boolean>(false);
   const [showStartSprintDialog, setShowStartSprintDialog] = useState<boolean>(false);
+
+  const sprintTickets = tickets.filter((ticket) => ticket.isInSprint === true);
 
   const renderSprintDetails = (): JSX.Element => {
     if (!activeSprint) {
@@ -47,10 +48,6 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
       </div>
     );
   };
-
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
 
   return (
     <div>
@@ -85,15 +82,15 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
           onChange={(e) => setSearchInput(e.target.value)}
         />
       </Box>
-      {tickets && tickets.length === 0 && (
+      {sprintTickets && sprintTickets.length === 0 && (
         <Typography variant='body2' color='GrayText'>
           There are no tickets in the backlog.
         </Typography>
       )}
-      {tickets?.map((ticket) => {
+      {sprintTickets?.map((ticket) => {
         const { _id: id, title } = ticket;
         if (title.toLowerCase().includes(searchInput.toLowerCase())) {
-          return <SprintBacklogTicket key={id} ticket={ticket} onUpdateTicket={onUpdateTicket} />;
+          return <SprintBacklogTicket key={id} ticket={ticket} />;
         }
         return null;
       })}

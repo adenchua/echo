@@ -8,17 +8,18 @@ import Checkbox from "@mui/material/Checkbox";
 import Chip from "@mui/material/Chip";
 import { format } from "date-fns";
 
-import StoryInterface, { TicketUpdateFieldsType } from "../types/StoryInterface";
+import StoryInterface from "../types/StoryInterface";
 import PriorityIcon from "./PriorityIcon";
 import TicketTypeIcon from "./TicketTypeIcon";
+import useProductBacklog from "../hooks/useProductBacklog";
 
 interface ProductBacklogTicketProps {
   ticket: StoryInterface;
-  onUpdateTicket: (ticketId: string, updatedFields: TicketUpdateFieldsType) => Promise<void>;
 }
 
 const ProductBacklogTicket = (props: ProductBacklogTicketProps): JSX.Element => {
-  const { ticket, onUpdateTicket } = props;
+  const { ticket } = props;
+  const { onUpdateTicket } = useProductBacklog();
   const { priority, title, type, isInSprint, _id: id, dueDate } = ticket;
   const formattedDueDate = dueDate ? format(new Date(dueDate), "LLL dd") : "";
 

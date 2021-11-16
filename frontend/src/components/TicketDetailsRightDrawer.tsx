@@ -13,22 +13,23 @@ import DatePicker from "@mui/lab/DatePicker";
 import Chip from "@mui/material/Chip";
 import { format, isValid } from "date-fns";
 
-import StoryInterface, { PriorityType, StatusType, StoryType, TicketUpdateFieldsType } from "../types/StoryInterface";
+import StoryInterface, { PriorityType, StatusType, StoryType } from "../types/StoryInterface";
 import { capitalizeFirstLetter } from "../utils/capitalizeFirstLetter";
 import PriorityIcon from "./PriorityIcon";
 import TicketTypeIcon from "./TicketTypeIcon";
 import FormPriorityToggleButtons from "./FormPriorityToggleButtons";
 import FormTicketTypeToggleButtons from "./FormTicketTypeToggleButtonts";
+import useProductBacklog from "../hooks/useProductBacklog";
 
 interface TicketDetailsRightDrawerProps {
   ticket: StoryInterface;
   isOpen: boolean;
   onClose: () => void;
-  onUpdateTicket: (ticketId: string, updatedFields: TicketUpdateFieldsType) => Promise<void>;
 }
 
 const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Element => {
-  const { ticket, onClose, onUpdateTicket, isOpen } = props;
+  const { ticket, onClose, isOpen } = props;
+  const { onUpdateTicket } = useProductBacklog();
   const { _id: id, title, description, priority, type, dueDate, status } = ticket;
   const [titleInput, setTitleInput] = useState<string>(title);
   const [descriptionInput, setDescriptionInput] = useState<string>(description ?? "");
