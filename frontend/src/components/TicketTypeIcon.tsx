@@ -2,6 +2,7 @@ import React from "react";
 import BugIcon from "@mui/icons-material/BugReport";
 import TaskIcon from "@mui/icons-material/Task";
 import UserStoryIcon from "@mui/icons-material/AutoStories";
+import Tooltip from "@mui/material/Tooltip";
 
 import { StoryType } from "../types/StoryInterface";
 
@@ -15,11 +16,23 @@ const TicketTypeIcon = (props: TicketTypeIconProps): JSX.Element => {
 
   switch (type) {
     case "bug":
-      return <BugIcon fontSize={fontSize} color='error' />;
+      return (
+        <Tooltip title='Bug' disableInteractive>
+          <BugIcon fontSize={fontSize} color='error' />
+        </Tooltip>
+      );
     case "story":
-      return <UserStoryIcon fontSize={fontSize} color='info' />;
+      return (
+        <Tooltip title='User Story' disableInteractive>
+          <UserStoryIcon fontSize={fontSize} color='info' />
+        </Tooltip>
+      );
     case "task":
-      return <TaskIcon fontSize={fontSize} color='secondary' />;
+      return (
+        <Tooltip title='Task' disableInteractive>
+          <TaskIcon fontSize={fontSize} color='secondary' />
+        </Tooltip>
+      );
     default:
       return <div />;
   }

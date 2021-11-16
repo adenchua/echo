@@ -19,17 +19,17 @@ const FormTicketTypeToggleButtons = (props: FormTicketTypeToggleButtonsProps): J
   return (
     <ToggleButtonGroup value={value} exclusive onChange={onChangeHandler} size='small'>
       <ToggleButton value={"task"} color='secondary'>
-        <Tooltip title={"Task"}>
+        <Tooltip title={"Task"} disableInteractive>
           <TaskIcon fontSize='small' />
         </Tooltip>
       </ToggleButton>
       <ToggleButton value={"story"} color='info'>
-        <Tooltip title={"User Story"}>
+        <Tooltip title={"User Story"} disableInteractive>
           <UserStoryIcon fontSize='small' />
         </Tooltip>
       </ToggleButton>
       <ToggleButton value={"bug"} color='error'>
-        <Tooltip title={"Bug"}>
+        <Tooltip title={"Bug"} disableInteractive>
           <BugIcon fontSize='small' />
         </Tooltip>
       </ToggleButton>

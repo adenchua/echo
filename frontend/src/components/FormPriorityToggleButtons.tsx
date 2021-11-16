@@ -20,22 +20,22 @@ const FormPriorityToggleButtons = (props: FormPriorityToggleButtonsProps): JSX.E
   return (
     <ToggleButtonGroup value={value} exclusive onChange={onChangeHandler} size='small'>
       <ToggleButton value={"low"} color='success'>
-        <Tooltip title={"Low"}>
+        <Tooltip title={"Low"} disableInteractive>
           <LowPriorityIcon fontSize='small' />
         </Tooltip>
       </ToggleButton>
       <ToggleButton value={"medium"} color='warning'>
-        <Tooltip title={"Medium"}>
+        <Tooltip title={"Medium"} disableInteractive>
           <MediumPriorityIcon fontSize='small' />
         </Tooltip>
       </ToggleButton>
       <ToggleButton value={"high"} color='error'>
-        <Tooltip title={"High"}>
+        <Tooltip title={"High"} disableInteractive>
           <HighPriorityIcon fontSize='small' />
         </Tooltip>
       </ToggleButton>
       <ToggleButton value={"highest"} color='error'>
-        <Tooltip title={"Highest"}>
+        <Tooltip title={"Highest"} disableInteractive>
           <div>
             <HighestPriorityIcon />
           </div>

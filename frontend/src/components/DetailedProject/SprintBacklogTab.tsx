@@ -9,11 +9,11 @@ import { format, differenceInBusinessDays } from "date-fns";
 
 import ProjectInterface from "../../types/ProjectInterface";
 import SprintStartDialog from "../SprintStartDialog";
-import SprintBacklogTicket from "../SprintBacklogTicket";
 import useSprintBacklog from "../../hooks/useSprintBacklog";
 import SprintEndDialog from "../SprintEndDialog";
 import { TicketsContext } from "../TicketsContextProvider";
 import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
+import Ticket from "../Ticket";
 
 interface SprintBacklogTabProps {
   project: ProjectInterface;
@@ -123,7 +123,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
         if (title.toLowerCase().includes(searchInput.toLowerCase())) {
           return (
             <Box key={id} onClick={() => handleSetSelectedTicket(id)}>
-              <SprintBacklogTicket ticket={ticket} />
+              <Ticket ticket={ticket} showSprintToggleCheckBox={false} />
             </Box>
           );
         }

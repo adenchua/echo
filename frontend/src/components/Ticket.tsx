@@ -3,24 +3,27 @@ import Paper from "@mui/material/Paper";
 import Hidden from "@mui/material/Hidden";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
 import Checkbox from "@mui/material/Checkbox";
 import Chip from "@mui/material/Chip";
+import Tooltip from "@mui/material/Tooltip";
+import Avatar from "@mui/material/Avatar";
 import { format } from "date-fns";
 
 import StoryInterface from "../types/StoryInterface";
 import PriorityIcon from "./PriorityIcon";
 import TicketTypeIcon from "./TicketTypeIcon";
 import useProductBacklog from "../hooks/useProductBacklog";
+import StatusChipButton from "./StatusChipButton";
 
-interface ProductBacklogTicketProps {
+interface TicketProps {
   ticket: StoryInterface;
+  showSprintToggleCheckBox: boolean;
 }
 
-const ProductBacklogTicket = (props: ProductBacklogTicketProps): JSX.Element => {
-  const { ticket } = props;
+const Ticket = (props: TicketProps): JSX.Element => {
+  const { ticket, showSprintToggleCheckBox } = props;
   const { onUpdateTicket } = useProductBacklog();
-  const { priority, title, type, isInSprint, _id: id, dueDate } = ticket;
+  const { priority, title, type, isInSprint, _id: id, dueDate, status, assigneeId } = ticket;
   const formattedDueDate = dueDate ? format(new Date(dueDate), "LLL dd") : "";
 
   const handleToggleTicketInSprint = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,24 +42,36 @@ const ProductBacklogTicket = (props: ProductBacklogTicketProps): JSX.Element => 
           borderColor: "grey.200",
           display: "flex",
           alignItems: "center",
-          gap: 0.5,
+          gap: 1.5,
+          py: 0.5,
           px: 1,
+          overflowX: "hidden",
         }}
         square
         elevation={0}
       >
-        <Checkbox size='small' checked={isInSprint} onChange={handleToggleTicketInSprint} />
-        <IconButton size='small'>
-          <PriorityIcon priority={priority} />
-        </IconButton>
-        <IconButton size='small' color='error' disabled>
-          <TicketTypeIcon type={type} />
-        </IconButton>
+        {showSprintToggleCheckBox && (
+          <Tooltip title={isInSprint ? "Remove from sprint backlog" : "Put in sprint backlog"} disableInteractive>
+            <Checkbox
+              size='small'
+              sx={{
+                padding: 0,
+              }}
+              disableRipple
+              checked={isInSprint}
+              onChange={handleToggleTicketInSprint}
+            />
+          </Tooltip>
+        )}
+        <PriorityIcon priority={priority} />
+        <TicketTypeIcon type={type} />
         <Typography variant='body2' noWrap>
           {title}
         </Typography>
         <Box flexGrow={1} />
         <Chip label={formattedDueDate} size='small' sx={{ display: dueDate ? "" : "none" }} />
+        <Avatar style={{ height: 32, width: 32, display: assigneeId ? "" : "none" }}>?</Avatar>
+        <StatusChipButton status={status} size='medium' />
       </Paper>
     );
   };
@@ -82,4 +97,4 @@ const ProductBacklogTicket = (props: ProductBacklogTicketProps): JSX.Element => 
   );
 };
 
-export default ProductBacklogTicket;
+export default Ticket;

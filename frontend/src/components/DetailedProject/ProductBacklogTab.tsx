@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 
 import ProjectInterface from "../../types/ProjectInterface";
-import ProductBacklogTicket from "../ProductBacklogTicket";
+import Ticket from "../Ticket";
 import CreateTicketButtonWithDialog from "../CreateTicketButtonWithDialog";
 import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
 import { TicketsContext } from "../TicketsContextProvider";
@@ -78,7 +78,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
           if (ticket.title.toLowerCase().includes(searchInput.toLowerCase())) {
             return (
               <Box key={ticket._id} onClick={() => handleSetSelectedTicket(ticket._id)}>
-                <ProductBacklogTicket ticket={ticket} />
+                <Ticket ticket={ticket} showSprintToggleCheckBox />
               </Box>
             );
           }

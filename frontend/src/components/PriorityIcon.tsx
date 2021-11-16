@@ -2,6 +2,7 @@ import React from "react";
 import LowPriorityIcon from "@mui/icons-material/KeyboardArrowDown";
 import MediumPriorityIcon from "@mui/icons-material/Remove";
 import HighPriorityIcon from "@mui/icons-material/KeyboardArrowUp";
+import Tooltip from "@mui/material/Tooltip";
 
 import { PriorityType } from "../types/StoryInterface";
 import HighestPriorityIcon from "./HighestPriorityIcon";
@@ -16,11 +17,23 @@ const PriorityIcon = (props: PriorityIconProps): JSX.Element => {
 
   switch (priority) {
     case "low":
-      return <LowPriorityIcon fontSize={fontSize} color='success' />;
+      return (
+        <Tooltip title='Low Priority' disableInteractive>
+          <LowPriorityIcon fontSize={fontSize} color='success' />
+        </Tooltip>
+      );
     case "medium":
-      return <MediumPriorityIcon fontSize={fontSize} color='warning' />;
+      return (
+        <Tooltip title='Medium Priority' disableInteractive>
+          <MediumPriorityIcon fontSize={fontSize} color='warning' />
+        </Tooltip>
+      );
     case "high":
-      return <HighPriorityIcon fontSize={fontSize} color='error' />;
+      return (
+        <Tooltip title='High Priority' disableInteractive>
+          <HighPriorityIcon fontSize={fontSize} color='error' />
+        </Tooltip>
+      );
     case "highest":
       return <HighestPriorityIcon fontSize={fontSize} color='error' />;
     default:
