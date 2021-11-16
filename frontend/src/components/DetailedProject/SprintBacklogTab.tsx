@@ -123,7 +123,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
         if (title.toLowerCase().includes(searchInput.toLowerCase())) {
           return (
             <Box key={id} onClick={() => handleSetSelectedTicket(id)}>
-              <Ticket ticket={ticket} showSprintToggleCheckBox={false} />
+              <Ticket ticket={ticket} showSprintToggleCheckBox={false} bgGrey={id === selectedTicketId} />
             </Box>
           );
         }

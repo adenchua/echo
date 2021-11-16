@@ -47,6 +47,7 @@ module.exports.updateStory = async (req, res) => {
       dueDate,
       isInSprint,
     });
+
     await Story.findByIdAndUpdate(storyId, { ...keysToUpdate });
     res.status(204).send();
   } catch (error) {

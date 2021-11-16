@@ -7,7 +7,7 @@ export type TicketUpdateFieldsType = {
   status?: StatusType;
   priority?: PriorityType;
   type?: StoryType;
-  dueDate?: string;
+  dueDate?: string | null;
   isInSprint?: boolean;
 };
 interface StoryInterface {

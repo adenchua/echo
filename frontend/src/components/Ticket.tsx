@@ -18,10 +18,11 @@ import StatusChipButton from "./StatusChipButton";
 interface TicketProps {
   ticket: StoryInterface;
   showSprintToggleCheckBox: boolean;
+  bgGrey: boolean;
 }
 
 const Ticket = (props: TicketProps): JSX.Element => {
-  const { ticket, showSprintToggleCheckBox } = props;
+  const { ticket, showSprintToggleCheckBox, bgGrey } = props;
   const { onUpdateTicket } = useProductBacklog();
   const { priority, title, type, isInSprint, _id: id, dueDate, status, assigneeId } = ticket;
   const formattedDueDate = dueDate ? format(new Date(dueDate), "LLL dd") : "";
@@ -35,6 +36,7 @@ const Ticket = (props: TicketProps): JSX.Element => {
     return (
       <Paper
         sx={{
+          backgroundColor: bgGrey ? "grey.50" : "",
           "&:hover": {
             backgroundColor: "grey.50",
           },

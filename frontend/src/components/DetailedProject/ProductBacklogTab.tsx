@@ -78,7 +78,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
           if (ticket.title.toLowerCase().includes(searchInput.toLowerCase())) {
             return (
               <Box key={ticket._id} onClick={() => handleSetSelectedTicket(ticket._id)}>
-                <Ticket ticket={ticket} showSprintToggleCheckBox />
+                <Ticket ticket={ticket} showSprintToggleCheckBox bgGrey={ticket._id === selectedTicketId} />
               </Box>
             );
           }

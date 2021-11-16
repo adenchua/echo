@@ -157,7 +157,7 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
           sx={{ color: "warning.light" }}
           color='inherit'
           startIcon={isLoading && <CircularProgress sx={{ color: "inherit" }} size={14} />}
-          disabled={!endDateInput || sprintTicketsCount === 0}
+          disabled={!endDateInput || !isValid(endDateInput) || sprintTicketsCount === 0}
         >
           {isLoading ? "Creating Sprint..." : "Start Sprint"}
         </Button>

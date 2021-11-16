@@ -3,6 +3,7 @@ import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import IconButton from "@mui/material/IconButton";
@@ -71,7 +72,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
   }, [ticket, title, description, type, priority, dueDate, status]);
 
   const handleUpdateTicket = (): void => {
-    const dueDateInputInISOString = dueDateInput ? dueDateInput.toISOString() : undefined;
+    const dueDateInputInISOString = dueDateInput ? dueDateInput.toISOString() : null;
     onUpdateTicket(id, {
       title: titleInput,
       description: descriptionInput,
@@ -317,9 +318,9 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
             }
           }}
           minDate={new Date()}
-          clearable
           renderInput={(params) => <TextField {...params} size='small' />}
         />
+        <Button onClick={() => setDueDateInput(null)}>Remove Due Date</Button>
       </Box>
       <Divider flexItem />
     </ListItem>
