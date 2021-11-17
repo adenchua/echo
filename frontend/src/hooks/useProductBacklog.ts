@@ -3,10 +3,10 @@ import { useContext } from "react";
 import createStory from "../api/stories/createStory";
 import updateTicket from "../api/stories/updateTicket";
 import { PriorityType, StoryType, TicketUpdateFieldsType } from "../types/StoryInterface";
-import { TicketsContext } from "../components/TicketsContextProvider";
+import { TicketsContext } from "../components/contexts/TicketsContextProvider";
 
 const useProductBacklog = () => {
-  const { addTickets, updateTicket: updateTicketContext } = useContext(TicketsContext);
+  const { addTicket, updateTicket: updateTicketContext } = useContext(TicketsContext);
 
   const onAddTicket = async (
     title: string,
@@ -16,7 +16,7 @@ const useProductBacklog = () => {
   ): Promise<void> => {
     try {
       const newTicket = await createStory(title, projectId, priority, type);
-      addTickets([newTicket]);
+      addTicket(newTicket);
     } catch (error) {
       throw new Error("Failed to create ticket");
     }

@@ -11,7 +11,7 @@ import OverviewTab from "../components/DetailedProject/OverviewTab";
 import ProductBacklogTab from "../components/DetailedProject/ProductBacklogTab";
 import SprintBacklogTab from "../components/DetailedProject/SprintBacklogTab";
 import Loading from "../components/Loading";
-import { TicketsContext } from "../components/TicketsContextProvider";
+import { TicketsContext } from "../components/contexts/TicketsContextProvider";
 import fetchStoriesByIds from "../api/stories/fetchStoriesByIds";
 
 const DetailedProjectPage = (): JSX.Element => {
@@ -19,14 +19,14 @@ const DetailedProjectPage = (): JSX.Element => {
   const query = useQuery();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [project, setProject] = useState<ProjectInterface | null>(null);
-  const { addTickets } = useContext(TicketsContext);
+  const { handleSetTickets } = useContext(TicketsContext);
 
   useEffect(() => {
     const getTickets = async (storyIds: string[]): Promise<void> => {
       try {
         setIsLoading(true);
         const response = await fetchStoriesByIds(storyIds);
-        addTickets(response);
+        handleSetTickets(response);
         setIsLoading(false);
       } catch (error) {
         alert("Something went wrong. Please try again later.");
@@ -47,7 +47,7 @@ const DetailedProjectPage = (): JSX.Element => {
     };
 
     getProject();
-  }, [id]);
+  }, [id, handleSetTickets]);
 
   if (isLoading) {
     return <Loading />;

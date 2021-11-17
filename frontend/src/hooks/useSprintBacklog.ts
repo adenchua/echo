@@ -4,7 +4,7 @@ import SprintInterface from "../types/SprintInterface";
 import fetchSprintsByIds from "../api/sprints/fetchSprintsByIds";
 import startSprint from "../api/sprints/startSprint";
 import endSprint from "../api/sprints/endSprint";
-import { TicketsContext } from "../components/TicketsContextProvider";
+import { TicketsContext } from "../components/contexts/TicketsContextProvider";
 
 const useSprintBacklog = (sprintIds: string[] = []) => {
   const [activeSprint, setActiveSprint] = useState<SprintInterface | null>(null);

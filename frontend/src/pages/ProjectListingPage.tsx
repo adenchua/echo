@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -13,12 +13,11 @@ import PageLayoutWrapper from "../components/PageLayoutWrapper";
 import ProjectInterface from "../types/ProjectInterface";
 import ProjectListingItem from "../components/ProjectListingItem";
 import CreateProjectButtonWithDialog from "../components/CreateProjectButtonWithDialog";
-import useProjects from "../hooks/useProjects";
-import Loading from "../components/Loading";
+import { UserProjectsContext } from "../components/contexts/UserProjectsContextProvider";
 
 const ProjectListingPage = (): JSX.Element => {
-  const { projects, isLoading, handleAddProject } = useProjects();
   const [searchInput, setSearchInput] = useState<string>("");
+  const { projects } = useContext(UserProjectsContext);
 
   const renderTitleHeaders = (): JSX.Element => {
     return (
@@ -45,17 +44,13 @@ const ProjectListingPage = (): JSX.Element => {
     </Typography>
   );
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <PageLayoutWrapper>
       <Typography variant='h5' paragraph>
         Projects
       </Typography>
       <Box display='flex' gap={2}>
-        <CreateProjectButtonWithDialog onAddProject={handleAddProject} />
+        <CreateProjectButtonWithDialog />
         <TextField
           size='small'
           margin='none'

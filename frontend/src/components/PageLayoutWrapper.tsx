@@ -32,7 +32,7 @@ const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
         aria-label='open drawer'
         edge='start'
         onClick={handleDrawerToggle}
-        sx={{ mr: 2, display: { md: "none" } }}
+        sx={{ mr: 2, display: { lg: "none" } }}
       >
         <MenuIcon />
       </IconButton>
@@ -60,12 +60,12 @@ const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box display='flex'>
       <AppBar
         position='fixed'
         sx={{
-          width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
-          ml: { md: `${DRAWER_WIDTH}px` },
+          width: { lg: `calc(100% - ${DRAWER_WIDTH}px)` },
+          ml: { lg: `${DRAWER_WIDTH}px` },
           borderBottom: "1px solid",
           borderColor: "divider",
         }}
@@ -74,7 +74,7 @@ const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
       >
         <Toolbar>{renderToolbarContent()}</Toolbar>
       </AppBar>
-      <Box component='nav' sx={{ width: { md: DRAWER_WIDTH }, flexShrink: { md: 0 } }}>
+      <Box component='nav' sx={{ width: { lg: DRAWER_WIDTH }, flexShrink: { lg: 0 } }}>
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           variant='temporary'
@@ -84,7 +84,7 @@ const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: "block", md: "none" },
+            display: { xs: "block", lg: "none" },
             "& .MuiDrawer-paper": { boxSizing: "border-box", width: DRAWER_WIDTH },
           }}
         >
@@ -93,7 +93,7 @@ const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
         <Drawer
           variant='permanent'
           sx={{
-            display: { xs: "none", md: "block" },
+            display: { xs: "none", lg: "block" },
             "& .MuiDrawer-paper": { boxSizing: "border-box", width: DRAWER_WIDTH },
           }}
           open

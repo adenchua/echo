@@ -11,7 +11,7 @@ import ProjectInterface from "../../types/ProjectInterface";
 import SprintStartDialog from "../SprintStartDialog";
 import useSprintBacklog from "../../hooks/useSprintBacklog";
 import SprintEndDialog from "../SprintEndDialog";
-import { TicketsContext } from "../TicketsContextProvider";
+import { TicketsContext } from "../contexts/TicketsContextProvider";
 import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
 import Ticket from "../Ticket";
 

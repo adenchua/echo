@@ -7,7 +7,7 @@ import ProjectInterface from "../../types/ProjectInterface";
 import Ticket from "../Ticket";
 import CreateTicketButtonWithDialog from "../CreateTicketButtonWithDialog";
 import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
-import { TicketsContext } from "../TicketsContextProvider";
+import { TicketsContext } from "../contexts/TicketsContextProvider";
 
 interface ProductBacklogTabProps {
   project: ProjectInterface;

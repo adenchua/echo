@@ -1,5 +1,5 @@
 import React from "react";
-import TicketsContextProvider from "../components/TicketsContextProvider";
+import TicketsContextProvider from "../components/contexts/TicketsContextProvider";
 import DetailedProjectPage from "./DetailedProjectPage";
 
 const DetailedProjectPageWrapper = (): JSX.Element => {

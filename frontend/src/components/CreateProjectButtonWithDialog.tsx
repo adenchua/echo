@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import Dialog from "@mui/material/Dialog";
@@ -17,22 +17,20 @@ import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { TEMP_ADMIN_ID } from "../utils/constants";
+import createProject from "../api/projects/createProject";
+import { UserProjectsContext } from "./contexts/UserProjectsContextProvider";
 
 const PROJECT_TYPES: ProjectType[] = ["Software Engineering", "Exploratory Data Analysis", "UX Design"];
 
 type ProjectType = "Software Engineering" | "Exploratory Data Analysis" | "UX Design";
 
-interface CreateProjectButtonWithDialogProps {
-  onAddProject: (title: string, adminId: string, type: string) => Promise<void>;
-}
-
-const CreateProjectButtonWithDialog = (props: CreateProjectButtonWithDialogProps): JSX.Element => {
-  const { onAddProject } = props;
+const CreateProjectButtonWithDialog = (): JSX.Element => {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [projectTitle, setProjectTitle] = useState<string>("");
   const [projectType, setProjectType] = useState<ProjectType>(PROJECT_TYPES[0]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showError, setShowError] = useState<boolean>(false);
+  const { addProject } = useContext(UserProjectsContext);
 
   const handleCloseDialog = (): void => {
     setIsDialogOpen(false);
@@ -50,7 +48,8 @@ const CreateProjectButtonWithDialog = (props: CreateProjectButtonWithDialogProps
     try {
       setIsLoading(true);
       setShowError(false);
-      await onAddProject(projectTitle, TEMP_ADMIN_ID, projectType);
+      const project = await createProject(projectTitle, TEMP_ADMIN_ID, projectType);
+      addProject(project);
       handleCloseDialog();
     } catch (error) {
       setShowError(true);
