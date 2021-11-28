@@ -115,7 +115,7 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
           <ProjectIcon />
         </Avatar>
         <Box sx={{ width: "200px" }}>
-          <Typography variant='subtitle2' noWrap color='primary.dark'>
+          <Typography variant='subtitle2' noWrap color='primary.main'>
             {title}
           </Typography>
           <Typography variant='caption' sx={{ color: "GrayText" }} noWrap>

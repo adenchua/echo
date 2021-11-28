@@ -3,9 +3,9 @@ import axios from "axios";
 import UserInterface from "../../types/UserInterface";
 import { UMS_API_ENDPOINT } from "../../utils/constants";
 
-const fetchUsersByIds = async (userIds: string[]): Promise<UserInterface[]> => {
+const fetchAllUsers = async (): Promise<UserInterface[]> => {
   try {
-    const response = await axios.post<UserInterface[]>(`${UMS_API_ENDPOINT}/bulk-retrieve`, { userIds });
+    const response = await axios.get<UserInterface[]>(`${UMS_API_ENDPOINT}/all`);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -16,4 +16,4 @@ const fetchUsersByIds = async (userIds: string[]): Promise<UserInterface[]> => {
   }
 };
 
-export default fetchUsersByIds;
+export default fetchAllUsers;

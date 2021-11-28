@@ -16,9 +16,9 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import { TEMP_ADMIN_ID } from "../utils/constants";
 import createProject from "../api/projects/createProject";
 import { UserProjectsContext } from "./contexts/UserProjectsContextProvider";
+import { useLocalStorage } from "../utils/useLocalStorage";
 
 const PROJECT_TYPES: ProjectType[] = ["Software Engineering", "Exploratory Data Analysis", "UX Design"];
 
@@ -31,6 +31,7 @@ const CreateProjectButtonWithDialog = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showError, setShowError] = useState<boolean>(false);
   const { addProject } = useContext(UserProjectsContext);
+  const { storedValue: userId } = useLocalStorage("user-id", "");
 
   const handleCloseDialog = (): void => {
     setIsDialogOpen(false);
@@ -48,7 +49,7 @@ const CreateProjectButtonWithDialog = (): JSX.Element => {
     try {
       setIsLoading(true);
       setShowError(false);
-      const project = await createProject(projectTitle, TEMP_ADMIN_ID, projectType);
+      const project = await createProject(projectTitle, userId, projectType);
       addProject(project);
       handleCloseDialog();
     } catch (error) {

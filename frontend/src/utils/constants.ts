@@ -1,3 +1,3 @@
 export const API_ENDPOINT = "/api";
 
-export const TEMP_ADMIN_ID = "61767ee9f53abfc3cbb6aefd";
+export const UMS_API_ENDPOINT = "http://localhost:5100/api/users";
