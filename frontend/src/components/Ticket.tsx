@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Hidden from "@mui/material/Hidden";
 import Typography from "@mui/material/Typography";
@@ -14,6 +14,9 @@ import PriorityIcon from "./PriorityIcon";
 import TicketTypeIcon from "./TicketTypeIcon";
 import useProductBacklog from "../hooks/useProductBacklog";
 import StatusChipButton from "./StatusChipButton";
+import getUserAvatarSVG from "../utils/getUserAvatarSVG";
+import fetchUsersByIds from "../api/users/fetchUsersByIds";
+import UserInterface from "../types/UserInterface";
 
 interface TicketProps {
   ticket: StoryInterface;
@@ -23,9 +26,22 @@ interface TicketProps {
 
 const Ticket = (props: TicketProps): JSX.Element => {
   const { ticket, showSprintToggleCheckBox, bgGrey } = props;
+  const [assignee, setAssignee] = useState<UserInterface | null>(null);
   const { onUpdateTicket } = useProductBacklog();
   const { priority, title, type, isInSprint, _id: id, dueDate, status, assigneeId } = ticket;
   const formattedDueDate = dueDate ? format(new Date(dueDate), "LLL dd") : "";
+
+  useEffect(() => {
+    const getAssigneeDetails = async () => {
+      if (!assigneeId) {
+        return;
+      }
+      const [response] = await fetchUsersByIds([assigneeId]);
+      setAssignee(response);
+    };
+
+    getAssigneeDetails();
+  }, [assigneeId]);
 
   const handleToggleTicketInSprint = (event: React.ChangeEvent<HTMLInputElement>) => {
     const updatedIsInSprintStatus = event.target.checked;
@@ -36,9 +52,9 @@ const Ticket = (props: TicketProps): JSX.Element => {
     return (
       <Paper
         sx={{
-          backgroundColor: bgGrey ? "grey.50" : "",
+          backgroundColor: bgGrey ? "grey.200" : "",
           "&:hover": {
-            backgroundColor: "grey.50",
+            backgroundColor: "grey.200",
           },
           borderBottom: "1px solid",
           borderColor: "grey.200",
@@ -72,7 +88,12 @@ const Ticket = (props: TicketProps): JSX.Element => {
         </Typography>
         <Box flexGrow={1} />
         <Chip label={formattedDueDate} size='small' sx={{ display: dueDate ? "" : "none" }} />
-        <Avatar style={{ height: 32, width: 32, display: assigneeId ? "" : "none" }}>?</Avatar>
+        {assignee && (
+          <Avatar
+            style={{ height: 32, width: 32, display: assigneeId ? "" : "none" }}
+            src={getUserAvatarSVG(assignee.username)}
+          />
+        )}
         <StatusChipButton status={status} size='medium' />
       </Paper>
     );

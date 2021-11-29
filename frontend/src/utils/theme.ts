@@ -11,7 +11,7 @@ let theme = createTheme({
       main: teal[500],
     },
     background: {
-      default: "#F0F0F0",
+      default: "#f5f5f5",
     },
   },
   components: {

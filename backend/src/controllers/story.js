@@ -30,7 +30,7 @@ module.exports.createStory = async (req, res) => {
 
 module.exports.updateStory = async (req, res) => {
   const { storyId } = req.params;
-  const { title, description, status, priority, type, dueDate, isInSprint } = req.body;
+  const { title, description, status, priority, type, dueDate, isInSprint, assigneeId } = req.body;
 
   if (!storyId) {
     res.status(400).send();
@@ -46,7 +46,10 @@ module.exports.updateStory = async (req, res) => {
       type,
       dueDate,
       isInSprint,
+      assigneeId,
     });
+
+    console.log(keysToUpdate);
 
     await Story.findByIdAndUpdate(storyId, { ...keysToUpdate });
     res.status(204).send();
@@ -69,42 +72,6 @@ module.exports.deleteStory = async (req, res) => {
     res.status(204).send();
   } catch (error) {
     console.error("deleteStory", error);
-    res.status(500).send();
-  }
-};
-
-module.exports.addAssigneeToStory = async (req, res) => {
-  const { storyId } = req.params;
-  const { userId } = req.body;
-
-  if (!storyId || !userId) {
-    res.status(400).send();
-    return;
-  }
-
-  try {
-    await Story.findByIdAndUpdate(storyId, { assigneeId: userId });
-    res.status(204).send();
-  } catch (error) {
-    console.error("addAssigneeToStory", error);
-    res.status(500).send();
-  }
-};
-
-module.exports.removeAssigneeFromStory = async (req, res) => {
-  const { storyId } = req.params;
-  const { userId } = req.body;
-
-  if (!storyId || !userId) {
-    res.status(400).send();
-    return;
-  }
-
-  try {
-    await Story.findByIdAndUpdate(storyId, { assigneeId: undefined });
-    res.status(204).send();
-  } catch (error) {
-    console.error("removeAssigneeFromStory", error);
     res.status(500).send();
   }
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -7,12 +7,14 @@ import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import IconButton from "@mui/material/IconButton";
+import Avatar from "@mui/material/Avatar";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import DatePicker from "@mui/lab/DatePicker";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Chip from "@mui/material/Chip";
 import { format, isValid } from "date-fns";
 
@@ -24,6 +26,10 @@ import FormPriorityToggleButtons from "./FormPriorityToggleButtons";
 import FormTicketTypeToggleButtons from "./FormTicketTypeToggleButtonts";
 import useProductBacklog from "../hooks/useProductBacklog";
 import StatusChipButton from "./StatusChipButton";
+import UserInterface from "../types/UserInterface";
+import fetchUsersByIds from "../api/users/fetchUsersByIds";
+import getUserAvatarSVG from "../utils/getUserAvatarSVG";
+import { ProjectMembersContext } from "./contexts/ProjectMembersContextProvider";
 
 interface TicketDetailsRightDrawerProps {
   ticket: StoryInterface;
@@ -34,12 +40,15 @@ interface TicketDetailsRightDrawerProps {
 const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Element => {
   const { ticket, onClose, isOpen } = props;
   const { onUpdateTicket } = useProductBacklog();
-  const { _id: id, title, description, priority, type, dueDate, status } = ticket;
+  const { members, admins } = useContext(ProjectMembersContext);
+  const { _id: id, title, description, priority, type, dueDate, status, assigneeId } = ticket;
   const [titleInput, setTitleInput] = useState<string>(title);
   const [descriptionInput, setDescriptionInput] = useState<string>(description ?? "");
   const [ticketType, setTicketType] = useState<StoryType>(type);
   const [priorityInput, setPriorityInput] = useState<PriorityType>(priority);
   const [statusInput, setStatusInput] = useState<StatusType>(status);
+  const [assigneeIdInput, setAssigneeIdInput] = useState<string>(assigneeId ?? "");
+  const [assignee, setAssignee] = useState<UserInterface | null>(null);
   const [dueDateInput, setDueDateInput] = useState<Date | null>(dueDate ? new Date(dueDate) : null);
   const [isTitleEditModeOn, setIsTitleEditModeOn] = useState<boolean>(false);
   const [isDescriptionEditModeOn, setIsDescriptionEditModeOn] = useState<boolean>(false);
@@ -47,6 +56,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
   const [isTypeEditModeOn, setIsTypeEditModeOn] = useState<boolean>(false);
   const [isDueDateEditModeOn, setDueDateEditModeOn] = useState<boolean>(false);
   const [isStatusEditModeOn, setIsStatusEditModeOn] = useState<boolean>(false);
+  const [isAssigneeEditModeOn, setIsAssigneeEditModeOn] = useState<boolean>(false);
 
   const closeAllEditModes = (): void => {
     setIsTitleEditModeOn(false);
@@ -55,7 +65,21 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
     setIsTypeEditModeOn(false);
     setDueDateEditModeOn(false);
     setIsStatusEditModeOn(false);
+    setIsAssigneeEditModeOn(false);
   };
+
+  useEffect(() => {
+    const getAssigneeDetails = async () => {
+      if (!assigneeId) {
+        setAssignee(null);
+        return;
+      }
+      const [response] = await fetchUsersByIds([assigneeId]);
+      setAssignee(response);
+    };
+
+    getAssigneeDetails();
+  }, [assigneeId]);
 
   useEffect(() => {
     const clearFields = (): void => {
@@ -65,11 +89,12 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
       setPriorityInput(priority);
       setDueDateInput(dueDate ? new Date(dueDate) : null);
       setStatusInput(status);
+      setAssigneeIdInput(assigneeId ?? "");
     };
 
     closeAllEditModes();
     clearFields();
-  }, [ticket, title, description, type, priority, dueDate, status]);
+  }, [ticket, title, description, type, priority, dueDate, status, assigneeId]);
 
   const handleUpdateTicket = (): void => {
     const dueDateInputInISOString = dueDateInput ? dueDateInput.toISOString() : null;
@@ -80,6 +105,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
       priority: priorityInput,
       dueDate: dueDateInputInISOString,
       status: statusInput,
+      assigneeId: assigneeIdInput ? assigneeIdInput : null,
     });
     closeAllEditModes();
   };
@@ -120,6 +146,10 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
 
   const handleStatusEditMode = (): void => {
     setIsStatusEditModeOn(!isStatusEditModeOn);
+  };
+
+  const handleAssigneeEditMode = (): void => {
+    setIsAssigneeEditModeOn(!isAssigneeEditModeOn);
   };
 
   const renderEditButton = (onStartEdit: any): JSX.Element => (
@@ -377,6 +407,59 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
     </ListItem>
   );
 
+  const renderAssigneeChip = (): JSX.Element => {
+    if (!assignee) {
+      return <ListItemText secondary='None' />;
+    }
+    const { _id: userId, username, displayName } = assignee;
+    return <Chip key={userId} avatar={<Avatar src={getUserAvatarSVG(username)} />} label={displayName} size='small' />;
+  };
+
+  const renderAssigneeListItem = (): JSX.Element => (
+    <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+      <Box display='flex' justifyContent='space-between' width='100%' mb={1}>
+        <Typography variant='body2'>Assignee</Typography>
+        {renderEditButton(handleAssigneeEditMode)}
+      </Box>
+      <Box mb={2}>{renderAssigneeChip()}</Box>
+      <Divider flexItem />
+    </ListItem>
+  );
+
+  const renderAssigneeListItemEdit = (): JSX.Element => (
+    <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+      <Box display='flex' width='100%' mb={1.5} gap={2}>
+        <Typography variant='body2'>Assignee</Typography>
+        <Box flexGrow={1} />
+        {renderUpdateButtons(handleUpdateTicket, handleAssigneeEditMode)}
+      </Box>
+      <Box mb={2} width='100%'>
+        <Select
+          size='small'
+          onChange={(e: SelectChangeEvent) => setAssigneeIdInput(e.target.value)}
+          value={assigneeIdInput}
+          fullWidth
+        >
+          <MenuItem value='' dense sx={{ display: "flex", justifyContent: "center" }}>
+            None
+          </MenuItem>
+          {[...admins, ...members].map((user) => {
+            const { displayName, _id: userId, username } = user;
+            return (
+              <MenuItem key={userId} value={userId} dense>
+                <ListItemAvatar>
+                  <Avatar sx={{ height: 24, width: 24 }} src={getUserAvatarSVG(username)} />
+                </ListItemAvatar>
+                <ListItemText>{displayName}</ListItemText>
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </Box>
+      <Divider flexItem />
+    </ListItem>
+  );
+
   return (
     <Drawer
       anchor='right'
@@ -396,6 +479,9 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
 
         {!isDescriptionEditModeOn && renderDescriptionListItem()}
         {isDescriptionEditModeOn && renderDescriptionListItemEdit()}
+
+        {!isAssigneeEditModeOn && renderAssigneeListItem()}
+        {isAssigneeEditModeOn && renderAssigneeListItemEdit()}
 
         {!isPriorityEditModeOn && renderPriorityListItem()}
         {isPriorityEditModeOn && renderPriorityListItemEdit()}
