@@ -8,6 +8,7 @@ import Ticket from "../Ticket";
 import CreateTicketButtonWithDialog from "../CreateTicketButtonWithDialog";
 import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
 import { TicketsContext } from "../contexts/TicketsContextProvider";
+import { matchString } from "../../utils/matchString";
 
 interface ProductBacklogTabProps {
   project: ProjectInterface;
@@ -75,7 +76,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
           />
         </Box>
         {tickets.map((ticket) => {
-          if (ticket.title.toLowerCase().includes(searchInput.toLowerCase())) {
+          if (matchString(searchInput, ticket.title)) {
             return (
               <Box key={ticket._id} onClick={() => handleSetSelectedTicket(ticket._id)}>
                 <Ticket ticket={ticket} showSprintToggleCheckBox bgGrey={ticket._id === selectedTicketId} />

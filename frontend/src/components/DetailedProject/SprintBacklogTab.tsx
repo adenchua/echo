@@ -14,6 +14,7 @@ import SprintEndDialog from "../SprintEndDialog";
 import { TicketsContext } from "../contexts/TicketsContextProvider";
 import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
 import Ticket from "../Ticket";
+import { matchString } from "../../utils/matchString";
 
 interface SprintBacklogTabProps {
   project: ProjectInterface;
@@ -120,7 +121,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
       )}
       {sprintTickets?.map((ticket) => {
         const { _id: id, title } = ticket;
-        if (title.toLowerCase().includes(searchInput.toLowerCase())) {
+        if (matchString(searchInput, title)) {
           return (
             <Box key={id} onClick={() => handleSetSelectedTicket(id)}>
               <Ticket ticket={ticket} showSprintToggleCheckBox={false} bgGrey={id === selectedTicketId} />

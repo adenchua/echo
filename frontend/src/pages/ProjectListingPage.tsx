@@ -14,6 +14,7 @@ import ProjectInterface from "../types/ProjectInterface";
 import ProjectListingItem from "../components/ProjectListingItem";
 import CreateProjectButtonWithDialog from "../components/CreateProjectButtonWithDialog";
 import { UserProjectsContext } from "../components/contexts/UserProjectsContextProvider";
+import { matchString } from "../utils/matchString";
 
 const ProjectListingPage = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>("");
@@ -70,7 +71,7 @@ const ProjectListingPage = (): JSX.Element => {
       {projects.length > 0 && renderTitleHeaders()}
       {projects.length === 0 && renderNoProjectsMessage()}
       {projects.map((project: ProjectInterface) => {
-        if (project.title.toLowerCase().includes(searchInput.toLowerCase())) {
+        if (matchString(searchInput, project.title)) {
           return (
             <Link
               component={RouterLink}

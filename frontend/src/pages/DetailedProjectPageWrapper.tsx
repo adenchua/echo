@@ -1,11 +1,14 @@
 import React from "react";
+import ProjectMembersContextProvider from "../components/contexts/ProjectMembersContextProvider";
 import TicketsContextProvider from "../components/contexts/TicketsContextProvider";
 import DetailedProjectPage from "./DetailedProjectPage";
 
 const DetailedProjectPageWrapper = (): JSX.Element => {
   return (
     <TicketsContextProvider>
-      <DetailedProjectPage />
+      <ProjectMembersContextProvider>
+        <DetailedProjectPage />
+      </ProjectMembersContextProvider>
     </TicketsContextProvider>
   );
 };

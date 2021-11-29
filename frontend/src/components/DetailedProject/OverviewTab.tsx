@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
-import AddIcon from "@mui/icons-material/Add";
 
-import ProjectInterface from "../../types/ProjectInterface";
 import UserInterface from "../../types/UserInterface";
-import fetchUsersByIds from "../../api/users/fetchUsersByIds";
 import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
 import ContainerWrapper from "../ContainerWrapper";
+import AddMemberToProjectButtonWithDialog from "../AddMemberToProjectButtonWithDialog";
+import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
+import ProjectInterface from "../../types/ProjectInterface";
 
 interface OverviewTabProps {
   project: ProjectInterface;
@@ -19,21 +18,8 @@ interface OverviewTabProps {
 
 const OverviewTab = (props: OverviewTabProps): JSX.Element => {
   const { project } = props;
-  const { memberIds, adminIds } = project;
-  const [members, setMembers] = useState<UserInterface[]>([]);
-
-  useEffect(() => {
-    const getMembers = async () => {
-      try {
-        const response = await fetchUsersByIds([...adminIds, ...memberIds]);
-        setMembers(response);
-      } catch (error) {
-        // do nothing
-      }
-    };
-
-    getMembers();
-  }, [memberIds, adminIds]);
+  const { _id: projectId } = project;
+  const { members, admins } = useContext(ProjectMembersContext);
 
   const renderMemberCard = (member: UserInterface): JSX.Element => {
     const { displayName, username } = member;
@@ -63,11 +49,14 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
       </Typography>
       <Box display='flex' alignItems='center' gap={2} mb={2}>
         <Typography variant='h5'>Members</Typography>
-        <Button startIcon={<AddIcon fontSize='small' />} size='small'>
-          Add Member
-        </Button>
+        <AddMemberToProjectButtonWithDialog projectId={projectId} />
       </Box>
       <Grid container spacing={2} sx={{ maxHeight: "300px", overflowY: "auto" }}>
+        {admins.map((admin) => (
+          <Grid item key={admin._id}>
+            {renderMemberCard(admin)}
+          </Grid>
+        ))}
         {members.map((member) => (
           <Grid item key={member._id}>
             {renderMemberCard(member)}

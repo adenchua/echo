@@ -13,6 +13,8 @@ import SprintBacklogTab from "../components/DetailedProject/SprintBacklogTab";
 import Loading from "../components/Loading";
 import { TicketsContext } from "../components/contexts/TicketsContextProvider";
 import fetchStoriesByIds from "../api/stories/fetchStoriesByIds";
+import { ProjectMembersContext } from "../components/contexts/ProjectMembersContextProvider";
+import fetchUsersByIds from "../api/users/fetchUsersByIds";
 
 const DetailedProjectPage = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
@@ -20,6 +22,7 @@ const DetailedProjectPage = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [project, setProject] = useState<ProjectInterface | null>(null);
   const { handleSetTickets } = useContext(TicketsContext);
+  const { handleSetMembers, handleSetAdmins } = useContext(ProjectMembersContext);
 
   useEffect(() => {
     const getTickets = async (storyIds: string[]): Promise<void> => {
@@ -37,8 +40,9 @@ const DetailedProjectPage = (): JSX.Element => {
       try {
         setIsLoading(true);
         const response = await fetchProject(id);
-        const { backlogIds } = response;
+        const { backlogIds, adminIds, memberIds } = response;
         getTickets(backlogIds);
+        getProjectMembersAndAdmins(adminIds, memberIds);
         setProject(response);
         setIsLoading(false);
       } catch (error) {
@@ -46,8 +50,19 @@ const DetailedProjectPage = (): JSX.Element => {
       }
     };
 
+    const getProjectMembersAndAdmins = async (adminIds: string[], memberIds: string[]) => {
+      try {
+        const adminResponse = await fetchUsersByIds(adminIds);
+        const memberResponse = await fetchUsersByIds(memberIds);
+        handleSetMembers(memberResponse);
+        handleSetAdmins(adminResponse);
+      } catch (error) {
+        // do nothing
+      }
+    };
+
     getProject();
-  }, [id, handleSetTickets]);
+  }, [id, handleSetTickets, handleSetAdmins, handleSetMembers]);
 
   if (isLoading) {
     return <Loading />;

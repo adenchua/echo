@@ -78,7 +78,13 @@ const LoginPage = (): JSX.Element => {
             onChange={(e) => setPasswordInput(e.target.value)}
             sx={{ mb: 4 }}
           />
-          <Button fullWidth variant='contained' endIcon={<ArrowRightIcon />} type='submit' disabled={isLoading}>
+          <Button
+            fullWidth
+            variant='contained'
+            endIcon={<ArrowRightIcon />}
+            type='submit'
+            disabled={isLoading || !usernameInput || !passwordInput}
+          >
             {isLoading ? "Logging in..." : "Login"}
           </Button>
         </form>

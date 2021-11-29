@@ -64,6 +64,34 @@ module.exports.addMemberToProject = async (req, res) => {
   }
 };
 
+module.exports.addMembersToProject = async (req, res) => {
+  const { projectId } = req.params;
+  const { userIds } = req.body;
+
+  if (!userIds || !projectId || !Array.isArray(userIds)) {
+    res.status(400).send();
+    return;
+  }
+
+  try {
+    const project = await Project.findById(projectId);
+    for (const userId of userIds) {
+      if (project.adminIds.includes(userId)) {
+        continue; // already admin, no need to add
+      }
+      if (!project.memberIds.includes(userId)) {
+        project.memberIds.push(userId);
+      }
+    }
+
+    await project.save();
+    res.status(204).send();
+  } catch (error) {
+    console.error("addMembersToProject", error);
+    res.status(500).send();
+  }
+};
+
 module.exports.removeMemberFromProject = async (req, res) => {
   const { projectId } = req.params;
   const { userId } = req.body;
