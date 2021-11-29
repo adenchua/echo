@@ -49,8 +49,6 @@ module.exports.updateStory = async (req, res) => {
       assigneeId,
     });
 
-    console.log(keysToUpdate);
-
     await Story.findByIdAndUpdate(storyId, { ...keysToUpdate });
     res.status(204).send();
   } catch (error) {
