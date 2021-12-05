@@ -13,6 +13,7 @@ type ProjectMembersStateType = {
   handleSetAdmins: (newAdmins: UserInterface[]) => void;
   handleAddMembers: (newMembers: UserInterface[]) => void;
   handleRemoveMember: (memberToRemove: UserInterface) => void;
+  handlePromoteMember: (memberToPromote: UserInterface) => void;
 };
 
 const projectMembersDefaultState: ProjectMembersStateType = {
@@ -22,6 +23,7 @@ const projectMembersDefaultState: ProjectMembersStateType = {
   handleSetMembers: () => {},
   handleAddMembers: () => {},
   handleRemoveMember: () => {},
+  handlePromoteMember: () => {},
 };
 
 export const ProjectMembersContext = createContext<ProjectMembersStateType>(projectMembersDefaultState);
@@ -50,9 +52,26 @@ const ProjectMembersContextProvider = ({ children }: ProjectMembersContextProvid
     [members]
   );
 
+  const handlePromoteMember = useCallback(
+    (memberToPromote: UserInterface): void => {
+      const remainingMembers = members.filter((member) => member._id !== memberToPromote._id);
+      setMembers(remainingMembers);
+      setAdmins((prevState) => [...prevState, memberToPromote]);
+    },
+    [members]
+  );
+
   return (
     <ProjectMembersContext.Provider
-      value={{ members, admins, handleSetAdmins, handleSetMembers, handleAddMembers, handleRemoveMember }}
+      value={{
+        members,
+        admins,
+        handleSetAdmins,
+        handleSetMembers,
+        handleAddMembers,
+        handleRemoveMember,
+        handlePromoteMember,
+      }}
     >
       {children}
     </ProjectMembersContext.Provider>

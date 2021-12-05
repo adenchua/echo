@@ -25,7 +25,7 @@ router.route("/members/add/:projectId").post(addMemberToProject);
 router.route("/members/bulk-add/:projectId").post(addMembersToProject);
 router.route("/members/remove/:projectId").post(removeMemberFromProject);
 router.route("/user/:userId").get(getProjectsOfUser);
-router.route("/admins/:projectId").post(promoteMemberToAdministrator);
-router.route("/admins/:projectId").delete(demoteAdmintoMember);
+router.route("/admins/promote/:projectId").post(promoteMemberToAdministrator);
+router.route("/admins/demote/:projectId").post(demoteAdmintoMember);
 
 module.exports = router;
