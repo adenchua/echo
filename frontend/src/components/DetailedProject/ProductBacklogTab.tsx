@@ -60,7 +60,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
 
   return (
     <>
-      <Box sx={{ marginRight: selectedTicketId ? "240px" : 0 }}>
+      <Box sx={{ marginRight: "240px" }}>
         <Typography variant='h5' paragraph>
           Product Backlog
         </Typography>

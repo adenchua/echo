@@ -53,14 +53,21 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
     const { number, startDate, endDate } = activeSprint;
     const formattedStartDate = startDate ? format(new Date(startDate), "LLL dd") : "Invalid Date";
     const formattedEndDate = endDate ? format(new Date(endDate), "LLL dd") : "Invalid Date";
-    const dayDifference = differenceInBusinessDays(new Date(endDate), new Date(startDate));
+    const dayDifference = differenceInBusinessDays(new Date(endDate), new Date());
 
     return (
       <div>
         <Typography variant='h5'>Sprint {number}</Typography>
-        <Typography variant='caption' color={dayDifference > 0 ? "grey.600" : "error"} paragraph>
-          {formattedStartDate} - {formattedEndDate} <span>&#8729;</span> {dayDifference} business days remaining
-        </Typography>
+        {dayDifference >= 0 && (
+          <Typography variant='caption' color='grey.600' paragraph>
+            {formattedStartDate} - {formattedEndDate} <span>&#8729;</span> {dayDifference} business days remaining
+          </Typography>
+        )}
+        {dayDifference < 0 && (
+          <Typography variant='caption' color={dayDifference > 0 ? "grey.600" : "error"} paragraph>
+            {formattedStartDate} - {formattedEndDate} <span>&#8729;</span> Overdue
+          </Typography>
+        )}
       </div>
     );
   };
@@ -82,7 +89,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   };
 
   return (
-    <Box sx={{ marginRight: selectedTicketId ? "240px" : 0 }}>
+    <Box sx={{ marginRight: "240px" }}>
       <Box display='flex' alignItems='flex-start' justifyContent='space-between' mb={1}>
         {renderSprintDetails()}
         {(!activeSprint || activeSprint.hasEnded) && (
