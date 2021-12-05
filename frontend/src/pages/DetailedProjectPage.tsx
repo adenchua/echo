@@ -15,6 +15,7 @@ import { TicketsContext } from "../components/contexts/TicketsContextProvider";
 import fetchStoriesByIds from "../api/stories/fetchStoriesByIds";
 import { ProjectMembersContext } from "../components/contexts/ProjectMembersContextProvider";
 import fetchUsersByIds from "../api/users/fetchUsersByIds";
+import MembersTab from "../components/DetailedProject/MembersTab";
 
 const DetailedProjectPage = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
@@ -82,6 +83,7 @@ const DetailedProjectPage = (): JSX.Element => {
       { tabKey: "overview", component: <OverviewTab project={project} /> },
       { tabKey: "product-backlog", component: <ProductBacklogTab project={project} /> },
       { tabKey: "sprint-backlog", component: <SprintBacklogTab project={project} /> },
+      { tabKey: "members", component: <MembersTab project={project} /> },
     ];
     const selectedTab = availableTabs.find((element) => element.tabKey === currentTabKey);
 

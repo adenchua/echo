@@ -2,9 +2,9 @@ import axios from "axios";
 
 import { API_ENDPOINT } from "../../utils/constants";
 
-const addMembersToProject = async (projectId: string, userIds: string[]): Promise<void> => {
+const removeMemberFromProject = async (projectId: string, userId: string): Promise<void> => {
   try {
-    await axios.post(`${API_ENDPOINT}/projects/members/bulk-add/${projectId}`, { userIds });
+    await axios.post(`${API_ENDPOINT}/projects/members/remove/${projectId}`, { userId });
     return;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -15,4 +15,4 @@ const addMembersToProject = async (projectId: string, userIds: string[]): Promis
   }
 };
 
-export default addMembersToProject;
+export default removeMemberFromProject;
