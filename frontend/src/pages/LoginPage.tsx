@@ -9,7 +9,7 @@ import Alert from "@mui/material/Alert";
 import { useHistory } from "react-router-dom";
 
 import login from "../api/authentication/login";
-import { useLocalStorage } from "../utils/useLocalStorage";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 import { loginErrorCodeToMessageHelper } from "../utils/loginErrorCodeToMessageHelper";
 
 const LoginPage = (): JSX.Element => {
@@ -49,7 +49,7 @@ const LoginPage = (): JSX.Element => {
         }}
       >
         <Typography variant='h6' sx={{ mb: 2 }}>
-          Login to Echo
+          Login to echo.yl
         </Typography>
         {errorMessage && (
           <Alert severity='error' sx={{ width: "100%" }}>

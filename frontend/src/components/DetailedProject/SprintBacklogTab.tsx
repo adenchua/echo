@@ -5,6 +5,8 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SprintEndIcon from "@mui/icons-material/RunningWithErrors";
 import SprintStartIcon from "@mui/icons-material/Timelapse";
+import InputAdornment from "@mui/material/InputAdornment";
+import SearchIcon from "@mui/icons-material/Search";
 import { format, differenceInBusinessDays } from "date-fns";
 
 import ProjectInterface from "../../types/ProjectInterface";
@@ -60,12 +62,12 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
         <Typography variant='h5'>Sprint {number}</Typography>
         {dayDifference >= 0 && (
           <Typography variant='caption' color='grey.600' paragraph>
-            {formattedStartDate} - {formattedEndDate} <span>&#8729;</span> {dayDifference} business days remaining
+            {formattedStartDate} - {formattedEndDate} <span>&#8729;</span> {dayDifference} business day(s) remaining
           </Typography>
         )}
         {dayDifference < 0 && (
           <Typography variant='caption' color={dayDifference > 0 ? "grey.600" : "error"} paragraph>
-            {formattedStartDate} - {formattedEndDate} <span>&#8729;</span> Overdue
+            {formattedStartDate} - {formattedEndDate} <span>&#8729;</span> {Math.abs(dayDifference)} day(s) overdue
           </Typography>
         )}
       </div>
@@ -115,6 +117,16 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
       </Box>
       <Box display='flex' alignItems='center' gap={2} mb={3}>
         <TextField
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position='start'>
+                <SearchIcon fontSize='small' />
+              </InputAdornment>
+            ),
+            style: {
+              borderRadius: 0,
+            },
+          }}
           placeholder='Search...'
           size='small'
           value={searchInput}
@@ -126,17 +138,21 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
           There are no tickets in the backlog.
         </Typography>
       )}
-      {sprintTickets?.map((ticket) => {
-        const { _id: id, title } = ticket;
-        if (matchString(searchInput, title)) {
-          return (
-            <Box key={id} onClick={() => handleSetSelectedTicket(id)}>
-              <Ticket ticket={ticket} showSprintToggleCheckBox={false} bgGrey={id === selectedTicketId} />
-            </Box>
-          );
-        }
-        return null;
-      })}
+      {tickets && tickets.length > 1 && (
+        <Box sx={{ border: "1px solid", borderColor: "grey.300", borderBottom: 0 }}>
+          {sprintTickets?.map((ticket) => {
+            const { _id: id, title } = ticket;
+            if (matchString(searchInput, title)) {
+              return (
+                <Box key={id} onClick={() => handleSetSelectedTicket(id)}>
+                  <Ticket ticket={ticket} showSprintToggleCheckBox={false} bgGrey={id === selectedTicketId} />
+                </Box>
+              );
+            }
+            return null;
+          })}
+        </Box>
+      )}
       <SprintEndDialog
         showEndSprintDialog={showEndSprintDialog}
         onClose={() => setShowEndSprintDialog(false)}

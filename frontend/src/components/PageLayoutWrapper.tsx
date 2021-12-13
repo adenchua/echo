@@ -5,7 +5,6 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 
 import Navbar from "./Navbar";
 
@@ -49,14 +48,7 @@ const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
       );
     }
 
-    return (
-      <>
-        {renderHamburgerIcon()}
-        <Typography variant='h6' noWrap component='div'>
-          Echo
-        </Typography>
-      </>
-    );
+    return <>{renderHamburgerIcon()}</>;
   };
 
   return (

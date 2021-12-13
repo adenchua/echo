@@ -57,7 +57,7 @@ const Ticket = (props: TicketProps): JSX.Element => {
             backgroundColor: "grey.200",
           },
           borderBottom: "1px solid",
-          borderColor: "grey.200",
+          borderColor: "grey.300",
           display: "flex",
           alignItems: "center",
           gap: 1.5,
@@ -90,7 +90,11 @@ const Ticket = (props: TicketProps): JSX.Element => {
         <Chip label={formattedDueDate} size='small' sx={{ display: dueDate ? "" : "none" }} />
         {assignee && (
           <Avatar
-            style={{ height: 32, width: 32, display: assigneeId ? "" : "none" }}
+            style={{
+              height: 32,
+              width: 32,
+              display: assigneeId ? "" : "none",
+            }}
             src={getUserAvatarSVG(assignee.username)}
           />
         )}

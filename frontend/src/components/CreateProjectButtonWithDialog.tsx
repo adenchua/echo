@@ -18,7 +18,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import createProject from "../api/projects/createProject";
 import { UserProjectsContext } from "./contexts/UserProjectsContextProvider";
-import { useLocalStorage } from "../utils/useLocalStorage";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const PROJECT_TYPES: ProjectType[] = ["Software Engineering", "Exploratory Data Analysis", "UX Design"];
 

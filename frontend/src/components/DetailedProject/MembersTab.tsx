@@ -15,6 +15,8 @@ import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import Paper from "@mui/material/Paper";
+import InputAdornment from "@mui/material/InputAdornment";
+import SearchIcon from "@mui/icons-material/Search";
 
 import ContainerWrapper from "../ContainerWrapper";
 import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
@@ -25,6 +27,7 @@ import removeMemberFromProject from "../../api/projects/removeMemberFromProject"
 import ProjectInterface from "../../types/ProjectInterface";
 import promoteMemberToAdmin from "../../api/projects/promoteMemberToAdmin";
 import AddMemberToProjectButtonWithDialog from "../AddMemberToProjectButtonWithDialog";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 interface RowUserInterface {
   user: UserInterface;
@@ -45,6 +48,8 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
     handlePromoteMember: handlePromoteMemberInContext,
   } = useContext(ProjectMembersContext);
   const [searchInput, setSearchInput] = useState<string>("");
+  const { storedValue: loggedInUserId } = useLocalStorage("user-id", "");
+  const isLoggedInUserAnAdmin = admins.map((admin) => admin._id).includes(loggedInUserId);
 
   const getTableRows = (rows: UserInterface[], isAdmin: boolean): RowUserInterface[] => {
     const updatedRows: RowUserInterface[] = rows.map((row) => {
@@ -80,6 +85,16 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
       </Typography>
       <Box display='flex' alignItems='center' gap={2} mb={2}>
         <TextField
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position='start'>
+                <SearchIcon fontSize='small' />
+              </InputAdornment>
+            ),
+            style: {
+              borderRadius: 0,
+            },
+          }}
           size='small'
           placeholder='Search...'
           value={searchInput}
@@ -87,14 +102,14 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
         />
         <AddMemberToProjectButtonWithDialog projectId={projectId} />
       </Box>
-      <TableContainer component={Paper} elevation={0}>
+      <TableContainer component={Paper} elevation={0} sx={{ border: "1px solid", borderColor: "grey.300" }}>
         <Table sx={{ minWidth: 650 }} size='small'>
           <TableHead>
             <TableRow>
               <TableCell>Member</TableCell>
               <TableCell align='left'>Title</TableCell>
               <TableCell align='left'>Type</TableCell>
-              <TableCell align='center'>Actions</TableCell>
+              {isLoggedInUserAnAdmin && <TableCell align='center'>Actions</TableCell>}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -104,7 +119,7 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
 
               if (matchString(searchInput, username) || matchString(searchInput, displayName)) {
                 return (
-                  <TableRow key={userId} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                  <TableRow key={userId} sx={{ "&:last-child td, &:last-child th": { border: 0 } }} hover>
                     <TableCell>
                       <CardHeader
                         sx={{ padding: 0 }}
@@ -129,20 +144,27 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
                       )}
                       {!isAdmin && <Typography fontSize={12}>Member</Typography>}
                     </TableCell>
-                    <TableCell align='center'>
-                      {!isAdmin && (
-                        <Tooltip title='Promote to Admin' disableInteractive>
-                          <IconButton size='small' color='primary' onClick={() => handlePromoteMember(user)}>
-                            <PromoteAdminIcon fontSize='small' />
+                    {isLoggedInUserAnAdmin && (
+                      <TableCell align='center'>
+                        {!isAdmin && (
+                          <Tooltip title='Promote to Admin' disableInteractive>
+                            <IconButton size='small' color='primary' onClick={() => handlePromoteMember(user)}>
+                              <PromoteAdminIcon fontSize='small' />
+                            </IconButton>
+                          </Tooltip>
+                        )}
+                        <Tooltip title='Remove from project' disableInteractive>
+                          <IconButton
+                            size='small'
+                            color='error'
+                            onClick={() => handleRemoveMember(user)}
+                            disabled={loggedInUserId === userId}
+                          >
+                            <DeleteIcon fontSize='small' />
                           </IconButton>
                         </Tooltip>
-                      )}
-                      <Tooltip title='Remove from project' disableInteractive>
-                        <IconButton size='small' color='error' onClick={() => handleRemoveMember(user)}>
-                          <DeleteIcon fontSize='small' />
-                        </IconButton>
-                      </Tooltip>
-                    </TableCell>
+                      </TableCell>
+                    )}
                   </TableRow>
                 );
               }

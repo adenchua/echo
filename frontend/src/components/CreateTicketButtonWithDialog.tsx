@@ -137,7 +137,7 @@ const CreateTicketButtonWithDialog = (props: CreateTicketButtonWithDialogProps):
         <Button
           startIcon={<AddIcon />}
           variant='outlined'
-          sx={{ minWidth: "128px", minHeight: "40px", display: { xs: "none", sm: "flex" } }}
+          sx={{ display: { xs: "none", sm: "flex" } }}
           onClick={() => setIsDialogOpen(true)}
         >
           Add Ticket

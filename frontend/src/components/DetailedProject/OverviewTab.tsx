@@ -24,9 +24,17 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
   const renderMemberCard = (member: UserInterface): JSX.Element => {
     const { displayName, username } = member;
     return (
-      <Paper sx={{ p: 2, display: "flex", alignItems: "center", gap: 1 }} elevation={0}>
-        <Avatar src={getUserAvatarSVG(username)}>{displayName}</Avatar>
-        <Box width='180px'>
+      <Paper
+        sx={{ p: 1, display: "flex", alignItems: "center", gap: 1, border: "1px solid", borderColor: "grey.300" }}
+        elevation={0}
+      >
+        <Avatar
+          src={getUserAvatarSVG(username)}
+          sx={{ height: 32, width: 32, border: "1px solid", borderColor: "grey.300" }}
+        >
+          {displayName}
+        </Avatar>
+        <Box width='160px'>
           <Typography noWrap variant='body2' component='div'>
             {displayName}
           </Typography>

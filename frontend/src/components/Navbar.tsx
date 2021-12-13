@@ -1,13 +1,13 @@
 import React, { useEffect, useContext } from "react";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
+import Typography from "@mui/material/Typography";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import ProjectsIcon from "@mui/icons-material/GitHub";
-import HomeIcon from "@mui/icons-material/Home";
+import HomeIcon from "@mui/icons-material/HomeOutlined";
 import MyTasksIcon from "@mui/icons-material/TaskAlt";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Box from "@mui/material/Box";
 import ListSubheader from "@mui/material/ListSubheader";
@@ -17,7 +17,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 
 import fetchAllProjectsByUser from "../api/projects/fetchAllProjectsByUser";
 import { UserProjectsContext } from "./contexts/UserProjectsContextProvider";
-import { useLocalStorage } from "../utils/useLocalStorage";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const navigationItems = [
   {
@@ -58,7 +58,14 @@ const Navbar = (): JSX.Element => {
 
   return (
     <Box sx={{ bgcolor: "grey.800", height: "100%" }}>
-      <Toolbar />
+      <Toolbar>
+        <Typography variant='h5' color='primary.light'>
+          🔥
+        </Typography>
+        <Typography variant='h5' color='primary.light' sx={{ ml: 1 }}>
+          echo.yl
+        </Typography>
+      </Toolbar>
       <Divider />
       <List
         subheader={
@@ -66,6 +73,7 @@ const Navbar = (): JSX.Element => {
             Navigation
           </ListSubheader>
         }
+        sx={{ px: 1 }}
       >
         {navigationItems.map(({ icon, text, link }) => (
           <ListItemButton
@@ -75,7 +83,11 @@ const Navbar = (): JSX.Element => {
             dense
             selected={link === pathname}
             sx={{
-              "&.Mui-selected": { borderLeft: "5px solid", borderColor: "primary.light" },
+              "&.Mui-selected": {
+                bgcolor: "primary.main",
+                borderRadius: 0.5,
+                "&:hover": { bgcolor: "primary.main" },
+              },
             }}
           >
             <ListItemIcon>{icon}</ListItemIcon>
@@ -91,16 +103,20 @@ const Navbar = (): JSX.Element => {
               My Projects
             </ListSubheader>
           }
+          sx={{ px: 1 }}
         >
           {projects.map(({ _id: projectId, title }) => (
-            <ListItem
-              button
+            <ListItemButton
               key={projectId}
               dense
               component={Link}
               to={`/projects/id/${projectId}?tab=overview`}
               sx={{
-                "&.Mui-selected": { borderLeft: "5px solid", borderColor: "primary.light" },
+                "&.Mui-selected": {
+                  bgcolor: "primary.main",
+                  borderRadius: 0.5,
+                  "&:hover": { bgcolor: "primary.main" },
+                },
               }}
               selected={selectedProjectId === projectId}
             >
@@ -109,8 +125,8 @@ const Navbar = (): JSX.Element => {
                   <ProjectsIcon fontSize={"small"} sx={{ color: "#FFF" }} />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary={title} sx={{ color: "#FFF" }} />
-            </ListItem>
+              <ListItemText primary={title} sx={{ color: "#FFF" }} primaryTypographyProps={{ noWrap: true }} />
+            </ListItemButton>
           ))}
         </List>
       )}

@@ -2,6 +2,8 @@ import React, { useState, useContext } from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import InputAdornment from "@mui/material/InputAdornment";
+import SearchIcon from "@mui/icons-material/Search";
 
 import ProjectInterface from "../../types/ProjectInterface";
 import Ticket from "../Ticket";
@@ -64,27 +66,40 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
         <Typography variant='h5' paragraph>
           Product Backlog
         </Typography>
-        <Box display='flex' alignItems='center' gap={2} mb={3}>
+        <Box display='flex' gap={2} mb={3}>
           {renderDesktopHeaderButtons()}
           {renderMobileHeaderButtons()}
           <TextField
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <SearchIcon fontSize='small' />
+                </InputAdornment>
+              ),
+              style: {
+                borderRadius: 0,
+              },
+            }}
             placeholder='Search...'
             size='small'
-            margin='none'
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
           />
         </Box>
-        {tickets.map((ticket) => {
-          if (matchString(searchInput, ticket.title)) {
-            return (
-              <Box key={ticket._id} onClick={() => handleSetSelectedTicket(ticket._id)}>
-                <Ticket ticket={ticket} showSprintToggleCheckBox bgGrey={ticket._id === selectedTicketId} />
-              </Box>
-            );
-          }
-          return null;
-        })}
+        {tickets && tickets.length > 1 && (
+          <Box sx={{ border: "1px solid", borderColor: "grey.300", borderBottom: 0 }}>
+            {tickets.map((ticket) => {
+              if (matchString(searchInput, ticket.title)) {
+                return (
+                  <Box key={ticket._id} onClick={() => handleSetSelectedTicket(ticket._id)}>
+                    <Ticket ticket={ticket} showSprintToggleCheckBox bgGrey={ticket._id === selectedTicketId} />
+                  </Box>
+                );
+              }
+              return null;
+            })}
+          </Box>
+        )}
         {tickets && tickets.length === 0 && (
           <Typography variant='body2' color='GrayText'>
             There are no tickets in the backlog.
