@@ -21,7 +21,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const navigationItems = [
   {
-    icon: <HomeIcon fontSize={"small"} sx={{ color: "#FFF" }} />,
+    icon: <HomeIcon sx={{ color: "#FFF" }} />,
     text: "Home",
     link: "/home",
   },
