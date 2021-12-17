@@ -241,6 +241,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
         margin='dense'
         size='small'
         multiline
+        rows={3}
         sx={{ mb: 2 }}
         autoFocus
       />
@@ -381,24 +382,11 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
           onChange={(e: SelectChangeEvent) => handleUpdateTicketStatus(e.target.value as StatusType)}
           fullWidth
         >
-          <MenuItem value='todo' dense sx={{ display: "flex", justifyContent: "center" }}>
-            <StatusChipButton status='todo' size='small' />
-          </MenuItem>
-          <MenuItem value='progress' dense sx={{ display: "flex", justifyContent: "center" }}>
-            <StatusChipButton status='progress' size='small' />
-          </MenuItem>
-          <MenuItem value='review' dense sx={{ display: "flex", justifyContent: "center" }}>
-            <StatusChipButton status='review' size='small' />
-          </MenuItem>
-          <MenuItem value='completed' dense sx={{ display: "flex", justifyContent: "center" }}>
-            <StatusChipButton status='completed' size='small' />
-          </MenuItem>
-          <MenuItem value='stuck' dense sx={{ display: "flex", justifyContent: "center" }}>
-            <StatusChipButton status='stuck' size='small' />
-          </MenuItem>
-          <MenuItem value='hold' dense sx={{ display: "flex", justifyContent: "center" }}>
-            <StatusChipButton status='hold' size='small' />
-          </MenuItem>
+          {["todo", "progress", "review", "completed", "stuck", "hold"].map((ticketStatus) => (
+            <MenuItem key={ticketStatus} value={ticketStatus} dense sx={{ display: "flex", justifyContent: "center" }}>
+              <StatusChipButton status={ticketStatus as StatusType} size='small' />
+            </MenuItem>
+          ))}
         </Select>
       </Box>
       <Divider flexItem />
