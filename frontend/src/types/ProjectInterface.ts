@@ -13,6 +13,11 @@ interface ProjectInterface {
   picture: number;
 }
 
+export type ProjectUpdateFieldsType = {
+  title?: string;
+  description?: string;
+};
+
 type ProjectTypeInterface = "Software Development" | "Exploratory Data Analysis";
 
 export default ProjectInterface;

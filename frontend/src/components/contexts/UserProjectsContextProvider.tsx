@@ -1,6 +1,7 @@
 import React, { createContext, useState, ReactNode, useCallback } from "react";
+import _ from "lodash";
 
-import ProjectInterface from "../../types/ProjectInterface";
+import ProjectInterface, { ProjectUpdateFieldsType } from "../../types/ProjectInterface";
 
 interface UserProjectsContextProviderProps {
   children: ReactNode;
@@ -10,12 +11,14 @@ type UserProjectsContextStateType = {
   projects: ProjectInterface[];
   addProject: (project: ProjectInterface) => void;
   handleSetProject: (projects: ProjectInterface[]) => void;
+  updateProject: (projectId: string, updatedFields: ProjectUpdateFieldsType) => void;
 };
 
 const ticketContextDefaultValues: UserProjectsContextStateType = {
   projects: [],
   addProject: () => {},
   handleSetProject: () => {},
+  updateProject: () => {},
 };
 
 export const UserProjectsContext = createContext<UserProjectsContextStateType>(ticketContextDefaultValues);
@@ -31,8 +34,19 @@ const UserProjectsContextProvider = ({ children }: UserProjectsContextProviderPr
     setProjects(newProjects);
   }, []);
 
+  const updateProject = useCallback((projectId: string, updatedFields: ProjectUpdateFieldsType): void => {
+    setProjects((prevState) =>
+      prevState.map((project) => {
+        if (project._id === projectId) {
+          project = _.merge({}, project, updatedFields);
+        }
+        return project;
+      })
+    );
+  }, []);
+
   return (
-    <UserProjectsContext.Provider value={{ projects, addProject, handleSetProject }}>
+    <UserProjectsContext.Provider value={{ projects, addProject, handleSetProject, updateProject }}>
       {children}
     </UserProjectsContext.Provider>
   );

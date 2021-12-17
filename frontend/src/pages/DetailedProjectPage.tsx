@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
+import _ from "lodash";
 
 import PageLayoutWrapper from "../components/PageLayoutWrapper";
-import ProjectInterface from "../types/ProjectInterface";
+import ProjectInterface, { ProjectUpdateFieldsType } from "../types/ProjectInterface";
 import fetchProject from "../api/projects/fetchProject";
 import ErrorBanner from "../components/ErrorBanner";
 import ToolbarContent from "../components/DetailedProject/ToolbarContent";
@@ -16,6 +17,7 @@ import fetchStoriesByIds from "../api/stories/fetchStoriesByIds";
 import { ProjectMembersContext } from "../components/contexts/ProjectMembersContextProvider";
 import fetchUsersByIds from "../api/users/fetchUsersByIds";
 import MembersTab from "../components/DetailedProject/MembersTab";
+import SettingsTab from "../components/DetailedProject/SettingsTab";
 
 const DetailedProjectPage = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
@@ -65,6 +67,11 @@ const DetailedProjectPage = (): JSX.Element => {
     getProject();
   }, [id, handleSetTickets, handleSetAdmins, handleSetMembers]);
 
+  const handleUpdateProjectFields = (updatedFields: ProjectUpdateFieldsType): void => {
+    const updatedProject = _.merge({}, project, updatedFields);
+    setProject(updatedProject);
+  };
+
   if (isLoading) {
     return <Loading />;
   }
@@ -84,6 +91,10 @@ const DetailedProjectPage = (): JSX.Element => {
       { tabKey: "product-backlog", component: <ProductBacklogTab project={project} /> },
       { tabKey: "sprint-backlog", component: <SprintBacklogTab project={project} /> },
       { tabKey: "members", component: <MembersTab project={project} /> },
+      {
+        tabKey: "settings",
+        component: <SettingsTab project={project} handleUpdateProjectFields={handleUpdateProjectFields} />,
+      },
     ];
     const selectedTab = availableTabs.find((element) => element.tabKey === currentTabKey);
 

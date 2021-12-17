@@ -5,7 +5,7 @@ import PageLayoutWrapper from "../components/PageLayoutWrapper";
 const HomePage = (): JSX.Element => {
   return (
     <PageLayoutWrapper>
-      <p>hello world</p>
+      <p>Work In Progress</p>
     </PageLayoutWrapper>
   );
 };

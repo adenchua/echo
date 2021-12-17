@@ -18,7 +18,7 @@ interface OverviewTabProps {
 
 const OverviewTab = (props: OverviewTabProps): JSX.Element => {
   const { project } = props;
-  const { _id: projectId } = project;
+  const { _id: projectId, description } = project;
   const { members, admins } = useContext(ProjectMembersContext);
 
   const renderMemberCard = (member: UserInterface): JSX.Element => {
@@ -51,9 +51,8 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
       <Typography variant='h5' paragraph>
         Description
       </Typography>
-      <Typography color='grey.600' textAlign='justify' mb={5}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua.
+      <Typography fontSize={14} color='grey.600' textAlign='justify' mb={5}>
+        {description ?? "No project description."}
       </Typography>
       <Box display='flex' alignItems='center' gap={2} mb={2}>
         <Typography variant='h5'>Members</Typography>

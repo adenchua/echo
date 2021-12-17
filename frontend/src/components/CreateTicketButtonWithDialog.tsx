@@ -116,7 +116,7 @@ const CreateTicketButtonWithDialog = (props: CreateTicketButtonWithDialogProps):
         )}
       </DialogContent>
       <DialogActions>
-        <Button sx={{ color: "grey.600", borderColor: "grey.600" }} onClick={handleCloseDialog} variant='outlined'>
+        <Button sx={{ color: "grey.600", borderColor: "grey.600" }} onClick={handleCloseDialog}>
           Cancel
         </Button>
         <Button

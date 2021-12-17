@@ -5,7 +5,7 @@ import PageLayoutWrapper from "../components/PageLayoutWrapper";
 const UserTasksPage = (): JSX.Element => {
   return (
     <PageLayoutWrapper>
-      <div>user tasks page</div>
+      <p>Work In Progress</p>
     </PageLayoutWrapper>
   );
 };
