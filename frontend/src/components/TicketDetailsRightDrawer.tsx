@@ -230,7 +230,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
   const renderDescriptionListItemEdit = (): JSX.Element => (
     <ListItem sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
       <Box display="flex" width="100%" mb={0.5} gap={2}>
-        <Typography variant="body2">Ticket</Typography>
+        <Typography variant="body2">Description</Typography>
         <Box flexGrow={1} />
         {renderUpdateButtons(handleUpdateTicket, handleDescriptionEditMode, true)}
       </Box>
