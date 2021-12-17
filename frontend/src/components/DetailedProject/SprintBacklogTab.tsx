@@ -1,22 +1,22 @@
-import React, { useContext, useState } from "react";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import SprintEndIcon from "@mui/icons-material/RunningWithErrors";
-import SprintStartIcon from "@mui/icons-material/Timelapse";
-import InputAdornment from "@mui/material/InputAdornment";
-import SearchIcon from "@mui/icons-material/Search";
-import { format, differenceInBusinessDays } from "date-fns";
+import React, { useContext, useState } from 'react';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import SprintEndIcon from '@mui/icons-material/RunningWithErrors';
+import SprintStartIcon from '@mui/icons-material/Timelapse';
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchIcon from '@mui/icons-material/Search';
+import { format, differenceInBusinessDays } from 'date-fns';
 
-import ProjectInterface from "../../types/ProjectInterface";
-import SprintStartDialog from "../SprintStartDialog";
-import useSprintBacklog from "../../hooks/useSprintBacklog";
-import SprintEndDialog from "../SprintEndDialog";
-import { TicketsContext } from "../contexts/TicketsContextProvider";
-import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
-import Ticket from "../Ticket";
-import { matchString } from "../../utils/matchString";
+import ProjectInterface from '../../types/ProjectInterface';
+import SprintStartDialog from '../SprintStartDialog';
+import useSprintBacklog from '../../hooks/useSprintBacklog';
+import SprintEndDialog from '../SprintEndDialog';
+import { TicketsContext } from '../contexts/TicketsContextProvider';
+import TicketDetailsRightDrawer from '../TicketDetailsRightDrawer';
+import Ticket from '../Ticket';
+import { matchString } from '../../utils/matchString';
 
 interface SprintBacklogTabProps {
   project: ProjectInterface;
@@ -27,7 +27,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   const { sprintIds, _id: projectId } = project;
   const { tickets } = useContext(TicketsContext);
   const { activeSprint, onStartSprint, onEndSprint } = useSprintBacklog(sprintIds);
-  const [searchInput, setSearchInput] = useState<string>("");
+  const [searchInput, setSearchInput] = useState<string>('');
   const [showEndSprintDialog, setShowEndSprintDialog] = useState<boolean>(false);
   const [showStartSprintDialog, setShowStartSprintDialog] = useState<boolean>(false);
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
@@ -49,24 +49,24 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
 
   const renderSprintDetails = (): JSX.Element => {
     if (!activeSprint) {
-      return <Typography variant='h5'>Sprint Backlog</Typography>;
+      return <Typography variant="h5">Sprint Backlog</Typography>;
     }
 
     const { number, startDate, endDate } = activeSprint;
-    const formattedStartDate = startDate ? format(new Date(startDate), "LLL dd") : "Invalid Date";
-    const formattedEndDate = endDate ? format(new Date(endDate), "LLL dd") : "Invalid Date";
+    const formattedStartDate = startDate ? format(new Date(startDate), 'LLL dd') : 'Invalid Date';
+    const formattedEndDate = endDate ? format(new Date(endDate), 'LLL dd') : 'Invalid Date';
     const dayDifference = differenceInBusinessDays(new Date(endDate), new Date());
 
     return (
       <div>
-        <Typography variant='h5'>Sprint {number}</Typography>
+        <Typography variant="h5">Sprint {number}</Typography>
         {dayDifference >= 0 && (
-          <Typography variant='caption' color='grey.600' paragraph>
+          <Typography variant="caption" color="grey.600" paragraph>
             {formattedStartDate} - {formattedEndDate} <span>&#8729;</span> {dayDifference} business day(s) remaining
           </Typography>
         )}
         {dayDifference < 0 && (
-          <Typography variant='caption' color={dayDifference > 0 ? "grey.600" : "error"} paragraph>
+          <Typography variant="caption" color={dayDifference > 0 ? 'grey.600' : 'error'} paragraph>
             {formattedStartDate} - {formattedEndDate} <span>&#8729;</span> {Math.abs(dayDifference)} day(s) overdue
           </Typography>
         )}
@@ -91,14 +91,14 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   };
 
   return (
-    <Box sx={{ marginRight: "240px" }}>
-      <Box display='flex' alignItems='flex-start' justifyContent='space-between' mb={1}>
+    <Box sx={{ marginRight: '240px' }}>
+      <Box display="flex" alignItems="flex-start" justifyContent="space-between" mb={1}>
         {renderSprintDetails()}
         {(!activeSprint || activeSprint.hasEnded) && (
           <Button
-            variant='contained'
+            variant="contained"
             startIcon={<SprintStartIcon />}
-            sx={{ whiteSpace: "nowrap" }}
+            sx={{ whiteSpace: 'nowrap' }}
             onClick={() => setShowStartSprintDialog(true)}
           >
             Start Sprint
@@ -106,40 +106,40 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
         )}
         {activeSprint && !activeSprint.hasEnded && (
           <Button
-            variant='contained'
+            variant="contained"
             startIcon={<SprintEndIcon />}
-            sx={{ minWidth: "132px", whiteSpace: "nowrap" }}
+            sx={{ minWidth: '132px', whiteSpace: 'nowrap' }}
             onClick={() => setShowEndSprintDialog(true)}
           >
             End Sprint
           </Button>
         )}
       </Box>
-      <Box display='flex' alignItems='center' gap={2} mb={3}>
+      <Box display="flex" alignItems="center" gap={2} mb={3}>
         <TextField
           InputProps={{
             startAdornment: (
-              <InputAdornment position='start'>
-                <SearchIcon fontSize='small' />
+              <InputAdornment position="start">
+                <SearchIcon fontSize="small" />
               </InputAdornment>
             ),
             style: {
               borderRadius: 0,
             },
           }}
-          placeholder='Search...'
-          size='small'
+          placeholder="Search..."
+          size="small"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
         />
       </Box>
       {sprintTickets && sprintTickets.length === 0 && (
-        <Typography variant='body2' color='GrayText'>
+        <Typography variant="body2" color="GrayText">
           There are no tickets in the backlog.
         </Typography>
       )}
-      {tickets && tickets.length > 1 && (
-        <Box sx={{ border: "1px solid", borderColor: "grey.300", borderBottom: 0 }}>
+      {sprintTickets && sprintTickets.length > 0 && (
+        <Box sx={{ border: '1px solid', borderColor: 'grey.300', borderBottom: 0 }}>
           {sprintTickets?.map((ticket) => {
             const { _id: id, title } = ticket;
             if (matchString(searchInput, title)) {
