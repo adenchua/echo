@@ -44,10 +44,6 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
   const { _id: id, title, description, priority, type, dueDate, status, assigneeId } = ticket;
   const [titleInput, setTitleInput] = useState<string>(title);
   const [descriptionInput, setDescriptionInput] = useState<string>(description ?? "");
-  const [ticketType, setTicketType] = useState<StoryType>(type);
-  const [priorityInput, setPriorityInput] = useState<PriorityType>(priority);
-  const [statusInput, setStatusInput] = useState<StatusType>(status);
-  const [assigneeIdInput, setAssigneeIdInput] = useState<string>(assigneeId ?? "");
   const [assignee, setAssignee] = useState<UserInterface | null>(null);
   const [dueDateInput, setDueDateInput] = useState<Date | null>(dueDate ? new Date(dueDate) : null);
   const [isTitleEditModeOn, setIsTitleEditModeOn] = useState<boolean>(false);
@@ -85,11 +81,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
     const clearFields = (): void => {
       setTitleInput(title);
       setDescriptionInput(description);
-      setTicketType(type);
-      setPriorityInput(priority);
       setDueDateInput(dueDate ? new Date(dueDate) : null);
-      setStatusInput(status);
-      setAssigneeIdInput(assigneeId ?? "");
     };
 
     closeAllEditModes();
@@ -101,27 +93,31 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
     onUpdateTicket(id, {
       title: titleInput,
       description: descriptionInput,
-      type: ticketType,
-      priority: priorityInput,
       dueDate: dueDateInputInISOString,
-      status: statusInput,
-      assigneeId: assigneeIdInput ? assigneeIdInput : null,
     });
     closeAllEditModes();
+  };
+
+  const handleUpdateTicketStatus = (newStatus: StatusType): void => {
+    onUpdateTicket(id, { status: newStatus });
   };
 
   const handleChangePriority = (event: React.MouseEvent<HTMLElement>, newPriority: PriorityType) => {
     if (!newPriority) {
       return; // prevent deselecting a button
     }
-    setPriorityInput(newPriority);
+    onUpdateTicket(id, { priority: newPriority });
   };
 
   const handleChangeTicketType = (event: React.MouseEvent<HTMLElement>, newType: StoryType) => {
     if (!newType) {
       return; // prevent deselecting a button
     }
-    setTicketType(newType);
+    onUpdateTicket(id, { type: newType });
+  };
+
+  const handleUpdateTicketAssignee = (newAssigneeId: string) => {
+    onUpdateTicket(id, { assigneeId: newAssigneeId ? newAssigneeId : null }); // if no assignee, newAssigneeId will be empty string
   };
 
   const handleTitleEditMode = (): void => {
@@ -163,16 +159,18 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
     </Typography>
   );
 
-  const renderUpdateButtons = (onAccept: any, onCancel: any): JSX.Element => (
+  const renderUpdateButtons = (onAccept: any, onCancel: any, showUpdateButton: boolean): JSX.Element => (
     <>
-      <Typography
-        variant='body2'
-        color='primary'
-        sx={{ "&:hover": { textDecoration: "underline", cursor: "pointer" } }}
-        onClick={onAccept}
-      >
-        Update
-      </Typography>
+      {showUpdateButton && (
+        <Typography
+          variant='body2'
+          color='primary'
+          sx={{ "&:hover": { textDecoration: "underline", cursor: "pointer" } }}
+          onClick={onAccept}
+        >
+          Update
+        </Typography>
+      )}
       <Typography
         variant='body2'
         color='primary'
@@ -200,7 +198,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
       <Box display='flex' width='100%' mb={0.5} gap={2}>
         <Typography variant='body2'>Ticket</Typography>
         <Box flexGrow={1} />
-        {renderUpdateButtons(handleUpdateTicket, handleTitleEditMode)}
+        {renderUpdateButtons(handleUpdateTicket, handleTitleEditMode, true)}
       </Box>
       <TextField
         value={titleInput}
@@ -233,7 +231,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
       <Box display='flex' width='100%' mb={0.5} gap={2}>
         <Typography variant='body2'>Ticket</Typography>
         <Box flexGrow={1} />
-        {renderUpdateButtons(handleUpdateTicket, handleDescriptionEditMode)}
+        {renderUpdateButtons(handleUpdateTicket, handleDescriptionEditMode, true)}
       </Box>
       <TextField
         value={descriptionInput}
@@ -275,10 +273,10 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
       <Box display='flex' width='100%' mb={2} gap={2}>
         <Typography variant='body2'>Priority</Typography>
         <Box flexGrow={1} />
-        {renderUpdateButtons(handleUpdateTicket, handlePriorityEditMode)}
+        {renderUpdateButtons(handleUpdateTicket, handlePriorityEditMode, false)}
       </Box>
       <Box mb={2}>
-        <FormPriorityToggleButtons value={priorityInput} onChangeHandler={handleChangePriority} />
+        <FormPriorityToggleButtons value={priority} onChangeHandler={handleChangePriority} />
       </Box>
       <Divider flexItem />
     </ListItem>
@@ -309,10 +307,10 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
       <Box display='flex' width='100%' mb={2} gap={2}>
         <Typography variant='body2'>Type</Typography>
         <Box flexGrow={1} />
-        {renderUpdateButtons(handleUpdateTicket, handleTicketTypeEditMode)}
+        {renderUpdateButtons(handleUpdateTicket, handleTicketTypeEditMode, false)}
       </Box>
       <Box mb={2}>
-        <FormTicketTypeToggleButtons value={ticketType} onChangeHandler={handleChangeTicketType} />
+        <FormTicketTypeToggleButtons value={type} onChangeHandler={handleChangeTicketType} />
       </Box>
       <Divider flexItem />
     </ListItem>
@@ -337,7 +335,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
       <Box display='flex' width='100%' mb={2} gap={2}>
         <Typography variant='body2'>Due Date</Typography>
         <Box flexGrow={1} />
-        {renderUpdateButtons(handleUpdateTicket, handleDueDateEditMode)}
+        {renderUpdateButtons(handleUpdateTicket, handleDueDateEditMode, false)}
       </Box>
       <Box mb={2}>
         <DatePicker
@@ -374,13 +372,13 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
       <Box display='flex' width='100%' mb={1.5} gap={2}>
         <Typography variant='body2'>Status</Typography>
         <Box flexGrow={1} />
-        {renderUpdateButtons(handleUpdateTicket, handleStatusEditMode)}
+        {renderUpdateButtons(handleUpdateTicket, handleStatusEditMode, false)}
       </Box>
       <Box mb={2} width='100%'>
         <Select
           size='small'
-          value={statusInput}
-          onChange={(e: SelectChangeEvent) => setStatusInput(e.target.value as StatusType)}
+          value={status}
+          onChange={(e: SelectChangeEvent) => handleUpdateTicketStatus(e.target.value as StatusType)}
           fullWidth
         >
           <MenuItem value='todo' dense sx={{ display: "flex", justifyContent: "center" }}>
@@ -431,13 +429,13 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
       <Box display='flex' width='100%' mb={1.5} gap={2}>
         <Typography variant='body2'>Assignee</Typography>
         <Box flexGrow={1} />
-        {renderUpdateButtons(handleUpdateTicket, handleAssigneeEditMode)}
+        {renderUpdateButtons(handleUpdateTicket, handleAssigneeEditMode, false)}
       </Box>
       <Box mb={2} width='100%'>
         <Select
           size='small'
-          onChange={(e: SelectChangeEvent) => setAssigneeIdInput(e.target.value)}
-          value={assigneeIdInput}
+          onChange={(e: SelectChangeEvent) => handleUpdateTicketAssignee(e.target.value)}
+          value={assigneeId ? assigneeId : ""}
           fullWidth
         >
           <MenuItem value='' dense sx={{ display: "flex", justifyContent: "center" }}>
