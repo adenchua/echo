@@ -49,7 +49,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
 
   const renderSprintDetails = (): JSX.Element => {
     if (!activeSprint) {
-      return <Typography variant="h5">Sprint Backlog</Typography>;
+      return <Typography variant="h5">Sprint</Typography>;
     }
 
     const { number, startDate, endDate } = activeSprint;

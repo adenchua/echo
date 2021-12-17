@@ -261,7 +261,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
         size="small"
         icon={
           <Box display="flex" alignItems="center">
-            <PriorityIcon priority={priority} />
+            <PriorityIcon priority={priority} hideMedium={false} />
           </Box>
         }
         sx={{ mb: 2 }}
