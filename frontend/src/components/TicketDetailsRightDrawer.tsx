@@ -334,12 +334,12 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
 
   const renderDueDateListItemEdit = (): JSX.Element => (
     <ListItem sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-      <Box display="flex" width="100%" mb={2} gap={2}>
+      <Box display="flex" width="100%" mb={3} gap={2}>
         <Typography variant="body2">Due Date</Typography>
         <Box flexGrow={1} />
         {renderUpdateButtons(handleUpdateTicket, handleDueDateEditMode, false)}
       </Box>
-      <Box mb={2}>
+      <Box mb={3} width="100%">
         <DatePicker
           value={dueDate}
           onChange={(newSelectedDate) => {
@@ -358,7 +358,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
             edge: 'start',
           }}
           renderInput={({ inputRef, inputProps, InputProps }) => (
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, gap: 1 }} ref={inputRef}>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 3, gap: 1 }} ref={inputRef}>
               <input {...inputProps} style={{ display: 'none' }} />
               <div>{InputProps?.endAdornment}</div>
               {!dueDate && (
@@ -374,7 +374,9 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
             </Box>
           )}
         />
-        <Button onClick={() => handleUpdateTicketDueDate(null)}>Remove Due Date</Button>
+        <Button onClick={() => handleUpdateTicketDueDate(null)} fullWidth variant="outlined">
+          Remove Due Date
+        </Button>
       </Box>
       <Divider flexItem />
     </ListItem>
