@@ -14,14 +14,14 @@ type UserProjectsContextStateType = {
   updateProject: (projectId: string, updatedFields: ProjectUpdateFieldsType) => void;
 };
 
-const ticketContextDefaultValues: UserProjectsContextStateType = {
+const userProjectsContextDefaultValues: UserProjectsContextStateType = {
   projects: [],
   addProject: () => {},
   handleSetProject: () => {},
   updateProject: () => {},
 };
 
-export const UserProjectsContext = createContext<UserProjectsContextStateType>(ticketContextDefaultValues);
+export const UserProjectsContext = createContext<UserProjectsContextStateType>(userProjectsContextDefaultValues);
 
 const UserProjectsContextProvider = ({ children }: UserProjectsContextProviderProps): JSX.Element => {
   const [projects, setProjects] = useState<ProjectInterface[]>([]);

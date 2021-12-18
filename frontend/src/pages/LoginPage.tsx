@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -9,15 +9,15 @@ import Alert from "@mui/material/Alert";
 import { useHistory } from "react-router-dom";
 
 import login from "../api/authentication/login";
-import { useLocalStorage } from "../hooks/useLocalStorage";
 import { loginErrorCodeToMessageHelper } from "../utils/loginErrorCodeToMessageHelper";
+import { UserAuthenticationContext } from "../components/contexts/UserAuthenticationContextProvider";
 
 const LoginPage = (): JSX.Element => {
   const [usernameInput, setUsernameInput] = useState<string>("");
   const [passwordInput, setPasswordInput] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const { setValueInStorage } = useLocalStorage("user-id", "");
+  const { loginUser } = useContext(UserAuthenticationContext);
   const history = useHistory();
 
   const handleLogin = async (e: React.SyntheticEvent): Promise<void> => {
@@ -27,7 +27,8 @@ const LoginPage = (): JSX.Element => {
     try {
       setIsLoading(true);
       const user = await login(usernameInput, passwordInput);
-      setValueInStorage(user._id);
+      const { _id: userId } = user;
+      loginUser(userId);
       history.push("/home"); // redirect to homepage upon login
     } catch (error) {
       const errorCode = (error as Error).message;

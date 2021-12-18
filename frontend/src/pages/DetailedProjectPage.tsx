@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Redirect } from "react-router-dom";
 import _ from "lodash";
 
+import { UserAuthenticationContext } from "../components/contexts/UserAuthenticationContextProvider";
 import PageLayoutWrapper from "../components/PageLayoutWrapper";
 import ProjectInterface, { ProjectUpdateFieldsType } from "../types/ProjectInterface";
 import fetchProject from "../api/projects/fetchProject";
@@ -20,6 +21,7 @@ import MembersTab from "../components/DetailedProject/MembersTab";
 import SettingsTab from "../components/DetailedProject/SettingsTab";
 
 const DetailedProjectPage = (): JSX.Element => {
+  const { isLoggedIn } = useContext(UserAuthenticationContext);
   const { id } = useParams<{ id: string }>();
   const query = useQuery();
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -71,6 +73,10 @@ const DetailedProjectPage = (): JSX.Element => {
     const updatedProject = _.merge({}, project, updatedFields);
     setProject(updatedProject);
   };
+
+  if (!isLoggedIn) {
+    return <Redirect to='/' />;
+  }
 
   if (isLoading) {
     return <Loading />;

@@ -18,7 +18,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import createProject from "../api/projects/createProject";
 import { UserProjectsContext } from "./contexts/UserProjectsContextProvider";
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import { UserAuthenticationContext } from "./contexts/UserAuthenticationContextProvider";
 
 const PROJECT_TYPES: ProjectType[] = ["Software Engineering", "Exploratory Data Analysis", "UX Design"];
 
@@ -31,7 +31,7 @@ const CreateProjectButtonWithDialog = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showError, setShowError] = useState<boolean>(false);
   const { addProject } = useContext(UserProjectsContext);
-  const { storedValue: userId } = useLocalStorage("user-id", "");
+  const { loggedInUserId } = useContext(UserAuthenticationContext);
 
   const handleCloseDialog = (): void => {
     setIsDialogOpen(false);
@@ -46,10 +46,14 @@ const CreateProjectButtonWithDialog = (): JSX.Element => {
   };
 
   const handleAddProject = async (): Promise<void> => {
+    if (!loggedInUserId) {
+      return;
+    }
+
     try {
       setIsLoading(true);
       setShowError(false);
-      const project = await createProject(projectTitle, userId, projectType);
+      const project = await createProject(projectTitle, loggedInUserId, projectType);
       addProject(project);
       handleCloseDialog();
     } catch (error) {

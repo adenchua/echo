@@ -5,7 +5,7 @@ import PageLayoutWrapper from "../components/PageLayoutWrapper";
 const UserProfilePage = (): JSX.Element => {
   return (
     <PageLayoutWrapper>
-      <div>upp</div>
+      <p>Work In Progress</p>
     </PageLayoutWrapper>
   );
 };
