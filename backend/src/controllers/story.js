@@ -86,7 +86,9 @@ module.exports.getStories = async (req, res) => {
   try {
     for (const storyId of storyIds) {
       const story = await Story.findById(storyId);
-      stories.push(story);
+      if (story) {
+        stories.push(story);
+      }
     }
 
     res.status(200).send(stories);

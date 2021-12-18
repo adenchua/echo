@@ -13,6 +13,7 @@ type TicketsContextStateType = {
   updateTicket: (ticketId: string, updatedFields: TicketUpdateFieldsType) => void;
   removeCompletedTickets: () => void;
   handleSetTickets: (newTickets: StoryInterface[]) => void;
+  deleteTicket: (ticketId: string) => void;
 };
 
 const ticketContextDefaultValues: TicketsContextStateType = {
@@ -21,6 +22,7 @@ const ticketContextDefaultValues: TicketsContextStateType = {
   updateTicket: () => {},
   removeCompletedTickets: () => {},
   handleSetTickets: () => {},
+  deleteTicket: () => {},
 };
 
 export const TicketsContext = createContext<TicketsContextStateType>(ticketContextDefaultValues);
@@ -43,6 +45,11 @@ const TicketsContextProvider = ({ children }: TicketsContextProviderProps): JSX.
     );
   }, []);
 
+  const deleteTicket = (ticketId: string): void => {
+    const filteredTickets = tickets.filter((ticket) => ticket._id !== ticketId);
+    setTickets(filteredTickets);
+  };
+
   const removeCompletedTickets = useCallback((): void => {
     const incompleteTickets = tickets.filter((ticket) => ticket.status !== "completed");
     setTickets(incompleteTickets);
@@ -53,7 +60,9 @@ const TicketsContextProvider = ({ children }: TicketsContextProviderProps): JSX.
   }, []);
 
   return (
-    <TicketsContext.Provider value={{ tickets, addTicket, updateTicket, removeCompletedTickets, handleSetTickets }}>
+    <TicketsContext.Provider
+      value={{ tickets, addTicket, updateTicket, removeCompletedTickets, handleSetTickets, deleteTicket }}
+    >
       {children}
     </TicketsContext.Provider>
   );

@@ -72,8 +72,10 @@ module.exports.getUsers = async (req, res) => {
   try {
     for (const userId of userIds) {
       const user = await User.findById(userId);
-      user.password = undefined;
-      users.push(user);
+      if (user) {
+        user.password = undefined;
+        users.push(user);
+      }
     }
 
     res.status(200).send(users);
