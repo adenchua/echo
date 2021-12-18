@@ -57,7 +57,7 @@ const Navbar = (): JSX.Element => {
   }, [handleSetProject, loggedInUserId]);
 
   return (
-    <Box sx={{ bgcolor: "grey.800", height: "100%", display: "flex", flexDirection: "column", pb: 3 }}>
+    <Box sx={{ bgcolor: "grey.800", height: "100%", display: "flex", flexDirection: "column", pb: 2 }}>
       <Toolbar component={Link} to='/home' sx={{ textDecoration: "none", color: "inherit" }}>
         <Typography variant='h5' color='primary.light'>
           🔥

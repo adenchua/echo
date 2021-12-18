@@ -45,10 +45,13 @@ const TicketsContextProvider = ({ children }: TicketsContextProviderProps): JSX.
     );
   }, []);
 
-  const deleteTicket = (ticketId: string): void => {
-    const filteredTickets = tickets.filter((ticket) => ticket._id !== ticketId);
-    setTickets(filteredTickets);
-  };
+  const deleteTicket = useCallback(
+    (ticketId: string): void => {
+      const filteredTickets = tickets.filter((ticket) => ticket._id !== ticketId);
+      setTickets(filteredTickets);
+    },
+    [tickets]
+  );
 
   const removeCompletedTickets = useCallback((): void => {
     const incompleteTickets = tickets.filter((ticket) => ticket.status !== "completed");
