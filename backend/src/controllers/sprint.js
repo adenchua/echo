@@ -45,6 +45,9 @@ module.exports.endSprint = async (req, res) => {
     const project = await Project.findById(projectId);
     for (const storyId of project.backlogIds) {
       const story = await Story.findById(storyId);
+      if (!story) {
+        continue; // temp fix where invalid storyIds will return null, causing the next statements to break
+      }
       if (story.isInSprint && story.status === "completed") {
         completedStoryIds.push(story._id);
       }

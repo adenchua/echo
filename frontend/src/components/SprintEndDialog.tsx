@@ -13,6 +13,7 @@ import TickIcon from "@mui/icons-material/Check";
 
 import StoryInterface from "../types/StoryInterface";
 import SprintInterface from "../types/SprintInterface";
+import { sleep } from "../utils/sleep";
 
 interface SprintEndDialogProps {
   showEndSprintDialog: boolean;
@@ -46,6 +47,7 @@ const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
     try {
       setShowError(false);
       setIsLoading(true);
+      await sleep(1000);
       const response = await onEndSprint(projectId, sprintId);
       setCompletedSprint(response);
       setShowSuccessMessage(true);

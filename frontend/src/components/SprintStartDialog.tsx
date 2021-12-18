@@ -15,6 +15,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { isValid, format, differenceInCalendarDays } from "date-fns";
 
 import SprintInterface from "../types/SprintInterface";
+import { sleep } from "../utils/sleep";
 
 interface SprintStartDialogProps {
   showStartSprintDialog: boolean;
@@ -44,6 +45,7 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
     try {
       setShowError(false);
       setIsLoading(true);
+      await sleep(1000);
       const response = await onStartSprint(projectId, endDateInput);
       setNewSprint(response);
       setShowSuccessMessage(true);
