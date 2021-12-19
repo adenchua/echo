@@ -10,6 +10,7 @@
     "@dicebear/pixel-art": "^4.10.0",
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
+    "@fontsource/lato": "^4.5.0",
     "@fontsource/roboto": "^4.5.1",
     "@mui/icons-material": "^5.0.4",
     "@mui/lab": "^5.0.0-alpha.53",
