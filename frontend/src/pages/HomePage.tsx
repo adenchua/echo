@@ -47,7 +47,7 @@ const HomePage = (): JSX.Element => {
           color='primary.light'
           fontWeight={400}
         >
-          🔥 echo.yl
+          echo<span style={{ color: "orange" }}>.yl</span>
         </Typography>
         <Typography sx={{ color: "#FFF", maxWidth: "50%", marginX: "auto" }} variant='h3' align='center'>
           Plan, manage and track all your tasks in one place.

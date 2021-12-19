@@ -35,10 +35,11 @@ interface TicketDetailsRightDrawerProps {
   ticket: StoryInterface;
   isOpen: boolean;
   onClose: () => void;
+  projectId: string;
 }
 
 const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Element => {
-  const { ticket, onClose, isOpen } = props;
+  const { ticket, onClose, isOpen, projectId } = props;
   const { onUpdateTicket, onDeleteTicket } = useProductBacklog();
   const { members, admins } = useContext(ProjectMembersContext);
   const { _id: id, title, description, priority, type, dueDate, status, assigneeId } = ticket;
@@ -528,7 +529,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
         {isDueDateEditModeOn && renderDueDateListItemEdit()}
 
         <ListItem sx={{ mt: 1 }}>
-          <Button fullWidth variant='outlined' color='error' onClick={() => onDeleteTicket(id)}>
+          <Button fullWidth variant='outlined' color='error' onClick={() => onDeleteTicket(id, projectId)}>
             Delete Ticket
           </Button>
         </ListItem>

@@ -59,11 +59,8 @@ const Navbar = (): JSX.Element => {
   return (
     <Box sx={{ bgcolor: "grey.800", height: "100%", display: "flex", flexDirection: "column", pb: 2 }}>
       <Toolbar component={Link} to='/home' sx={{ textDecoration: "none", color: "inherit" }}>
-        <Typography variant='h5' color='primary.light'>
-          🔥
-        </Typography>
-        <Typography variant='h5' color='primary.light' sx={{ ml: 1 }}>
-          echo.yl
+        <Typography variant='h4' color='primary.light'>
+          echo<span style={{ color: "orange" }}>.yl</span>
         </Typography>
       </Toolbar>
       <Divider />

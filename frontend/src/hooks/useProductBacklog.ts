@@ -36,9 +36,9 @@ const useProductBacklog = () => {
     }
   };
 
-  const onDeleteTicket = async (ticketId: string): Promise<void> => {
+  const onDeleteTicket = async (ticketId: string, projectId: string): Promise<void> => {
     try {
-      await deleteTicket(ticketId);
+      await deleteTicket(ticketId, projectId);
       deleteTicketContext(ticketId);
     } catch (error) {
       throw new Error("Failed to update ticket");

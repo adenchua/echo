@@ -59,14 +59,18 @@ module.exports.updateStory = async (req, res) => {
 
 module.exports.deleteStory = async (req, res) => {
   const { storyId } = req.params;
+  const { projectId } = req.body;
 
-  if (!storyId) {
+  if (!storyId || !projectId) {
     res.status(400).send();
     return;
   }
 
   try {
     await Story.findByIdAndDelete(storyId);
+    const project = await Project.findById(projectId);
+    project.backlogIds.pull(storyId);
+    await project.save();
     res.status(204).send();
   } catch (error) {
     console.error("deleteStory", error);
