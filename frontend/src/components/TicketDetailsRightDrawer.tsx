@@ -373,7 +373,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
             </Box>
           )}
         />
-        <Button onClick={() => handleUpdateTicketDueDate(null)} fullWidth variant='outlined'>
+        <Button onClick={() => handleUpdateTicketDueDate(null)} fullWidth variant='outlined' size='small'>
           Remove Due Date
         </Button>
       </Box>
@@ -407,6 +407,16 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
           value={status}
           onChange={(e: SelectChangeEvent) => handleUpdateTicketStatus(e.target.value as StatusType)}
           fullWidth
+          SelectDisplayProps={{
+            style: {
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "4px 8px",
+              margin: 0,
+              background: "#00000014",
+            },
+          }}
         >
           {["todo", "progress", "review", "completed", "stuck", "hold"].map((ticketStatus) => (
             <MenuItem key={ticketStatus} value={ticketStatus} dense sx={{ display: "flex", justifyContent: "center" }}>
@@ -451,10 +461,17 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
           onChange={(e: SelectChangeEvent) => handleUpdateTicketAssignee(e.target.value)}
           value={assigneeId ? assigneeId : ""}
           fullWidth
+          SelectDisplayProps={{
+            style: {
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              padding: "0px 8px",
+              margin: 0,
+              background: "#00000014",
+            },
+          }}
         >
-          <MenuItem value='' dense sx={{ display: "flex", justifyContent: "center" }}>
-            None
-          </MenuItem>
           {[...admins, ...members].map((user) => {
             const { displayName, _id: userId, username } = user;
             return (
@@ -467,6 +484,9 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
             );
           })}
         </Select>
+        <Button fullWidth variant='outlined' size='small' sx={{ mt: 1 }} onClick={() => handleUpdateTicketAssignee("")}>
+          Remove Assignee
+        </Button>
       </Box>
       <Divider flexItem />
     </ListItem>
