@@ -6,6 +6,7 @@ import UserProjectsContextProvider from "./components/contexts/UserProjectsConte
 import DetailedProjectPageWrapper from "./pages/DetailedProjectPageWrapper";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
+import NotFoundPage from "./pages/NotFoundPage";
 import ProjectListingPage from "./pages/ProjectListingPage";
 
 function App() {
@@ -25,6 +26,9 @@ function App() {
             </Route>
             <Route path='/projects/id/:id'>
               <DetailedProjectPageWrapper />
+            </Route>
+            <Route path='*'>
+              <NotFoundPage />
             </Route>
           </Switch>
         </Router>
