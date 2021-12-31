@@ -29,6 +29,12 @@ module.exports.getProject = async (req, res) => {
 
   try {
     const project = await Project.findById(projectId);
+
+    if (project.isDeleted) {
+      res.status(400).send();
+      return;
+    }
+
     res.status(200).send(project);
   } catch (error) {
     console.error("getProject error", error);
@@ -47,6 +53,11 @@ module.exports.addMemberToProject = async (req, res) => {
 
   try {
     const project = await Project.findById(projectId);
+
+    if (project.isDeleted) {
+      res.status(400).send();
+      return;
+    }
 
     if (project.adminIds.includes(userId)) {
       res.status(400).send({ message: "member is already an administrator" });
@@ -75,6 +86,12 @@ module.exports.addMembersToProject = async (req, res) => {
 
   try {
     const project = await Project.findById(projectId);
+
+    if (project.isDeleted) {
+      res.status(400).send();
+      return;
+    }
+
     for (const userId of userIds) {
       if (project.adminIds.includes(userId)) {
         continue; // already admin, no need to add
@@ -103,6 +120,12 @@ module.exports.removeMemberFromProject = async (req, res) => {
 
   try {
     const project = await Project.findById(projectId);
+
+    if (project.isDeleted) {
+      res.status(400).send();
+      return;
+    }
+
     if (project.memberIds.includes(userId)) {
       project.memberIds.pull(userId);
     }
@@ -123,6 +146,12 @@ module.exports.updateProject = async (req, res) => {
   }
 
   try {
+    const project = await Project.findById(projectId);
+    if (project.isDeleted) {
+      res.status(400).send();
+      return;
+    }
+
     const keysToUpdate = removeUndefinedKeysFromObject({ title, description, announcement, picture, type });
     await Project.findByIdAndUpdate(projectId, { ...keysToUpdate });
     res.status(204).send();
@@ -140,8 +169,8 @@ module.exports.getProjectsOfUser = async (req, res) => {
   }
 
   try {
-    const projectsWithUsersAsAdmins = await Project.find({ adminIds: userId });
-    const projectsWithUsersAsMembers = await Project.find({ memberIds: userId });
+    const projectsWithUsersAsAdmins = await Project.find({ adminIds: userId, isDeleted: false });
+    const projectsWithUsersAsMembers = await Project.find({ memberIds: userId, isDeleted: false });
     const projects = [...projectsWithUsersAsAdmins, ...projectsWithUsersAsMembers];
     res.status(200).send(projects);
   } catch (error) {
@@ -152,7 +181,7 @@ module.exports.getProjectsOfUser = async (req, res) => {
 
 module.exports.getAllProjects = async (req, res) => {
   try {
-    const projects = await Project.find();
+    const projects = await Project.find({ isDeleted: false });
     res.status(200).send(projects);
   } catch (error) {
     console.error("getAllProjects", error);
@@ -171,6 +200,11 @@ module.exports.promoteMemberToAdministrator = async (req, res) => {
 
   try {
     const project = await Project.findById(projectId);
+
+    if (project.isDeleted) {
+      res.status(400).send();
+      return;
+    }
 
     if (!project.adminIds.includes(userId)) {
       project.adminIds.push(userId);
@@ -200,6 +234,11 @@ module.exports.demoteAdmintoMember = async (req, res) => {
   try {
     const project = await Project.findById(projectId);
 
+    if (project.isDeleted) {
+      res.status(400).send();
+      return;
+    }
+
     if (project.adminIds.length === 1 && project.adminIds.includes(userId)) {
       res.status(400).send({ message: "unable to remove the only administrator" });
       return;
@@ -225,7 +264,7 @@ module.exports.deleteProject = async (req, res) => {
   const { projectId } = req.params;
 
   try {
-    await Project.findByIdAndDelete(projectId);
+    await Project.findByIdAndUpdate(projectId, { isDeleted: true }); // safe delete.
     res.status(204).send();
   } catch (error) {
     console.error("deleteProject", error);
