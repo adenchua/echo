@@ -36,8 +36,6 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
         });
       case "creation-asc":
         return tickets.sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
-      case "creation-dsc":
-        return tickets.sort((a, b) => new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime());
       default:
         return tickets; // invalid sort order
     }
@@ -93,6 +91,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
         </Typography>
         <Box display='flex' gap={2} mb={3} maxHeight={40}>
           {renderDesktopHeaderButtons()}
+          <Box flexGrow={1} />
           <TextField
             InputProps={{
               startAdornment: (

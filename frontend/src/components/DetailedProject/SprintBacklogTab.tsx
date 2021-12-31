@@ -46,8 +46,6 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
         });
       case "creation-asc":
         return sprintTickets.sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
-      case "creation-dsc":
-        return sprintTickets.sort((a, b) => new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime());
       default:
         return sprintTickets; // invalid sort order
     }
@@ -143,7 +141,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
           </Button>
         )}
       </Box>
-      <Box display='flex' alignItems='stretch' gap={2} mb={3} maxHeight={40}>
+      <Box display='flex' alignItems='stretch' justifyContent='flex-end' gap={2} mb={3} maxHeight={40}>
         <TextField
           InputProps={{
             startAdornment: (

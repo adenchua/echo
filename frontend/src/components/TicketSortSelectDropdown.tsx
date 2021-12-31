@@ -2,7 +2,12 @@ import React from "react";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 
-export type TicketSortType = "priority-dsc" | "creation-asc" | "creation-dsc";
+export type TicketSortType = "priority-dsc" | "creation-asc";
+
+const sortDisplayMapping = {
+  "priority-dsc": "Priority",
+  "creation-asc": "Creation",
+};
 
 export const priorityMap = {
   highest: 3,
@@ -23,22 +28,25 @@ const TicketSortSelectDropdown = (props: TicketSortSelectDropdownProps): JSX.Ele
     <Select
       size='small'
       value={sortSelection}
-      autoWidth
       onChange={onChangeHandler}
       SelectDisplayProps={{
         style: {
           fontSize: 14,
-          minWidth: 180,
+          minWidth: 100,
           color: "grey",
         },
       }}
       sx={{
         borderRadius: 0,
       }}
+      renderValue={(value) => `Sort: ${sortDisplayMapping[value]}`}
     >
-      <MenuItem value='priority-dsc'>Highest Priority First</MenuItem>
-      <MenuItem value='creation-dsc'>Creation Date (Earliest First)</MenuItem>
-      <MenuItem value='creation-asc'>Creation Date (Latest First)</MenuItem>
+      <MenuItem value='priority-dsc' sx={{ fontSize: 14 }}>
+        Priority
+      </MenuItem>
+      <MenuItem value='creation-asc' sx={{ fontSize: 14 }}>
+        Creation Date
+      </MenuItem>
     </Select>
   );
 };
