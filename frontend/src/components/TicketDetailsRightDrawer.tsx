@@ -16,7 +16,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Chip from "@mui/material/Chip";
-import { format, isValid, compareAsc } from "date-fns";
+import { format, compareAsc } from "date-fns";
 
 import StoryInterface, { PriorityType, StatusType, StoryType } from "../types/StoryInterface";
 import { capitalizeFirstLetter } from "../utils/capitalizeFirstLetter";
@@ -346,11 +346,9 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
       </Box>
       <Box mb={3} width='100%'>
         <DatePicker
-          value={dueDate}
+          value={isDue ? null : dueDate}
           onChange={(newSelectedDate) => {
-            if (isValid(newSelectedDate)) {
-              handleUpdateTicketDueDate(newSelectedDate);
-            }
+            handleUpdateTicketDueDate(newSelectedDate);
           }}
           minDate={new Date()}
           reduceAnimations

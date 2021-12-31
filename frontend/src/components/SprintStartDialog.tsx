@@ -8,7 +8,6 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
-import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import DatePicker from "@mui/lab/DatePicker";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -82,11 +81,11 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
         </DialogTitle>
         <DialogContent dividers>
           <DialogContentText sx={{ fontSize: 14 }}>
-            Sprint Start Date: <b>{format(new Date(startDate), "dd MMMM yyyy")}</b>
-            <br />
-            Sprint End Date: <b>{format(new Date(endDate), "dd MMMM yyyy")}</b>
-            <br />
-            Total Duration: <b>{differenceInCalendarDays(new Date(endDate), new Date(startDate))} Days</b>
+            Sprint Dates:{" "}
+            <b>
+              {format(new Date(startDate), "dd MMMM yyyy")} - {format(new Date(endDate), "dd MMMM yyyy")} (
+              {differenceInCalendarDays(new Date(endDate), new Date(startDate))} Days)
+            </b>
             <br />
             Total Tickets: <b>{sprintTicketsCount}</b>
           </DialogContentText>
@@ -119,24 +118,24 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
       </DialogTitle>
       <DialogContent dividers>
         {showError && (
-          <Typography sx={{ mb: 3, fontSize: 14 }} color='error'>
+          <Typography sx={{ mb: 4, fontSize: 14 }} color='error'>
             Failed to start a new sprint. Please try again later.
           </Typography>
         )}
         {sprintTicketsCount > 0 && (
-          <DialogContentText sx={{ mb: 3, fontSize: 14 }}>
+          <DialogContentText sx={{ mb: 4, fontSize: 14 }}>
             <b>{sprintTicketsCount}</b> ticket(s) will be included in this sprint.
           </DialogContentText>
         )}
         {sprintTicketsCount === 0 && (
-          <DialogContentText sx={{ mb: 3, fontSize: 14 }}>
+          <DialogContentText sx={{ mb: 4, fontSize: 14 }}>
             No tickets were included in this sprint. Please move one or more tickets from the product backlog.
           </DialogContentText>
         )}
-        <Typography sx={{ mb: 1, fontSize: 12 }} color='grey.600'>
-          Sprint End Date
-        </Typography>
         <Box>
+          <Typography variant='body2' color='primary' sx={{ mb: 2 }}>
+            Sprint End Date
+          </Typography>
           <DatePicker
             value={endDateInput}
             onChange={(newValue) => {
@@ -145,8 +144,25 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
               }
             }}
             minDate={new Date()}
-            clearable
-            renderInput={(params) => <TextField {...params} size='small' />}
+            reduceAnimations
+            OpenPickerButtonProps={{
+              disableRipple: true,
+              disableTouchRipple: true,
+              size: "small",
+              color: "primary",
+              edge: "start",
+            }}
+            renderInput={({ inputRef, inputProps, InputProps }) => (
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1, ml: -1.5 }} ref={inputRef}>
+                <input {...inputProps} style={{ display: "none" }} />
+                <div>{InputProps?.endAdornment}</div>
+                {endDateInput && (
+                  <Typography variant='body2' color='textSecondary'>
+                    {format(new Date(endDateInput), " dd MMMM yyyy")}
+                  </Typography>
+                )}
+              </Box>
+            )}
           />
         </Box>
       </DialogContent>
