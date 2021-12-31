@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SprintIcon from "@mui/icons-material/Timelapse";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -32,12 +32,18 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
   const [newSprint, setNewSprint] = useState<SprintInterface | null>(null);
   const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
 
+  useEffect(() => {
+    // return dialog to original state upon opening
+    if (showStartSprintDialog) {
+      setShowError(false);
+      setEndDateInput(null);
+      setIsLoading(false);
+      setShowSuccessMessage(false);
+    }
+  }, [showStartSprintDialog]);
+
   const handleClose = (): void => {
     onClose();
-    setShowError(false);
-    setEndDateInput(null);
-    setIsLoading(false);
-    setShowSuccessMessage(false);
   };
 
   const handleStartSprint = async (): Promise<void> => {

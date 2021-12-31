@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import Dialog from "@mui/material/Dialog";
@@ -33,12 +33,18 @@ const CreateProjectButtonWithDialog = (): JSX.Element => {
   const { addProject } = useContext(UserProjectsContext);
   const { loggedInUserId } = useContext(UserAuthenticationContext);
 
+  useEffect(() => {
+    // return dialog to original state upon opening
+    if (isDialogOpen) {
+      setIsLoading(false);
+      setProjectTitle("");
+      setProjectType(PROJECT_TYPES[0]);
+      setShowError(false);
+    }
+  }, [isDialogOpen]);
+
   const handleCloseDialog = (): void => {
     setIsDialogOpen(false);
-    setIsLoading(false);
-    setProjectTitle("");
-    setProjectType(PROJECT_TYPES[0]);
-    setShowError(false);
   };
 
   const handleProjectTypeChange = (event: SelectChangeEvent) => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -32,11 +32,17 @@ const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
   const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
   const completedTickets = sprintTickets.filter((ticket) => ticket.status === "completed");
 
+  useEffect(() => {
+    // return dialog to original state upon opening
+    if (showEndSprintDialog) {
+      setShowSuccessMessage(false);
+      setShowError(false);
+      setIsLoading(false);
+    }
+  }, [showEndSprintDialog]);
+
   const handleClose = (): void => {
     onClose();
-    setShowSuccessMessage(false);
-    setShowError(false);
-    setIsLoading(false);
   };
 
   const handleEndSprint = async (): Promise<void> => {
