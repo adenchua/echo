@@ -1,9 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useMemo } from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
+import { SelectChangeEvent } from "@mui/material/Select";
 
 import ProjectInterface from "../../types/ProjectInterface";
 import Ticket from "../Ticket";
@@ -11,6 +12,7 @@ import CreateTicketButtonWithDialog from "../CreateTicketButtonWithDialog";
 import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
 import { TicketsContext } from "../contexts/TicketsContextProvider";
 import { matchString } from "../../utils/matchString";
+import TicketSortSelectDropdown, { priorityMap, TicketSortType } from "../TicketSortSelectDropdown";
 
 interface ProductBacklogTabProps {
   project: ProjectInterface;
@@ -22,9 +24,27 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
   const { tickets } = useContext(TicketsContext);
   const [searchInput, setSearchInput] = useState<string>("");
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
+  const [sortSelection, setSortSelection] = useState<TicketSortType>("priority-dsc");
 
-  const renderMobileHeaderButtons = (): JSX.Element => {
-    return <CreateTicketButtonWithDialog projectId={projectId} variant='mobile' />;
+  const sortedTickets = useMemo(() => {
+    switch (sortSelection) {
+      case "priority-dsc":
+        return tickets.sort((a, b) => {
+          const aPriorityType = priorityMap[a.priority];
+          const bPriorityType = priorityMap[b.priority];
+          return bPriorityType - aPriorityType;
+        });
+      case "creation-asc":
+        return tickets.sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
+      case "creation-dsc":
+        return tickets.sort((a, b) => new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime());
+      default:
+        return tickets; // invalid sort order
+    }
+  }, [sortSelection, tickets]);
+
+  const handleSortSelectionOnChange = (e: SelectChangeEvent): void => {
+    setSortSelection(e.target.value as TicketSortType);
   };
 
   const renderDesktopHeaderButtons = (): JSX.Element => {
@@ -71,9 +91,8 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
         <Typography variant='h5' paragraph>
           {`Product Backlog (${tickets.length})`}
         </Typography>
-        <Box display='flex' gap={2} mb={3}>
+        <Box display='flex' gap={2} mb={3} maxHeight={40}>
           {renderDesktopHeaderButtons()}
-          {renderMobileHeaderButtons()}
           <TextField
             InputProps={{
               startAdornment: (
@@ -83,17 +102,18 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
               ),
               style: {
                 borderRadius: 0,
+                maxHeight: "100%",
               },
             }}
             placeholder='Search...'
-            size='small'
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
           />
+          <TicketSortSelectDropdown sortSelection={sortSelection} onChangeHandler={handleSortSelectionOnChange} />
         </Box>
-        {tickets && tickets.length > 0 && (
+        {sortedTickets && sortedTickets.length > 0 && (
           <Box sx={{ border: "1px solid", borderColor: "grey.300", borderBottom: 0 }}>
-            {tickets.map((ticket) => {
+            {sortedTickets.map((ticket) => {
               if (matchString(searchInput, ticket.title)) {
                 return (
                   <Box key={ticket._id} onClick={() => handleSetSelectedTicket(ticket._id)}>

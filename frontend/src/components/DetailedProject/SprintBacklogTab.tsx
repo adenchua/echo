@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useMemo } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -7,6 +7,7 @@ import SprintEndIcon from "@mui/icons-material/RunningWithErrors";
 import SprintStartIcon from "@mui/icons-material/Timelapse";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
+import { SelectChangeEvent } from "@mui/material/Select";
 import { format, differenceInBusinessDays } from "date-fns";
 
 import ProjectInterface from "../../types/ProjectInterface";
@@ -17,6 +18,7 @@ import { TicketsContext } from "../contexts/TicketsContextProvider";
 import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
 import Ticket from "../Ticket";
 import { matchString } from "../../utils/matchString";
+import TicketSortSelectDropdown, { priorityMap, TicketSortType } from "../TicketSortSelectDropdown";
 
 interface SprintBacklogTabProps {
   project: ProjectInterface;
@@ -31,8 +33,29 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   const [showEndSprintDialog, setShowEndSprintDialog] = useState<boolean>(false);
   const [showStartSprintDialog, setShowStartSprintDialog] = useState<boolean>(false);
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
-
+  const [sortSelection, setSortSelection] = useState<TicketSortType>("priority-dsc");
   const sprintTickets = tickets.filter((ticket) => ticket.isInSprint === true);
+
+  const sortedTickets = useMemo(() => {
+    switch (sortSelection) {
+      case "priority-dsc":
+        return sprintTickets.sort((a, b) => {
+          const aPriorityType = priorityMap[a.priority];
+          const bPriorityType = priorityMap[b.priority];
+          return bPriorityType - aPriorityType;
+        });
+      case "creation-asc":
+        return sprintTickets.sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
+      case "creation-dsc":
+        return sprintTickets.sort((a, b) => new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime());
+      default:
+        return sprintTickets; // invalid sort order
+    }
+  }, [sortSelection, sprintTickets]);
+
+  const handleSortSelectionOnChange = (e: SelectChangeEvent): void => {
+    setSortSelection(e.target.value as TicketSortType);
+  };
 
   const handleSetSelectedTicket = (ticketId: string) => {
     if (!selectedTicketId) {
@@ -58,7 +81,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
     const dayDifference = differenceInBusinessDays(new Date(endDate), new Date());
 
     return (
-      <div>
+      <>
         <Typography variant='h5'>Sprint {number}</Typography>
         {dayDifference >= 0 && (
           <Typography variant='caption' color='grey.600' paragraph>
@@ -70,7 +93,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
             {formattedStartDate} - {formattedEndDate} <span>&#8729;</span> {Math.abs(dayDifference)} day(s) overdue
           </Typography>
         )}
-      </div>
+      </>
     );
   };
 
@@ -120,7 +143,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
           </Button>
         )}
       </Box>
-      <Box display='flex' alignItems='center' gap={2} mb={3}>
+      <Box display='flex' alignItems='stretch' gap={2} mb={3} maxHeight={40}>
         <TextField
           InputProps={{
             startAdornment: (
@@ -130,6 +153,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
             ),
             style: {
               borderRadius: 0,
+              height: "100%",
             },
           }}
           placeholder='Search...'
@@ -137,15 +161,16 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
         />
+        <TicketSortSelectDropdown sortSelection={sortSelection} onChangeHandler={handleSortSelectionOnChange} />
       </Box>
       {sprintTickets && sprintTickets.length === 0 && (
         <Typography variant='body2' color='GrayText'>
           There are no tickets in the backlog.
         </Typography>
       )}
-      {sprintTickets && sprintTickets.length > 0 && (
+      {sortedTickets && sortedTickets.length > 0 && (
         <Box sx={{ border: "1px solid", borderColor: "grey.300", borderBottom: 0 }}>
-          {sprintTickets?.map((ticket) => {
+          {sortedTickets.map((ticket) => {
             const { _id: id, title } = ticket;
             if (matchString(searchInput, title)) {
               return (
