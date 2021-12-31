@@ -46,6 +46,9 @@ const storySchema = new Schema(
       type: Boolean,
       default: false,
     },
+    ticketNumber: {
+      type: Number,
+    },
   },
   { versionKey: false }
 );

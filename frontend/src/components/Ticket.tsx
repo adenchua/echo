@@ -28,7 +28,7 @@ const Ticket = (props: TicketProps): JSX.Element => {
   const { ticket, showSprintToggleCheckBox, bgGrey } = props;
   const [assignee, setAssignee] = useState<UserInterface | null>(null);
   const { onUpdateTicket } = useProductBacklog();
-  const { priority, title, type, isInSprint, _id: id, dueDate, status, assigneeId } = ticket;
+  const { priority, title, type, isInSprint, _id: id, dueDate, status, assigneeId, ticketNumber } = ticket;
   const formattedDueDate = dueDate ? format(new Date(dueDate), "LLL dd") : "";
   const isDue = dueDate && compareAsc(new Date(), new Date(dueDate)) === 1 ? true : false;
 
@@ -84,6 +84,9 @@ const Ticket = (props: TicketProps): JSX.Element => {
         )}
         <PriorityIcon priority={priority} hideMedium />
         <TicketTypeIcon type={type} />
+        <Typography variant='caption' color='grey.500' noWrap>
+          {`#${ticketNumber}`}
+        </Typography>
         <Typography variant='body2' noWrap>
           {title}
         </Typography>

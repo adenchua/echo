@@ -26,6 +26,7 @@ interface StoryInterface {
   type: StoryType;
   subtaskIds: string[];
   isInSprint: boolean;
+  ticketNumber: number;
 }
 
 export default StoryInterface;

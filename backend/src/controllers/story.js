@@ -17,7 +17,8 @@ module.exports.createStory = async (req, res) => {
 
   try {
     const project = await Project.findById(projectId);
-    const newStory = new Story({ title, ...keysToUpdate });
+    const ticketNumber = project.backlogIds.length + 1;
+    const newStory = new Story({ title, ...keysToUpdate, ticketNumber });
     await newStory.save();
     project.backlogIds.push(newStory._id);
     await project.save();
