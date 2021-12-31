@@ -30,6 +30,7 @@ import UserInterface from "../types/UserInterface";
 import fetchUsersByIds from "../api/users/fetchUsersByIds";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
 import { ProjectMembersContext } from "./contexts/ProjectMembersContextProvider";
+import { UserAuthenticationContext } from "./contexts/UserAuthenticationContextProvider";
 
 interface TicketDetailsRightDrawerProps {
   ticket: StoryInterface;
@@ -42,6 +43,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
   const { ticket, onClose, isOpen, projectId } = props;
   const { onUpdateTicket, onDeleteTicket } = useProductBacklog();
   const { members, admins } = useContext(ProjectMembersContext);
+  const { loggedInUserId } = useContext(UserAuthenticationContext);
   const { _id: id, title, description, priority, type, dueDate, status, assigneeId } = ticket;
   const [titleInput, setTitleInput] = useState<string>(title);
   const [descriptionInput, setDescriptionInput] = useState<string>(description ?? "");
@@ -360,7 +362,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
             edge: "start",
           }}
           renderInput={({ inputRef, inputProps, InputProps }) => (
-            <Box sx={{ display: "flex", alignItems: "center", mb: 3, gap: 1 }} ref={inputRef}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }} ref={inputRef}>
               <input {...inputProps} style={{ display: "none" }} />
               <div>{InputProps?.endAdornment}</div>
               {!dueDate && (
@@ -376,9 +378,18 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
             </Box>
           )}
         />
-        <Button onClick={() => handleUpdateTicketDueDate(null)} fullWidth variant='outlined' size='small'>
-          Remove Due Date
-        </Button>
+        {dueDate && (
+          <Button
+            sx={{ mt: 3 }}
+            onClick={() => handleUpdateTicketDueDate(null)}
+            fullWidth
+            variant='outlined'
+            size='small'
+            color='warning'
+          >
+            Remove Due Date
+          </Button>
+        )}
       </Box>
       <Divider flexItem />
     </ListItem>
@@ -487,9 +498,31 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
             );
           })}
         </Select>
-        <Button fullWidth variant='outlined' size='small' sx={{ mt: 1 }} onClick={() => handleUpdateTicketAssignee("")}>
-          Remove Assignee
+        <Button
+          fullWidth
+          variant='outlined'
+          size='small'
+          sx={{ mt: 2 }}
+          onClick={() => {
+            if (loggedInUserId) {
+              handleUpdateTicketAssignee(loggedInUserId);
+            }
+          }}
+        >
+          Assign Myself
         </Button>
+        {assigneeId && (
+          <Button
+            fullWidth
+            color='warning'
+            variant='outlined'
+            size='small'
+            sx={{ mt: 2 }}
+            onClick={() => handleUpdateTicketAssignee("")}
+          >
+            Remove Assignee
+          </Button>
+        )}
       </Box>
       <Divider flexItem />
     </ListItem>
