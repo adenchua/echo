@@ -33,7 +33,6 @@ const LoginPage = (): JSX.Element => {
     } catch (error) {
       const errorCode = (error as Error).message;
       setErrorMessage(loginErrorCodeToMessageHelper(errorCode));
-    } finally {
       setIsLoading(false);
     }
   };
