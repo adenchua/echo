@@ -16,7 +16,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Chip from "@mui/material/Chip";
-import { format, isValid } from "date-fns";
+import { format, isValid, compareAsc } from "date-fns";
 
 import StoryInterface, { PriorityType, StatusType, StoryType } from "../types/StoryInterface";
 import { capitalizeFirstLetter } from "../utils/capitalizeFirstLetter";
@@ -53,6 +53,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
   const [isDueDateEditModeOn, setDueDateEditModeOn] = useState<boolean>(true);
   const [isStatusEditModeOn, setIsStatusEditModeOn] = useState<boolean>(false);
   const [isAssigneeEditModeOn, setIsAssigneeEditModeOn] = useState<boolean>(false);
+  const isDue = dueDate && compareAsc(new Date(), new Date(dueDate)) === 1 ? true : false;
 
   const closeAllEditModes = (): void => {
     setIsTitleEditModeOn(false);
@@ -327,6 +328,9 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
       </Box>
       <ListItemText
         secondary={!dueDate || dueDate === "" ? "None" : format(new Date(dueDate), "dd MMMM yyyy")}
+        secondaryTypographyProps={{
+          color: isDue ? "crimson" : "textSecondary",
+        }}
         sx={{ mb: 2 }}
       />
       <Divider flexItem />

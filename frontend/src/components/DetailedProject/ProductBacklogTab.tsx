@@ -69,7 +69,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
     <>
       <Box sx={{ mr: selectedTicketId ? "240px" : "" }}>
         <Typography variant='h5' paragraph>
-          Product Backlog
+          {`Product Backlog (${tickets.length})`}
         </Typography>
         <Box display='flex' gap={2} mb={3}>
           {renderDesktopHeaderButtons()}
