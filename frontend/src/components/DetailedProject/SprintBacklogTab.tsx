@@ -81,7 +81,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
     const dayDifference = differenceInBusinessDays(new Date(endDate), new Date());
 
     return (
-      <>
+      <div>
         <Typography variant='h5'>Sprint {number}</Typography>
         {dayDifference >= 0 && (
           <Typography variant='caption' color='grey.600' paragraph>
@@ -93,7 +93,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
             {formattedStartDate} - {formattedEndDate} <span>&#8729;</span> {Math.abs(dayDifference)} day(s) overdue
           </Typography>
         )}
-      </>
+      </div>
     );
   };
 
