@@ -8,13 +8,19 @@ const epicSchema = new Schema(
       required: true,
       trim: true,
     },
-    storyIds: {
-      type: [Schema.Types.ObjectId],
-      ref: "Story",
-    },
     description: {
       type: String,
       trim: true,
+    },
+    ticketIds: {
+      type: [Schema.Types.ObjectId],
+      ref: "Story",
+    },
+    startDate: {
+      type: Date,
+    },
+    endDate: {
+      type: Date,
     },
     createdDate: {
       type: Date,

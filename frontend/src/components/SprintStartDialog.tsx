@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SprintIcon from "@mui/icons-material/Timelapse";
+import SprintIcon from "@mui/icons-material/DirectionsRun";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";

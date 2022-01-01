@@ -3,8 +3,8 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import SprintEndIcon from "@mui/icons-material/RunningWithErrors";
-import SprintStartIcon from "@mui/icons-material/Timelapse";
+import SprintEndIcon from "@mui/icons-material/DirectionsWalk";
+import SprintStartIcon from "@mui/icons-material/DirectionsRun";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import { SelectChangeEvent } from "@mui/material/Select";
@@ -118,7 +118,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
 
   return (
     <Box sx={{ mr: selectedTicketId ? "240px" : "" }}>
-      <Box display='flex' alignItems='flex-start' justifyContent='space-between' mb={1}>
+      <Box display='flex' alignItems='flex-start' justifyContent='space-between' mb={3}>
         {renderSprintDetails()}
         {(!activeSprint || activeSprint.hasEnded) && (
           <Button
@@ -132,8 +132,9 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
         )}
         {activeSprint && !activeSprint.hasEnded && (
           <Button
-            variant='contained'
+            variant='outlined'
             startIcon={<SprintEndIcon />}
+            color='error'
             sx={{ minWidth: "132px", whiteSpace: "nowrap" }}
             onClick={() => setShowEndSprintDialog(true)}
           >

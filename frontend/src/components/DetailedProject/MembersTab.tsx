@@ -154,15 +154,17 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
                           </Tooltip>
                         )}
                         <Tooltip title='Remove from project' disableInteractive>
-                          <IconButton
-                            size='small'
-                            color='error'
-                            onClick={() => handleRemoveMember(user)}
-                            disabled={loggedInUserId === userId}
-                            sx={{ ml: 1 }}
-                          >
-                            <DeleteIcon fontSize='small' />
-                          </IconButton>
+                          <span>
+                            <IconButton
+                              size='small'
+                              color='error'
+                              onClick={() => handleRemoveMember(user)}
+                              disabled={loggedInUserId === userId}
+                              sx={{ ml: 1 }}
+                            >
+                              <DeleteIcon fontSize='small' />
+                            </IconButton>
+                          </span>
                         </Tooltip>
                       </TableCell>
                     )}

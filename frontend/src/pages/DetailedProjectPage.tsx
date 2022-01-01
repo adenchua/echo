@@ -19,6 +19,7 @@ import { ProjectMembersContext } from "../components/contexts/ProjectMembersCont
 import fetchUsersByIds from "../api/users/fetchUsersByIds";
 import MembersTab from "../components/DetailedProject/MembersTab";
 import SettingsTab from "../components/DetailedProject/SettingsTab";
+import TeamObjectivesTab from "../components/DetailedProject/TeamObjectivesTab";
 
 const DetailedProjectPage = (): JSX.Element => {
   const { isLoggedIn } = useContext(UserAuthenticationContext);
@@ -96,6 +97,7 @@ const DetailedProjectPage = (): JSX.Element => {
       { tabKey: "overview", component: <OverviewTab project={project} /> },
       { tabKey: "product-backlog", component: <ProductBacklogTab project={project} /> },
       { tabKey: "sprint-backlog", component: <SprintBacklogTab project={project} /> },
+      { tabKey: "objectives", component: <TeamObjectivesTab project={project} /> },
       { tabKey: "members", component: <MembersTab project={project} /> },
       {
         tabKey: "settings",
