@@ -360,6 +360,9 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
             size: "small",
             color: "primary",
             edge: "start",
+            sx: {
+              border: "1px solid",
+            },
           }}
           renderInput={({ inputRef, inputProps, InputProps }) => (
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }} ref={inputRef}>

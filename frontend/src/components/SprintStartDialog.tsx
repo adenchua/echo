@@ -89,7 +89,7 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
           <DialogContentText sx={{ fontSize: 14 }}>
             Sprint Dates:{" "}
             <b>
-              {format(new Date(startDate), "dd MMMM yyyy")} - {format(new Date(endDate), "dd MMMM yyyy")} (
+              {format(new Date(startDate), "dd MMM")} - {format(new Date(endDate), "dd MMM")} (
               {differenceInCalendarDays(new Date(endDate), new Date(startDate))} Days)
             </b>
             <br />
@@ -138,10 +138,7 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
             No tickets were included in this sprint. Please move one or more tickets from the product backlog.
           </DialogContentText>
         )}
-        <Box>
-          <Typography variant='body2' color='primary' sx={{ mb: 2 }}>
-            Sprint End Date
-          </Typography>
+        <Box sx={{ mb: 2 }}>
           <DatePicker
             value={endDateInput}
             onChange={(newValue) => {
@@ -157,14 +154,22 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
               size: "small",
               color: "primary",
               edge: "start",
+              sx: {
+                border: "1px solid",
+              },
             }}
             renderInput={({ inputRef, inputProps, InputProps }) => (
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1, ml: -1.5 }} ref={inputRef}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1, ml: -0.5 }} ref={inputRef}>
                 <input {...inputProps} style={{ display: "none" }} />
                 <div>{InputProps?.endAdornment}</div>
+                {!endDateInput && (
+                  <Typography variant='body2' color='textSecondary'>
+                    Set end date
+                  </Typography>
+                )}
                 {endDateInput && (
                   <Typography variant='body2' color='textSecondary'>
-                    {format(new Date(endDateInput), " dd MMMM yyyy")}
+                    {format(new Date(endDateInput), " dd MMM yyyy")}
                   </Typography>
                 )}
               </Box>

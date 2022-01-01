@@ -186,7 +186,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
         showEndSprintDialog={showEndSprintDialog}
         onClose={() => setShowEndSprintDialog(false)}
         projectId={projectId}
-        sprintTickets={tickets}
+        sprintTickets={sprintTickets}
         sprintId={activeSprint?._id}
         onEndSprint={onEndSprint}
       />
@@ -195,7 +195,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
         onClose={() => setShowStartSprintDialog(false)}
         onStartSprint={onStartSprint}
         projectId={projectId}
-        sprintTicketsCount={tickets?.length}
+        sprintTicketsCount={sprintTickets.length}
       />
       {renderDrawer()}
     </Box>
