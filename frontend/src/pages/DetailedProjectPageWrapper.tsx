@@ -5,6 +5,7 @@ import { UserAuthenticationContext } from "../components/contexts/UserAuthentica
 import ProjectMembersContextProvider from "../components/contexts/ProjectMembersContextProvider";
 import TicketsContextProvider from "../components/contexts/TicketsContextProvider";
 import DetailedProjectPage from "./DetailedProjectPage";
+import EpicsContextProvider from "../components/contexts/EpicsContextProvider";
 
 const DetailedProjectPageWrapper = (): JSX.Element => {
   const { isLoggedIn } = useContext(UserAuthenticationContext);
@@ -14,11 +15,13 @@ const DetailedProjectPageWrapper = (): JSX.Element => {
   }
 
   return (
-    <TicketsContextProvider>
-      <ProjectMembersContextProvider>
-        <DetailedProjectPage />
-      </ProjectMembersContextProvider>
-    </TicketsContextProvider>
+    <EpicsContextProvider>
+      <TicketsContextProvider>
+        <ProjectMembersContextProvider>
+          <DetailedProjectPage />
+        </ProjectMembersContextProvider>
+      </TicketsContextProvider>
+    </EpicsContextProvider>
   );
 };
 

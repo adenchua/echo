@@ -49,6 +49,10 @@ const storySchema = new Schema(
     ticketNumber: {
       type: Number,
     },
+    epicId: {
+      type: Schema.Types.ObjectId,
+      ref: "Epic",
+    },
   },
   { versionKey: false }
 );

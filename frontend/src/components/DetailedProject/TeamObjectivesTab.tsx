@@ -1,34 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/AddOutlined";
 
 import ProjectInterface from "../../types/ProjectInterface";
-import EpicInterface from "../../types/EpicInterface";
-import fetchEpics from "../../api/epics/fetchEpics";
+
 import EpicSummaryAccordion from "../EpicSummaryAccordion";
+import { EpicsContext } from "../contexts/EpicsContextProvider";
 
 interface TeamObjectivesTabProps {
   project: ProjectInterface;
 }
 
 const TeamObjectivesTab = (props: TeamObjectivesTabProps): JSX.Element => {
-  const [epics, setEpics] = useState<EpicInterface[]>([]);
-  const { project } = props;
-  const { epicIds } = project;
-
-  useEffect(() => {
-    const getEpics = async (): Promise<void> => {
-      try {
-        const response = await fetchEpics(epicIds);
-        setEpics(response);
-      } catch (error) {
-        // do nothing
-      }
-    };
-
-    getEpics();
-  }, [epicIds]);
+  const { epics } = useContext(EpicsContext);
 
   return (
     <div>
@@ -43,11 +28,7 @@ const TeamObjectivesTab = (props: TeamObjectivesTabProps): JSX.Element => {
           There are no objectives created.
         </Typography>
       )}
-      <div>
-        <EpicSummaryAccordion />
-        <EpicSummaryAccordion />
-        <EpicSummaryAccordion />
-      </div>
+      <div>{epics && epics.map((epic) => <EpicSummaryAccordion key={epic._id} epic={epic} />)}</div>
     </div>
   );
 };

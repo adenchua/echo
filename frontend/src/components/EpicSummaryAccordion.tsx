@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -7,59 +7,61 @@ import MoreVertIcon from "@mui/icons-material/MoreVertOutlined";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import SprintIcon from "@mui/icons-material/RunCircleOutlined";
-import FilledSprintIcon from "@mui/icons-material/RunCircle";
-import CheckIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
-import FilledCheckIcon from "@mui/icons-material/CheckCircle";
-import Avatar from "@mui/material/Avatar";
+import { format } from "date-fns";
 
 import ProgressBarWithPercentage from "./ProgressBarWithPercentage";
-import TicketTypeIcon from "./TicketTypeIcon";
-import getUserAvatarSVG from "../utils/getUserAvatarSVG";
+import EpicSummaryAccordionTicket from "./EpicSummaryAccordionTicket";
+import EpicInterface from "../types/EpicInterface";
+import StoryInterface from "../types/StoryInterface";
+import fetchStoriesByIds from "../api/stories/fetchStoriesByIds";
 
-const EpicSummaryAccordion = (): JSX.Element => {
-  const renderTicket = (): JSX.Element => {
-    return (
-      <Paper
-        square
-        elevation={0}
-        sx={{
-          borderBottom: "1px solid",
-          borderColor: "grey.300",
-          py: 1,
-          px: 4,
-          display: "flex",
-          alignItems: "center",
-          gap: 1,
-          "&: last-child": { borderBottom: 0 },
-        }}
-      >
-        <CheckIcon color='disabled' />
-        <FilledCheckIcon sx={{ color: "success.light" }} />
-        <SprintIcon color='disabled' />
-        <FilledSprintIcon sx={{ color: "warning.light" }} />
-        <TicketTypeIcon type='task' />
-        <Typography variant='caption' color='grey.500' noWrap sx={{ flexShrink: 0 }}>
-          {`#41`}
-        </Typography>
-        <Typography variant='body2' noWrap>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-          est laborum.
-        </Typography>
-        <Box flexGrow={1} />
-        <Avatar
-          style={{
-            height: 20,
-            width: 20,
-          }}
-          src={getUserAvatarSVG("animalmother")}
-        />
-      </Paper>
-    );
+interface EpicSummaryAccordionProps {
+  epic: EpicInterface;
+}
+
+const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => {
+  const { epic } = props;
+  const { title, ticketIds, startDate, endDate } = epic;
+  const [tickets, setTickets] = useState<StoryInterface[]>([]);
+
+  const epicProgressionPercentage = useMemo(() => {
+    let completedCount = 0;
+
+    if (ticketIds.length === 0) {
+      return 0; // prevent divison by 0
+    }
+
+    tickets.forEach((ticket) => {
+      if (ticket.status === "completed") {
+        completedCount += 1;
+      }
+    });
+
+    return Math.floor((completedCount / ticketIds.length) * 100);
+  }, [ticketIds, tickets]);
+
+  useEffect(() => {
+    const getTickets = async (): Promise<void> => {
+      try {
+        const response = await fetchStoriesByIds(ticketIds);
+        setTickets(response);
+      } catch (error) {
+        // do nothing
+      }
+    };
+
+    getTickets();
+  }, [ticketIds]);
+
+  const getDateString = (startDate: string, endDate: string): string => {
+    if (!startDate && !endDate) {
+      return "-";
+    }
+
+    const formattedStartDate = startDate ? format(new Date(startDate), "dd MMM") : "N.A.";
+    const formattedEndDate = endDate ? format(new Date(endDate), "dd MMM") : "N.A.";
+
+    return `${formattedStartDate} - ${formattedEndDate}`;
   };
 
   return (
@@ -71,6 +73,7 @@ const EpicSummaryAccordion = (): JSX.Element => {
           padding: 0,
         },
       }}
+      TransitionProps={{ unmountOnExit: true }}
     >
       <AccordionSummary
         expandIcon={<ArrowForwardIosSharpIcon color='primary' sx={{ fontSize: "0.9rem", mt: 0.5 }} />}
@@ -87,19 +90,13 @@ const EpicSummaryAccordion = (): JSX.Element => {
           },
         }}
       >
-        <Typography noWrap>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-          est laborum.
-        </Typography>
+        <Typography noWrap>{title}</Typography>
         <Box flexGrow={1} />
         <Box sx={{ width: 180, flexShrink: 0 }}>
-          <ProgressBarWithPercentage value={45} />
+          <ProgressBarWithPercentage value={epicProgressionPercentage} />
         </Box>
-        <Typography fontSize={14} color='textSecondary' noWrap sx={{ flexShrink: 0 }}>
-          14 Jan - 24 Oct
+        <Typography fontSize={14} color='textSecondary' noWrap sx={{ flexShrink: 0, minWidth: 120 }} align='center'>
+          {getDateString(startDate, endDate)}
         </Typography>
         <IconButton size='small' color='primary'>
           <MoreVertIcon />
@@ -111,11 +108,14 @@ const EpicSummaryAccordion = (): JSX.Element => {
           borderColor: "grey.300",
         }}
       >
-        {renderTicket()}
-        {renderTicket()}
-        {renderTicket()}
-        {renderTicket()}
-        {renderTicket()}
+        {tickets && tickets.length === 0 && (
+          <Box py={1} px={4}>
+            <Typography variant='body2' color='textSecondary'>
+              There are no tickets tagged to this objective.
+            </Typography>
+          </Box>
+        )}
+        {tickets && tickets.map((ticket) => <EpicSummaryAccordionTicket key={ticket._id} />)}
       </AccordionDetails>
     </Accordion>
   );

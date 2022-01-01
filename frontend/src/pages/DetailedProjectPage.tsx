@@ -20,6 +20,8 @@ import fetchUsersByIds from "../api/users/fetchUsersByIds";
 import MembersTab from "../components/DetailedProject/MembersTab";
 import SettingsTab from "../components/DetailedProject/SettingsTab";
 import TeamObjectivesTab from "../components/DetailedProject/TeamObjectivesTab";
+import { EpicsContext } from "../components/contexts/EpicsContextProvider";
+import fetchEpics from "../api/epics/fetchEpics";
 
 const DetailedProjectPage = (): JSX.Element => {
   const { isLoggedIn } = useContext(UserAuthenticationContext);
@@ -29,14 +31,22 @@ const DetailedProjectPage = (): JSX.Element => {
   const [project, setProject] = useState<ProjectInterface | null>(null);
   const { handleSetTickets } = useContext(TicketsContext);
   const { handleSetMembers, handleSetAdmins } = useContext(ProjectMembersContext);
+  const { handleSetEpics } = useContext(EpicsContext);
 
   useEffect(() => {
     const getTickets = async (storyIds: string[]): Promise<void> => {
       try {
-        setIsLoading(true);
         const response = await fetchStoriesByIds(storyIds);
         handleSetTickets(response);
-        setIsLoading(false);
+      } catch (error) {
+        alert("Something went wrong. Please try again later.");
+      }
+    };
+
+    const getEpics = async (epicIds: string[]): Promise<void> => {
+      try {
+        const response = await fetchEpics(epicIds);
+        handleSetEpics(response);
       } catch (error) {
         alert("Something went wrong. Please try again later.");
       }
@@ -46,8 +56,9 @@ const DetailedProjectPage = (): JSX.Element => {
       try {
         setIsLoading(true);
         const response = await fetchProject(id);
-        const { backlogIds, adminIds, memberIds } = response;
+        const { backlogIds, adminIds, memberIds, epicIds } = response;
         getTickets(backlogIds);
+        getEpics(epicIds);
         getProjectMembersAndAdmins(adminIds, memberIds);
         setProject(response);
         setIsLoading(false);
@@ -68,7 +79,7 @@ const DetailedProjectPage = (): JSX.Element => {
     };
 
     getProject();
-  }, [id, handleSetTickets, handleSetAdmins, handleSetMembers]);
+  }, [id, handleSetTickets, handleSetAdmins, handleSetMembers, handleSetEpics]);
 
   const handleUpdateProjectFields = (updatedFields: ProjectUpdateFieldsType): void => {
     const updatedProject = _.merge({}, project, updatedFields);

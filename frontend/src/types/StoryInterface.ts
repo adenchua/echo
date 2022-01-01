@@ -13,6 +13,7 @@ export type TicketUpdateFieldsType = {
   dueDate?: string | null;
   isInSprint?: boolean;
   assigneeId?: string | null;
+  epicId?: string | null;
 };
 interface StoryInterface {
   _id: string;
@@ -27,6 +28,7 @@ interface StoryInterface {
   subtaskIds: string[];
   isInSprint: boolean;
   ticketNumber: number;
+  epicId: string;
 }
 
 export default StoryInterface;

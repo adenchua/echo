@@ -1,11 +1,12 @@
 const Epic = require("../models/epic");
 const Project = require("../models/project");
+const Story = require("../models/story");
 const { removeUndefinedKeysFromObject } = require("../utils/removeUndefinedKeysFromObject");
 
 module.exports.createEpic = async (req, res) => {
   const { title, projectId } = req.body;
 
-  if (!title || projectId) {
+  if (!title || !projectId) {
     res.status(400).send();
     return;
   }
@@ -75,6 +76,7 @@ module.exports.addStoryToEpic = async (req, res) => {
 
   try {
     const epic = await Epic.findById(epicId);
+    await Story.findByIdAndUpdate(storyId, { epicId }); // add link to both sides
     if (!epic.storyIds.includes(storyId)) {
       epic.storyIds.push(storyId);
     }
@@ -97,6 +99,7 @@ module.exports.removeStoryFromEpic = async (req, res) => {
 
   try {
     const epic = await Epic.findById(epicId);
+    await Story.findByIdAndUpdate(storyId, { epicId: undefined }); // remove link from both sides
     if (epic.storyIds.includes(storyId)) {
       epic.storyIds.pull(storyId);
     }
@@ -117,6 +120,15 @@ module.exports.deleteEpic = async (req, res) => {
   }
 
   try {
+    const epic = Epic.findById(epicId);
+    const ticketIds = epic.ticketIds;
+    for (const ticketId of ticketIds) {
+      const ticket = await Story.findById(ticketId);
+      if (ticket) {
+        ticket.epicId = undefined;
+        await ticket.save();
+      }
+    }
     await Epic.findByIdAndDelete(epicId);
     res.status(204).send();
   } catch (error) {
