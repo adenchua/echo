@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
+import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
 import SprintIcon from "@mui/icons-material/RunCircleOutlined";
 import FilledSprintIcon from "@mui/icons-material/RunCircle";
@@ -52,10 +53,26 @@ const EpicSummaryAccordionTicket = (props: EpicSummaryAccordionTicketProps): JSX
         "&: last-child": { borderBottom: 0 },
       }}
     >
-      {status !== "completed" && <CheckIcon color='disabled' />}
-      {status === "completed" && <FilledCheckIcon sx={{ color: "success.light" }} />}
-      {isInSprint && <FilledSprintIcon sx={{ color: "warning.light" }} />}
-      {!isInSprint && <SprintIcon color='disabled' />}
+      {status !== "completed" && (
+        <Tooltip title='Not done' disableInteractive>
+          <CheckIcon color='disabled' />
+        </Tooltip>
+      )}
+      {status === "completed" && (
+        <Tooltip title='Done' disableInteractive>
+          <FilledCheckIcon sx={{ color: "success.light" }} />
+        </Tooltip>
+      )}
+      {isInSprint && (
+        <Tooltip title='In sprint' disableInteractive>
+          <FilledSprintIcon sx={{ color: "warning.light" }} />
+        </Tooltip>
+      )}
+      {!isInSprint && (
+        <Tooltip title='Not in sprint' disableInteractive>
+          <SprintIcon color='disabled' />
+        </Tooltip>
+      )}
       <TicketTypeIcon type={type} />
       <Typography variant='caption' color='grey.500' noWrap sx={{ flexShrink: 0 }}>
         {`#${ticketNumber}`}

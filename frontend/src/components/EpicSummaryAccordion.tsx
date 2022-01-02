@@ -4,6 +4,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVertOutlined";
+import Chip from "@mui/material/Chip";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -93,6 +94,7 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
         <Typography noWrap variant='body2'>
           {title}
         </Typography>
+        <Chip label={ticketIds.length} size='small' />
         <Box flexGrow={1} />
         <Box sx={{ width: 180, flexShrink: 0 }}>
           <ProgressBarWithPercentage value={epicProgressionPercentage} />
