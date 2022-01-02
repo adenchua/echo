@@ -8,7 +8,7 @@ interface EpicsContextProviderProps {
 
 type EpicsContextStateType = {
   epics: EpicInterface[];
-  addEpic: (epics: EpicInterface) => void;
+  addEpic: (newEpic: EpicInterface) => void;
   handleSetEpics: (epics: EpicInterface[]) => void;
   addTicketIdToEpic: (epicId: string, ticketId: string) => void;
   deleteTicketIdFromEpic: (epicId: string, ticketId: string) => void;
