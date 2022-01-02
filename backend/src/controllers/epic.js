@@ -76,6 +76,7 @@ module.exports.addStoryToEpic = async (req, res) => {
 
   try {
     const epic = await Epic.findById(epicId);
+    await Epic.updateMany({ ticketIds: storyId }, { $pullAll: { ticketIds: [storyId] } }); // remove all instances of the ticketId in all epics
     await Story.findByIdAndUpdate(storyId, { epicId }); // add link to both sides
     if (!epic.ticketIds.includes(storyId)) {
       epic.ticketIds.push(storyId);

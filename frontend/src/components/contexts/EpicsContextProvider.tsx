@@ -34,6 +34,17 @@ const EpicsContextProvider = ({ children }: EpicsContextProviderProps): JSX.Elem
   }, []);
 
   const addTicketIdToEpic = useCallback((epicId: string, ticketId: string): void => {
+    // remove ticket id from all epics
+    setEpics((prevState) =>
+      prevState.map((epic) => {
+        if (epic.ticketIds.includes(ticketId)) {
+          epic.ticketIds = epic.ticketIds.filter((_ticketId) => _ticketId !== ticketId);
+        }
+        return epic;
+      })
+    );
+
+    // add ticket id to the new epic
     setEpics((prevState) =>
       prevState.map((epic) => {
         if (epic._id === epicId) {
