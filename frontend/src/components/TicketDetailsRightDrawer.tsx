@@ -44,7 +44,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
   const { ticket, onClose, isOpen, projectId } = props;
   const { _id: id, title, description, priority, type, dueDate, status, assigneeId, epicId } = ticket;
 
-  const { onUpdateTicket, onDeleteTicket, onAddTicketToEpic } = useProductBacklog();
+  const { onUpdateTicket, onDeleteTicket, onAddTicketToEpic, onRemoveTicketFromEpic } = useProductBacklog();
   const { members, admins } = useContext(ProjectMembersContext);
   const { loggedInUserId } = useContext(UserAuthenticationContext);
   const { epics } = useContext(EpicsContext);
@@ -133,6 +133,10 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
 
   const handleUpdateTicketEpicLink = (newEpicLinkId: string): void => {
     onAddTicketToEpic(id, newEpicLinkId);
+  };
+
+  const handleDeleteTicketEpicLink = (): void => {
+    onRemoveTicketFromEpic(id, epicId);
   };
 
   const handleTitleEditMode = (): void => {
@@ -545,24 +549,39 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
     </ListItem>
   );
 
+  const renderEpicTypography = (): JSX.Element => {
+    if (!epicId) {
+      return (
+        <Typography variant='body2' color='textSecondary' sx={{ mb: 2 }}>
+          None
+        </Typography>
+      );
+    }
+
+    const epicToDisplay = epics.find((epic) => epic._id === epicId);
+
+    if (!epicToDisplay) {
+      return (
+        <Typography variant='body2' color='textSecondary' sx={{ mb: 2 }}>
+          Invalid Objective
+        </Typography>
+      );
+    }
+
+    return (
+      <Typography variant='body2' color='textSecondary' maxWidth='100%' noWrap sx={{ mb: 2 }}>
+        {epicToDisplay.title}
+      </Typography>
+    );
+  };
+
   const renderEpicLinkListItem = (): JSX.Element => (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
       <Box display='flex' justifyContent='space-between' width='100%' mb={1}>
         <Typography variant='body2'>Objectives Link</Typography>
         {renderEditButton(handleEpicLinkEditMode)}
       </Box>
-      <Box mb={2}>
-        {epicId && (
-          <Typography variant='body2' color='textSecondary'>
-            {epicId}
-          </Typography>
-        )}
-        {!epicId && (
-          <Typography variant='body2' color='textSecondary'>
-            None
-          </Typography>
-        )}
-      </Box>
+      {renderEpicTypography()}
       <Divider flexItem />
     </ListItem>
   );
@@ -594,11 +613,23 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
           }}
         >
           {epics?.map((epic) => (
-            <MenuItem key={epic._id} value={epic._id} dense sx={{ display: "flex", justifyContent: "center" }} divider>
-              {epic.title}
+            <MenuItem key={epic._id} value={epic._id} dense sx={{ display: "flex", justifyContent: "center" }}>
+              <Typography fontSize={14} maxWidth='80%' noWrap>
+                {epic.title}
+              </Typography>
             </MenuItem>
           ))}
         </Select>
+        <Button
+          fullWidth
+          color='warning'
+          variant='outlined'
+          size='small'
+          sx={{ mt: 2 }}
+          onClick={() => handleDeleteTicketEpicLink()}
+        >
+          Remove Link
+        </Button>
       </Box>
       <Divider flexItem />
     </ListItem>
@@ -639,8 +670,8 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
         {!isDueDateEditModeOn && renderDueDateListItem()}
         {isDueDateEditModeOn && renderDueDateListItemEdit()}
 
-        {!isEpicLinkEditModeOn && renderEpicLinkListItem()}
-        {isEpicLinkEditModeOn && renderEpicLinkListItemEdit()}
+        {epics.length > 0 && !isEpicLinkEditModeOn && renderEpicLinkListItem()}
+        {epics.length > 0 && isEpicLinkEditModeOn && renderEpicLinkListItemEdit()}
 
         <ListItem sx={{ mt: 1 }}>
           <Button fullWidth variant='outlined' color='error' onClick={() => onDeleteTicket(id, projectId)}>

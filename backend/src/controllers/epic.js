@@ -100,9 +100,9 @@ module.exports.removeStoryFromEpic = async (req, res) => {
 
   try {
     const epic = await Epic.findById(epicId);
-    await Story.findByIdAndUpdate(storyId, { epicId: undefined }); // remove link from both sides
-    if (epic.storyIds.includes(storyId)) {
-      epic.storyIds.pull(storyId);
+    await Story.findByIdAndUpdate(storyId, { epicId: null }); // remove link from both sides
+    if (epic.ticketIds.includes(storyId)) {
+      epic.ticketIds.pull(storyId);
     }
     await epic.save();
     res.status(204).send();

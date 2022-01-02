@@ -15,7 +15,7 @@ router.route("/").post(createEpic);
 router.route("/id/:epicId").patch(updateEpic);
 router.route("/id/:epicId").delete(deleteEpic);
 router.route("/bulk-retrieve").post(getEpics);
-router.route("/story/:epicId").post(addStoryToEpic);
-router.route("/story/:epicId").delete(removeStoryFromEpic);
+router.route("/add-story/:epicId").post(addStoryToEpic);
+router.route("/remove-story/:epicId").post(removeStoryFromEpic);
 
 module.exports = router;

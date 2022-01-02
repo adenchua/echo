@@ -2,9 +2,9 @@ import axios from "axios";
 
 import { API_ENDPOINT } from "../../utils/constants";
 
-const addTicketToEpic = async (ticketId: string, epicId: string): Promise<void> => {
+const removeTicketFromEpic = async (ticketId: string, epicId: string): Promise<void> => {
   try {
-    await axios.post(`${API_ENDPOINT}/epics/add-story/${epicId}`, { storyId: ticketId });
+    await axios.post(`${API_ENDPOINT}/epics/remove-story/${epicId}`, { storyId: ticketId });
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error("Axios Error");
@@ -14,4 +14,4 @@ const addTicketToEpic = async (ticketId: string, epicId: string): Promise<void> 
   }
 };
 
-export default addTicketToEpic;
+export default removeTicketFromEpic;
