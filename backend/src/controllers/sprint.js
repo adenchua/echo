@@ -49,6 +49,8 @@ module.exports.endSprint = async (req, res) => {
         continue; // temp fix where invalid storyIds will return null, causing the next statements to break
       }
       if (story.isInSprint && story.status === "completed") {
+        story.isInSprint = false;
+        await story.save(); // update ticket tor inSprint status
         completedStoryIds.push(story._id);
       }
       if (story.isInSprint && story.status !== "completed") {
