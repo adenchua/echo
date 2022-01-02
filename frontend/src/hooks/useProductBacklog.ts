@@ -5,6 +5,8 @@ import updateTicket from "../api/stories/updateTicket";
 import { PriorityType, StoryType, TicketUpdateFieldsType } from "../types/StoryInterface";
 import { TicketsContext } from "../components/contexts/TicketsContextProvider";
 import deleteTicket from "../api/stories/deleteTicket";
+import addTicketToEpic from "../api/epics/addTicketToEpic";
+import { EpicsContext } from "../components/contexts/EpicsContextProvider";
 
 const useProductBacklog = () => {
   const {
@@ -12,6 +14,7 @@ const useProductBacklog = () => {
     updateTicket: updateTicketContext,
     deleteTicket: deleteTicketContext,
   } = useContext(TicketsContext);
+  const { addTicketIdToEpic } = useContext(EpicsContext);
 
   const onAddTicket = async (
     title: string,
@@ -45,7 +48,17 @@ const useProductBacklog = () => {
     }
   };
 
-  return { onAddTicket, onUpdateTicket, onDeleteTicket };
+  const onAddTicketToEpic = async (ticketId: string, epicId: string): Promise<void> => {
+    try {
+      await addTicketToEpic(ticketId, epicId);
+      addTicketIdToEpic(epicId, ticketId); // update epic to have ticket id
+      updateTicketContext(ticketId, { epicId }); // update ticket to have epic Id
+    } catch (error) {
+      throw new Error("Failed to add ticket to epic");
+    }
+  };
+
+  return { onAddTicket, onUpdateTicket, onDeleteTicket, onAddTicketToEpic };
 };
 
 export default useProductBacklog;

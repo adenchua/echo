@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
@@ -10,8 +10,33 @@ import FilledCheckIcon from "@mui/icons-material/CheckCircle";
 
 import TicketTypeIcon from "./TicketTypeIcon";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
+import StoryInterface from "../types/StoryInterface";
+import UserInterface from "../types/UserInterface";
+import fetchUsersByIds from "../api/users/fetchUsersByIds";
 
-const EpicSummaryAccordionTicket = (): JSX.Element => {
+interface EpicSummaryAccordionTicketProps {
+  ticket: StoryInterface;
+}
+
+const EpicSummaryAccordionTicket = (props: EpicSummaryAccordionTicketProps): JSX.Element => {
+  const { ticket } = props;
+  const { title, ticketNumber, isInSprint, status, type, assigneeId } = ticket;
+
+  const [assignee, setAssignee] = useState<UserInterface | null>(null);
+
+  useEffect(() => {
+    const getAssigneeDetails = async () => {
+      if (!assigneeId) {
+        setAssignee(null);
+        return;
+      }
+      const [response] = await fetchUsersByIds([assigneeId]);
+      setAssignee(response);
+    };
+
+    getAssigneeDetails();
+  }, [assigneeId]);
+
   return (
     <Paper
       square
@@ -27,29 +52,27 @@ const EpicSummaryAccordionTicket = (): JSX.Element => {
         "&: last-child": { borderBottom: 0 },
       }}
     >
-      <CheckIcon color='disabled' />
-      <FilledCheckIcon sx={{ color: "success.light" }} />
-      <SprintIcon color='disabled' />
-      <FilledSprintIcon sx={{ color: "warning.light" }} />
-      <TicketTypeIcon type='task' />
+      {status !== "completed" && <CheckIcon color='disabled' />}
+      {status === "completed" && <FilledCheckIcon sx={{ color: "success.light" }} />}
+      {isInSprint && <FilledSprintIcon sx={{ color: "warning.light" }} />}
+      {!isInSprint && <SprintIcon color='disabled' />}
+      <TicketTypeIcon type={type} />
       <Typography variant='caption' color='grey.500' noWrap sx={{ flexShrink: 0 }}>
-        {`#41`}
+        {`#${ticketNumber}`}
       </Typography>
       <Typography variant='body2' noWrap>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-        laborum.
+        {title}
       </Typography>
       <Box flexGrow={1} />
-      <Avatar
-        style={{
-          height: 20,
-          width: 20,
-        }}
-        src={getUserAvatarSVG("animalmother")}
-      />
+      {assignee && (
+        <Avatar
+          style={{
+            height: 20,
+            width: 20,
+          }}
+          src={getUserAvatarSVG(assignee.username)}
+        />
+      )}
     </Paper>
   );
 };

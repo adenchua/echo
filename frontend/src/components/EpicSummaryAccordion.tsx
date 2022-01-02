@@ -90,7 +90,9 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
           },
         }}
       >
-        <Typography noWrap>{title}</Typography>
+        <Typography noWrap variant='body2'>
+          {title}
+        </Typography>
         <Box flexGrow={1} />
         <Box sx={{ width: 180, flexShrink: 0 }}>
           <ProgressBarWithPercentage value={epicProgressionPercentage} />
@@ -115,7 +117,7 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
             </Typography>
           </Box>
         )}
-        {tickets && tickets.map((ticket) => <EpicSummaryAccordionTicket key={ticket._id} />)}
+        {tickets && tickets.map((ticket) => <EpicSummaryAccordionTicket key={ticket._id} ticket={ticket} />)}
       </AccordionDetails>
     </Accordion>
   );

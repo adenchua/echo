@@ -31,6 +31,7 @@ import fetchUsersByIds from "../api/users/fetchUsersByIds";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
 import { ProjectMembersContext } from "./contexts/ProjectMembersContextProvider";
 import { UserAuthenticationContext } from "./contexts/UserAuthenticationContextProvider";
+import { EpicsContext } from "./contexts/EpicsContextProvider";
 
 interface TicketDetailsRightDrawerProps {
   ticket: StoryInterface;
@@ -41,10 +42,13 @@ interface TicketDetailsRightDrawerProps {
 
 const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Element => {
   const { ticket, onClose, isOpen, projectId } = props;
-  const { onUpdateTicket, onDeleteTicket } = useProductBacklog();
+  const { _id: id, title, description, priority, type, dueDate, status, assigneeId, epicId } = ticket;
+
+  const { onUpdateTicket, onDeleteTicket, onAddTicketToEpic } = useProductBacklog();
   const { members, admins } = useContext(ProjectMembersContext);
   const { loggedInUserId } = useContext(UserAuthenticationContext);
-  const { _id: id, title, description, priority, type, dueDate, status, assigneeId } = ticket;
+  const { epics } = useContext(EpicsContext);
+
   const [titleInput, setTitleInput] = useState<string>(title);
   const [descriptionInput, setDescriptionInput] = useState<string>(description ?? "");
   const [assignee, setAssignee] = useState<UserInterface | null>(null);
@@ -55,6 +59,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
   const [isDueDateEditModeOn, setDueDateEditModeOn] = useState<boolean>(true);
   const [isStatusEditModeOn, setIsStatusEditModeOn] = useState<boolean>(false);
   const [isAssigneeEditModeOn, setIsAssigneeEditModeOn] = useState<boolean>(false);
+  const [isEpicLinkEditModeOn, setIsEpicLinkEditModeOn] = useState<boolean>(false);
   const isDue = dueDate && compareAsc(new Date(), new Date(dueDate)) === 1 ? true : false;
 
   const closeAllEditModes = (): void => {
@@ -65,6 +70,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
     setDueDateEditModeOn(false);
     setIsStatusEditModeOn(false);
     setIsAssigneeEditModeOn(false);
+    setIsEpicLinkEditModeOn(false);
   };
 
   useEffect(() => {
@@ -125,6 +131,10 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
     onUpdateTicket(id, { dueDate: dueDateInputInISOString });
   };
 
+  const handleUpdateTicketEpicLink = (newEpicLinkId: string): void => {
+    onAddTicketToEpic(id, newEpicLinkId);
+  };
+
   const handleTitleEditMode = (): void => {
     setIsTitleEditModeOn(!isTitleEditModeOn);
   };
@@ -151,6 +161,10 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
 
   const handleAssigneeEditMode = (): void => {
     setIsAssigneeEditModeOn(!isAssigneeEditModeOn);
+  };
+
+  const handleEpicLinkEditMode = (): void => {
+    setIsEpicLinkEditModeOn(!isEpicLinkEditModeOn);
   };
 
   const renderEditButton = (onStartEdit: any): JSX.Element => (
@@ -531,6 +545,65 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
     </ListItem>
   );
 
+  const renderEpicLinkListItem = (): JSX.Element => (
+    <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+      <Box display='flex' justifyContent='space-between' width='100%' mb={1}>
+        <Typography variant='body2'>Objectives Link</Typography>
+        {renderEditButton(handleEpicLinkEditMode)}
+      </Box>
+      <Box mb={2}>
+        {epicId && (
+          <Typography variant='body2' color='textSecondary'>
+            {epicId}
+          </Typography>
+        )}
+        {!epicId && (
+          <Typography variant='body2' color='textSecondary'>
+            None
+          </Typography>
+        )}
+      </Box>
+      <Divider flexItem />
+    </ListItem>
+  );
+
+  const renderEpicLinkListItemEdit = (): JSX.Element => (
+    <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+      <Box display='flex' width='100%' mb={1.5} gap={2}>
+        <Typography variant='body2'>Objectives Link</Typography>
+        <Box flexGrow={1} />
+        {renderUpdateButtons(handleUpdateTicket, handleEpicLinkEditMode, false)}
+      </Box>
+      <Box mb={2} width='100%'>
+        <Select
+          size='small'
+          fullWidth
+          value={epicId ? epicId : ""}
+          onChange={(e: SelectChangeEvent) => {
+            handleUpdateTicketEpicLink(e.target.value);
+          }}
+          SelectDisplayProps={{
+            style: {
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "4px 8px",
+              margin: 0,
+              background: "#00000014",
+            },
+          }}
+        >
+          {epics?.map((epic) => (
+            <MenuItem key={epic._id} value={epic._id} dense sx={{ display: "flex", justifyContent: "center" }} divider>
+              {epic.title}
+            </MenuItem>
+          ))}
+        </Select>
+      </Box>
+      <Divider flexItem />
+    </ListItem>
+  );
+
   return (
     <Drawer
       anchor='right'
@@ -565,6 +638,9 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
 
         {!isDueDateEditModeOn && renderDueDateListItem()}
         {isDueDateEditModeOn && renderDueDateListItemEdit()}
+
+        {!isEpicLinkEditModeOn && renderEpicLinkListItem()}
+        {isEpicLinkEditModeOn && renderEpicLinkListItemEdit()}
 
         <ListItem sx={{ mt: 1 }}>
           <Button fullWidth variant='outlined' color='error' onClick={() => onDeleteTicket(id, projectId)}>

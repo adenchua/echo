@@ -77,8 +77,8 @@ module.exports.addStoryToEpic = async (req, res) => {
   try {
     const epic = await Epic.findById(epicId);
     await Story.findByIdAndUpdate(storyId, { epicId }); // add link to both sides
-    if (!epic.storyIds.includes(storyId)) {
-      epic.storyIds.push(storyId);
+    if (!epic.ticketIds.includes(storyId)) {
+      epic.ticketIds.push(storyId);
     }
     await epic.save();
     res.status(204).send();
