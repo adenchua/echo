@@ -3,7 +3,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import IconButton from "@mui/material/IconButton";
-import MoreVertIcon from "@mui/icons-material/MoreVertOutlined";
+import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import Chip from "@mui/material/Chip";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import Typography from "@mui/material/Typography";
@@ -15,6 +15,7 @@ import EpicSummaryAccordionTicket from "./EpicSummaryAccordionTicket";
 import EpicInterface from "../types/EpicInterface";
 import StoryInterface from "../types/StoryInterface";
 import fetchStoriesByIds from "../api/stories/fetchStoriesByIds";
+import DeleteEpicDialog from "./DeleteEpicDialog";
 
 interface EpicSummaryAccordionProps {
   epic: EpicInterface;
@@ -24,6 +25,7 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
   const { epic } = props;
   const { title, ticketIds, startDate, endDate } = epic;
   const [tickets, setTickets] = useState<StoryInterface[]>([]);
+  const [isDeleteEpicDialogOpened, setIsDeleteEpicDialogOpened] = useState<boolean>(false);
 
   const epicProgressionPercentage = useMemo(() => {
     let completedCount = 0;
@@ -84,7 +86,7 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
             transform: "rotate(90deg)",
           },
           "& .MuiAccordionSummary-content": {
-            ml: 1,
+            ml: 2,
             gap: 5,
             alignItems: "center",
             overflowX: "hidden",
@@ -102,9 +104,14 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
         <Typography fontSize={14} color='textSecondary' noWrap sx={{ flexShrink: 0, minWidth: 120 }} align='center'>
           {getDateString(startDate, endDate)}
         </Typography>
-        <IconButton size='small' color='primary'>
-          <MoreVertIcon />
+        <IconButton size='small' color='error' sx={{ padding: 0 }} onClick={() => setIsDeleteEpicDialogOpened(true)}>
+          <DeleteIcon />
         </IconButton>
+        <DeleteEpicDialog
+          isDialogOpened={isDeleteEpicDialogOpened}
+          onClose={() => setIsDeleteEpicDialogOpened(false)}
+          epic={epic}
+        />
       </AccordionSummary>
       <AccordionDetails
         sx={{

@@ -56,7 +56,9 @@ module.exports.getEpics = async (req, res) => {
   try {
     for (const epicId of epicIds) {
       const epic = await Epic.findById(epicId);
-      epics.push(epic);
+      if (epic) {
+        epics.push(epic);
+      }
     }
     res.status(200).send(epics);
   } catch (error) {
@@ -121,15 +123,9 @@ module.exports.deleteEpic = async (req, res) => {
   }
 
   try {
-    const epic = Epic.findById(epicId);
-    const ticketIds = epic.ticketIds;
-    for (const ticketId of ticketIds) {
-      const ticket = await Story.findById(ticketId);
-      if (ticket) {
-        ticket.epicId = undefined;
-        await ticket.save();
-      }
-    }
+    await Epic.findById(epicId);
+    await Story.updateMany({ epicId: epicId }, { $unset: { epicId: "" } }); // remove tickets with this epic id
+    await Project.updateMany({ epicIds: epicId }, { $pullAll: { epicIds: [epicId] } }); // remove projects with this epic id
     await Epic.findByIdAndDelete(epicId);
     res.status(204).send();
   } catch (error) {

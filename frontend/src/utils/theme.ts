@@ -50,6 +50,13 @@ let theme = createTheme({
         },
       },
     },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          boxShadow: "none",
+        },
+      },
+    },
   },
 });
 

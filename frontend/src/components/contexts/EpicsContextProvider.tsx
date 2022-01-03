@@ -12,6 +12,7 @@ type EpicsContextStateType = {
   handleSetEpics: (epics: EpicInterface[]) => void;
   addTicketIdToEpic: (epicId: string, ticketId: string) => void;
   deleteTicketIdFromEpic: (epicId: string, ticketId: string) => void;
+  deleteEpic: (epicId: string) => void;
 };
 
 const epicContextDefaultProps: EpicsContextStateType = {
@@ -20,6 +21,7 @@ const epicContextDefaultProps: EpicsContextStateType = {
   handleSetEpics: () => {},
   addTicketIdToEpic: () => {},
   deleteTicketIdFromEpic: () => {},
+  deleteEpic: () => {},
 };
 
 export const EpicsContext = createContext<EpicsContextStateType>(epicContextDefaultProps);
@@ -29,6 +31,10 @@ const EpicsContextProvider = ({ children }: EpicsContextProviderProps): JSX.Elem
 
   const addEpic = useCallback((newEpic: EpicInterface): void => {
     setEpics((prevState) => [...prevState, newEpic]);
+  }, []);
+
+  const deleteEpic = useCallback((epicId: string): void => {
+    setEpics((prevState) => prevState.filter((epic) => epic._id !== epicId));
   }, []);
 
   const handleSetEpics = useCallback((newEpics: EpicInterface[]): void => {
@@ -73,7 +79,9 @@ const EpicsContextProvider = ({ children }: EpicsContextProviderProps): JSX.Elem
   }, []);
 
   return (
-    <EpicsContext.Provider value={{ epics, addEpic, handleSetEpics, addTicketIdToEpic, deleteTicketIdFromEpic }}>
+    <EpicsContext.Provider
+      value={{ epics, addEpic, handleSetEpics, addTicketIdToEpic, deleteTicketIdFromEpic, deleteEpic }}
+    >
       {children}
     </EpicsContext.Provider>
   );
