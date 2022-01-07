@@ -16,11 +16,13 @@ module.exports.createStory = async (req, res) => {
   });
 
   try {
+		let ticketNumber = 1;
     const project = await Project.findById(projectId);
-
     const latestTicketId = project.backlogIds[project.backlogIds.length - 1];
-    const latestTicket = await Story.findById(latestTicketId);
-    const ticketNumber = latestTicket.ticketNumber + 1;
+		if (latestTicketId) {
+			const latestTicket = await Story.findById(latestTicketId); // if no tickets at all, will be null.
+			ticketNumber = latestTicket.ticketNumber + 1;
+		}
 
     const newStory = new Story({ title, ...keysToUpdate, ticketNumber });
     await newStory.save();
