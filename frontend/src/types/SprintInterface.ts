@@ -3,8 +3,8 @@ interface SprintInterface {
   number: number;
   startDate: string;
   endDate: string;
-  incompleteStoryIds: string[];
-  completedStoryIds: string[];
+  incompleteTicketIds: string[];
+  completedTicketIds: string[];
   hasEnded: boolean;
 }
 

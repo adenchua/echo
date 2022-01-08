@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 
-import StoryInterface from "../types/StoryInterface";
+import TicketInterface from "../types/TicketInterface";
 import useProductBacklog from "../hooks/useProductBacklog";
 import { EpicsContext } from "./contexts/EpicsContextProvider";
 import TitleEditItem from "./TicketRightDrawerItems/TitleEditItem";
@@ -19,7 +19,7 @@ import AssigneeEditItem from "./TicketRightDrawerItems/AssigneeEditItem";
 import EpicLinkEditItem from "./TicketRightDrawerItems/EpicLinkEditItem";
 
 interface TicketDetailsRightDrawerProps {
-  ticket: StoryInterface;
+  ticket: TicketInterface;
   isOpen: boolean;
   onClose: () => void;
   projectId: string;

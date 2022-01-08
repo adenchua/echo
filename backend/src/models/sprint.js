@@ -14,13 +14,13 @@ const sprintSchema = new Schema(
       type: Date,
       required: true,
     },
-    incompleteStoryIds: {
+    incompleteTicketIds: {
       type: [Schema.Types.ObjectId],
-      ref: "Story",
+      ref: "Ticket",
     },
-    completedStoryIds: {
+    completedTicketIds: {
       type: [Schema.Types.ObjectId],
-      ref: "Story",
+      ref: "Ticket",
     },
     hasEnded: {
       type: Boolean,

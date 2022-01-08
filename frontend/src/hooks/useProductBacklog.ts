@@ -1,10 +1,10 @@
 import { useContext } from "react";
 
-import createStory from "../api/stories/createStory";
-import updateTicket from "../api/stories/updateTicket";
-import { PriorityType, StoryType, TicketUpdateFieldsType } from "../types/StoryInterface";
+import createTicket from "../api/tickets/createTicket";
+import updateTicket from "../api/tickets/updateTicket";
+import { PriorityType, TicketType, TicketUpdateFieldsType } from "../types/TicketInterface";
 import { TicketsContext } from "../components/contexts/TicketsContextProvider";
-import deleteTicket from "../api/stories/deleteTicket";
+import deleteTicket from "../api/tickets/deleteTicket";
 import addTicketToEpic from "../api/epics/addTicketToEpic";
 import { EpicsContext } from "../components/contexts/EpicsContextProvider";
 import removeTicketFromEpic from "../api/epics/removeTicketFromEpic";
@@ -21,10 +21,10 @@ const useProductBacklog = () => {
     title: string,
     projectId: string,
     priority: PriorityType,
-    type: StoryType
+    type: TicketType
   ): Promise<void> => {
     try {
-      const newTicket = await createStory(title, projectId, priority, type);
+      const newTicket = await createTicket(title, projectId, priority, type);
       addTicket(newTicket);
     } catch (error) {
       throw new Error("Failed to create ticket");

@@ -40,7 +40,7 @@ const projectSchema = new Schema(
     },
     backlogIds: {
       type: [Schema.Types.ObjectId],
-      ref: "Story",
+      ref: "Ticket",
     },
     sprintIds: {
       type: [Schema.Types.ObjectId],

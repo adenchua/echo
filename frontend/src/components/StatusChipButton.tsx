@@ -1,7 +1,7 @@
 import React from "react";
 import Chip from "@mui/material/Chip";
 
-import { StatusType } from "../types/StoryInterface";
+import { StatusType } from "../types/TicketInterface";
 
 const CHIP_MIN_WIDTH = "92px";
 

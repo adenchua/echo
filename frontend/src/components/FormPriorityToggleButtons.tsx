@@ -6,7 +6,7 @@ import LowPriorityIcon from "@mui/icons-material/KeyboardArrowDown";
 import MediumPriorityIcon from "@mui/icons-material/Remove";
 import HighPriorityIcon from "@mui/icons-material/KeyboardArrowUp";
 
-import { PriorityType } from "../types/StoryInterface";
+import { PriorityType } from "../types/TicketInterface";
 import HighestPriorityIcon from "./HighestPriorityIcon";
 
 interface FormPriorityToggleButtonsProps {

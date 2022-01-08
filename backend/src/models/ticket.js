@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const storySchema = new Schema(
+const ticketSchema = new Schema(
   {
     title: {
       type: String,
@@ -57,6 +57,6 @@ const storySchema = new Schema(
   { versionKey: false }
 );
 
-const Story = mongoose.model("Story", storySchema);
+const Ticket = mongoose.model("Ticket", ticketSchema);
 
-module.exports = Story;
+module.exports = Ticket;

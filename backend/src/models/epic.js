@@ -14,7 +14,7 @@ const epicSchema = new Schema(
     },
     ticketIds: {
       type: [Schema.Types.ObjectId],
-      ref: "Story",
+      ref: "Ticket",
     },
     startDate: {
       type: Date,

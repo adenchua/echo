@@ -15,7 +15,7 @@ import getUserAvatarSVG from "../utils/getUserAvatarSVG";
 import UserInterface from "../types/UserInterface";
 import fetchSprintsByIds from "../api/sprints/fetchSprintsByIds";
 import fetchUsersByIds from "../api/users/fetchUsersByIds";
-import fetchStoriesByIds from "../api/stories/fetchStoriesByIds";
+import fetchTicketsByIds from "../api/tickets/fetchTicketsByIds";
 
 interface ProjectListingItemProps {
   project: ProjectInterface;
@@ -51,16 +51,16 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
           setActiveSprintProgressPercentage(0);
           return;
         }
-        let completedStoryCount = 0;
-        const stories = await fetchStoriesByIds(backlogIds);
-        const ticketsInSprint = stories.filter((story) => story.isInSprint === true);
+        let completedTicketCount = 0;
+        const tickets = await fetchTicketsByIds(backlogIds);
+        const ticketsInSprint = tickets.filter((ticket) => ticket.isInSprint === true);
         ticketsInSprint.forEach((ticket) => {
           const { status } = ticket;
           if (status === "completed") {
-            completedStoryCount += 1;
+            completedTicketCount += 1;
           }
         });
-        const result = Number(Math.floor((completedStoryCount / ticketsInSprint.length) * 100).toFixed());
+        const result = Number(Math.floor((completedTicketCount / ticketsInSprint.length) * 100).toFixed());
         setActiveSprintProgressPercentage(result);
       } catch (error) {}
     };

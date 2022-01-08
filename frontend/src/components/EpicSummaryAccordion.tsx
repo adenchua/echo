@@ -13,8 +13,8 @@ import { format } from "date-fns";
 import ProgressBarWithPercentage from "./ProgressBarWithPercentage";
 import EpicSummaryAccordionTicket from "./EpicSummaryAccordionTicket";
 import EpicInterface from "../types/EpicInterface";
-import StoryInterface from "../types/StoryInterface";
-import fetchStoriesByIds from "../api/stories/fetchStoriesByIds";
+import TicketInterface from "../types/TicketInterface";
+import fetchTicketsByIds from "../api/tickets/fetchTicketsByIds";
 import DeleteEpicDialog from "./DeleteEpicDialog";
 
 interface EpicSummaryAccordionProps {
@@ -24,7 +24,7 @@ interface EpicSummaryAccordionProps {
 const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => {
   const { epic } = props;
   const { title, ticketIds, startDate, endDate } = epic;
-  const [tickets, setTickets] = useState<StoryInterface[]>([]);
+  const [tickets, setTickets] = useState<TicketInterface[]>([]);
   const [isDeleteEpicDialogOpened, setIsDeleteEpicDialogOpened] = useState<boolean>(false);
 
   const epicProgressionPercentage = useMemo(() => {
@@ -46,7 +46,7 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
   useEffect(() => {
     const getTickets = async (): Promise<void> => {
       try {
-        const response = await fetchStoriesByIds(ticketIds);
+        const response = await fetchTicketsByIds(ticketIds);
         setTickets(response);
       } catch (error) {
         // do nothing

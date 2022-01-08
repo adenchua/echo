@@ -11,7 +11,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import SprintEndIcon from "@mui/icons-material/DirectionsWalk";
 import TickIcon from "@mui/icons-material/Check";
 
-import StoryInterface from "../types/StoryInterface";
+import TicketInterface from "../types/TicketInterface";
 import SprintInterface from "../types/SprintInterface";
 import { sleep } from "../utils/sleep";
 
@@ -21,7 +21,7 @@ interface SprintEndDialogProps {
   onEndSprint: (projectId: string, sprintId: string) => Promise<SprintInterface>;
   projectId: string;
   sprintId: string | undefined;
-  sprintTickets: StoryInterface[];
+  sprintTickets: TicketInterface[];
 }
 
 const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
@@ -70,8 +70,8 @@ const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
     let completionRate = 0;
 
     if (completedSprint) {
-      numberOfCompletedTickets = completedSprint.completedStoryIds.length;
-      numberOfIncompleteTickets = completedSprint.incompleteStoryIds.length;
+      numberOfCompletedTickets = completedSprint.completedTicketIds.length;
+      numberOfIncompleteTickets = completedSprint.incompleteTicketIds.length;
       completionRate = Math.floor(
         (numberOfCompletedTickets / (numberOfCompletedTickets + numberOfIncompleteTickets)) * 100
       );

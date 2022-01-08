@@ -2,7 +2,7 @@ import React from "react";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 
-import { StatusType } from "../types/StoryInterface";
+import { StatusType } from "../types/TicketInterface";
 
 interface FormTicketStatusToggleButtonProps {
   value: StatusType;

@@ -2,20 +2,20 @@ export type StatusType = "todo" | "progress" | "review" | "completed" | "stuck" 
 
 export type PriorityType = "low" | "medium" | "high" | "highest";
 
-export type StoryType = "story" | "task" | "bug";
+export type TicketType = "story" | "task" | "bug";
 
 export type TicketUpdateFieldsType = {
   title?: string;
   description?: string;
   status?: StatusType;
   priority?: PriorityType;
-  type?: StoryType;
+  type?: TicketType;
   dueDate?: string | null;
   isInSprint?: boolean;
   assigneeId?: string | null;
   epicId?: string | null;
 };
-interface StoryInterface {
+interface TicketInterface {
   _id: string;
   title: string;
   description: string;
@@ -24,11 +24,11 @@ interface StoryInterface {
   dueDate: string;
   status: StatusType;
   priority: PriorityType;
-  type: StoryType;
+  type: TicketType;
   subtaskIds: string[];
   isInSprint: boolean;
   ticketNumber: number;
   epicId: string;
 }
 
-export default StoryInterface;
+export default TicketInterface;

@@ -14,7 +14,7 @@ import ProductBacklogTab from "../components/DetailedProject/ProductBacklogTab";
 import SprintBacklogTab from "../components/DetailedProject/SprintBacklogTab";
 import Loading from "../components/Loading";
 import { TicketsContext } from "../components/contexts/TicketsContextProvider";
-import fetchStoriesByIds from "../api/stories/fetchStoriesByIds";
+import fetchTicketsByIds from "../api/tickets/fetchTicketsByIds";
 import { ProjectMembersContext } from "../components/contexts/ProjectMembersContextProvider";
 import fetchUsersByIds from "../api/users/fetchUsersByIds";
 import MembersTab from "../components/DetailedProject/MembersTab";
@@ -34,9 +34,9 @@ const DetailedProjectPage = (): JSX.Element => {
   const { handleSetEpics } = useContext(EpicsContext);
 
   useEffect(() => {
-    const getTickets = async (storyIds: string[]): Promise<void> => {
+    const getTickets = async (ticketIds: string[]): Promise<void> => {
       try {
-        const response = await fetchStoriesByIds(storyIds);
+        const response = await fetchTicketsByIds(ticketIds);
         handleSetTickets(response);
       } catch (error) {
         alert("Something went wrong. Please try again later.");

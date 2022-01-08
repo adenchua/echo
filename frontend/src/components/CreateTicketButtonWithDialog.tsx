@@ -13,9 +13,9 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import { PriorityType, StoryType } from "../types/StoryInterface";
+import { PriorityType, TicketType } from "../types/TicketInterface";
 import FormPriorityToggleButtons from "./FormPriorityToggleButtons";
-import FormTicketTypeToggleButtons from "./FormTicketTypeToggleButtonts";
+import FormTicketTypeToggleButtons from "./FormTicketTypeToggleButtons";
 import useProductBacklog from "../hooks/useProductBacklog";
 
 type ScreenType = "desktop" | "mobile";
@@ -30,7 +30,7 @@ const CreateTicketButtonWithDialog = (props: CreateTicketButtonWithDialogProps):
   const { projectId, variant } = props;
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [titleInput, setTitleInput] = useState<string>("");
-  const [ticketType, setTicketType] = useState<StoryType>("task");
+  const [ticketType, setTicketType] = useState<TicketType>("task");
   const [priority, setPriority] = useState<PriorityType>("medium");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showError, setShowError] = useState<boolean>(false);
@@ -64,7 +64,7 @@ const CreateTicketButtonWithDialog = (props: CreateTicketButtonWithDialogProps):
     }
   };
 
-  const handleChangeTicketType = (event: React.MouseEvent<HTMLElement>, newType: StoryType) => {
+  const handleChangeTicketType = (event: React.MouseEvent<HTMLElement>, newType: TicketType) => {
     if (!newType) {
       return; // prevent deselecting a button
     }

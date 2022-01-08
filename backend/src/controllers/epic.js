@@ -1,6 +1,6 @@
 const Epic = require("../models/epic");
 const Project = require("../models/project");
-const Story = require("../models/story");
+const Ticket = require("../models/ticket");
 const { removeUndefinedKeysFromObject } = require("../utils/removeUndefinedKeysFromObject");
 
 module.exports.createEpic = async (req, res) => {
@@ -67,49 +67,49 @@ module.exports.getEpics = async (req, res) => {
   }
 };
 
-module.exports.addStoryToEpic = async (req, res) => {
+module.exports.addTicketToEpic = async (req, res) => {
   const { epicId } = req.params;
-  const { storyId } = req.body;
+  const { ticketId } = req.body;
 
-  if (!epicId || !storyId) {
+  if (!epicId || !ticketId) {
     res.status(400).send();
     return;
   }
 
   try {
     const epic = await Epic.findById(epicId);
-    await Epic.updateMany({ ticketIds: storyId }, { $pullAll: { ticketIds: [storyId] } }); // remove all instances of the ticketId in all epics
-    await Story.findByIdAndUpdate(storyId, { epicId }); // add link to both sides
-    if (!epic.ticketIds.includes(storyId)) {
-      epic.ticketIds.push(storyId);
+    await Epic.updateMany({ ticketIds: ticketId }, { $pullAll: { ticketIds: [ticketId] } }); // remove all instances of the ticketId in all epics
+    await Ticket.findByIdAndUpdate(ticketId, { epicId }); // add link to both sides
+    if (!epic.ticketIds.includes(ticketId)) {
+      epic.ticketIds.push(ticketId);
     }
     await epic.save();
     res.status(204).send();
   } catch (error) {
-    console.error("addStoryToEpic", error);
+    console.error("addTicketToEpic", error);
     res.status(500).send();
   }
 };
 
-module.exports.removeStoryFromEpic = async (req, res) => {
+module.exports.removeTicketFromEpic = async (req, res) => {
   const { epicId } = req.params;
-  const { storyId } = req.body;
+  const { ticketId } = req.body;
 
-  if (!epicId || !storyId) {
+  if (!epicId || !ticketId) {
     res.status(400).send();
     return;
   }
 
   try {
     const epic = await Epic.findById(epicId);
-    await Story.findByIdAndUpdate(storyId, { epicId: null }); // remove link from both sides
-    if (epic.ticketIds.includes(storyId)) {
-      epic.ticketIds.pull(storyId);
+    await Ticket.findByIdAndUpdate(ticketId, { epicId: null }); // remove link from both sides
+    if (epic.ticketIds.includes(ticketId)) {
+      epic.ticketIds.pull(ticketId);
     }
     await epic.save();
     res.status(204).send();
   } catch (error) {
-    console.error("addStoryToEpic", error);
+    console.error("addTicketToEpic", error);
     res.status(500).send();
   }
 };
@@ -124,7 +124,7 @@ module.exports.deleteEpic = async (req, res) => {
 
   try {
     await Epic.findById(epicId);
-    await Story.updateMany({ epicId: epicId }, { $unset: { epicId: "" } }); // remove tickets with this epic id
+    await Ticket.updateMany({ epicId: epicId }, { $unset: { epicId: "" } }); // remove tickets with this epic id
     await Project.updateMany({ epicIds: epicId }, { $pullAll: { epicIds: [epicId] } }); // remove projects with this epic id
     await Epic.findByIdAndDelete(epicId);
     res.status(204).send();

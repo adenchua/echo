@@ -8,7 +8,7 @@ import Chip from "@mui/material/Chip";
 import EditButton from "./EditButton";
 import UpdateButton from "./UpdateButton";
 import useProductBacklog from "../../hooks/useProductBacklog";
-import { PriorityType } from "../../types/StoryInterface";
+import { PriorityType } from "../../types/TicketInterface";
 import FormPriorityToggleButtons from "../FormPriorityToggleButtons";
 import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter";
 import PriorityIcon from "../PriorityIcon";

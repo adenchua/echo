@@ -1,6 +1,6 @@
 const Project = require("../models/project");
 const Sprint = require("../models/sprint");
-const Story = require("../models/story");
+const Ticket = require("../models/ticket");
 
 module.exports.startSprint = async (req, res) => {
   const { projectId, endDateISOString } = req.body;
@@ -26,8 +26,8 @@ module.exports.startSprint = async (req, res) => {
 
 module.exports.endSprint = async (req, res) => {
   const { sprintId, projectId } = req.body;
-  const completedStoryIds = [];
-  const incompleteStoryIds = [];
+  const completedTicketIds = [];
+  const incompleteTicketIds = [];
 
   if (!sprintId || !projectId) {
     res.status(400).send();
@@ -43,26 +43,26 @@ module.exports.endSprint = async (req, res) => {
     }
 
     const project = await Project.findById(projectId);
-    for (const storyId of project.backlogIds) {
-      const story = await Story.findById(storyId);
-      if (!story) {
-        continue; // temp fix where invalid storyIds will return null, causing the next statements to break
+    for (const ticketId of project.backlogIds) {
+      const ticket = await Ticket.findById(ticketId);
+      if (!ticket) {
+        continue; // temp fix where invalid ticketIds will return null, causing the next statements to break
       }
-      if (story.isInSprint && story.status === "completed") {
-        story.isInSprint = false;
-        await story.save(); // update ticket tor inSprint status
-        completedStoryIds.push(story._id);
+      if (ticket.isInSprint && ticket.status === "completed") {
+        ticket.isInSprint = false;
+        await ticket.save(); // update ticket tor inSprint status
+        completedTicketIds.push(ticket._id);
       }
-      if (story.isInSprint && story.status !== "completed") {
-        incompleteStoryIds.push(story._id);
+      if (ticket.isInSprint && ticket.status !== "completed") {
+        incompleteTicketIds.push(ticket._id);
       }
     }
 
-    completedStoryIds.forEach((storyId) => project.backlogIds.pull(storyId)); // remove completed tickets from product backlog
+    completedTicketIds.forEach((ticketId) => project.backlogIds.pull(ticketId)); // remove completed tickets from product backlog
 
     sprint.hasEnded = true;
-    sprint.completedStoryIds = completedStoryIds;
-    sprint.incompleteStoryIds = incompleteStoryIds;
+    sprint.completedTicketIds = completedTicketIds;
+    sprint.incompleteTicketIds = incompleteTicketIds;
     await sprint.save();
     await project.save();
     res.status(200).send(sprint);

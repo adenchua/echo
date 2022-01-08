@@ -4,7 +4,7 @@ import { API_ENDPOINT } from "../../utils/constants";
 
 const deleteTicket = async (ticketId: string, projectId: string): Promise<void> => {
   try {
-    await axios.post(`${API_ENDPOINT}/stories/id/${ticketId}`, { projectId });
+    await axios.post(`${API_ENDPOINT}/tickets/id/${ticketId}`, { projectId });
     return;
   } catch (error) {
     if (axios.isAxiosError(error)) {

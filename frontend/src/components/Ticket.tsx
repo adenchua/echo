@@ -9,7 +9,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Avatar from "@mui/material/Avatar";
 import { format, compareAsc } from "date-fns";
 
-import StoryInterface from "../types/StoryInterface";
+import TicketInterface from "../types/TicketInterface";
 import PriorityIcon from "./PriorityIcon";
 import TicketTypeIcon from "./TicketTypeIcon";
 import useProductBacklog from "../hooks/useProductBacklog";
@@ -19,7 +19,7 @@ import fetchUsersByIds from "../api/users/fetchUsersByIds";
 import UserInterface from "../types/UserInterface";
 
 interface TicketProps {
-  ticket: StoryInterface;
+  ticket: TicketInterface;
   showSprintToggleCheckBox: boolean;
   bgGrey: boolean;
 }

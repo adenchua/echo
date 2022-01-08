@@ -1,16 +1,16 @@
 import axios from "axios";
 
-import StoryInterface, { PriorityType, StoryType } from "../../types/StoryInterface";
+import TicketInterface, { PriorityType, TicketType } from "../../types/TicketInterface";
 import { API_ENDPOINT } from "../../utils/constants";
 
-const createStory = async (
+const createTicket = async (
   title: string,
   projectId: string,
   priority: PriorityType,
-  type: StoryType
-): Promise<StoryInterface> => {
+  type: TicketType
+): Promise<TicketInterface> => {
   try {
-    const response = await axios.post<StoryInterface>(`${API_ENDPOINT}/stories`, { title, projectId, priority, type });
+    const response = await axios.post<TicketInterface>(`${API_ENDPOINT}/tickets`, { title, projectId, priority, type });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -21,4 +21,4 @@ const createStory = async (
   }
 };
 
-export default createStory;
+export default createTicket;

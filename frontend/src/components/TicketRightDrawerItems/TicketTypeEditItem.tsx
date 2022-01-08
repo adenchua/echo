@@ -9,13 +9,13 @@ import EditButton from "./EditButton";
 import UpdateButton from "./UpdateButton";
 import TicketTypeIcon from "../TicketTypeIcon";
 import useProductBacklog from "../../hooks/useProductBacklog";
-import { StoryType } from "../../types/StoryInterface";
+import { TicketType } from "../../types/TicketInterface";
 import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter";
-import FormTicketTypeToggleButtons from "../FormTicketTypeToggleButtonts";
+import FormTicketTypeToggleButtons from "../FormTicketTypeToggleButtons";
 
 interface TicketTypeEditItemProps {
   ticketId: string;
-  type: StoryType;
+  type: TicketType;
 }
 
 const TicketTypeEditItem = (props: TicketTypeEditItemProps): JSX.Element => {
@@ -27,7 +27,7 @@ const TicketTypeEditItem = (props: TicketTypeEditItemProps): JSX.Element => {
     setIsEditModeOn(!isEditModeOn);
   };
 
-  const handleChangeTicketType = (event: React.MouseEvent<HTMLElement>, newType: StoryType): void => {
+  const handleChangeTicketType = (event: React.MouseEvent<HTMLElement>, newType: TicketType): void => {
     if (!newType) {
       return; // prevent deselecting a button
     }

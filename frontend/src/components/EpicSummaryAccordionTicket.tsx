@@ -11,12 +11,12 @@ import FilledCheckIcon from "@mui/icons-material/CheckCircle";
 
 import TicketTypeIcon from "./TicketTypeIcon";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
-import StoryInterface from "../types/StoryInterface";
+import TicketInterface from "../types/TicketInterface";
 import UserInterface from "../types/UserInterface";
 import fetchUsersByIds from "../api/users/fetchUsersByIds";
 
 interface EpicSummaryAccordionTicketProps {
-  ticket: StoryInterface;
+  ticket: TicketInterface;
 }
 
 const EpicSummaryAccordionTicket = (props: EpicSummaryAccordionTicketProps): JSX.Element => {

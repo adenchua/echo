@@ -1,11 +1,11 @@
 const Subtask = require("../models/subtask");
-const Story = require("../models/story");
+const Ticket = require("../models/ticket");
 const { removeUndefinedKeysFromObject } = require("../utils/removeUndefinedKeysFromObject");
 
 module.exports.createSubtask = async (req, res) => {
-  const { storyId, title } = req.body;
+  const { ticketId, title } = req.body;
 
-  if (!storyId || !title) {
+  if (!ticketId || !title) {
     res.status(400).send();
     return;
   }
@@ -13,9 +13,9 @@ module.exports.createSubtask = async (req, res) => {
   try {
     const subtask = new Subtask({ title });
     await subtask.save();
-    const story = await Story.findById(storyId);
-    story.subtaskIds.push(subtask._id);
-    await story.save();
+    const ticket = await Ticket.findById(ticketId);
+    ticket.subtaskIds.push(subtask._id);
+    await ticket.save();
     res.status(201).send(subtask);
   } catch (error) {
     console.error("createSubtask", error);

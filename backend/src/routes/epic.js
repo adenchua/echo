@@ -1,10 +1,10 @@
 const { Router } = require("express");
 
 const {
-  addStoryToEpic,
+  addTicketToEpic,
   createEpic,
   getEpics,
-  removeStoryFromEpic,
+  removeTicketFromEpic,
   updateEpic,
   deleteEpic,
 } = require("../controllers/epic");
@@ -15,7 +15,7 @@ router.route("/").post(createEpic);
 router.route("/id/:epicId").patch(updateEpic);
 router.route("/id/:epicId").delete(deleteEpic);
 router.route("/bulk-retrieve").post(getEpics);
-router.route("/add-story/:epicId").post(addStoryToEpic);
-router.route("/remove-story/:epicId").post(removeStoryFromEpic);
+router.route("/add-ticket/:epicId").post(addTicketToEpic);
+router.route("/remove-ticket/:epicId").post(removeTicketFromEpic);
 
 module.exports = router;
