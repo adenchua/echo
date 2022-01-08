@@ -79,105 +79,107 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
   const tableRows = useMemo(() => [...getTableRows(admins, true), ...getTableRows(members, false)], [admins, members]);
 
   return (
-    <ContainerWrapper>
-      <Typography variant='h5' paragraph>
-        Team Members
-      </Typography>
-      <Box display='flex' alignItems='center' gap={2} mb={2}>
-        <TextField
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position='start'>
-                <SearchIcon fontSize='small' />
-              </InputAdornment>
-            ),
-            style: {
-              borderRadius: 0,
-            },
-          }}
-          size='small'
-          placeholder='Search...'
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-        />
-        <AddMemberToProjectButtonWithDialog projectId={projectId} />
-      </Box>
-      <TableContainer component={Paper} elevation={0} sx={{ border: "1px solid", borderColor: "grey.300" }}>
-        <Table sx={{ minWidth: 650 }} size='small'>
-          <TableHead>
-            <TableRow>
-              <TableCell>Member</TableCell>
-              <TableCell align='left'>Title</TableCell>
-              <TableCell align='left'>Type</TableCell>
-              {isLoggedInUserAnAdmin && <TableCell align='center'>Actions</TableCell>}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {tableRows.map((row: RowUserInterface) => {
-              const { user, isAdmin } = row;
-              const { _id: userId, username, displayName } = user;
+    <Box p={3}>
+      <ContainerWrapper>
+        <Typography variant='h5' paragraph>
+          Team Members
+        </Typography>
+        <Box display='flex' alignItems='center' gap={2} mb={2}>
+          <TextField
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <SearchIcon fontSize='small' />
+                </InputAdornment>
+              ),
+              style: {
+                borderRadius: 0,
+              },
+            }}
+            size='small'
+            placeholder='Search...'
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
+          <AddMemberToProjectButtonWithDialog projectId={projectId} />
+        </Box>
+        <TableContainer component={Paper} elevation={0} sx={{ border: "1px solid", borderColor: "grey.300" }}>
+          <Table sx={{ minWidth: 650 }} size='small'>
+            <TableHead>
+              <TableRow>
+                <TableCell>Member</TableCell>
+                <TableCell align='left'>Title</TableCell>
+                <TableCell align='left'>Type</TableCell>
+                {isLoggedInUserAnAdmin && <TableCell align='center'>Actions</TableCell>}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {tableRows.map((row: RowUserInterface) => {
+                const { user, isAdmin } = row;
+                const { _id: userId, username, displayName } = user;
 
-              if (matchString(searchInput, username) || matchString(searchInput, displayName)) {
-                return (
-                  <TableRow key={userId} sx={{ "&:last-child td, &:last-child th": { border: 0 } }} hover>
-                    <TableCell>
-                      <CardHeader
-                        sx={{ padding: 0 }}
-                        avatar={<Avatar sx={{ height: 24, width: 24 }} src={getUserAvatarSVG(username)} />}
-                        title={
-                          <>
-                            <Typography fontSize={12} display='inline'>{`${displayName} `}</Typography>{" "}
-                            <Typography fontSize={12} color='grey.500' display='inline'>{`@${username}`}</Typography>
-                          </>
-                        }
-                        disableTypography
-                      />
-                    </TableCell>
-                    <TableCell align='left'>
-                      <Typography fontSize={12}>Software Engineer</Typography>
-                    </TableCell>
-                    <TableCell align='left'>
-                      {isAdmin && (
-                        <Typography fontSize={12} color='error'>
-                          Admin
-                        </Typography>
-                      )}
-                      {!isAdmin && <Typography fontSize={12}>Member</Typography>}
-                    </TableCell>
-                    {isLoggedInUserAnAdmin && (
-                      <TableCell align='center'>
-                        {!isAdmin && (
-                          <Tooltip title='Promote to Admin' disableInteractive>
-                            <IconButton size='small' color='primary' onClick={() => handlePromoteMember(user)}>
-                              <PromoteAdminIcon fontSize='small' />
-                            </IconButton>
-                          </Tooltip>
-                        )}
-                        <Tooltip title='Remove from project' disableInteractive>
-                          <span>
-                            <IconButton
-                              size='small'
-                              color='error'
-                              onClick={() => handleRemoveMember(user)}
-                              disabled={loggedInUserId === userId}
-                              sx={{ ml: 1 }}
-                            >
-                              <DeleteIcon fontSize='small' />
-                            </IconButton>
-                          </span>
-                        </Tooltip>
+                if (matchString(searchInput, username) || matchString(searchInput, displayName)) {
+                  return (
+                    <TableRow key={userId} sx={{ "&:last-child td, &:last-child th": { border: 0 } }} hover>
+                      <TableCell>
+                        <CardHeader
+                          sx={{ padding: 0 }}
+                          avatar={<Avatar sx={{ height: 24, width: 24 }} src={getUserAvatarSVG(username)} />}
+                          title={
+                            <>
+                              <Typography fontSize={12} display='inline'>{`${displayName} `}</Typography>{" "}
+                              <Typography fontSize={12} color='grey.500' display='inline'>{`@${username}`}</Typography>
+                            </>
+                          }
+                          disableTypography
+                        />
                       </TableCell>
-                    )}
-                  </TableRow>
-                );
-              }
+                      <TableCell align='left'>
+                        <Typography fontSize={12}>Software Engineer</Typography>
+                      </TableCell>
+                      <TableCell align='left'>
+                        {isAdmin && (
+                          <Typography fontSize={12} color='error'>
+                            Admin
+                          </Typography>
+                        )}
+                        {!isAdmin && <Typography fontSize={12}>Member</Typography>}
+                      </TableCell>
+                      {isLoggedInUserAnAdmin && (
+                        <TableCell align='center'>
+                          {!isAdmin && (
+                            <Tooltip title='Promote to Admin' disableInteractive>
+                              <IconButton size='small' color='primary' onClick={() => handlePromoteMember(user)}>
+                                <PromoteAdminIcon fontSize='small' />
+                              </IconButton>
+                            </Tooltip>
+                          )}
+                          <Tooltip title='Remove from project' disableInteractive>
+                            <span>
+                              <IconButton
+                                size='small'
+                                color='error'
+                                onClick={() => handleRemoveMember(user)}
+                                disabled={loggedInUserId === userId}
+                                sx={{ ml: 1 }}
+                              >
+                                <DeleteIcon fontSize='small' />
+                              </IconButton>
+                            </span>
+                          </Tooltip>
+                        </TableCell>
+                      )}
+                    </TableRow>
+                  );
+                }
 
-              return null;
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </ContainerWrapper>
+                return null;
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </ContainerWrapper>
+    </Box>
   );
 };
 

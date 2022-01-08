@@ -7,8 +7,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 
 import Navbar from "./Navbar";
-
-const DRAWER_WIDTH = 240;
+import { DRAWER_WIDTH } from "../utils/constants";
 
 interface PageLayoutWrapperProps {
   children: React.ReactNode;

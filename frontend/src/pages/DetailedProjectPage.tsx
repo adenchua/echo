@@ -125,7 +125,9 @@ const DetailedProjectPage = (): JSX.Element => {
   };
 
   return (
-    <PageLayoutWrapper toolbarContent={<ToolbarContent project={project} />}>{renderTabContent()}</PageLayoutWrapper>
+    <PageLayoutWrapper toolbarContent={<ToolbarContent project={project} />} disablePadding>
+      {renderTabContent()}
+    </PageLayoutWrapper>
   );
 };
 

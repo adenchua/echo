@@ -7,7 +7,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import Avatar from "@mui/material/Avatar";
 import TicketIcon from "@mui/icons-material/TaskAlt";
-import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -18,16 +17,13 @@ import FormPriorityToggleButtons from "./FormPriorityToggleButtons";
 import FormTicketTypeToggleButtons from "./FormTicketTypeToggleButtons";
 import useProductBacklog from "../hooks/useProductBacklog";
 
-type ScreenType = "desktop" | "mobile";
-
 interface CreateTicketButtonWithDialogProps {
   projectId: string;
-  variant: ScreenType;
 }
 
 const CreateTicketButtonWithDialog = (props: CreateTicketButtonWithDialogProps): JSX.Element => {
   const { onAddTicket } = useProductBacklog();
-  const { projectId, variant } = props;
+  const { projectId } = props;
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [titleInput, setTitleInput] = useState<string>("");
   const [ticketType, setTicketType] = useState<TicketType>("task");
@@ -142,26 +138,14 @@ const CreateTicketButtonWithDialog = (props: CreateTicketButtonWithDialogProps):
 
   return (
     <>
-      {variant === "desktop" && (
-        <Button
-          startIcon={<AddIcon />}
-          variant='outlined'
-          sx={{ display: { xs: "none", sm: "flex" } }}
-          onClick={() => setIsDialogOpen(true)}
-        >
-          Add Ticket
-        </Button>
-      )}
-      {variant === "mobile" && (
-        <IconButton
-          color='primary'
-          sx={{ display: { sm: "none" }, border: "1px solid", borderRadius: "4px" }}
-          size='small'
-          onClick={() => setIsDialogOpen(true)}
-        >
-          <AddIcon />
-        </IconButton>
-      )}
+      <Button
+        startIcon={<AddIcon fontSize='small' />}
+        sx={{ display: { xs: "none", sm: "flex" } }}
+        onClick={() => setIsDialogOpen(true)}
+        size='small'
+      >
+        Add Ticket
+      </Button>
       {renderDialog()}
     </>
   );

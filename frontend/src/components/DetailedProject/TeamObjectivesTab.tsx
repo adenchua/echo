@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 import AddIcon from "@mui/icons-material/AddOutlined";
 
 import ProjectInterface from "../../types/ProjectInterface";
@@ -20,7 +21,7 @@ const TeamObjectivesTab = (props: TeamObjectivesTabProps): JSX.Element => {
   const { _id: projectId } = project;
 
   return (
-    <div>
+    <Box p={3}>
       <Typography variant='h5' paragraph>
         Team Objectives
       </Typography>
@@ -34,7 +35,7 @@ const TeamObjectivesTab = (props: TeamObjectivesTabProps): JSX.Element => {
         </Typography>
       )}
       <div>{epics && epics.map((epic) => <EpicSummaryAccordion key={epic._id} epic={epic} />)}</div>
-    </div>
+    </Box>
   );
 };
 

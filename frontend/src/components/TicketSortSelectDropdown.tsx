@@ -27,17 +27,26 @@ const TicketSortSelectDropdown = (props: TicketSortSelectDropdownProps): JSX.Ele
   return (
     <Select
       size='small'
+      margin='none'
       value={sortSelection}
       onChange={onChangeHandler}
       SelectDisplayProps={{
         style: {
           fontSize: 14,
-          minWidth: 100,
-          color: "grey",
+          color: "#9e9e9e",
         },
       }}
       sx={{
         borderRadius: 0,
+        "& .MuiSelect-select": {
+          padding: "3px 6px",
+        },
+        "& .MuiOutlinedInput-notchedOutline": {
+          border: "none",
+        },
+        "& .MuiSelect-iconOutlined": {
+          color: "#9e9e9e",
+        },
       }}
       renderValue={(value) => `Sort: ${sortDisplayMapping[value]}`}
     >

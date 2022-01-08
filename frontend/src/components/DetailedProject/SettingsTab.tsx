@@ -3,6 +3,7 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { useHistory } from "react-router-dom";
 
@@ -61,7 +62,7 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
   };
 
   return (
-    <>
+    <Box p={3}>
       <Typography variant='h5' paragraph>
         Project Settings
       </Typography>
@@ -147,7 +148,7 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
           </Button>
         </Grid>
       </Grid>
-    </>
+    </Box>
   );
 };
 

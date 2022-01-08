@@ -1,8 +1,7 @@
 import React, { useState, useContext, useMemo } from "react";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
+import InputBase from "@mui/material/InputBase";
 import Box from "@mui/material/Box";
-import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import { SelectChangeEvent } from "@mui/material/Select";
 
@@ -13,6 +12,7 @@ import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
 import { TicketsContext } from "../contexts/TicketsContextProvider";
 import { matchString } from "../../utils/matchString";
 import TicketSortSelectDropdown, { priorityMap, TicketSortType } from "../TicketSortSelectDropdown";
+import TicketNavbarWrapper from "../TicketNavbarWrapper";
 
 interface ProductBacklogTabProps {
   project: ProjectInterface;
@@ -43,10 +43,6 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
 
   const handleSortSelectionOnChange = (e: SelectChangeEvent): void => {
     setSortSelection(e.target.value as TicketSortType);
-  };
-
-  const renderDesktopHeaderButtons = (): JSX.Element => {
-    return <CreateTicketButtonWithDialog projectId={projectId} variant='desktop' />;
   };
 
   const handleSetSelectedTicket = (ticketId: string) => {
@@ -86,51 +82,52 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
   return (
     <>
       <Box sx={{ mr: selectedTicketId ? "240px" : "" }}>
-        <Typography variant='h5' paragraph>
-          {`Product Backlog (${tickets.length})`}
-        </Typography>
-        <Box display='flex' gap={2} mb={3} maxHeight={40}>
-          {renderDesktopHeaderButtons()}
+        <TicketNavbarWrapper>
+          <Typography color='textSecondary' variant='body2'>{`${tickets.length} ticket(s)`}</Typography>
           <Box flexGrow={1} />
-          <TextField
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position='start'>
-                  <SearchIcon fontSize='small' />
-                </InputAdornment>
-              ),
-              style: {
-                borderRadius: 0,
-                maxHeight: "100%",
+          <CreateTicketButtonWithDialog projectId={projectId} />
+          <TicketSortSelectDropdown sortSelection={sortSelection} onChangeHandler={handleSortSelectionOnChange} />
+          <InputBase
+            sx={{
+              borderLeft: "1px solid",
+              borderColor: "grey.300",
+              px: 1,
+              "& .MuiInputBase-input": {
+                ml: 0.5,
+                fontSize: 14,
               },
             }}
+            startAdornment={<SearchIcon fontSize='small' color='disabled' />}
+            size='small'
             placeholder='Search...'
+            type='search'
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
           />
-          <TicketSortSelectDropdown sortSelection={sortSelection} onChangeHandler={handleSortSelectionOnChange} />
+        </TicketNavbarWrapper>
+        <Box p={3}>
+          {sortedTickets && sortedTickets.length > 0 && (
+            <Box sx={{ border: "1px solid", borderColor: "grey.300", borderBottom: 0 }}>
+              {sortedTickets.map((ticket) => {
+                if (matchString(searchInput, ticket.title)) {
+                  return (
+                    <Box key={ticket._id} onClick={() => handleSetSelectedTicket(ticket._id)}>
+                      <Ticket ticket={ticket} showSprintToggleCheckBox bgGrey={ticket._id === selectedTicketId} />
+                    </Box>
+                  );
+                }
+                return null;
+              })}
+            </Box>
+          )}
+          {tickets && tickets.length === 0 && (
+            <Typography variant='body2' color='GrayText'>
+              There are no tickets in the backlog.
+            </Typography>
+          )}
         </Box>
-        {sortedTickets && sortedTickets.length > 0 && (
-          <Box sx={{ border: "1px solid", borderColor: "grey.300", borderBottom: 0 }}>
-            {sortedTickets.map((ticket) => {
-              if (matchString(searchInput, ticket.title)) {
-                return (
-                  <Box key={ticket._id} onClick={() => handleSetSelectedTicket(ticket._id)}>
-                    <Ticket ticket={ticket} showSprintToggleCheckBox bgGrey={ticket._id === selectedTicketId} />
-                  </Box>
-                );
-              }
-              return null;
-            })}
-          </Box>
-        )}
-        {tickets && tickets.length === 0 && (
-          <Typography variant='body2' color='GrayText'>
-            There are no tickets in the backlog.
-          </Typography>
-        )}
+        {renderDrawer()}
       </Box>
-      {renderDrawer()}
     </>
   );
 };
