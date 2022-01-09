@@ -1,5 +1,5 @@
 import { createAvatar } from "@dicebear/avatars";
-import * as style from "@dicebear/pixel-art";
+import * as style from "@dicebear/avatars-bottts-sprites";
 
 const getUserAvatarSVG = (username: string): string => {
   const svg = createAvatar(style, {
