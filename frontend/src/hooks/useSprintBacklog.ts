@@ -1,42 +1,14 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 
 import SprintInterface from "../types/SprintInterface";
-import fetchSprintsByIds from "../api/sprints/fetchSprintsByIds";
 import startSprint from "../api/sprints/startSprint";
 import endSprint from "../api/sprints/endSprint";
 import { TicketsContext } from "../contexts/TicketsContextProvider";
 import { ActiveSprintContext } from "../contexts/ActiveSprintContextProvider";
 
-const useSprintBacklog = (sprintIds: string[] = []) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+const useSprintBacklog = () => {
   const { removeCompletedTickets } = useContext(TicketsContext);
   const { handleRemoveActiveSprint, handleSetActiveSprint } = useContext(ActiveSprintContext);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const getActiveSprint = async (): Promise<void> => {
-      try {
-        setIsLoading(true);
-        const response = await fetchSprintsByIds(sprintIds);
-        const activeSprint = response.find((sprint) => sprint.hasEnded === false);
-        if (isMounted) {
-          if (activeSprint) {
-            handleSetActiveSprint(activeSprint);
-          }
-          setIsLoading(false);
-        }
-      } catch (error) {
-        alert("Something went wrong. Please try again later.");
-      }
-    };
-
-    getActiveSprint();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [sprintIds, handleSetActiveSprint]);
 
   const onStartSprint = async (projectId: string, endDate: Date | null): Promise<SprintInterface> => {
     try {
@@ -62,7 +34,7 @@ const useSprintBacklog = (sprintIds: string[] = []) => {
     }
   };
 
-  return { isLoading, onStartSprint, onEndSprint };
+  return { onStartSprint, onEndSprint };
 };
 
 export default useSprintBacklog;

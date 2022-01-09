@@ -83,7 +83,9 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
     <>
       <Box sx={{ mr: selectedTicketId ? "240px" : "" }}>
         <TicketNavbarWrapper>
-          <Typography color='textSecondary' variant='body2'>{`${tickets.length} ticket(s)`}</Typography>
+          <Typography color='grey.500' variant='caption' fontStyle='italic'>
+            Product Backlog <span>&#8729;</span> {`${tickets.length} ticket(s)`}
+          </Typography>
           <Box flexGrow={1} />
           <CreateTicketButtonWithDialog projectId={projectId} />
           <TicketSortSelectDropdown sortSelection={sortSelection} onChangeHandler={handleSortSelectionOnChange} />

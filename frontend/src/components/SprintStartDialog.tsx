@@ -134,48 +134,50 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
           </DialogContentText>
         )}
         {sprintTicketsCount === 0 && (
-          <DialogContentText sx={{ mb: 4, fontSize: 14 }}>
+          <DialogContentText sx={{ fontSize: 14 }}>
             No tickets were included in this sprint. Please move one or more tickets from the product backlog.
           </DialogContentText>
         )}
-        <Box sx={{ mb: 2 }}>
-          <DatePicker
-            value={endDateInput}
-            onChange={(newValue) => {
-              if (isValid(newValue)) {
-                setEndDateInput(newValue);
-              }
-            }}
-            minDate={new Date()}
-            reduceAnimations
-            OpenPickerButtonProps={{
-              disableRipple: true,
-              disableTouchRipple: true,
-              size: "small",
-              color: "primary",
-              edge: "start",
-              sx: {
-                border: "1px solid",
-              },
-            }}
-            renderInput={({ inputRef, inputProps, InputProps }) => (
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1, ml: -0.5 }} ref={inputRef}>
-                <input {...inputProps} style={{ display: "none" }} />
-                <div>{InputProps?.endAdornment}</div>
-                {!endDateInput && (
-                  <Typography variant='body2' color='textSecondary'>
-                    Set end date
-                  </Typography>
-                )}
-                {endDateInput && (
-                  <Typography variant='body2' color='textSecondary'>
-                    {format(new Date(endDateInput), " dd MMM yyyy")}
-                  </Typography>
-                )}
-              </Box>
-            )}
-          />
-        </Box>
+        {sprintTicketsCount > 0 && (
+          <Box sx={{ mb: 2 }}>
+            <DatePicker
+              value={endDateInput}
+              onChange={(newValue) => {
+                if (isValid(newValue)) {
+                  setEndDateInput(newValue);
+                }
+              }}
+              minDate={new Date()}
+              reduceAnimations
+              OpenPickerButtonProps={{
+                disableRipple: true,
+                disableTouchRipple: true,
+                size: "small",
+                color: "primary",
+                edge: "start",
+                sx: {
+                  border: "1px solid",
+                },
+              }}
+              renderInput={({ inputRef, inputProps, InputProps }) => (
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1, ml: -0.5 }} ref={inputRef}>
+                  <input {...inputProps} style={{ display: "none" }} />
+                  <div>{InputProps?.endAdornment}</div>
+                  {!endDateInput && (
+                    <Typography variant='body2' color='textSecondary'>
+                      Set end date
+                    </Typography>
+                  )}
+                  {endDateInput && (
+                    <Typography variant='body2' color='textSecondary'>
+                      {format(new Date(endDateInput), " dd MMM yyyy")}
+                    </Typography>
+                  )}
+                </Box>
+              )}
+            />
+          </Box>
+        )}
       </DialogContent>
       <DialogActions>
         <Button sx={{ color: "grey.500" }} color='inherit' onClick={handleClose}>

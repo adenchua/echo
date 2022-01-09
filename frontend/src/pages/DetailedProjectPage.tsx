@@ -22,6 +22,8 @@ import SettingsTab from "../components/DetailedProject/SettingsTab";
 import TeamObjectivesTab from "../components/DetailedProject/TeamObjectivesTab";
 import { EpicsContext } from "../contexts/EpicsContextProvider";
 import fetchEpics from "../api/epics/fetchEpics";
+import { ActiveSprintContext } from "../contexts/ActiveSprintContextProvider";
+import fetchSprintsByIds from "../api/sprints/fetchSprintsByIds";
 
 const DetailedProjectPage = (): JSX.Element => {
   const { isLoggedIn } = useContext(UserAuthenticationContext);
@@ -32,6 +34,7 @@ const DetailedProjectPage = (): JSX.Element => {
   const { handleSetTickets } = useContext(TicketsContext);
   const { handleSetMembers, handleSetAdmins } = useContext(ProjectMembersContext);
   const { handleSetEpics } = useContext(EpicsContext);
+  const { handleSetActiveSprint, handleRemoveActiveSprint } = useContext(ActiveSprintContext);
 
   useEffect(() => {
     const getTickets = async (ticketIds: string[]): Promise<void> => {
@@ -52,13 +55,28 @@ const DetailedProjectPage = (): JSX.Element => {
       }
     };
 
+    const getActiveSprint = async (sprintIds: string[]): Promise<void> => {
+      try {
+        const response = await fetchSprintsByIds(sprintIds);
+        const activeSprint = response.find((sprint) => sprint.hasEnded === false);
+        if (activeSprint) {
+          handleSetActiveSprint(activeSprint);
+          return;
+        }
+        handleRemoveActiveSprint(); // cleanup in case next selected project has no active sprint
+      } catch (error) {
+        alert("Something went wrong. Please try again later.");
+      }
+    };
+
     const getProject = async (): Promise<void> => {
       try {
         setIsLoading(true);
         const response = await fetchProject(id);
-        const { backlogIds, adminIds, memberIds, epicIds } = response;
+        const { backlogIds, adminIds, memberIds, epicIds, sprintIds } = response;
         getTickets(backlogIds);
         getEpics(epicIds);
+        getActiveSprint(sprintIds);
         getProjectMembersAndAdmins(adminIds, memberIds);
         setProject(response);
         setIsLoading(false);
@@ -79,7 +97,15 @@ const DetailedProjectPage = (): JSX.Element => {
     };
 
     getProject();
-  }, [id, handleSetTickets, handleSetAdmins, handleSetMembers, handleSetEpics]);
+  }, [
+    id,
+    handleSetTickets,
+    handleSetAdmins,
+    handleSetMembers,
+    handleSetEpics,
+    handleSetActiveSprint,
+    handleRemoveActiveSprint,
+  ]);
 
   const handleUpdateProjectFields = (updatedFields: ProjectUpdateFieldsType): void => {
     const updatedProject = _.merge({}, project, updatedFields);

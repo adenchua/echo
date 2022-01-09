@@ -27,10 +27,10 @@ interface SprintBacklogTabProps {
 
 const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   const { project } = props;
-  const { sprintIds, _id: projectId } = project;
+  const { _id: projectId } = project;
   const { tickets } = useContext(TicketsContext);
   const { activeSprint } = useContext(ActiveSprintContext);
-  const { onStartSprint, onEndSprint } = useSprintBacklog(sprintIds);
+  const { onStartSprint, onEndSprint } = useSprintBacklog();
   const [searchInput, setSearchInput] = useState<string>("");
   const [showEndSprintDialog, setShowEndSprintDialog] = useState<boolean>(false);
   const [showStartSprintDialog, setShowStartSprintDialog] = useState<boolean>(false);
@@ -72,7 +72,11 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
 
   const renderSprintDetails = (): JSX.Element => {
     if (!activeSprint) {
-      return <div />;
+      return (
+        <Typography variant='caption' color='grey.500' fontStyle='italic'>
+          No Active Sprint <span>&#8729;</span> {sprintTickets.length} ticket(s)
+        </Typography>
+      );
     }
 
     const { number, startDate, endDate } = activeSprint;
@@ -86,12 +90,12 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
           Sprint {number} <span>&#8729;</span>
         </Typography>
         {dayDifference >= 0 && (
-          <Typography variant='caption' color='grey.500'>
+          <Typography variant='caption' color='grey.500' fontStyle='italic'>
             {formattedStartDate} - {formattedEndDate} <span>&#8729;</span> {dayDifference} business day(s) remaining
           </Typography>
         )}
         {dayDifference < 0 && (
-          <Typography variant='caption' color={dayDifference > 0 ? "grey.500" : "error"}>
+          <Typography variant='caption' color={dayDifference > 0 ? "grey.500" : "error"} fontStyle='italic'>
             {formattedStartDate} - {formattedEndDate} <span>&#8729;</span> {Math.abs(dayDifference)} day(s) overdue
           </Typography>
         )}
