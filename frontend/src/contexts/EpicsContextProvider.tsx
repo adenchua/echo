@@ -1,6 +1,6 @@
 import React, { createContext, useState, ReactNode, useCallback } from "react";
 
-import EpicInterface from "../../types/EpicInterface";
+import EpicInterface from "../types/EpicInterface";
 
 interface EpicsContextProviderProps {
   children: ReactNode;

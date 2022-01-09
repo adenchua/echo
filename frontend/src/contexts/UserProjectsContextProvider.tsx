@@ -1,7 +1,7 @@
 import React, { createContext, useState, ReactNode, useCallback } from "react";
 import _ from "lodash";
 
-import ProjectInterface, { ProjectUpdateFieldsType } from "../../types/ProjectInterface";
+import ProjectInterface, { ProjectUpdateFieldsType } from "../types/ProjectInterface";
 
 interface UserProjectsContextProviderProps {
   children: ReactNode;

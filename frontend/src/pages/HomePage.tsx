@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 import teal from "@mui/material/colors/teal";
 import DoneIcon from "@mui/icons-material/DoneOutlineOutlined";
 
-import { UserAuthenticationContext } from "../components/contexts/UserAuthenticationContextProvider";
+import { UserAuthenticationContext } from "../contexts/UserAuthenticationContextProvider";
 import PageLayoutWrapper from "../components/PageLayoutWrapper";
 
 const HomePage = (): JSX.Element => {

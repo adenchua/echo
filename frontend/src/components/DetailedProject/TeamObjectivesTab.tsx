@@ -6,7 +6,7 @@ import AddIcon from "@mui/icons-material/AddOutlined";
 
 import ProjectInterface from "../../types/ProjectInterface";
 import EpicSummaryAccordion from "../EpicSummaryAccordion";
-import { EpicsContext } from "../contexts/EpicsContextProvider";
+import { EpicsContext } from "../../contexts/EpicsContextProvider";
 import EpicCreationForm from "../EpicCreationForm";
 
 interface TeamObjectivesTabProps {

@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 import ProjectInterface, { ProjectUpdateFieldsType } from "../../types/ProjectInterface";
 import updateProject from "../../api/projects/updateProject";
 import { sleep } from "../../utils/sleep";
-import { UserProjectsContext } from "../contexts/UserProjectsContextProvider";
+import { UserProjectsContext } from "../../contexts/UserProjectsContextProvider";
 import deleteProject from "../../api/projects/deleteProject";
 
 interface SettingsTabProps {

@@ -17,8 +17,8 @@ import Avatar from "@mui/material/Avatar";
 import { Link, useLocation, useParams } from "react-router-dom";
 
 import fetchAllProjectsByUser from "../api/projects/fetchAllProjectsByUser";
-import { UserProjectsContext } from "./contexts/UserProjectsContextProvider";
-import { UserAuthenticationContext } from "./contexts/UserAuthenticationContextProvider";
+import { UserProjectsContext } from "../contexts/UserProjectsContextProvider";
+import { UserAuthenticationContext } from "../contexts/UserAuthenticationContextProvider";
 import { APP_VERSION } from "../utils/constants";
 
 const navigationItems = [

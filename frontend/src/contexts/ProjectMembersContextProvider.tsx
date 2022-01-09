@@ -1,6 +1,6 @@
 import React, { createContext, useState, ReactNode, useCallback } from "react";
 
-import UserInterface from "../../types/UserInterface";
+import UserInterface from "../types/UserInterface";
 
 interface ProjectMembersContextProviderProps {
   children: ReactNode;

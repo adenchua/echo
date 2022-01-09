@@ -13,8 +13,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import EpicInterface from "../types/EpicInterface";
 import { sleep } from "../utils/sleep";
 import deleteEpic from "../api/epics/deleteEpic";
-import { EpicsContext } from "./contexts/EpicsContextProvider";
-import { TicketsContext } from "./contexts/TicketsContextProvider";
+import { EpicsContext } from "../contexts/EpicsContextProvider";
+import { TicketsContext } from "../contexts/TicketsContextProvider";
 
 interface DeleteEpicDialogProps {
   isDialogOpened: boolean;

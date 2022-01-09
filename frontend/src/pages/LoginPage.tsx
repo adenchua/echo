@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 
 import login from "../api/authentication/login";
 import { loginErrorCodeToMessageHelper } from "../utils/loginErrorCodeToMessageHelper";
-import { UserAuthenticationContext } from "../components/contexts/UserAuthenticationContextProvider";
+import { UserAuthenticationContext } from "../contexts/UserAuthenticationContextProvider";
 
 const LoginPage = (): JSX.Element => {
   const [usernameInput, setUsernameInput] = useState<string>("");

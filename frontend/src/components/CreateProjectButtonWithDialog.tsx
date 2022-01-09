@@ -17,8 +17,8 @@ import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import createProject from "../api/projects/createProject";
-import { UserProjectsContext } from "./contexts/UserProjectsContextProvider";
-import { UserAuthenticationContext } from "./contexts/UserAuthenticationContextProvider";
+import { UserProjectsContext } from "../contexts/UserProjectsContextProvider";
+import { UserAuthenticationContext } from "../contexts/UserAuthenticationContextProvider";
 
 const PROJECT_TYPES: ProjectType[] = ["Software Engineering", "Exploratory Data Analysis", "UX Design"];
 

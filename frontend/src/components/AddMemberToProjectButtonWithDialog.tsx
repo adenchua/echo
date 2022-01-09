@@ -24,7 +24,7 @@ import fetchAllUsers from "../api/users/fetchAllUsers";
 import { ListItemAvatar } from "@mui/material";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
 import { matchString } from "../utils/matchString";
-import { ProjectMembersContext } from "./contexts/ProjectMembersContextProvider";
+import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
 import addMembersToProject from "../api/projects/addMembersToProject";
 
 interface AddMemberToProjectButtonWithDialogProps {

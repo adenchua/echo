@@ -13,9 +13,9 @@ import PageLayoutWrapper from "../components/PageLayoutWrapper";
 import ProjectInterface from "../types/ProjectInterface";
 import ProjectListingItem from "../components/ProjectListingItem";
 import CreateProjectButtonWithDialog from "../components/CreateProjectButtonWithDialog";
-import { UserProjectsContext } from "../components/contexts/UserProjectsContextProvider";
+import { UserProjectsContext } from "../contexts/UserProjectsContextProvider";
 import { matchString } from "../utils/matchString";
-import { UserAuthenticationContext } from "../components/contexts/UserAuthenticationContextProvider";
+import { UserAuthenticationContext } from "../contexts/UserAuthenticationContextProvider";
 
 const ProjectListingPage = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>("");

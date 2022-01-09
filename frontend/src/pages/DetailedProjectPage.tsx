@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams, Redirect } from "react-router-dom";
 import _ from "lodash";
 
-import { UserAuthenticationContext } from "../components/contexts/UserAuthenticationContextProvider";
+import { UserAuthenticationContext } from "../contexts/UserAuthenticationContextProvider";
 import PageLayoutWrapper from "../components/PageLayoutWrapper";
 import ProjectInterface, { ProjectUpdateFieldsType } from "../types/ProjectInterface";
 import fetchProject from "../api/projects/fetchProject";
@@ -13,14 +13,14 @@ import OverviewTab from "../components/DetailedProject/OverviewTab";
 import ProductBacklogTab from "../components/DetailedProject/ProductBacklogTab";
 import SprintBacklogTab from "../components/DetailedProject/SprintBacklogTab";
 import Loading from "../components/Loading";
-import { TicketsContext } from "../components/contexts/TicketsContextProvider";
+import { TicketsContext } from "../contexts/TicketsContextProvider";
 import fetchTicketsByIds from "../api/tickets/fetchTicketsByIds";
-import { ProjectMembersContext } from "../components/contexts/ProjectMembersContextProvider";
+import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
 import fetchUsersByIds from "../api/users/fetchUsersByIds";
 import MembersTab from "../components/DetailedProject/MembersTab";
 import SettingsTab from "../components/DetailedProject/SettingsTab";
 import TeamObjectivesTab from "../components/DetailedProject/TeamObjectivesTab";
-import { EpicsContext } from "../components/contexts/EpicsContextProvider";
+import { EpicsContext } from "../contexts/EpicsContextProvider";
 import fetchEpics from "../api/epics/fetchEpics";
 
 const DetailedProjectPage = (): JSX.Element => {

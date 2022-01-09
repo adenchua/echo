@@ -1,7 +1,7 @@
 import React, { createContext, useState, ReactNode, useCallback } from "react";
 import _ from "lodash";
 
-import TicketInterface, { TicketUpdateFieldsType } from "../../types/TicketInterface";
+import TicketInterface, { TicketUpdateFieldsType } from "../types/TicketInterface";
 
 interface TicketsContextProviderProps {
   children: ReactNode;

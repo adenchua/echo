@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import UserAuthenticationContextProvider from "./components/contexts/UserAuthenticationContextProvider";
-import UserProjectsContextProvider from "./components/contexts/UserProjectsContextProvider";
+import UserAuthenticationContextProvider from "./contexts/UserAuthenticationContextProvider";
+import UserProjectsContextProvider from "./contexts/UserProjectsContextProvider";
 import DetailedProjectPageWrapper from "./pages/DetailedProjectPageWrapper";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";

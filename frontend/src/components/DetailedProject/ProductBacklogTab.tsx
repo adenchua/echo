@@ -9,7 +9,7 @@ import ProjectInterface from "../../types/ProjectInterface";
 import Ticket from "../Ticket";
 import CreateTicketButtonWithDialog from "../CreateTicketButtonWithDialog";
 import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
-import { TicketsContext } from "../contexts/TicketsContextProvider";
+import { TicketsContext } from "../../contexts/TicketsContextProvider";
 import { matchString } from "../../utils/matchString";
 import TicketSortSelectDropdown, { priorityMap, TicketSortType } from "../TicketSortSelectDropdown";
 import TicketNavbarWrapper from "../TicketNavbarWrapper";

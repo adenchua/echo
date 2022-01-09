@@ -9,7 +9,7 @@ import UserInterface from "../../types/UserInterface";
 import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
 import ContainerWrapper from "../ContainerWrapper";
 import AddMemberToProjectButtonWithDialog from "../AddMemberToProjectButtonWithDialog";
-import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
+import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
 import ProjectInterface from "../../types/ProjectInterface";
 
 interface OverviewTabProps {

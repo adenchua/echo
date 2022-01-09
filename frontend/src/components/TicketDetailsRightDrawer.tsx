@@ -8,7 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import TicketInterface from "../types/TicketInterface";
 import useProductBacklog from "../hooks/useProductBacklog";
-import { EpicsContext } from "./contexts/EpicsContextProvider";
+import { EpicsContext } from "../contexts/EpicsContextProvider";
 import TitleEditItem from "./TicketRightDrawerItems/TitleEditItem";
 import DescriptionEditItem from "./TicketRightDrawerItems/DescriptionEditItem";
 import PriorityEditItem from "./TicketRightDrawerItems/PriorityEditItem";

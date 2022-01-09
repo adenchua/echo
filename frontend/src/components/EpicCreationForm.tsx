@@ -8,7 +8,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import createEpic from "../api/epics/createEpic";
 import { sleep } from "../utils/sleep";
-import { EpicsContext } from "./contexts/EpicsContextProvider";
+import { EpicsContext } from "../contexts/EpicsContextProvider";
 
 interface EpicCreationFormProps {
   onClose: () => void;

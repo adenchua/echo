@@ -4,12 +4,13 @@ import SprintInterface from "../types/SprintInterface";
 import fetchSprintsByIds from "../api/sprints/fetchSprintsByIds";
 import startSprint from "../api/sprints/startSprint";
 import endSprint from "../api/sprints/endSprint";
-import { TicketsContext } from "../components/contexts/TicketsContextProvider";
+import { TicketsContext } from "../contexts/TicketsContextProvider";
+import { ActiveSprintContext } from "../contexts/ActiveSprintContextProvider";
 
 const useSprintBacklog = (sprintIds: string[] = []) => {
-  const [activeSprint, setActiveSprint] = useState<SprintInterface | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { removeCompletedTickets } = useContext(TicketsContext);
+  const { handleRemoveActiveSprint, handleSetActiveSprint } = useContext(ActiveSprintContext);
 
   useEffect(() => {
     let isMounted = true;
@@ -21,7 +22,7 @@ const useSprintBacklog = (sprintIds: string[] = []) => {
         const activeSprint = response.find((sprint) => sprint.hasEnded === false);
         if (isMounted) {
           if (activeSprint) {
-            setActiveSprint(activeSprint);
+            handleSetActiveSprint(activeSprint);
           }
           setIsLoading(false);
         }
@@ -35,7 +36,7 @@ const useSprintBacklog = (sprintIds: string[] = []) => {
     return () => {
       isMounted = false;
     };
-  }, [sprintIds]);
+  }, [sprintIds, handleSetActiveSprint]);
 
   const onStartSprint = async (projectId: string, endDate: Date | null): Promise<SprintInterface> => {
     try {
@@ -43,7 +44,7 @@ const useSprintBacklog = (sprintIds: string[] = []) => {
         throw new Error("No end date specified");
       }
       const newSprint = await startSprint(projectId, endDate.toISOString());
-      setActiveSprint(newSprint);
+      handleSetActiveSprint(newSprint);
       return newSprint;
     } catch (error) {
       throw new Error("Failed to start sprint");
@@ -53,7 +54,7 @@ const useSprintBacklog = (sprintIds: string[] = []) => {
   const onEndSprint = async (projectId: string, sprintId: string): Promise<SprintInterface> => {
     try {
       const completedSprint = await endSprint(projectId, sprintId);
-      setActiveSprint(null);
+      handleRemoveActiveSprint();
       removeCompletedTickets();
       return completedSprint;
     } catch (error) {
@@ -61,7 +62,7 @@ const useSprintBacklog = (sprintIds: string[] = []) => {
     }
   };
 
-  return { isLoading, activeSprint, onStartSprint, onEndSprint };
+  return { isLoading, onStartSprint, onEndSprint };
 };
 
 export default useSprintBacklog;

@@ -9,7 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 
 import EditButton from "./EditButton";
 import useProductBacklog from "../../hooks/useProductBacklog";
-import { EpicsContext } from "../contexts/EpicsContextProvider";
+import { EpicsContext } from "../../contexts/EpicsContextProvider";
 import UpdateButton from "./UpdateButton";
 
 interface EpicLinkEditItemProps {

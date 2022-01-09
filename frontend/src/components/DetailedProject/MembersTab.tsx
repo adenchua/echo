@@ -19,7 +19,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 
 import ContainerWrapper from "../ContainerWrapper";
-import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
+import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
 import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
 import UserInterface from "../../types/UserInterface";
 import { matchString } from "../../utils/matchString";
@@ -27,7 +27,7 @@ import removeMemberFromProject from "../../api/projects/removeMemberFromProject"
 import ProjectInterface from "../../types/ProjectInterface";
 import promoteMemberToAdmin from "../../api/projects/promoteMemberToAdmin";
 import AddMemberToProjectButtonWithDialog from "../AddMemberToProjectButtonWithDialog";
-import { UserAuthenticationContext } from "../contexts/UserAuthenticationContextProvider";
+import { UserAuthenticationContext } from "../../contexts/UserAuthenticationContextProvider";
 
 interface RowUserInterface {
   user: UserInterface;

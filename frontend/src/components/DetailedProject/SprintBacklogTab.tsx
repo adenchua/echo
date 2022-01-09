@@ -13,12 +13,13 @@ import ProjectInterface from "../../types/ProjectInterface";
 import SprintStartDialog from "../SprintStartDialog";
 import useSprintBacklog from "../../hooks/useSprintBacklog";
 import SprintEndDialog from "../SprintEndDialog";
-import { TicketsContext } from "../contexts/TicketsContextProvider";
+import { TicketsContext } from "../../contexts/TicketsContextProvider";
 import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
 import Ticket from "../Ticket";
 import { matchString } from "../../utils/matchString";
 import TicketSortSelectDropdown, { priorityMap, TicketSortType } from "../TicketSortSelectDropdown";
 import TicketNavbarWrapper from "../TicketNavbarWrapper";
+import { ActiveSprintContext } from "../../contexts/ActiveSprintContextProvider";
 
 interface SprintBacklogTabProps {
   project: ProjectInterface;
@@ -28,7 +29,8 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   const { project } = props;
   const { sprintIds, _id: projectId } = project;
   const { tickets } = useContext(TicketsContext);
-  const { activeSprint, onStartSprint, onEndSprint } = useSprintBacklog(sprintIds);
+  const { activeSprint } = useContext(ActiveSprintContext);
+  const { onStartSprint, onEndSprint } = useSprintBacklog(sprintIds);
   const [searchInput, setSearchInput] = useState<string>("");
   const [showEndSprintDialog, setShowEndSprintDialog] = useState<boolean>(false);
   const [showStartSprintDialog, setShowStartSprintDialog] = useState<boolean>(false);
