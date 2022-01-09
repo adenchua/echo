@@ -5,7 +5,7 @@ import { UMS_API_ENDPOINT } from "../../utils/constants";
 
 const login = async (username: string, password: string): Promise<UserInterface> => {
   try {
-    const response = await axios.post<UserInterface>(`${UMS_API_ENDPOINT}/user-login`, {
+    const response = await axios.post<UserInterface>(`${UMS_API_ENDPOINT}/users/user-login`, {
       username,
       password,
     });
