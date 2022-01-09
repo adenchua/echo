@@ -5,7 +5,7 @@ import { UMS_API_ENDPOINT } from "../../utils/constants";
 
 const fetchUsersByIds = async (userIds: string[]): Promise<UserInterface[]> => {
   try {
-    const response = await axios.post<UserInterface[]>(`${UMS_API_ENDPOINT}/bulk-retrieve`, { userIds });
+    const response = await axios.post<UserInterface[]>(`${UMS_API_ENDPOINT}/users/bulk-retrieve`, { userIds });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
