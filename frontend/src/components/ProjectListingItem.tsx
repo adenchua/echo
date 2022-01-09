@@ -71,7 +71,7 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
 
   const renderSprintStatusSpan = (sprints: SprintInterface[]): JSX.Element => {
     let span = (
-      <Typography component='span' fontSize='inherit' sx={{ color: "warning.main" }}>
+      <Typography component='span' fontSize='inherit' sx={{ color: "error.main" }}>
         Stopped
       </Typography>
     ); // if no active sprint
@@ -105,21 +105,18 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
 
   return (
     <Paper
-      sx={{ padding: 1, mb: 0.5, display: "flex", alignItems: "center", gap: 8, overflowX: "hidden" }}
+      sx={{ padding: 0.5, mb: 0.5, display: "flex", alignItems: "center", gap: 8, overflowX: "hidden" }}
       square
       elevation={0}
       key={projectId}
     >
-      <Box display='flex' gap={2}>
-        <Avatar sx={{ height: "48px", width: "48px" }} variant='rounded'>
+      <Box display='flex' alignItems='center' gap={1}>
+        <Avatar sx={{ height: 40, width: 40 }} variant='rounded'>
           <ProjectIcon />
         </Avatar>
         <Box sx={{ width: "200px" }}>
-          <Typography variant='subtitle2' noWrap color='primary.main'>
-            {title}
-          </Typography>
-          <Typography variant='caption' sx={{ color: "GrayText" }} noWrap>
-            {type}
+          <Typography variant='body2' noWrap lineHeight='16px'>
+            {title} <br /> <span style={{ fontSize: 12, color: "#969892" }}>{type}</span>
           </Typography>
         </Box>
       </Box>

@@ -29,7 +29,7 @@ const ProjectListingPage = (): JSX.Element => {
   const renderTitleHeaders = (): JSX.Element => {
     return (
       <Box mb={1} p={1} display='flex' alignItems='center' gap={8}>
-        <Typography variant='body2' sx={{ width: "264px" }}>
+        <Typography variant='body2' sx={{ width: "242px" }}>
           Project
         </Typography>
         <Typography variant='body2' sx={{ width: "64px" }} noWrap>
