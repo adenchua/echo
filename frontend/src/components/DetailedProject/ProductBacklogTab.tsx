@@ -4,15 +4,17 @@ import InputBase from "@mui/material/InputBase";
 import Box from "@mui/material/Box";
 import SearchIcon from "@mui/icons-material/Search";
 import { SelectChangeEvent } from "@mui/material/Select";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
 
 import ProjectInterface from "../../types/ProjectInterface";
 import Ticket from "../Ticket";
-import CreateTicketButtonWithDialog from "../CreateTicketButtonWithDialog";
 import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
 import { TicketsContext } from "../../contexts/TicketsContextProvider";
 import { matchString } from "../../utils/matchString";
 import TicketSortSelectDropdown, { priorityMap, TicketSortType } from "../TicketSortSelectDropdown";
 import TicketNavbarWrapper from "../TicketNavbarWrapper";
+import CreateTicketForm from "../CreateTicketForm";
 
 interface ProductBacklogTabProps {
   project: ProjectInterface;
@@ -25,6 +27,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>("");
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
   const [sortSelection, setSortSelection] = useState<TicketSortType>("priority-dsc");
+  const [showTicketCreationForm, setShowTicketCreationForm] = useState<boolean>(false);
 
   const sortedTickets = useMemo(() => {
     switch (sortSelection) {
@@ -87,7 +90,14 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
             Product Backlog <span>&#8729;</span> {`${tickets.length} ticket(s)`}
           </Typography>
           <Box flexGrow={1} />
-          <CreateTicketButtonWithDialog projectId={projectId} />
+          <Button
+            startIcon={<AddIcon fontSize='small' />}
+            sx={{ display: { xs: "none", sm: "flex" } }}
+            onClick={() => setShowTicketCreationForm(true)}
+            size='small'
+          >
+            Add Ticket
+          </Button>
           <TicketSortSelectDropdown sortSelection={sortSelection} onChangeHandler={handleSortSelectionOnChange} />
           <InputBase
             sx={{
@@ -108,6 +118,11 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
           />
         </TicketNavbarWrapper>
         <Box p={3}>
+          {showTicketCreationForm && (
+            <Box mb={4}>
+              <CreateTicketForm projectId={projectId} onClose={() => setShowTicketCreationForm(false)} />
+            </Box>
+          )}
           {sortedTickets && sortedTickets.length > 0 && (
             <Box sx={{ border: "1px solid", borderColor: "grey.300", borderBottom: 0 }}>
               {sortedTickets.map((ticket) => {
