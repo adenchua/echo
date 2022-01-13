@@ -138,9 +138,10 @@ const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
             Failed to end the sprint. Please try again later.
           </Typography>
         )}
-        <DialogContentText sx={{ mb: 3, fontSize: 14 }}>
+        <DialogContentText sx={{ fontSize: 14 }}>
           <b>{`${completedTickets.length} of ${sprintTickets.length}`}</b> ticket(s) completed in this sprint. Are you
           sure you want to end this sprint?
+          <span style={{ color: "crimson" }}> This action will also archive all completed tickets. </span>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -153,7 +154,7 @@ const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
           color='inherit'
           startIcon={isLoading && <CircularProgress sx={{ color: "inherit" }} size={14} />}
         >
-          {isLoading ? "Ending Sprint..." : "Confirm"}
+          {isLoading ? "Ending Sprint..." : "End Sprint"}
         </Button>
       </DialogActions>
     </>
