@@ -15,6 +15,7 @@ import { matchString } from "../../utils/matchString";
 import TicketSortSelectDropdown, { priorityMap, TicketSortType } from "../TicketSortSelectDropdown";
 import TicketNavbarWrapper from "../TicketNavbarWrapper";
 import CreateTicketForm from "../CreateTicketForm";
+import TicketFilter, { TicketFilterType } from "../TicketFilter";
 
 interface ProductBacklogTabProps {
   project: ProjectInterface;
@@ -27,28 +28,48 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>("");
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
   const [sortSelection, setSortSelection] = useState<TicketSortType>("priority-dsc");
+  const [filterSelection, setFilterSelection] = useState<TicketFilterType>(null);
   const [showTicketCreationForm, setShowTicketCreationForm] = useState<boolean>(false);
+
+  const filteredTickets = useMemo(() => {
+    if (!filterSelection) {
+      return tickets;
+    }
+    const [filterKeyType, filterValue] = filterSelection.split("-");
+    switch (filterKeyType) {
+      case "assignee":
+        return tickets.filter((ticket) => ticket.assigneeId === filterValue);
+      case "not_status":
+        return tickets.filter((ticket) => ticket.status !== filterValue);
+      default:
+        return tickets; // invalid filter
+    }
+  }, [filterSelection, tickets]);
 
   const sortedTickets = useMemo(() => {
     switch (sortSelection) {
       case "priority-dsc":
-        return tickets.sort((a, b) => {
+        return filteredTickets.sort((a, b) => {
           const aPriorityType = priorityMap[a.priority];
           const bPriorityType = priorityMap[b.priority];
           return bPriorityType - aPriorityType;
         });
       case "creation-asc":
-        return tickets.sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
+        return filteredTickets.sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
       default:
-        return tickets; // invalid sort order
+        return filteredTickets; // invalid sort order
     }
-  }, [sortSelection, tickets]);
+  }, [sortSelection, filteredTickets]);
+
+  const handleFilterSelection = (newFilter: TicketFilterType): void => {
+    setFilterSelection(newFilter);
+  };
 
   const handleSortSelectionOnChange = (e: SelectChangeEvent): void => {
     setSortSelection(e.target.value as TicketSortType);
   };
 
-  const handleSetSelectedTicket = (ticketId: string) => {
+  const handleSetSelectedTicket = (ticketId: string): void => {
     if (!selectedTicketId) {
       setSelectedTicketId(ticketId);
       return;
@@ -98,6 +119,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
           >
             Add Ticket
           </Button>
+          <TicketFilter onSelectHandler={handleFilterSelection} />
           <TicketSortSelectDropdown sortSelection={sortSelection} onChangeHandler={handleSortSelectionOnChange} />
           <InputBase
             sx={{

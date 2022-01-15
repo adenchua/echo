@@ -20,6 +20,7 @@ import { matchString } from "../../utils/matchString";
 import TicketSortSelectDropdown, { priorityMap, TicketSortType } from "../TicketSortSelectDropdown";
 import TicketNavbarWrapper from "../TicketNavbarWrapper";
 import { ActiveSprintContext } from "../../contexts/ActiveSprintContextProvider";
+import TicketFilter, { TicketFilterType } from "../TicketFilter";
 
 interface SprintBacklogTabProps {
   project: ProjectInterface;
@@ -34,24 +35,44 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>("");
   const [showEndSprintDialog, setShowEndSprintDialog] = useState<boolean>(false);
   const [showStartSprintDialog, setShowStartSprintDialog] = useState<boolean>(false);
+  const [filterSelection, setFilterSelection] = useState<TicketFilterType>(null);
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
   const [sortSelection, setSortSelection] = useState<TicketSortType>("priority-dsc");
   const sprintTickets = tickets.filter((ticket) => ticket.isInSprint === true);
 
+  const filteredTickets = useMemo(() => {
+    if (!filterSelection) {
+      return sprintTickets;
+    }
+    const [filterKeyType, filterValue] = filterSelection.split("-");
+    switch (filterKeyType) {
+      case "assignee":
+        return sprintTickets.filter((ticket) => ticket.assigneeId === filterValue);
+      case "not_status":
+        return sprintTickets.filter((ticket) => ticket.status !== filterValue);
+      default:
+        return sprintTickets; // invalid filter
+    }
+  }, [filterSelection, sprintTickets]);
+
   const sortedTickets = useMemo(() => {
     switch (sortSelection) {
       case "priority-dsc":
-        return sprintTickets.sort((a, b) => {
+        return filteredTickets.sort((a, b) => {
           const aPriorityType = priorityMap[a.priority];
           const bPriorityType = priorityMap[b.priority];
           return bPriorityType - aPriorityType;
         });
       case "creation-asc":
-        return sprintTickets.sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
+        return filteredTickets.sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
       default:
-        return sprintTickets; // invalid sort order
+        return filteredTickets; // invalid sort order
     }
-  }, [sortSelection, sprintTickets]);
+  }, [sortSelection, filteredTickets]);
+
+  const handleFilterSelection = (newFilter: TicketFilterType): void => {
+    setFilterSelection(newFilter);
+  };
 
   const handleSortSelectionOnChange = (e: SelectChangeEvent): void => {
     setSortSelection(e.target.value as TicketSortType);
@@ -152,6 +173,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
             End Sprint
           </Button>
         )}
+        <TicketFilter onSelectHandler={handleFilterSelection} />
         <TicketSortSelectDropdown sortSelection={sortSelection} onChangeHandler={handleSortSelectionOnChange} />
         <InputBase
           sx={{

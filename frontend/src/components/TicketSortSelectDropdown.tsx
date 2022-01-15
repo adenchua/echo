@@ -1,6 +1,10 @@
 import React from "react";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import PriorityIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
+import TimeIcon from "@mui/icons-material/AccessTime";
 
 export type TicketSortType = "priority-dsc" | "creation-asc";
 
@@ -48,13 +52,27 @@ const TicketSortSelectDropdown = (props: TicketSortSelectDropdownProps): JSX.Ele
           color: "#9e9e9e",
         },
       }}
+      MenuProps={{
+        PaperProps: {
+          elevation: 2,
+        },
+        MenuListProps: {
+          dense: true,
+        },
+      }}
       renderValue={(value) => `Sort: ${sortDisplayMapping[value]}`}
     >
-      <MenuItem value='priority-dsc' sx={{ fontSize: 14 }}>
-        Priority
+      <MenuItem value='priority-dsc'>
+        <ListItemIcon>
+          <PriorityIcon fontSize='small' />
+        </ListItemIcon>
+        <ListItemText>Priority</ListItemText>
       </MenuItem>
-      <MenuItem value='creation-asc' sx={{ fontSize: 14 }}>
-        Creation Date
+      <MenuItem value='creation-asc'>
+        <ListItemIcon>
+          <TimeIcon fontSize='small' />
+        </ListItemIcon>
+        <ListItemText>Creation Date</ListItemText>
       </MenuItem>
     </Select>
   );

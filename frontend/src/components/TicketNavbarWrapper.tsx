@@ -16,7 +16,7 @@ const TicketNavbarWrapper = (props: TicketNavbarWrapperProps): JSX.Element => {
         alignItems: "center",
         borderBottom: "1px solid",
         borderColor: "divider",
-        gap: 1,
+        gap: 2,
       }}
       elevation={0}
     >
