@@ -41,6 +41,10 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
         return tickets.filter((ticket) => ticket.assigneeId === filterValue);
       case "not_status":
         return tickets.filter((ticket) => ticket.status !== filterValue);
+      case "status":
+        return tickets.filter((ticket) => ticket.status === filterValue);
+      case "epic":
+        return tickets.filter((ticket) => ticket.epicId === filterValue);
       default:
         return tickets; // invalid filter
     }

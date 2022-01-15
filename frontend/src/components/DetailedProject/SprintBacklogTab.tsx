@@ -50,6 +50,10 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
         return sprintTickets.filter((ticket) => ticket.assigneeId === filterValue);
       case "not_status":
         return sprintTickets.filter((ticket) => ticket.status !== filterValue);
+      case "status":
+        return sprintTickets.filter((ticket) => ticket.status === filterValue);
+      case "epic":
+        return sprintTickets.filter((ticket) => ticket.epicId === filterValue);
       default:
         return sprintTickets; // invalid filter
     }
