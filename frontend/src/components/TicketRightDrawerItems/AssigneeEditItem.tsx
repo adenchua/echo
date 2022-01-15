@@ -19,6 +19,7 @@ import { UserAuthenticationContext } from "../../contexts/UserAuthenticationCont
 import UserInterface from "../../types/UserInterface";
 import UpdateButton from "./UpdateButton";
 import fetchUsersByIds from "../../api/users/fetchUsersByIds";
+import { sliceLongString } from "../../utils/sliceLongString";
 
 interface AssigneeEditItemProps {
   ticketId: string;
@@ -61,7 +62,14 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
       return <ListItemText secondary='None' />;
     }
     const { _id: userId, username, displayName } = assignee;
-    return <Chip key={userId} avatar={<Avatar src={getUserAvatarSVG(username)} />} label={displayName} size='small' />;
+    return (
+      <Chip
+        key={userId}
+        avatar={<Avatar src={getUserAvatarSVG(username)} />}
+        label={sliceLongString(displayName, 24)}
+        size='small'
+      />
+    );
   };
 
   if (isEditModeOn) {
