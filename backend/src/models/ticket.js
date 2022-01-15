@@ -53,6 +53,10 @@ const ticketSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Epic",
     },
+    storyPoints: {
+      type: Number,
+      default: 1,
+    },
   },
   { versionKey: false }
 );
