@@ -102,16 +102,18 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
               </MenuItem>
             ))}
           </Select>
-          <Button
-            fullWidth
-            color='warning'
-            variant='outlined'
-            size='small'
-            sx={{ mt: 2 }}
-            onClick={() => handleDeleteTicketEpicLink()}
-          >
-            Remove Link
-          </Button>
+          {epicId && (
+            <Button
+              fullWidth
+              color='warning'
+              variant='outlined'
+              size='small'
+              sx={{ mt: 2 }}
+              onClick={() => handleDeleteTicketEpicLink()}
+            >
+              Remove Link
+            </Button>
+          )}
         </Box>
         <Divider flexItem />
       </ListItem>
