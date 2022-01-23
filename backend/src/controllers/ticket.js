@@ -37,7 +37,7 @@ module.exports.createTicket = async (req, res) => {
 
 module.exports.updateTicket = async (req, res) => {
   const { ticketId } = req.params;
-  const { title, description, status, priority, type, dueDate, isInSprint, assigneeId } = req.body;
+  const { title, description, status, priority, type, dueDate, isInSprint, assigneeId, storyPoints } = req.body;
 
   if (!ticketId) {
     res.status(400).send();
@@ -54,6 +54,7 @@ module.exports.updateTicket = async (req, res) => {
       dueDate,
       isInSprint,
       assigneeId,
+      storyPoints,
     });
 
     await Ticket.findByIdAndUpdate(ticketId, { ...keysToUpdate });

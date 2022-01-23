@@ -17,6 +17,7 @@ import StatusChipButton from "./StatusChipButton";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
 import fetchUsersByIds from "../api/users/fetchUsersByIds";
 import UserInterface from "../types/UserInterface";
+import StoryPointsChip from "./StoryPointsChip";
 
 interface TicketProps {
   ticket: TicketInterface;
@@ -28,7 +29,7 @@ const Ticket = (props: TicketProps): JSX.Element => {
   const { ticket, showSprintToggleCheckBox, bgGrey } = props;
   const [assignee, setAssignee] = useState<UserInterface | null>(null);
   const { onUpdateTicket } = useProductBacklog();
-  const { priority, title, type, isInSprint, _id: id, dueDate, status, assigneeId, ticketNumber } = ticket;
+  const { priority, title, type, isInSprint, _id: id, dueDate, status, assigneeId, ticketNumber, storyPoints } = ticket;
   const formattedDueDate = dueDate ? format(new Date(dueDate), "LLL dd") : "";
   const isDue = dueDate && compareAsc(new Date(), new Date(dueDate)) === 1 ? true : false;
 
@@ -84,6 +85,7 @@ const Ticket = (props: TicketProps): JSX.Element => {
         )}
         <PriorityIcon priority={priority} hideMedium />
         <TicketTypeIcon type={type} />
+        <StoryPointsChip storyPoints={storyPoints} />
         <Typography variant='caption' color='grey.500' noWrap>
           {`#${ticketNumber}`}
         </Typography>

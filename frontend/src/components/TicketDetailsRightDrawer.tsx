@@ -17,6 +17,7 @@ import StatusEditItem from "./TicketRightDrawerItems/StatusEditItem";
 import DueDateEditItem from "./TicketRightDrawerItems/DueDateEditItem";
 import AssigneeEditItem from "./TicketRightDrawerItems/AssigneeEditItem";
 import EpicLinkEditItem from "./TicketRightDrawerItems/EpicLinkEditItem";
+import StoryPointsEditItem from "./TicketRightDrawerItems/StoryPointsEditItem";
 
 interface TicketDetailsRightDrawerProps {
   ticket: TicketInterface;
@@ -27,7 +28,7 @@ interface TicketDetailsRightDrawerProps {
 
 const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Element => {
   const { ticket, onClose, isOpen, projectId } = props;
-  const { _id: id, title, description, priority, type, dueDate, status, assigneeId, epicId } = ticket;
+  const { _id: id, title, description, priority, type, dueDate, status, assigneeId, epicId, storyPoints } = ticket;
 
   const { onDeleteTicket } = useProductBacklog();
 
@@ -49,6 +50,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
 
         <TitleEditItem ticketId={id} title={title} />
         <DescriptionEditItem ticketId={id} description={description} />
+        <StoryPointsEditItem ticketId={id} storyPoints={storyPoints} />
         <AssigneeEditItem ticketId={id} assigneeId={assigneeId} />
         <PriorityEditItem ticketId={id} priority={priority} />
         <TicketTypeEditItem ticketId={id} type={type} />

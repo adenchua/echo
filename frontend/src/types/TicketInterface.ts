@@ -4,6 +4,8 @@ export type PriorityType = "low" | "medium" | "high" | "highest";
 
 export type TicketType = "story" | "task" | "bug";
 
+export type StoryPointsType = 1 | 2 | 3 | 5 | 8;
+
 export type TicketUpdateFieldsType = {
   title?: string;
   description?: string;
@@ -14,6 +16,7 @@ export type TicketUpdateFieldsType = {
   isInSprint?: boolean;
   assigneeId?: string | null;
   epicId?: string | null;
+  storyPoints?: StoryPointsType;
 };
 interface TicketInterface {
   _id: string;
@@ -29,6 +32,7 @@ interface TicketInterface {
   isInSprint: boolean;
   ticketNumber: number;
   epicId: string;
+  storyPoints: StoryPointsType;
 }
 
 export default TicketInterface;
