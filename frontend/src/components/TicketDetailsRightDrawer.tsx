@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -7,7 +7,6 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 
 import TicketInterface from "../types/TicketInterface";
-import useProductBacklog from "../hooks/useProductBacklog";
 import { EpicsContext } from "../contexts/EpicsContextProvider";
 import TitleEditItem from "./TicketRightDrawerItems/TitleEditItem";
 import DescriptionEditItem from "./TicketRightDrawerItems/DescriptionEditItem";
@@ -18,6 +17,8 @@ import DueDateEditItem from "./TicketRightDrawerItems/DueDateEditItem";
 import AssigneeEditItem from "./TicketRightDrawerItems/AssigneeEditItem";
 import EpicLinkEditItem from "./TicketRightDrawerItems/EpicLinkEditItem";
 import StoryPointsEditItem from "./TicketRightDrawerItems/StoryPointsEditItem";
+import DeleteTicketDialog from "./DeleteTicketDialog";
+import { DRAWER_WIDTH } from "../utils/constants";
 
 interface TicketDetailsRightDrawerProps {
   ticket: TicketInterface;
@@ -30,7 +31,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
   const { ticket, onClose, isOpen, projectId } = props;
   const { _id: id, title, description, priority, type, dueDate, status, assigneeId, epicId, storyPoints } = ticket;
 
-  const { onDeleteTicket } = useProductBacklog();
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
 
   const { epics } = useContext(EpicsContext);
 
@@ -39,7 +40,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
       anchor='right'
       open={isOpen}
       variant='persistent'
-      sx={{ width: 240, flexShrink: 0, "& .MuiDrawer-paper": { width: 240 } }}
+      sx={{ width: DRAWER_WIDTH, flexShrink: 0, "& .MuiDrawer-paper": { width: DRAWER_WIDTH } }}
     >
       <List>
         <ListItem disablePadding sx={{ pl: 1, py: 1 }}>
@@ -59,11 +60,17 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
         {epics.length > 0 && <EpicLinkEditItem ticketId={id} epicId={epicId} />}
 
         <ListItem sx={{ mt: 1 }}>
-          <Button fullWidth variant='outlined' color='error' onClick={() => onDeleteTicket(id, projectId)}>
+          <Button fullWidth variant='outlined' color='error' onClick={() => setIsDeleteDialogOpen(true)}>
             Delete Ticket
           </Button>
         </ListItem>
       </List>
+      <DeleteTicketDialog
+        projectId={projectId}
+        ticket={ticket}
+        isDialogOpened={isDeleteDialogOpen}
+        onClose={() => setIsDeleteDialogOpen(false)}
+      />
     </Drawer>
   );
 };
