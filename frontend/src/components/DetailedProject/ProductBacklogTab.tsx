@@ -16,7 +16,7 @@ import TicketSortSelectDropdown, { priorityMap, TicketSortType } from "../Ticket
 import TicketNavbarWrapper from "../TicketNavbarWrapper";
 import CreateTicketForm from "../CreateTicketForm";
 import TicketFilter, { TicketFilterType } from "../TicketFilter";
-import { DRAWER_WIDTH } from "../../utils/constants";
+import { TICKET_DRAWER_WIDTH } from "../../utils/constants";
 
 interface ProductBacklogTabProps {
   project: ProjectInterface;
@@ -110,7 +110,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
 
   return (
     <>
-      <Box sx={{ mr: selectedTicketId ? `${DRAWER_WIDTH}px` : "" }}>
+      <Box sx={{ mr: selectedTicketId ? `${TICKET_DRAWER_WIDTH}px` : "" }}>
         <TicketNavbarWrapper>
           <Typography color='grey.500' variant='caption' fontStyle='italic'>
             Product Backlog <span>&#8729;</span> {`${tickets.length} ticket(s)`}

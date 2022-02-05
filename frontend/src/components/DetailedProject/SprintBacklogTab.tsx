@@ -21,7 +21,7 @@ import TicketSortSelectDropdown, { priorityMap, TicketSortType } from "../Ticket
 import TicketNavbarWrapper from "../TicketNavbarWrapper";
 import { ActiveSprintContext } from "../../contexts/ActiveSprintContextProvider";
 import TicketFilter, { TicketFilterType } from "../TicketFilter";
-import { DRAWER_WIDTH } from "../../utils/constants";
+import { TICKET_DRAWER_WIDTH } from "../../utils/constants";
 
 interface SprintBacklogTabProps {
   project: ProjectInterface;
@@ -151,7 +151,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   };
 
   return (
-    <Box sx={{ mr: selectedTicketId ? `${DRAWER_WIDTH}px` : "" }}>
+    <Box sx={{ mr: selectedTicketId ? `${TICKET_DRAWER_WIDTH}px` : "" }}>
       <TicketNavbarWrapper>
         {renderSprintDetails()}
         <Box flexGrow={1} />

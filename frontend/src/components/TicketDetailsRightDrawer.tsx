@@ -18,7 +18,7 @@ import AssigneeEditItem from "./TicketRightDrawerItems/AssigneeEditItem";
 import EpicLinkEditItem from "./TicketRightDrawerItems/EpicLinkEditItem";
 import StoryPointsEditItem from "./TicketRightDrawerItems/StoryPointsEditItem";
 import DeleteTicketDialog from "./DeleteTicketDialog";
-import { DRAWER_WIDTH } from "../utils/constants";
+import { TICKET_DRAWER_WIDTH } from "../utils/constants";
 
 interface TicketDetailsRightDrawerProps {
   ticket: TicketInterface;
@@ -40,7 +40,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
       anchor='right'
       open={isOpen}
       variant='persistent'
-      sx={{ width: DRAWER_WIDTH, flexShrink: 0, "& .MuiDrawer-paper": { width: DRAWER_WIDTH } }}
+      sx={{ width: TICKET_DRAWER_WIDTH, flexShrink: 0, "& .MuiDrawer-paper": { width: TICKET_DRAWER_WIDTH } }}
     >
       <List>
         <ListItem disablePadding sx={{ pl: 1, py: 1 }}>
