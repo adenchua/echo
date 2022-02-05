@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ListItem from "@mui/material/ListItem";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
+import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -67,6 +68,17 @@ const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
               </MenuItem>
             ))}
           </Select>
+          {status !== "completed" && (
+            <Button
+              fullWidth
+              variant='outlined'
+              size='small'
+              sx={{ mt: 2 }}
+              onClick={() => handleUpdateTicketStatus("completed")}
+            >
+              Mark as Done
+            </Button>
+          )}
         </Box>
         <Divider flexItem />
       </ListItem>

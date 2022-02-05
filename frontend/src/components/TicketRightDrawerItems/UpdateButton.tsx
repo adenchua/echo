@@ -19,7 +19,7 @@ const UpdateButton = (props: UpdateButtonProps): JSX.Element => {
           sx={{ "&:hover": { textDecoration: "underline", cursor: "pointer" } }}
           onClick={onAccept}
         >
-          Update
+          Save
         </Typography>
       )}
       <Typography

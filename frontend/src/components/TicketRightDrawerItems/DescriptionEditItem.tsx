@@ -40,7 +40,7 @@ const DescriptionEditItem = (props: DescriptionEditItemProps): JSX.Element => {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
         <Box display='flex' justifyContent='space-between' width='100%' mb={0.5}>
-          <Typography variant='body2'>Description</Typography>
+          <Typography variant='body2'>Notes</Typography>
           <EditButton onStartEdit={handleToggleEditMode} />
         </Box>
         <ListItemText secondary={!description || description === "" ? "None" : description} sx={{ mb: 2 }} />
@@ -52,7 +52,7 @@ const DescriptionEditItem = (props: DescriptionEditItemProps): JSX.Element => {
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
       <Box display='flex' width='100%' mb={0.5} gap={2}>
-        <Typography variant='body2'>Description</Typography>
+        <Typography variant='body2'>Notes</Typography>
         <Box flexGrow={1} />
         <UpdateButton onAccept={handleUpdateTicket} onCancel={handleToggleEditMode} showUpdateButton />
       </Box>
