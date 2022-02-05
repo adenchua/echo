@@ -12,6 +12,21 @@ module.exports.startSprint = async (req, res) => {
 
   try {
     const project = await Project.findById(projectId);
+
+    if (!project || project.isDeleted) {
+      res.status(400).send({ message: "Project may not exist anymore" });
+      return;
+    }
+
+    for (const sprintId of project.sprintIds) {
+      const sprint = await Sprint.findById(sprintId);
+      if (!sprint.hasEnded) {
+        // already has active sprint
+        res.status(400).send({ messsage: "Active sprint exists" });
+        return;
+      }
+    }
+
     const sprintNumber = project.sprintIds.length + 1;
     const newSprint = new Sprint({ number: sprintNumber, endDate: endDateISOString });
     await newSprint.save();
@@ -43,10 +58,17 @@ module.exports.endSprint = async (req, res) => {
     }
 
     const project = await Project.findById(projectId);
+
+    if (!project || project.isDeleted) {
+      res.status(400).send({ message: "Project may not exist anymore" });
+      return;
+    }
+
     for (const ticketId of project.backlogIds) {
       const ticket = await Ticket.findById(ticketId);
       if (!ticket) {
-        continue; // temp fix where invalid ticketIds will return null, causing the next statements to break
+        project.backlogIds.pull(ticketId); // remove invalid ticket from backlog
+        continue; // invalid ticketIds will return null, causing the next statements to break
       }
       if (ticket.isInSprint && ticket.status === "completed") {
         ticket.isInSprint = false;
@@ -84,7 +106,9 @@ module.exports.getSprints = async (req, res) => {
   try {
     for (const sprintId of sprintIds) {
       const sprint = await Sprint.findById(sprintId);
-      sprints.push(sprint);
+      if (sprint) {
+        sprints.push(sprint);
+      }
     }
 
     res.status(200).send(sprints);

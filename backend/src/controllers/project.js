@@ -29,8 +29,7 @@ module.exports.getProject = async (req, res) => {
 
   try {
     const project = await Project.findById(projectId);
-
-    if (project.isDeleted) {
+    if (!project || project.isDeleted) {
       res.status(400).send();
       return;
     }
@@ -54,7 +53,7 @@ module.exports.addMemberToProject = async (req, res) => {
   try {
     const project = await Project.findById(projectId);
 
-    if (project.isDeleted) {
+    if (!project || project.isDeleted) {
       res.status(400).send();
       return;
     }
@@ -87,7 +86,7 @@ module.exports.addMembersToProject = async (req, res) => {
   try {
     const project = await Project.findById(projectId);
 
-    if (project.isDeleted) {
+    if (!project || project.isDeleted) {
       res.status(400).send();
       return;
     }
@@ -121,7 +120,7 @@ module.exports.removeMemberFromProject = async (req, res) => {
   try {
     const project = await Project.findById(projectId);
 
-    if (project.isDeleted) {
+    if (!project || project.isDeleted) {
       res.status(400).send();
       return;
     }
@@ -147,7 +146,7 @@ module.exports.updateProject = async (req, res) => {
 
   try {
     const project = await Project.findById(projectId);
-    if (project.isDeleted) {
+    if (!project || project.isDeleted) {
       res.status(400).send();
       return;
     }
@@ -201,7 +200,7 @@ module.exports.promoteMemberToAdministrator = async (req, res) => {
   try {
     const project = await Project.findById(projectId);
 
-    if (project.isDeleted) {
+    if (!project || project.isDeleted) {
       res.status(400).send();
       return;
     }
@@ -234,12 +233,12 @@ module.exports.demoteAdmintoMember = async (req, res) => {
   try {
     const project = await Project.findById(projectId);
 
-    if (project.isDeleted) {
+    if (!project || project.isDeleted) {
       res.status(400).send();
       return;
     }
 
-    if (project.adminIds.length === 1 && project.adminIds.includes(userId)) {
+    if (project.adminIds.length === 1) {
       res.status(400).send({ message: "unable to remove the only administrator" });
       return;
     }

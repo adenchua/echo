@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-const userRoute = require("./routes/user");
 const projectRoute = require("./routes/project");
 const epicRoute = require("./routes/epic");
 const subtaskRoute = require("./routes/subtask");
@@ -17,7 +16,6 @@ const API_PREPEND = "/api";
 app.use(express.json());
 app.use(cors());
 
-app.use(`${API_PREPEND}/users`, userRoute);
 app.use(`${API_PREPEND}/projects`, projectRoute);
 app.use(`${API_PREPEND}/epics`, epicRoute);
 app.use(`${API_PREPEND}/subtasks`, subtaskRoute);

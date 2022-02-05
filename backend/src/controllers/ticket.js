@@ -20,7 +20,7 @@ module.exports.createTicket = async (req, res) => {
     const project = await Project.findById(projectId);
     const latestTicketId = project.backlogIds[project.backlogIds.length - 1];
     if (latestTicketId) {
-      const latestTicket = await Ticket.findById(latestTicketId); // if no tickets at all, will be null.
+      const latestTicket = await Ticket.findById(latestTicketId); // if no tickets at all, latestTicketId will be null.
       ticketNumber = latestTicket.ticketNumber + 1;
     }
 
