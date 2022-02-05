@@ -115,12 +115,25 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
   return (
     <div>
       {filterText && (
-        <Button aria-describedby={id} size='small' color='primary' variant='contained' onClick={handleClick}>
+        <Button
+          aria-describedby={id}
+          size='small'
+          color='primary'
+          variant='contained'
+          onClick={handleClick}
+          sx={{ whiteSpace: "nowrap" }}
+        >
           Filters: {filterText}
         </Button>
       )}
       {!filterText && (
-        <Button aria-describedby={id} size='small' color='inherit' onClick={handleClick} sx={{ color: "#9e9e9e" }}>
+        <Button
+          aria-describedby={id}
+          size='small'
+          color='inherit'
+          onClick={handleClick}
+          sx={{ color: "#9e9e9e", whiteSpace: "nowrap" }}
+        >
           Filters: None
         </Button>
       )}

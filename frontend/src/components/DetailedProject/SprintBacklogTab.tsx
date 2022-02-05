@@ -8,6 +8,8 @@ import SprintStartIcon from "@mui/icons-material/DirectionsRun";
 import SearchIcon from "@mui/icons-material/Search";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { format, differenceInBusinessDays } from "date-fns";
+import IconButton from "@mui/material/IconButton";
+import TextField from "@mui/material/TextField";
 
 import ProjectInterface from "../../types/ProjectInterface";
 import SprintStartDialog from "../SprintStartDialog";
@@ -17,11 +19,13 @@ import { TicketsContext } from "../../contexts/TicketsContextProvider";
 import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
 import Ticket from "../Ticket";
 import { matchString } from "../../utils/matchString";
-import TicketSortSelectDropdown, { priorityMap, TicketSortType } from "../TicketSortSelectDropdown";
+import TicketSortSelectDropdown, { TicketSortType } from "../TicketSortSelectDropdown";
 import TicketNavbarWrapper from "../TicketNavbarWrapper";
 import { ActiveSprintContext } from "../../contexts/ActiveSprintContextProvider";
 import TicketFilter, { TicketFilterType } from "../TicketFilter";
 import { TICKET_DRAWER_WIDTH } from "../../utils/constants";
+import getFilteredTickets from "../../utils/getFilteredTickets";
+import getSortedTickets from "../../utils/getSortedTickets";
 
 interface SprintBacklogTabProps {
   project: ProjectInterface;
@@ -42,37 +46,11 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   const sprintTickets = tickets.filter((ticket) => ticket.isInSprint === true);
 
   const filteredTickets = useMemo(() => {
-    if (!filterSelection) {
-      return sprintTickets;
-    }
-    const [filterKeyType, filterValue] = filterSelection.split("-");
-    switch (filterKeyType) {
-      case "assignee":
-        return sprintTickets.filter((ticket) => ticket.assigneeId === filterValue);
-      case "not_status":
-        return sprintTickets.filter((ticket) => ticket.status !== filterValue);
-      case "status":
-        return sprintTickets.filter((ticket) => ticket.status === filterValue);
-      case "epic":
-        return sprintTickets.filter((ticket) => ticket.epicId === filterValue);
-      default:
-        return sprintTickets; // invalid filter
-    }
+    return getFilteredTickets(filterSelection, sprintTickets);
   }, [filterSelection, sprintTickets]);
 
   const sortedTickets = useMemo(() => {
-    switch (sortSelection) {
-      case "priority-dsc":
-        return filteredTickets.sort((a, b) => {
-          const aPriorityType = priorityMap[a.priority];
-          const bPriorityType = priorityMap[b.priority];
-          return bPriorityType - aPriorityType;
-        });
-      case "creation-asc":
-        return filteredTickets.sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
-      default:
-        return filteredTickets; // invalid sort order
-    }
+    return getSortedTickets(sortSelection, filteredTickets);
   }, [sortSelection, filteredTickets]);
 
   const handleFilterSelection = (newFilter: TicketFilterType): void => {
@@ -117,12 +95,18 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
         </Typography>
         {dayDifference >= 0 && (
           <Typography variant='caption' color='grey.500' fontStyle='italic'>
-            {formattedStartDate} - {formattedEndDate} <span>&#8729;</span> {dayDifference} business day(s) remaining
+            {formattedStartDate} - {formattedEndDate}
+            <Box sx={{ display: { xs: "none", lg: "inline" } }}>
+              <span>&#8729;</span> {dayDifference} business day(s) remaining
+            </Box>
           </Typography>
         )}
         {dayDifference < 0 && (
           <Typography variant='caption' color={dayDifference > 0 ? "grey.500" : "error"} fontStyle='italic'>
-            {formattedStartDate} - {formattedEndDate} <span>&#8729;</span> {Math.abs(dayDifference)} day(s) overdue
+            {formattedStartDate} - {formattedEndDate}{" "}
+            <Box sx={{ display: { xs: "none", lg: "inline" } }}>
+              <span>&#8729;</span> {Math.abs(dayDifference)} day(s) overdue
+            </Box>
           </Typography>
         )}
       </Box>
@@ -150,8 +134,48 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
     );
   };
 
-  return (
-    <Box sx={{ mr: selectedTicketId ? `${TICKET_DRAWER_WIDTH}px` : "" }}>
+  const renderMobileTicketNavbar = (): JSX.Element => (
+    <Box sx={{ display: { xs: "block", lg: "none" } }}>
+      <TicketNavbarWrapper>
+        {renderSprintDetails()}
+        {(!activeSprint || activeSprint.hasEnded) && (
+          <IconButton
+            onClick={() => setShowStartSprintDialog(true)}
+            color='primary'
+            size='small'
+            sx={{ border: "1px solid", borderColor: "primary.main" }}
+          >
+            <SprintStartIcon fontSize='small' />
+          </IconButton>
+        )}
+        {activeSprint && !activeSprint.hasEnded && (
+          <IconButton
+            onClick={() => setShowEndSprintDialog(true)}
+            color='error'
+            size='small'
+            sx={{ border: "1px solid", borderColor: "error.main" }}
+          >
+            <SprintEndIcon fontSize='small' />
+          </IconButton>
+        )}
+        <TicketFilter onSelectHandler={handleFilterSelection} />
+        <TicketSortSelectDropdown sortSelection={sortSelection} onChangeHandler={handleSortSelectionOnChange} />
+        <TextField
+          size='small'
+          margin='none'
+          variant='filled'
+          inputProps={{ style: { padding: 7, fontSize: 14 } }}
+          placeholder='search'
+          type='search'
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+        />
+      </TicketNavbarWrapper>
+    </Box>
+  );
+
+  const renderDesktopTicketNavbar = (): JSX.Element => (
+    <Box sx={{ display: { xs: "none", lg: "block" } }}>
       <TicketNavbarWrapper>
         {renderSprintDetails()}
         <Box flexGrow={1} />
@@ -198,6 +222,13 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
           onChange={(e) => setSearchInput(e.target.value)}
         />
       </TicketNavbarWrapper>
+    </Box>
+  );
+
+  return (
+    <Box sx={{ mr: selectedTicketId ? `${TICKET_DRAWER_WIDTH}px` : "" }}>
+      {renderMobileTicketNavbar()}
+      {renderDesktopTicketNavbar()}
       <Box p={3}>
         {sprintTickets && sprintTickets.length === 0 && (
           <Typography variant='body2' color='GrayText'>

@@ -36,16 +36,24 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
   const { loggedInUserId } = useContext(UserAuthenticationContext);
 
   useEffect(() => {
+    let isMounted = true;
+
     const getAssigneeDetails = async () => {
       if (!assigneeId) {
         setAssignee(null);
         return;
       }
       const [response] = await fetchUsersByIds([assigneeId]);
-      setAssignee(response);
+      if (isMounted) {
+        setAssignee(response);
+      }
     };
 
     getAssigneeDetails();
+
+    return () => {
+      isMounted = false;
+    };
   }, [assigneeId]);
 
   const handleToggleEditMode = (): void => {

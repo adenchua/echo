@@ -5,6 +5,8 @@ import Box from "@mui/material/Box";
 import SearchIcon from "@mui/icons-material/Search";
 import { SelectChangeEvent } from "@mui/material/Select";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import TextField from "@mui/material/TextField";
 import AddIcon from "@mui/icons-material/Add";
 
 import ProjectInterface from "../../types/ProjectInterface";
@@ -12,11 +14,13 @@ import Ticket from "../Ticket";
 import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
 import { TicketsContext } from "../../contexts/TicketsContextProvider";
 import { matchString } from "../../utils/matchString";
-import TicketSortSelectDropdown, { priorityMap, TicketSortType } from "../TicketSortSelectDropdown";
+import TicketSortSelectDropdown, { TicketSortType } from "../TicketSortSelectDropdown";
 import TicketNavbarWrapper from "../TicketNavbarWrapper";
 import CreateTicketForm from "../CreateTicketForm";
 import TicketFilter, { TicketFilterType } from "../TicketFilter";
 import { TICKET_DRAWER_WIDTH } from "../../utils/constants";
+import getFilteredTickets from "../../utils/getFilteredTickets";
+import getSortedTickets from "../../utils/getSortedTickets";
 
 interface ProductBacklogTabProps {
   project: ProjectInterface;
@@ -33,37 +37,11 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
   const [showTicketCreationForm, setShowTicketCreationForm] = useState<boolean>(false);
 
   const filteredTickets = useMemo(() => {
-    if (!filterSelection) {
-      return tickets;
-    }
-    const [filterKeyType, filterValue] = filterSelection.split("-");
-    switch (filterKeyType) {
-      case "assignee":
-        return tickets.filter((ticket) => ticket.assigneeId === filterValue);
-      case "not_status":
-        return tickets.filter((ticket) => ticket.status !== filterValue);
-      case "status":
-        return tickets.filter((ticket) => ticket.status === filterValue);
-      case "epic":
-        return tickets.filter((ticket) => ticket.epicId === filterValue);
-      default:
-        return tickets; // invalid filter
-    }
+    return getFilteredTickets(filterSelection, tickets);
   }, [filterSelection, tickets]);
 
   const sortedTickets = useMemo(() => {
-    switch (sortSelection) {
-      case "priority-dsc":
-        return filteredTickets.sort((a, b) => {
-          const aPriorityType = priorityMap[a.priority];
-          const bPriorityType = priorityMap[b.priority];
-          return bPriorityType - aPriorityType;
-        });
-      case "creation-asc":
-        return filteredTickets.sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
-      default:
-        return filteredTickets; // invalid sort order
-    }
+    return getSortedTickets(sortSelection, filteredTickets);
   }, [sortSelection, filteredTickets]);
 
   const handleFilterSelection = (newFilter: TicketFilterType): void => {
@@ -108,42 +86,76 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
     );
   };
 
+  const renderMobileTicketNavbar = (): JSX.Element => (
+    <Box sx={{ display: { xs: "block", lg: "none" } }}>
+      <TicketNavbarWrapper>
+        <IconButton
+          onClick={() => setShowTicketCreationForm(true)}
+          color='primary'
+          size='small'
+          sx={{ border: "1px solid", borderColor: "primary.main" }}
+        >
+          <AddIcon fontSize='small' />
+        </IconButton>
+        <TicketFilter onSelectHandler={handleFilterSelection} />
+        <TicketSortSelectDropdown sortSelection={sortSelection} onChangeHandler={handleSortSelectionOnChange} />
+        <TextField
+          size='small'
+          margin='none'
+          variant='filled'
+          inputProps={{ style: { padding: 7, fontSize: 14 } }}
+          placeholder='search'
+          type='search'
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+        />
+      </TicketNavbarWrapper>
+    </Box>
+  );
+
+  const renderDesktopTicketNavbar = (): JSX.Element => (
+    <Box sx={{ display: { xs: "none", lg: "block" } }}>
+      <TicketNavbarWrapper>
+        <Typography color='grey.500' variant='caption' fontStyle='italic'>
+          Product Backlog <span>&#8729;</span> {`${tickets.length} ticket(s)`}
+        </Typography>
+        <Box flexGrow={1} />
+        <Button
+          startIcon={<AddIcon fontSize='small' />}
+          sx={{ display: { xs: "none", sm: "flex" } }}
+          onClick={() => setShowTicketCreationForm(true)}
+          size='small'
+        >
+          Add Ticket
+        </Button>
+        <TicketFilter onSelectHandler={handleFilterSelection} />
+        <TicketSortSelectDropdown sortSelection={sortSelection} onChangeHandler={handleSortSelectionOnChange} />
+        <InputBase
+          sx={{
+            borderLeft: "1px solid",
+            borderColor: "grey.300",
+            px: 1,
+            "& .MuiInputBase-input": {
+              ml: 0.5,
+              fontSize: 14,
+            },
+          }}
+          startAdornment={<SearchIcon fontSize='small' color='disabled' />}
+          size='small'
+          placeholder='Search...'
+          type='search'
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+        />
+      </TicketNavbarWrapper>
+    </Box>
+  );
+
   return (
     <>
       <Box sx={{ mr: selectedTicketId ? `${TICKET_DRAWER_WIDTH}px` : "" }}>
-        <TicketNavbarWrapper>
-          <Typography color='grey.500' variant='caption' fontStyle='italic'>
-            Product Backlog <span>&#8729;</span> {`${tickets.length} ticket(s)`}
-          </Typography>
-          <Box flexGrow={1} />
-          <Button
-            startIcon={<AddIcon fontSize='small' />}
-            sx={{ display: { xs: "none", sm: "flex" } }}
-            onClick={() => setShowTicketCreationForm(true)}
-            size='small'
-          >
-            Add Ticket
-          </Button>
-          <TicketFilter onSelectHandler={handleFilterSelection} />
-          <TicketSortSelectDropdown sortSelection={sortSelection} onChangeHandler={handleSortSelectionOnChange} />
-          <InputBase
-            sx={{
-              borderLeft: "1px solid",
-              borderColor: "grey.300",
-              px: 1,
-              "& .MuiInputBase-input": {
-                ml: 0.5,
-                fontSize: 14,
-              },
-            }}
-            startAdornment={<SearchIcon fontSize='small' color='disabled' />}
-            size='small'
-            placeholder='Search...'
-            type='search'
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-          />
-        </TicketNavbarWrapper>
+        {renderMobileTicketNavbar()}
+        {renderDesktopTicketNavbar()}
         <Box p={3}>
           {showTicketCreationForm && (
             <Box mb={4}>

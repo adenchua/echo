@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
-import Hidden from "@mui/material/Hidden";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
@@ -50,93 +49,71 @@ const Ticket = (props: TicketProps): JSX.Element => {
     onUpdateTicket(id, { isInSprint: updatedIsInSprintStatus });
   };
 
-  const renderDesktopTicket = (): JSX.Element => {
-    return (
-      <Paper
-        sx={{
-          backgroundColor: bgGrey ? "grey.200" : "",
-          "&:hover": {
-            backgroundColor: "grey.200",
-          },
-          borderBottom: "1px solid",
-          borderColor: "grey.300",
-          display: "flex",
-          alignItems: "center",
-          gap: 1.5,
-          py: 0.5,
-          px: 1,
-          overflowX: "hidden",
-        }}
-        square
-        elevation={0}
-      >
-        {showSprintToggleCheckBox && (
-          <Tooltip title={isInSprint ? "Remove from sprint backlog" : "Put in sprint backlog"} disableInteractive>
-            <Checkbox
-              size='small'
-              sx={{
-                padding: 0,
-              }}
-              disableRipple
-              checked={isInSprint}
-              onChange={handleToggleTicketInSprint}
-            />
-          </Tooltip>
-        )}
-        <PriorityIcon priority={priority} hideMedium />
-        <TicketTypeIcon type={type} />
-        <StoryPointsChip storyPoints={storyPoints} />
-        <Typography variant='caption' color='grey.500' noWrap>
-          {`#${ticketNumber}`}
-        </Typography>
-        <Typography variant='body2' noWrap>
-          {title}
-        </Typography>
-        <Box flexGrow={1} />
-        {status !== "completed" && (
-          <Chip
-            label={formattedDueDate}
+  return (
+    <Paper
+      sx={{
+        backgroundColor: bgGrey ? "grey.200" : "",
+        "&:hover": {
+          backgroundColor: "grey.200",
+        },
+        borderBottom: "1px solid",
+        borderColor: "grey.300",
+        display: "flex",
+        alignItems: "center",
+        gap: 1.5,
+        py: 0.5,
+        px: 1,
+        overflowX: "hidden",
+      }}
+      square
+      elevation={0}
+    >
+      {showSprintToggleCheckBox && (
+        <Tooltip title={isInSprint ? "Remove from sprint backlog" : "Put in sprint backlog"} disableInteractive>
+          <Checkbox
             size='small'
             sx={{
-              display: dueDate ? "" : "none",
-              bgcolor: isDue ? "error.light" : "",
-              color: isDue ? "#FFF" : "",
+              padding: 0,
             }}
+            disableRipple
+            checked={isInSprint}
+            onChange={handleToggleTicketInSprint}
           />
-        )}
-        {assignee && (
-          <Avatar
-            style={{
-              height: 32,
-              width: 32,
-              display: assigneeId ? "" : "none",
-            }}
-            src={getUserAvatarSVG(assignee.username)}
-          />
-        )}
-        <StatusChipButton status={status} size='medium' />
-      </Paper>
-    );
-  };
-
-  const renderMobileTicket = (): JSX.Element => {
-    return (
-      <Paper sx={{ marginBottom: 1, padding: 1 }} elevation={0}>
-        <Box display='flex' alignItems='center' gap={1} mb={1}>
-          <PriorityIcon priority={priority} hideMedium />
-          <TicketTypeIcon type={type} />
-          <Box flexGrow={1} />
-          <Chip label='In Sprint' size='small' />
-        </Box>
-        <Typography variant='body2'>{title}</Typography>
-      </Paper>
-    );
-  };
-  return (
-    <>
-      <Hidden mdDown>{renderDesktopTicket()}</Hidden>
-      <Hidden mdUp>{renderMobileTicket()}</Hidden>
-    </>
+        </Tooltip>
+      )}
+      <PriorityIcon priority={priority} hideMedium />
+      <TicketTypeIcon type={type} />
+      <StoryPointsChip storyPoints={storyPoints} />
+      <Typography variant='caption' color='grey.500' noWrap sx={{ minWidth: 24 }}>
+        {`#${ticketNumber}`}
+      </Typography>
+      <Typography variant='body2' noWrap>
+        {title}
+      </Typography>
+      <Box flexGrow={1} />
+      {status !== "completed" && (
+        <Chip
+          label={formattedDueDate}
+          size='small'
+          sx={{
+            display: dueDate ? "" : "none",
+            bgcolor: isDue ? "error.light" : "",
+            color: isDue ? "#FFF" : "",
+          }}
+        />
+      )}
+      {assignee && (
+        <Avatar
+          style={{
+            height: 32,
+            width: 32,
+            display: assigneeId ? "" : "none",
+          }}
+          src={getUserAvatarSVG(assignee.username)}
+        />
+      )}
+      <StatusChipButton status={status} size='medium' />
+    </Paper>
   );
 };
 

@@ -19,6 +19,7 @@ const TicketNavbarWrapper = (props: TicketNavbarWrapperProps): JSX.Element => {
         gap: 2,
       }}
       elevation={0}
+      square
     >
       {children}
     </Paper>
