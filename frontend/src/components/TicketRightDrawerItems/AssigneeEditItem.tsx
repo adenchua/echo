@@ -106,6 +106,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
                 padding: "0px 8px",
                 margin: 0,
                 background: "#00000014",
+                height: 32,
               },
             }}
           >

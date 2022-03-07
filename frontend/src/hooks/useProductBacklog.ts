@@ -40,10 +40,13 @@ const useProductBacklog = () => {
     }
   };
 
-  const onDeleteTicket = async (ticketId: string, projectId: string): Promise<void> => {
+  const onDeleteTicket = async (ticketId: string, projectId: string, epicId: string): Promise<void> => {
     try {
       await deleteTicket(ticketId, projectId);
       deleteTicketContext(ticketId);
+      if (epicId) {
+        deleteTicketIdFromEpic(epicId, ticketId); // delete ticket from epic
+      }
     } catch (error) {
       throw new Error("Failed to update ticket");
     }
@@ -52,8 +55,8 @@ const useProductBacklog = () => {
   const onAddTicketToEpic = async (ticketId: string, epicId: string): Promise<void> => {
     try {
       await addTicketToEpic(ticketId, epicId);
-      addTicketIdToEpic(epicId, ticketId); // update epic to have ticket id
-      updateTicketContext(ticketId, { epicId }); // update ticket to have epic Id
+      addTicketIdToEpic(epicId, ticketId);
+      updateTicketContext(ticketId, { epicId });
     } catch (error) {
       throw new Error("Failed to add ticket to epic");
     }
@@ -62,8 +65,8 @@ const useProductBacklog = () => {
   const onRemoveTicketFromEpic = async (ticketId: string, epicId: string): Promise<void> => {
     try {
       await removeTicketFromEpic(ticketId, epicId);
-      deleteTicketIdFromEpic(epicId, ticketId); // update epic to have ticket id
-      updateTicketContext(ticketId, { epicId: "" }); // update ticket to have epic Id
+      deleteTicketIdFromEpic(epicId, ticketId);
+      updateTicketContext(ticketId, { epicId: "" });
     } catch (error) {
       throw new Error("Failed to remove ticket from epic");
     }

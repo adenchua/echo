@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.1-a] - 2022-03-07
+
+### FIXED
+
+- deletion of ticket does not remove it from the epic
+
+### CHANGED
+
+- increased width of the ticket drawer
+
 ## [1.2.0-a] - 2022-02-05
 
 ### FIXED

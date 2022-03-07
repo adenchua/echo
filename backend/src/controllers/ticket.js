@@ -1,5 +1,6 @@
 const Ticket = require("../models/ticket");
 const Project = require("../models/project");
+const Epic = require("../models/epic");
 const { removeUndefinedKeysFromObject } = require("../utils/removeUndefinedKeysFromObject");
 
 module.exports.createTicket = async (req, res) => {
@@ -76,6 +77,7 @@ module.exports.deleteTicket = async (req, res) => {
 
   try {
     await Ticket.findByIdAndDelete(ticketId);
+    await Epic.updateMany({ ticketIds: ticketId }, { $pullAll: { ticketIds: [ticketId] } }); // remove ticketids
     const project = await Project.findById(projectId);
     project.backlogIds.pull(ticketId);
     await project.save();

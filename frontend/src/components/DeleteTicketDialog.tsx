@@ -24,14 +24,14 @@ const DeleteTicketDialog = (props: DeleteTicketDialogProps): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { isDialogOpened, onClose, ticket, projectId } = props;
-  const { title, _id: ticketId } = ticket;
+  const { title, _id: ticketId, epicId } = ticket;
   const { onDeleteTicket } = useProductBacklog();
 
   const handleDelete = async (): Promise<void> => {
     try {
       setIsLoading(true);
       await sleep(1000);
-      onDeleteTicket(ticketId, projectId);
+      onDeleteTicket(ticketId, projectId, epicId);
     } catch (error) {
       setIsLoading(false);
     }
