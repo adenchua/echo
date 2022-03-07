@@ -9,6 +9,11 @@ interface ProgressBarWithPercentageProps {
 
 const ProgressBarWithPercentage = (props: ProgressBarWithPercentageProps): JSX.Element => {
   const { value } = props;
+  let displayedValue = value;
+
+  if (isNaN(value)) {
+    displayedValue = 0; // prevent display of NaN%
+  }
 
   function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
     return (
@@ -23,7 +28,7 @@ const ProgressBarWithPercentage = (props: ProgressBarWithPercentageProps): JSX.E
     );
   }
 
-  return <LinearProgressWithLabel value={value} />;
+  return <LinearProgressWithLabel value={displayedValue} />;
 };
 
 export default ProgressBarWithPercentage;
