@@ -15,14 +15,15 @@ import ProjectListingItem from "../components/ProjectListingItem";
 import CreateProjectButtonWithDialog from "../components/CreateProjectButtonWithDialog";
 import { UserProjectsContext } from "../contexts/UserProjectsContextProvider";
 import { matchString } from "../utils/matchString";
-import { UserAuthenticationContext } from "../contexts/UserAuthenticationContextProvider";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 
 const ProjectListingPage = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>("");
   const { projects } = useContext(UserProjectsContext);
-  const { isLoggedIn } = useContext(UserAuthenticationContext);
+  const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
 
-  if (!isLoggedIn) {
+  if (!loggedInUserId) {
     return <Redirect to='/' />;
   }
 

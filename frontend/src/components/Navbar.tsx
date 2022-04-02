@@ -14,12 +14,12 @@ import Button from "@mui/material/Button";
 import ListSubheader from "@mui/material/ListSubheader";
 import Toolbar from "@mui/material/Toolbar";
 import Avatar from "@mui/material/Avatar";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams, useHistory } from "react-router-dom";
 
 import fetchAllProjectsByUser from "../api/projects/fetchAllProjectsByUser";
 import { UserProjectsContext } from "../contexts/UserProjectsContextProvider";
-import { UserAuthenticationContext } from "../contexts/UserAuthenticationContextProvider";
-import { APP_VERSION } from "../utils/constants";
+import { APP_VERSION, LOCAL_STORAGE_UID_KEY } from "../utils/constants";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const navigationItems = [
   {
@@ -38,7 +38,8 @@ const Navbar = (): JSX.Element => {
   const { pathname } = useLocation();
   const { id: selectedProjectId } = useParams<{ id: string }>();
   const { projects, handleSetProject } = useContext(UserProjectsContext);
-  const { loggedInUserId, logoutUser } = useContext(UserAuthenticationContext);
+  const { storedValue: loggedInUserId, removeKeyValue } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
+  const history = useHistory();
 
   useEffect(() => {
     const getUserProjects = async () => {
@@ -56,6 +57,11 @@ const Navbar = (): JSX.Element => {
 
     getUserProjects();
   }, [handleSetProject, loggedInUserId]);
+
+  const handleLogout = (): void => {
+    removeKeyValue();
+    history.push("/"); //returns to login screen
+  };
 
   return (
     <Box sx={{ bgcolor: "grey.800", height: "100%", display: "flex", flexDirection: "column", pb: 2 }}>
@@ -137,7 +143,7 @@ const Navbar = (): JSX.Element => {
       <Box px={2}>
         <Button
           variant='outlined'
-          onClick={logoutUser}
+          onClick={handleLogout}
           fullWidth
           sx={{
             color: "#FFF",

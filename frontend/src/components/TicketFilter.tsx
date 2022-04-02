@@ -16,12 +16,13 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 
 import { StatusType } from "../types/TicketInterface";
-import { UserAuthenticationContext } from "../contexts/UserAuthenticationContextProvider";
 import StatusChipButton from "./StatusChipButton";
 import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
 import { EpicsContext } from "../contexts/EpicsContextProvider";
 import { sliceLongString } from "../utils/sliceLongString";
+import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export type TicketFilterType =
   | null
@@ -65,7 +66,7 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
   const { onSelectHandler } = props;
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [filterText, setFilterText] = useState<string>("");
-  const { loggedInUserId } = useContext(UserAuthenticationContext);
+  const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
   const { members, admins } = useContext(ProjectMembersContext);
   const { epics } = useContext(EpicsContext);
 

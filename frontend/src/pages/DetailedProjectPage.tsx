@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams, Redirect } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import _ from "lodash";
 
-import { UserAuthenticationContext } from "../contexts/UserAuthenticationContextProvider";
 import PageLayoutWrapper from "../components/PageLayoutWrapper";
 import ProjectInterface, { ProjectUpdateFieldsType } from "../types/ProjectInterface";
 import fetchProject from "../api/projects/fetchProject";
@@ -24,9 +23,11 @@ import { EpicsContext } from "../contexts/EpicsContextProvider";
 import fetchEpics from "../api/epics/fetchEpics";
 import { ActiveSprintContext } from "../contexts/ActiveSprintContextProvider";
 import fetchSprintsByIds from "../api/sprints/fetchSprintsByIds";
+import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 
 const DetailedProjectPage = (): JSX.Element => {
-  const { isLoggedIn } = useContext(UserAuthenticationContext);
+  // using this instead of useLocalStorage hook because theres a bug where cached value is used
+  const loggedInUserId = window.localStorage.getItem(LOCAL_STORAGE_UID_KEY);
   const { id } = useParams<{ id: string }>();
   const query = useQuery();
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -112,7 +113,7 @@ const DetailedProjectPage = (): JSX.Element => {
     setProject(updatedProject);
   };
 
-  if (!isLoggedIn) {
+  if (!loggedInUserId) {
     return <Redirect to='/' />;
   }
 

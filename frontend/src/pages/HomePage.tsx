@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Redirect } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -6,13 +6,14 @@ import Grid from "@mui/material/Grid";
 import teal from "@mui/material/colors/teal";
 import DoneIcon from "@mui/icons-material/DoneOutlineOutlined";
 
-import { UserAuthenticationContext } from "../contexts/UserAuthenticationContextProvider";
 import PageLayoutWrapper from "../components/PageLayoutWrapper";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 
 const HomePage = (): JSX.Element => {
-  const { isLoggedIn } = useContext(UserAuthenticationContext);
+  const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
 
-  if (!isLoggedIn) {
+  if (!loggedInUserId) {
     return <Redirect to='/' />;
   }
 

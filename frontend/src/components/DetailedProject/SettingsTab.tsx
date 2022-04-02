@@ -12,7 +12,8 @@ import updateProject from "../../api/projects/updateProject";
 import { sleep } from "../../utils/sleep";
 import { UserProjectsContext } from "../../contexts/UserProjectsContextProvider";
 import deleteProject from "../../api/projects/deleteProject";
-import { UserAuthenticationContext } from "../../contexts/UserAuthenticationContextProvider";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
 
 interface SettingsTabProps {
   project: ProjectInterface;
@@ -28,7 +29,7 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
   const [showButtonDeleting, setShowButtonDeleting] = useState<boolean>(false);
   const [deletionInput, setDeletionInput] = useState<string>("");
   const { updateProject: updateProjectInContext } = useContext(UserProjectsContext);
-  const { loggedInUserId } = useContext(UserAuthenticationContext);
+  const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
   const history = useHistory();
   const isLoggedInUserAdmin = loggedInUserId && adminIds.includes(loggedInUserId);
 

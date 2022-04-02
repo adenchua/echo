@@ -18,7 +18,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import createProject from "../api/projects/createProject";
 import { UserProjectsContext } from "../contexts/UserProjectsContextProvider";
-import { UserAuthenticationContext } from "../contexts/UserAuthenticationContextProvider";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 
 const PROJECT_TYPES: ProjectType[] = ["Software Engineering", "Exploratory Data Analysis", "UX Design"];
 
@@ -31,7 +32,7 @@ const CreateProjectButtonWithDialog = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showError, setShowError] = useState<boolean>(false);
   const { addProject } = useContext(UserProjectsContext);
-  const { loggedInUserId } = useContext(UserAuthenticationContext);
+  const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
 
   useEffect(() => {
     // return dialog to original state upon opening

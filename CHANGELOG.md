@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0-a] - 2022-04-02
+
+### CHANGED
+
+- login mechanism to persist in storage. Users can now refresh the page without redirecting to login page.
+
 ## [1.2.1-a] - 2022-03-07
 
 ### FIXED

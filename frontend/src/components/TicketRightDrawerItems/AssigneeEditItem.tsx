@@ -15,11 +15,12 @@ import EditButton from "./EditButton";
 import useProductBacklog from "../../hooks/useProductBacklog";
 import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
 import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
-import { UserAuthenticationContext } from "../../contexts/UserAuthenticationContextProvider";
 import UserInterface from "../../types/UserInterface";
 import UpdateButton from "./UpdateButton";
 import fetchUsersByIds from "../../api/users/fetchUsersByIds";
 import { sliceLongString } from "../../utils/sliceLongString";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
 
 interface AssigneeEditItemProps {
   ticketId: string;
@@ -33,7 +34,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
 
   const { onUpdateTicket } = useProductBacklog();
   const { members, admins } = useContext(ProjectMembersContext);
-  const { loggedInUserId } = useContext(UserAuthenticationContext);
+  const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
 
   useEffect(() => {
     let isMounted = true;

@@ -27,7 +27,8 @@ import removeMemberFromProject from "../../api/projects/removeMemberFromProject"
 import ProjectInterface from "../../types/ProjectInterface";
 import promoteMemberToAdmin from "../../api/projects/promoteMemberToAdmin";
 import AddMemberToProjectButtonWithDialog from "../AddMemberToProjectButtonWithDialog";
-import { UserAuthenticationContext } from "../../contexts/UserAuthenticationContextProvider";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
 
 interface RowUserInterface {
   user: UserInterface;
@@ -47,7 +48,7 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
     handleRemoveMember: handleRemoveMemberInContext,
     handlePromoteMember: handlePromoteMemberInContext,
   } = useContext(ProjectMembersContext);
-  const { loggedInUserId } = useContext(UserAuthenticationContext);
+  const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
   const [searchInput, setSearchInput] = useState<string>("");
   const isLoggedInUserAnAdmin = admins.map((admin) => admin._id).includes(loggedInUserId ?? "-1");
 
