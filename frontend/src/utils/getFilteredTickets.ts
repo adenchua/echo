@@ -15,8 +15,6 @@ const getFilteredTickets = (filterSelection: TicketFilterType, tickets: TicketIn
       return tickets.filter((ticket) => ticket.status !== filterValue);
     case "status":
       return tickets.filter((ticket) => ticket.status === filterValue);
-    case "epic":
-      return tickets.filter((ticket) => ticket.epicId === filterValue);
     default:
       return tickets; // invalid filter
   }

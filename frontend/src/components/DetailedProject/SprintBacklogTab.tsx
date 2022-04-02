@@ -17,8 +17,6 @@ import useSprintBacklog from "../../hooks/useSprintBacklog";
 import SprintEndDialog from "../SprintEndDialog";
 import { TicketsContext } from "../../contexts/TicketsContextProvider";
 import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
-import Ticket from "../Ticket";
-import { matchString } from "../../utils/matchString";
 import TicketSortSelectDropdown, { TicketSortType } from "../TicketSortSelectDropdown";
 import TicketNavbarWrapper from "../TicketNavbarWrapper";
 import { ActiveSprintContext } from "../../contexts/ActiveSprintContextProvider";
@@ -26,6 +24,8 @@ import TicketFilter, { TicketFilterType } from "../TicketFilter";
 import { TICKET_DRAWER_WIDTH } from "../../utils/constants";
 import getFilteredTickets from "../../utils/getFilteredTickets";
 import getSortedTickets from "../../utils/getSortedTickets";
+import TicketSection from "../TicketSection";
+import getTicketsByEpics from "../../utils/getTicketsByEpics";
 
 interface SprintBacklogTabProps {
   project: ProjectInterface;
@@ -52,6 +52,12 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   const sortedTickets = useMemo(() => {
     return getSortedTickets(sortSelection, filteredTickets);
   }, [sortSelection, filteredTickets]);
+
+  const displayedTicketsByEpics = useMemo(() => {
+    return getTicketsByEpics(sortedTickets);
+    //temp fix to get sort working
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortSelection, sortedTickets]);
 
   const handleFilterSelection = (newFilter: TicketFilterType): void => {
     setFilterSelection(newFilter);
@@ -235,21 +241,26 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
             There are no tickets in the backlog.
           </Typography>
         )}
-        {sortedTickets && sortedTickets.length > 0 && (
-          <Box sx={{ border: "1px solid", borderColor: "grey.300", borderBottom: 0 }}>
-            {sortedTickets.map((ticket) => {
-              const { _id: id, title } = ticket;
-              if (matchString(searchInput, title)) {
-                return (
-                  <Box key={id} onClick={() => handleSetSelectedTicket(id)}>
-                    <Ticket ticket={ticket} showSprintToggleCheckBox={false} bgGrey={id === selectedTicketId} />
-                  </Box>
-                );
-              }
-              return null;
-            })}
-          </Box>
-        )}
+        {displayedTicketsByEpics &&
+          displayedTicketsByEpics.map((displayedTicketsByEpic) => {
+            const { epicId, tickets: displayedTickets } = displayedTicketsByEpic;
+
+            if (epicId === "others" && displayedTickets.length === 0) {
+              return null; // prevent empty others section from showing if no tickets
+            }
+
+            return (
+              <Box mb={5} key={epicId}>
+                <TicketSection
+                  tickets={displayedTickets}
+                  searchInput={searchInput}
+                  epicId={epicId}
+                  onSelectTicket={handleSetSelectedTicket}
+                  selectedTicketId={selectedTicketId}
+                />
+              </Box>
+            );
+          })}
       </Box>
       <SprintEndDialog
         showEndSprintDialog={showEndSprintDialog}

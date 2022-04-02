@@ -10,10 +10,8 @@ import TextField from "@mui/material/TextField";
 import AddIcon from "@mui/icons-material/Add";
 
 import ProjectInterface from "../../types/ProjectInterface";
-import Ticket from "../Ticket";
 import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
 import { TicketsContext } from "../../contexts/TicketsContextProvider";
-import { matchString } from "../../utils/matchString";
 import TicketSortSelectDropdown, { TicketSortType } from "../TicketSortSelectDropdown";
 import TicketNavbarWrapper from "../TicketNavbarWrapper";
 import CreateTicketForm from "../CreateTicketForm";
@@ -21,6 +19,8 @@ import TicketFilter, { TicketFilterType } from "../TicketFilter";
 import { TICKET_DRAWER_WIDTH } from "../../utils/constants";
 import getFilteredTickets from "../../utils/getFilteredTickets";
 import getSortedTickets from "../../utils/getSortedTickets";
+import getTicketsByEpics from "../../utils/getTicketsByEpics";
+import TicketSection from "../TicketSection";
 
 interface ProductBacklogTabProps {
   project: ProjectInterface;
@@ -43,6 +43,12 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
   const sortedTickets = useMemo(() => {
     return getSortedTickets(sortSelection, filteredTickets);
   }, [sortSelection, filteredTickets]);
+
+  const displayedTicketsByEpics = useMemo(() => {
+    return getTicketsByEpics(sortedTickets);
+    //temp fix to get sort working
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortedTickets, sortSelection]);
 
   const handleFilterSelection = (newFilter: TicketFilterType): void => {
     setFilterSelection(newFilter);
@@ -162,20 +168,26 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
               <CreateTicketForm projectId={projectId} onClose={() => setShowTicketCreationForm(false)} />
             </Box>
           )}
-          {sortedTickets && sortedTickets.length > 0 && (
-            <Box sx={{ border: "1px solid", borderColor: "grey.300", borderBottom: 0 }}>
-              {sortedTickets.map((ticket) => {
-                if (matchString(searchInput, ticket.title)) {
-                  return (
-                    <Box key={ticket._id} onClick={() => handleSetSelectedTicket(ticket._id)}>
-                      <Ticket ticket={ticket} showSprintToggleCheckBox bgGrey={ticket._id === selectedTicketId} />
-                    </Box>
-                  );
-                }
-                return null;
-              })}
-            </Box>
-          )}
+          {displayedTicketsByEpics &&
+            displayedTicketsByEpics.map((displayedTicketsByEpic) => {
+              const { epicId, tickets: displayedTickets } = displayedTicketsByEpic;
+
+              if (epicId === "others" && displayedTickets.length === 0) {
+                return null; // prevent empty others section from showing if no tickets
+              }
+
+              return (
+                <Box mb={5} key={epicId}>
+                  <TicketSection
+                    tickets={displayedTickets}
+                    searchInput={searchInput}
+                    epicId={epicId}
+                    onSelectTicket={handleSetSelectedTicket}
+                    selectedTicketId={selectedTicketId}
+                  />
+                </Box>
+              );
+            })}
           {tickets && tickets.length === 0 && (
             <Typography variant='body2' color='GrayText'>
               There are no tickets in the backlog.

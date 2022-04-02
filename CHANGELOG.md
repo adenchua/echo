@@ -11,7 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### CHANGED
 
-- login mechanism to persist in storage. Users can now refresh the page without redirecting to login page.
+- login mechanism to persist in storage. Users can now refresh the page without redirecting to login page
+- overall look of product and sprint backlog ticket display
+
+### REMOVED
+
+- filter by epic as tickets are already separated by epics
 
 ## [1.2.1-a] - 2022-03-07
 

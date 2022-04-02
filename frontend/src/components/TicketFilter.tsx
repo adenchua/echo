@@ -19,17 +19,11 @@ import { StatusType } from "../types/TicketInterface";
 import StatusChipButton from "./StatusChipButton";
 import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
-import { EpicsContext } from "../contexts/EpicsContextProvider";
 import { sliceLongString } from "../utils/sliceLongString";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
-export type TicketFilterType =
-  | null
-  | `assignee-${string}`
-  | `not_status-${StatusType}`
-  | `status-${StatusType}`
-  | `epic-${string}`;
+export type TicketFilterType = null | `assignee-${string}` | `not_status-${StatusType}` | `status-${StatusType}`;
 
 const statusToTextMapping: Record<StatusType, string> = {
   todo: "To Do",
@@ -68,7 +62,6 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
   const [filterText, setFilterText] = useState<string>("");
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
   const { members, admins } = useContext(ProjectMembersContext);
-  const { epics } = useContext(EpicsContext);
 
   const open = Boolean(anchorEl);
   const id = open ? "popover-open" : undefined;
@@ -84,19 +77,6 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
       return "Invalid User";
     },
     [members, admins]
-  );
-
-  const getEpicDisplayTitle = useCallback(
-    (epicId: string): string => {
-      const [matchedEpic] = epics.filter((epic) => epic._id === epicId);
-
-      if (matchedEpic) {
-        return sliceLongString(matchedEpic.title, 32);
-      }
-
-      return "Invalid Objective";
-    },
-    [epics]
   );
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -218,33 +198,6 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
               })}
             </Select>
           </FilterSelectWrapper>
-
-          {epics.length > 0 && (
-            <FilterSelectWrapper label='Objective'>
-              <Select
-                defaultValue=''
-                label='Objective'
-                onChange={(e: SelectChangeEvent) =>
-                  handleSelectNewFilter(`epic-${e.target.value}`, getEpicDisplayTitle(e.target.value))
-                }
-                SelectDisplayProps={{
-                  style: {
-                    padding: "6px 8px",
-                    background: "#00000014",
-                  },
-                }}
-              >
-                {epics.map((epic) => {
-                  const { _id: epicId, title } = epic;
-                  return (
-                    <MenuItem key={epicId} value={epicId} dense>
-                      <ListItemText>{title}</ListItemText>
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FilterSelectWrapper>
-          )}
 
           <Divider />
           <MenuItem onClick={() => handleSelectNewFilter(null, "")}>
