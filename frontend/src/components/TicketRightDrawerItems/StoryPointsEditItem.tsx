@@ -60,7 +60,7 @@ const StoryPointsEditItem = (props: StoryPointsEditItemProps): JSX.Element => {
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <Box display='flex' gap={1} width='100%' mb={1}>
+      <Box display='flex' gap={1} width='100%' mb={2}>
         <Typography variant='body2'>Story Points</Typography>
         <EditButton onStartEdit={handleToggleEditMode} />
       </Box>

@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - increased width of the right ticket drawer to allow space for sub-tasks
 - added story points of 0, 13, 20 to the estimation pool
 - positioning of edit buttons for ticket drawer
+- improved visibility of ticket priority and type edit button icons
 
 ## [1.3.0-a] - 2022-04-02
 

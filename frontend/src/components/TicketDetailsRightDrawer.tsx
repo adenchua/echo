@@ -62,10 +62,10 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
         <TitleEditItem ticketId={id} title={title} />
         <DescriptionEditItem ticketId={id} description={description} />
         <StoryPointsEditItem ticketId={id} storyPoints={storyPoints} />
-        <AssigneeEditItem ticketId={id} assigneeId={assigneeId} />
         <PriorityEditItem ticketId={id} priority={priority} />
-        <TicketTypeEditItem ticketId={id} type={type} />
+        <AssigneeEditItem ticketId={id} assigneeId={assigneeId} />
         <StatusEditItem ticketId={id} status={status} />
+        <TicketTypeEditItem ticketId={id} type={type} />
         <DueDateEditItem ticketId={id} dueDate={dueDate} />
         {epics.length > 0 && <EpicLinkEditItem ticketId={id} epicId={epicId} />}
 
