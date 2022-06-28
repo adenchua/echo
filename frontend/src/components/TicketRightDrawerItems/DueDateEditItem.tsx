@@ -36,9 +36,8 @@ const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
   if (isEditModeOn) {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <Box display='flex' width='100%' mb={3} gap={2}>
+        <Box display='flex' width='100%' mb={3} gap={1}>
           <Typography variant='body2'>Due Date</Typography>
-          <Box flexGrow={1} />
           <UpdateButton onAccept={handleUpdateTicketDueDate} onCancel={handleToggleEditMode} showUpdateButton={false} />
         </Box>
         <Box mb={3} width='100%'>
@@ -96,7 +95,7 @@ const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <Box display='flex' justifyContent='space-between' width='100%' mb={0.5}>
+      <Box display='flex' width='100%' gap={1} mb={0.5}>
         <Typography variant='body2'>Due Date</Typography>
         <EditButton onStartEdit={handleToggleEditMode} />
       </Box>

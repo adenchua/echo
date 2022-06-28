@@ -35,9 +35,8 @@ const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
   if (isEditModeOn) {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <Box display='flex' width='100%' mb={1.5} gap={2}>
+        <Box display='flex' width='100%' mb={2} gap={1}>
           <Typography variant='body2'>Status</Typography>
-          <Box flexGrow={1} />
           <UpdateButton onAccept={handleUpdateTicketStatus} onCancel={handleToggleEditMode} showUpdateButton={false} />
         </Box>
         <Box mb={2} width='100%'>
@@ -87,7 +86,7 @@ const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <Box display='flex' justifyContent='space-between' width='100%' mb={1}>
+      <Box display='flex' gap={1} width='100%' mb={2}>
         <Typography variant='body2'>Status</Typography>
         <EditButton onStartEdit={handleToggleEditMode} />
       </Box>

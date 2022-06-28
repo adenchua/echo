@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0-1] - 2022-06-28
+
+### ADDED
+
+- sub tasks feature for each ticket
+
+### CHANGED
+
+- project overview tab members listing to expand the full width instead of a maximum height scroll
+- increased width of the right ticket drawer to allow space for sub-tasks
+- added story points of 0, 13, 20 to the estimation pool
+- positioning of edit buttons for ticket drawer
+
 ## [1.3.0-a] - 2022-04-02
 
 ### CHANGED

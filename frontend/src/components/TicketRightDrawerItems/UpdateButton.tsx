@@ -12,6 +12,14 @@ const UpdateButton = (props: UpdateButtonProps): JSX.Element => {
 
   return (
     <>
+      <Typography
+        variant='body2'
+        color='primary'
+        sx={{ "&:hover": { textDecoration: "underline", cursor: "pointer" } }}
+        onClick={onCancel}
+      >
+        Cancel
+      </Typography>
       {showUpdateButton && (
         <Typography
           variant='body2'
@@ -22,14 +30,6 @@ const UpdateButton = (props: UpdateButtonProps): JSX.Element => {
           Save
         </Typography>
       )}
-      <Typography
-        variant='body2'
-        color='primary'
-        sx={{ "&:hover": { textDecoration: "underline", cursor: "pointer" } }}
-        onClick={onCancel}
-      >
-        Cancel
-      </Typography>
     </>
   );
 };

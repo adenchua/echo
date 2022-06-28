@@ -7,7 +7,6 @@ import Avatar from "@mui/material/Avatar";
 
 import UserInterface from "../../types/UserInterface";
 import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
-import ContainerWrapper from "../ContainerWrapper";
 import AddMemberToProjectButtonWithDialog from "../AddMemberToProjectButtonWithDialog";
 import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
 import ProjectInterface from "../../types/ProjectInterface";
@@ -48,30 +47,28 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
 
   return (
     <Box p={3}>
-      <ContainerWrapper>
-        <Typography variant='h5' paragraph>
-          Description
-        </Typography>
-        <Typography fontSize={14} color='grey.600' textAlign='justify' mb={5}>
-          {description ?? "No project description."}
-        </Typography>
-        <Box display='flex' alignItems='center' gap={2} mb={2}>
-          <Typography variant='h5'>Members</Typography>
-          <AddMemberToProjectButtonWithDialog projectId={projectId} />
-        </Box>
-        <Grid container spacing={2} sx={{ maxHeight: "300px", overflowY: "auto" }}>
-          {admins.map((admin) => (
-            <Grid item key={admin._id}>
-              {renderMemberCard(admin)}
-            </Grid>
-          ))}
-          {members.map((member) => (
-            <Grid item key={member._id}>
-              {renderMemberCard(member)}
-            </Grid>
-          ))}
-        </Grid>
-      </ContainerWrapper>
+      <Typography variant='h5' paragraph>
+        Description
+      </Typography>
+      <Typography fontSize={14} color='grey.600' textAlign='justify' mb={5}>
+        {description ?? "No project description."}
+      </Typography>
+      <Box display='flex' alignItems='center' gap={2} mb={2}>
+        <Typography variant='h5'>Members</Typography>
+        <AddMemberToProjectButtonWithDialog projectId={projectId} />
+      </Box>
+      <Grid container spacing={2}>
+        {admins.map((admin) => (
+          <Grid item key={admin._id}>
+            {renderMemberCard(admin)}
+          </Grid>
+        ))}
+        {members.map((member) => (
+          <Grid item key={member._id}>
+            {renderMemberCard(member)}
+          </Grid>
+        ))}
+      </Grid>
     </Box>
   );
 };

@@ -39,9 +39,8 @@ const TitleEditItem = (props: TitleEditItemProps): JSX.Element => {
   if (isEditModeOn) {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <Box display='flex' width='100%' mb={0.5} gap={2}>
+        <Box display='flex' width='100%' mb={0.5} gap={1}>
           <Typography variant='body2'>Ticket</Typography>
-          <Box flexGrow={1} />
           <UpdateButton onAccept={handleUpdateTicket} onCancel={handleToggleEditMode} showUpdateButton />
         </Box>
         <TextField
@@ -62,7 +61,7 @@ const TitleEditItem = (props: TitleEditItemProps): JSX.Element => {
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <Box display='flex' justifyContent='space-between' width='100%' mb={0.5}>
+      <Box display='flex' gap={1} width='100%' mb={0.5}>
         <Typography variant='body2'>Ticket</Typography>
         <EditButton onStartEdit={handleToggleEditMode} />
       </Box>

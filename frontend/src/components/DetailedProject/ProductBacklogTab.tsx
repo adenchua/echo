@@ -194,8 +194,8 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
             </Typography>
           )}
         </Box>
-        {renderDrawer()}
       </Box>
+      {renderDrawer()}
     </>
   );
 };
