@@ -51,6 +51,7 @@ module.exports.deleteSubtask = async (req, res) => {
   }
 
   try {
+    await Ticket.updateMany({ subtaskIds: subtaskId }, { $pullAll: { subtaskIds: [subtaskId] } }); // remove ticket with this subtask id
     await Subtask.findByIdAndDelete(subtaskId);
     res.status(204).send();
   } catch (error) {

@@ -32,7 +32,7 @@ const StoryPointsEditItem = (props: StoryPointsEditItemProps): JSX.Element => {
   if (isEditModeOn) {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <Box display='flex' width='100%' mb={2} gap={1}>
+        <Box display='flex' width='100%' mb={1} gap={1}>
           <Typography variant='body2'>Story Points</Typography>
           <UpdateButton onAccept={handleChangeStoryPoints} onCancel={handleToggleEditMode} showUpdateButton={false} />
         </Box>
@@ -60,7 +60,7 @@ const StoryPointsEditItem = (props: StoryPointsEditItemProps): JSX.Element => {
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <Box display='flex' gap={1} width='100%' mb={2}>
+      <Box display='flex' gap={1} width='100%' mb={1}>
         <Typography variant='body2'>Story Points</Typography>
         <EditButton onStartEdit={handleToggleEditMode} />
       </Box>

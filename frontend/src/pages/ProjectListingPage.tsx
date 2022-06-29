@@ -9,7 +9,7 @@ import Hidden from "@mui/material/Hidden";
 import Link from "@mui/material/Link";
 import { Link as RouterLink, Redirect } from "react-router-dom";
 
-import PageLayoutWrapper from "../components/PageLayoutWrapper";
+import PageLayoutWrapper from "../components/common/PageLayoutWrapper";
 import ProjectInterface from "../types/ProjectInterface";
 import ProjectListingItem from "../components/ProjectListingItem";
 import CreateProjectButtonWithDialog from "../components/CreateProjectButtonWithDialog";

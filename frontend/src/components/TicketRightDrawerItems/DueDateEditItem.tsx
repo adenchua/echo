@@ -36,7 +36,7 @@ const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
   if (isEditModeOn) {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <Box display='flex' width='100%' mb={3} gap={1}>
+        <Box display='flex' width='100%' mb={2} gap={1}>
           <Typography variant='body2'>Due Date</Typography>
           <UpdateButton onAccept={handleUpdateTicketDueDate} onCancel={handleToggleEditMode} showUpdateButton={false} />
         </Box>

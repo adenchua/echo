@@ -19,7 +19,7 @@ import EpicLinkEditItem from "./TicketRightDrawerItems/EpicLinkEditItem";
 import StoryPointsEditItem from "./TicketRightDrawerItems/StoryPointsEditItem";
 import DeleteTicketDialog from "./DeleteTicketDialog";
 import { TICKET_DRAWER_WIDTH } from "../utils/constants";
-import { Toolbar } from "@mui/material";
+import SubtaskEditItem from "./TicketRightDrawerItems/SubtaskEditItem";
 
 interface TicketDetailsRightDrawerProps {
   ticket: TicketInterface;
@@ -30,7 +30,19 @@ interface TicketDetailsRightDrawerProps {
 
 const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Element => {
   const { ticket, onClose, isOpen, projectId } = props;
-  const { _id: id, title, description, priority, type, dueDate, status, assigneeId, epicId, storyPoints } = ticket;
+  const {
+    _id: id,
+    title,
+    description,
+    priority,
+    type,
+    dueDate,
+    status,
+    assigneeId,
+    epicId,
+    storyPoints,
+    subtaskIds,
+  } = ticket;
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
 
@@ -47,11 +59,9 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
         [`& .MuiDrawer-paper`]: {
           width: TICKET_DRAWER_WIDTH,
           boxSizing: "border-box",
-          zIndex: 0,
         },
       }}
     >
-      <Toolbar />
       <List>
         <ListItem disablePadding sx={{ pl: 1, py: 1 }}>
           <IconButton size='small' onClick={onClose}>
@@ -67,6 +77,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
         <StatusEditItem ticketId={id} status={status} />
         <TicketTypeEditItem ticketId={id} type={type} />
         <DueDateEditItem ticketId={id} dueDate={dueDate} />
+        <SubtaskEditItem ticketId={id} subtaskIds={subtaskIds} />
         {epics.length > 0 && <EpicLinkEditItem ticketId={id} epicId={epicId} />}
 
         <ListItem sx={{ mt: 1 }}>

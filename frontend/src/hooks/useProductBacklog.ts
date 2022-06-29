@@ -8,12 +8,14 @@ import deleteTicket from "../api/tickets/deleteTicket";
 import addTicketToEpic from "../api/epics/addTicketToEpic";
 import { EpicsContext } from "../contexts/EpicsContextProvider";
 import removeTicketFromEpic from "../api/epics/removeTicketFromEpic";
+import addTicketSubtask from "../api/tickets/addTicketSubtask";
 
 const useProductBacklog = () => {
   const {
     addTicket,
     updateTicket: updateTicketContext,
     deleteTicket: deleteTicketContext,
+    addSubtaskIdToTicket: addSubtaskIdToTicketContext,
   } = useContext(TicketsContext);
   const { addTicketIdToEpic, deleteTicketIdFromEpic } = useContext(EpicsContext);
 
@@ -72,7 +74,23 @@ const useProductBacklog = () => {
     }
   };
 
-  return { onAddTicket, onUpdateTicket, onDeleteTicket, onAddTicketToEpic, onRemoveTicketFromEpic };
+  const onAddSubtaskToTicket = async (ticketId: string, title: string): Promise<void> => {
+    try {
+      const newSubtask = await addTicketSubtask(ticketId, title);
+      addSubtaskIdToTicketContext(ticketId, newSubtask._id);
+    } catch (error) {
+      throw new Error("Failed to add subtask to ticket");
+    }
+  };
+
+  return {
+    onAddTicket,
+    onUpdateTicket,
+    onDeleteTicket,
+    onAddTicketToEpic,
+    onRemoveTicketFromEpic,
+    onAddSubtaskToTicket,
+  };
 };
 
 export default useProductBacklog;

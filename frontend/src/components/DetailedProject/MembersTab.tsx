@@ -18,7 +18,7 @@ import Paper from "@mui/material/Paper";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 
-import ContainerWrapper from "../ContainerWrapper";
+import ContainerWrapper from "../common/ContainerWrapper";
 import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
 import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
 import UserInterface from "../../types/UserInterface";
