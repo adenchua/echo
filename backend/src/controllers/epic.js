@@ -123,7 +123,6 @@ module.exports.deleteEpic = async (req, res) => {
   }
 
   try {
-    await Epic.findById(epicId);
     await Ticket.updateMany({ epicId: epicId }, { $unset: { epicId: "" } }); // remove tickets with this epic id
     await Project.updateMany({ epicIds: epicId }, { $pullAll: { epicIds: [epicId] } }); // remove projects with this epic id
     await Epic.findByIdAndDelete(epicId);

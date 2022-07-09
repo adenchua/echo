@@ -7,7 +7,7 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLessOutlined";
 
 import { matchString } from "../utils/matchString";
 import Ticket from "./Ticket";
-import TicketInterface from "../types/TicketInterface";
+import TicketInterface from "../types/Ticket";
 import { EpicsContext } from "../contexts/EpicsContextProvider";
 
 interface TicketSectionProps {

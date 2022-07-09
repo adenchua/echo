@@ -1,4 +1,4 @@
-interface UserInterface {
+interface User {
   _id: string;
   username: string;
   password: string;
@@ -10,4 +10,4 @@ interface UserInterface {
   hasPasswordReset: boolean;
 }
 
-export default UserInterface;
+export default User;

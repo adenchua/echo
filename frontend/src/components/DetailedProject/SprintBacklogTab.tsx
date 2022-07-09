@@ -11,7 +11,7 @@ import { format, differenceInBusinessDays } from "date-fns";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 
-import ProjectInterface from "../../types/ProjectInterface";
+import Project from "../../types/Project";
 import SprintStartDialog from "../SprintStartDialog";
 import useSprintBacklog from "../../hooks/useSprintBacklog";
 import SprintEndDialog from "../SprintEndDialog";
@@ -28,7 +28,7 @@ import TicketSection from "../TicketSection";
 import getTicketsByEpics from "../../utils/getTicketsByEpics";
 
 interface SprintBacklogTabProps {
-  project: ProjectInterface;
+  project: Project;
 }
 
 const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {

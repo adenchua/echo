@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 import teal from "@mui/material/colors/teal";
 import DoneIcon from "@mui/icons-material/DoneOutlineOutlined";
 
-import PageLayoutWrapper from "../components/PageLayoutWrapper";
+import PageLayoutWrapper from "../components/common/PageLayoutWrapper";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 

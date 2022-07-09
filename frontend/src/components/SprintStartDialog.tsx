@@ -13,13 +13,13 @@ import DatePicker from "@mui/lab/DatePicker";
 import CircularProgress from "@mui/material/CircularProgress";
 import { isValid, format, differenceInCalendarDays } from "date-fns";
 
-import SprintInterface from "../types/SprintInterface";
+import Sprint from "../types/Sprint";
 import { sleep } from "../utils/sleep";
 
 interface SprintStartDialogProps {
   showStartSprintDialog: boolean;
   onClose: () => void;
-  onStartSprint: (projectId: string, endDate: Date | null) => Promise<SprintInterface>;
+  onStartSprint: (projectId: string, endDate: Date | null) => Promise<Sprint>;
   projectId: string;
   sprintTicketsCount: number;
 }
@@ -29,7 +29,7 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
   const [endDateInput, setEndDateInput] = useState<Date | null>(null);
   const [showError, setShowError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [newSprint, setNewSprint] = useState<SprintInterface | null>(null);
+  const [newSprint, setNewSprint] = useState<Sprint | null>(null);
   const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
 
   useEffect(() => {

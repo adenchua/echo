@@ -12,19 +12,19 @@ import { format } from "date-fns";
 
 import ProgressBarWithPercentage from "./ProgressBarWithPercentage";
 import EpicSummaryAccordionTicket from "./EpicSummaryAccordionTicket";
-import EpicInterface from "../types/EpicInterface";
-import TicketInterface from "../types/TicketInterface";
+import Epic from "../types/Epic";
+import Ticket from "../types/Ticket";
 import fetchTicketsByIds from "../api/tickets/fetchTicketsByIds";
 import DeleteEpicDialog from "./DeleteEpicDialog";
 
 interface EpicSummaryAccordionProps {
-  epic: EpicInterface;
+  epic: Epic;
 }
 
 const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => {
   const { epic } = props;
   const { title, ticketIds, startDate, endDate } = epic;
-  const [tickets, setTickets] = useState<TicketInterface[]>([]);
+  const [tickets, setTickets] = useState<Ticket[]>([]);
   const [isDeleteEpicDialogOpened, setIsDeleteEpicDialogOpened] = useState<boolean>(false);
 
   const epicProgressionPercentage = useMemo(() => {

@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import FormTicketTypeToggleButtons from "./FormTicketTypeToggleButtons";
-import { PriorityType, TicketType } from "../types/TicketInterface";
+import { PriorityType, TicketType } from "../types/Ticket";
 import FormPriorityToggleButtons from "./FormPriorityToggleButtons";
 import useProductBacklog from "../hooks/useProductBacklog";
 

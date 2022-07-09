@@ -4,13 +4,13 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import AddIcon from "@mui/icons-material/AddOutlined";
 
-import ProjectInterface from "../../types/ProjectInterface";
+import Project from "../../types/Project";
 import EpicSummaryAccordion from "../EpicSummaryAccordion";
 import { EpicsContext } from "../../contexts/EpicsContextProvider";
 import EpicCreationForm from "../EpicCreationForm";
 
 interface TeamObjectivesTabProps {
-  project: ProjectInterface;
+  project: Project;
 }
 
 const TeamObjectivesTab = (props: TeamObjectivesTabProps): JSX.Element => {

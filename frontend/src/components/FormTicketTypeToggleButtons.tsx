@@ -4,9 +4,8 @@ import BugIcon from "@mui/icons-material/BugReportOutlined";
 import UserStoryIcon from "@mui/icons-material/HistoryEduOutlined";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
-import Tooltip from "@mui/material/Tooltip";
 
-import { TicketType } from "../types/TicketInterface";
+import { TicketType } from "../types/Ticket";
 
 interface FormTicketTypeToggleButtonsProps {
   value: TicketType;
@@ -18,20 +17,17 @@ const FormTicketTypeToggleButtons = (props: FormTicketTypeToggleButtonsProps): J
 
   return (
     <ToggleButtonGroup value={value} exclusive onChange={onChangeHandler} size='small'>
-      <ToggleButton value={"task"} color='secondary'>
-        <Tooltip title={"Task"} disableInteractive>
-          <TaskIcon fontSize='small' />
-        </Tooltip>
+      <ToggleButton value={"task"} color='secondary' sx={{ textTransform: "none" }}>
+        <TaskIcon fontSize='small' />
+        Task
       </ToggleButton>
-      <ToggleButton value={"story"} color='info'>
-        <Tooltip title={"User Story"} disableInteractive>
-          <UserStoryIcon fontSize='small' />
-        </Tooltip>
+      <ToggleButton value={"story"} color='info' sx={{ textTransform: "none" }}>
+        <UserStoryIcon fontSize='small' />
+        User Story
       </ToggleButton>
-      <ToggleButton value={"bug"} color='error'>
-        <Tooltip title={"Bug"} disableInteractive>
-          <BugIcon fontSize='small' />
-        </Tooltip>
+      <ToggleButton value={"bug"} color='error' sx={{ textTransform: "none" }}>
+        <BugIcon fontSize='small' />
+        Bug
       </ToggleButton>
     </ToggleButtonGroup>
   );

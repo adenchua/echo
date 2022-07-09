@@ -66,9 +66,8 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
   if (isEditModeOn) {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <Box display='flex' width='100%' mb={1.5} gap={2}>
+        <Box display='flex' width='100%' mb={1} gap={1}>
           <Typography variant='body2'>Objectives Link</Typography>
-          <Box flexGrow={1} />
           <UpdateButton
             onAccept={handleUpdateTicketEpicLink}
             onCancel={handleToggleEditMode}
@@ -122,7 +121,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <Box display='flex' justifyContent='space-between' width='100%' mb={1}>
+      <Box display='flex' gap={1} width='100%' mb={1}>
         <Typography variant='body2'>Objectives Link</Typography>
         <EditButton onStartEdit={handleToggleEditMode} />
       </Box>

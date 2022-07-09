@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import SprintInterface from "../types/SprintInterface";
+import Sprint from "../types/Sprint";
 import startSprint from "../api/sprints/startSprint";
 import endSprint from "../api/sprints/endSprint";
 import { TicketsContext } from "../contexts/TicketsContextProvider";
@@ -10,7 +10,7 @@ const useSprintBacklog = () => {
   const { removeCompletedTickets } = useContext(TicketsContext);
   const { handleRemoveActiveSprint, handleSetActiveSprint } = useContext(ActiveSprintContext);
 
-  const onStartSprint = async (projectId: string, endDate: Date | null): Promise<SprintInterface> => {
+  const onStartSprint = async (projectId: string, endDate: Date | null): Promise<Sprint> => {
     try {
       if (!endDate) {
         throw new Error("No end date specified");
@@ -23,7 +23,7 @@ const useSprintBacklog = () => {
     }
   };
 
-  const onEndSprint = async (projectId: string, sprintId: string): Promise<SprintInterface> => {
+  const onEndSprint = async (projectId: string, sprintId: string): Promise<Sprint> => {
     try {
       const completedSprint = await endSprint(projectId, sprintId);
       handleRemoveActiveSprint();

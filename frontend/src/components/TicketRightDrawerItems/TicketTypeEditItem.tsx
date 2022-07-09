@@ -9,7 +9,7 @@ import EditButton from "./EditButton";
 import UpdateButton from "./UpdateButton";
 import TicketTypeIcon from "../TicketTypeIcon";
 import useProductBacklog from "../../hooks/useProductBacklog";
-import { TicketType } from "../../types/TicketInterface";
+import { TicketType } from "../../types/Ticket";
 import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter";
 import FormTicketTypeToggleButtons from "../FormTicketTypeToggleButtons";
 
@@ -38,9 +38,8 @@ const TicketTypeEditItem = (props: TicketTypeEditItemProps): JSX.Element => {
   if (isEditModeOn) {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <Box display='flex' width='100%' mb={2} gap={2}>
+        <Box display='flex' width='100%' mb={1} gap={1}>
           <Typography variant='body2'>Type</Typography>
-          <Box flexGrow={1} />
           <UpdateButton onAccept={handleChangeTicketType} onCancel={handleToggleEditMode} showUpdateButton={false} />
         </Box>
         <Box mb={2}>
@@ -53,7 +52,7 @@ const TicketTypeEditItem = (props: TicketTypeEditItemProps): JSX.Element => {
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <Box display='flex' justifyContent='space-between' width='100%' mb={1}>
+      <Box display='flex' gap={1} width='100%' mb={1}>
         <Typography variant='body2'>Type</Typography>
         <EditButton onStartEdit={handleToggleEditMode} />
       </Box>

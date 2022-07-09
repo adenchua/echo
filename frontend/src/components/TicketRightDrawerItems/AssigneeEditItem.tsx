@@ -15,7 +15,7 @@ import EditButton from "./EditButton";
 import useProductBacklog from "../../hooks/useProductBacklog";
 import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
 import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
-import UserInterface from "../../types/UserInterface";
+import User from "../../types/User";
 import UpdateButton from "./UpdateButton";
 import fetchUsersByIds from "../../api/users/fetchUsersByIds";
 import { sliceLongString } from "../../utils/sliceLongString";
@@ -30,7 +30,7 @@ interface AssigneeEditItemProps {
 const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
   const { assigneeId, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
-  const [assignee, setAssignee] = useState<UserInterface | null>(null);
+  const [assignee, setAssignee] = useState<User | null>(null);
 
   const { onUpdateTicket } = useProductBacklog();
   const { members, admins } = useContext(ProjectMembersContext);
@@ -84,9 +84,8 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
   if (isEditModeOn) {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <Box display='flex' width='100%' mb={1.5} gap={2}>
+        <Box display='flex' width='100%' mb={1} gap={1}>
           <Typography variant='body2'>Assignee</Typography>
-          <Box flexGrow={1} />
           <UpdateButton
             onAccept={handleUpdateTicketAssignee}
             onCancel={handleToggleEditMode}
@@ -156,7 +155,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <Box display='flex' justifyContent='space-between' width='100%' mb={1}>
+      <Box display='flex' width='100%' gap={1} mb={1}>
         <Typography variant='body2'>Assignee</Typography>
         <EditButton onStartEdit={handleToggleEditMode} />
       </Box>

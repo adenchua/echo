@@ -1,5 +1,6 @@
 import React from "react";
-import Typography from "@mui/material/Typography";
+
+import TextButton from "../common/TextButton";
 
 interface UpdateButtonProps {
   showUpdateButton: boolean;
@@ -12,24 +13,8 @@ const UpdateButton = (props: UpdateButtonProps): JSX.Element => {
 
   return (
     <>
-      {showUpdateButton && (
-        <Typography
-          variant='body2'
-          color='primary'
-          sx={{ "&:hover": { textDecoration: "underline", cursor: "pointer" } }}
-          onClick={onAccept}
-        >
-          Save
-        </Typography>
-      )}
-      <Typography
-        variant='body2'
-        color='primary'
-        sx={{ "&:hover": { textDecoration: "underline", cursor: "pointer" } }}
-        onClick={onCancel}
-      >
-        Cancel
-      </Typography>
+      <TextButton handleOnClick={onCancel} text='Cancel' />
+      {showUpdateButton && <TextButton handleOnClick={onAccept} text='Save' />}
     </>
   );
 };

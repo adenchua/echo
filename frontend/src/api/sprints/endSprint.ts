@@ -1,11 +1,11 @@
 import axios from "axios";
-import SprintInterface from "../../types/SprintInterface";
+import Sprint from "../../types/Sprint";
 
 import { API_ENDPOINT } from "../../utils/constants";
 
-const endSprint = async (projectId: string, sprintId: string): Promise<SprintInterface> => {
+const endSprint = async (projectId: string, sprintId: string): Promise<Sprint> => {
   try {
-    const response = await axios.post<SprintInterface>(`${API_ENDPOINT}/sprints/end`, {
+    const response = await axios.post<Sprint>(`${API_ENDPOINT}/sprints/end`, {
       projectId,
       sprintId,
     });

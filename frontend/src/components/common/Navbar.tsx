@@ -16,10 +16,10 @@ import Toolbar from "@mui/material/Toolbar";
 import Avatar from "@mui/material/Avatar";
 import { Link, useLocation, useParams, useHistory } from "react-router-dom";
 
-import fetchAllProjectsByUser from "../api/projects/fetchAllProjectsByUser";
-import { UserProjectsContext } from "../contexts/UserProjectsContextProvider";
-import { APP_VERSION, LOCAL_STORAGE_UID_KEY } from "../utils/constants";
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import fetchAllProjectsByUser from "../../api/projects/fetchAllProjectsByUser";
+import { UserProjectsContext } from "../../contexts/UserProjectsContextProvider";
+import { APP_VERSION, LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const navigationItems = [
   {

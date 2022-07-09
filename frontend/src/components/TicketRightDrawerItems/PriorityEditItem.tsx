@@ -8,7 +8,7 @@ import Chip from "@mui/material/Chip";
 import EditButton from "./EditButton";
 import UpdateButton from "./UpdateButton";
 import useProductBacklog from "../../hooks/useProductBacklog";
-import { PriorityType } from "../../types/TicketInterface";
+import { PriorityType } from "../../types/Ticket";
 import FormPriorityToggleButtons from "../FormPriorityToggleButtons";
 import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter";
 import PriorityIcon from "../PriorityIcon";
@@ -38,9 +38,8 @@ const PriorityEditItem = (props: PriorityEditItemProps): JSX.Element => {
   if (isEditModeOn) {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <Box display='flex' width='100%' mb={2} gap={2}>
+        <Box display='flex' width='100%' mb={1} gap={1}>
           <Typography variant='body2'>Priority</Typography>
-          <Box flexGrow={1} />
           <UpdateButton onAccept={handleChangePriority} onCancel={handleToggleEditMode} showUpdateButton={false} />
         </Box>
         <Box mb={2}>
@@ -53,7 +52,7 @@ const PriorityEditItem = (props: PriorityEditItemProps): JSX.Element => {
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <Box display='flex' justifyContent='space-between' width='100%' mb={1}>
+      <Box display='flex' gap={1} width='100%' mb={1}>
         <Typography variant='body2'>Priority</Typography>
         <EditButton onStartEdit={handleToggleEditMode} />
       </Box>

@@ -1,12 +1,10 @@
 import axios from "axios";
 
-import Epic from "../../types/Epic";
 import { API_ENDPOINT } from "../../utils/constants";
 
-const fetchEpics = async (epicIds: string[]): Promise<Epic[]> => {
+const deleteTicketSubtask = async (subtaskId: string): Promise<void> => {
   try {
-    const response = await axios.post<Epic[]>(`${API_ENDPOINT}/epics/bulk-retrieve`, { epicIds });
-    return response.data;
+    await axios.delete(`${API_ENDPOINT}/subtasks/id/${subtaskId}`);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error("Axios Error");
@@ -16,4 +14,4 @@ const fetchEpics = async (epicIds: string[]): Promise<Epic[]> => {
   }
 };
 
-export default fetchEpics;
+export default deleteTicketSubtask;

@@ -1,11 +1,11 @@
 import axios from "axios";
 
-import UserInterface from "../../types/UserInterface";
+import User from "../../types/User";
 import { UMS_API_ENDPOINT } from "../../utils/constants";
 
-const fetchAllUsers = async (): Promise<UserInterface[]> => {
+const fetchAllUsers = async (): Promise<User[]> => {
   try {
-    const response = await axios.get<UserInterface[]>(`${UMS_API_ENDPOINT}/users/all`);
+    const response = await axios.get<User[]>(`${UMS_API_ENDPOINT}/users/all`);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

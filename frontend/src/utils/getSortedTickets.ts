@@ -1,7 +1,7 @@
 import { priorityMap, TicketSortType } from "../components/TicketSortSelectDropdown";
-import TicketInterface from "../types/TicketInterface";
+import Ticket from "../types/Ticket";
 
-const getSortedTickets = (sortSelection: TicketSortType, tickets: TicketInterface[]): TicketInterface[] => {
+const getSortedTickets = (sortSelection: TicketSortType, tickets: Ticket[]): Ticket[] => {
   switch (sortSelection) {
     case "priority-dsc":
       return tickets.sort((a, b) => {

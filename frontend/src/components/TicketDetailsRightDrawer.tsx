@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 
-import TicketInterface from "../types/TicketInterface";
+import Ticket from "../types/Ticket";
 import { EpicsContext } from "../contexts/EpicsContextProvider";
 import TitleEditItem from "./TicketRightDrawerItems/TitleEditItem";
 import DescriptionEditItem from "./TicketRightDrawerItems/DescriptionEditItem";
@@ -19,9 +19,10 @@ import EpicLinkEditItem from "./TicketRightDrawerItems/EpicLinkEditItem";
 import StoryPointsEditItem from "./TicketRightDrawerItems/StoryPointsEditItem";
 import DeleteTicketDialog from "./DeleteTicketDialog";
 import { TICKET_DRAWER_WIDTH } from "../utils/constants";
+import SubtaskEditItem from "./TicketRightDrawerItems/SubtaskEditItem";
 
 interface TicketDetailsRightDrawerProps {
-  ticket: TicketInterface;
+  ticket: Ticket;
   isOpen: boolean;
   onClose: () => void;
   projectId: string;
@@ -29,7 +30,19 @@ interface TicketDetailsRightDrawerProps {
 
 const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Element => {
   const { ticket, onClose, isOpen, projectId } = props;
-  const { _id: id, title, description, priority, type, dueDate, status, assigneeId, epicId, storyPoints } = ticket;
+  const {
+    _id: id,
+    title,
+    description,
+    priority,
+    type,
+    dueDate,
+    status,
+    assigneeId,
+    epicId,
+    storyPoints,
+    subtaskIds,
+  } = ticket;
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
 
@@ -40,7 +53,14 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
       anchor='right'
       open={isOpen}
       variant='persistent'
-      sx={{ width: TICKET_DRAWER_WIDTH, flexShrink: 0, "& .MuiDrawer-paper": { width: TICKET_DRAWER_WIDTH } }}
+      sx={{
+        width: TICKET_DRAWER_WIDTH,
+        flexShrink: 0,
+        [`& .MuiDrawer-paper`]: {
+          width: TICKET_DRAWER_WIDTH,
+          boxSizing: "border-box",
+        },
+      }}
     >
       <List>
         <ListItem disablePadding sx={{ pl: 1, py: 1 }}>
@@ -52,11 +72,12 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
         <TitleEditItem ticketId={id} title={title} />
         <DescriptionEditItem ticketId={id} description={description} />
         <StoryPointsEditItem ticketId={id} storyPoints={storyPoints} />
-        <AssigneeEditItem ticketId={id} assigneeId={assigneeId} />
         <PriorityEditItem ticketId={id} priority={priority} />
-        <TicketTypeEditItem ticketId={id} type={type} />
+        <AssigneeEditItem ticketId={id} assigneeId={assigneeId} />
         <StatusEditItem ticketId={id} status={status} />
+        <TicketTypeEditItem ticketId={id} type={type} />
         <DueDateEditItem ticketId={id} dueDate={dueDate} />
+        <SubtaskEditItem ticketId={id} subtaskIds={subtaskIds} />
         {epics.length > 0 && <EpicLinkEditItem ticketId={id} epicId={epicId} />}
 
         <ListItem sx={{ mt: 1 }}>

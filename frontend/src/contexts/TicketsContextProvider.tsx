@@ -1,19 +1,21 @@
 import React, { createContext, useState, ReactNode, useCallback } from "react";
 import _ from "lodash";
 
-import TicketInterface, { TicketUpdateFieldsType } from "../types/TicketInterface";
+import Ticket, { TicketUpdateFields } from "../types/Ticket";
 
 interface TicketsContextProviderProps {
   children: ReactNode;
 }
 
 type TicketsContextStateType = {
-  tickets: TicketInterface[];
-  addTicket: (tickets: TicketInterface) => void;
-  updateTicket: (ticketId: string, updatedFields: TicketUpdateFieldsType) => void;
+  tickets: Ticket[];
+  addTicket: (tickets: Ticket) => void;
+  updateTicket: (ticketId: string, updatedFields: TicketUpdateFields) => void;
   removeCompletedTickets: () => void;
-  handleSetTickets: (newTickets: TicketInterface[]) => void;
+  handleSetTickets: (newTickets: Ticket[]) => void;
   deleteTicket: (ticketId: string) => void;
+  addSubtaskIdToTicket: (ticketId: string, subtaskId: string) => void;
+  removeSubtaskIdFromTicket: (ticketId: string, subtaskId: string) => void;
 };
 
 const ticketContextDefaultValues: TicketsContextStateType = {
@@ -23,18 +25,20 @@ const ticketContextDefaultValues: TicketsContextStateType = {
   removeCompletedTickets: () => {},
   handleSetTickets: () => {},
   deleteTicket: () => {},
+  addSubtaskIdToTicket: () => {},
+  removeSubtaskIdFromTicket: () => {},
 };
 
 export const TicketsContext = createContext<TicketsContextStateType>(ticketContextDefaultValues);
 
 const TicketsContextProvider = ({ children }: TicketsContextProviderProps): JSX.Element => {
-  const [tickets, setTickets] = useState<TicketInterface[]>([]);
+  const [tickets, setTickets] = useState<Ticket[]>([]);
 
-  const addTicket = useCallback((newTicket: TicketInterface): void => {
+  const addTicket = useCallback((newTicket: Ticket): void => {
     setTickets((prevState) => [...prevState, newTicket]);
   }, []);
 
-  const updateTicket = useCallback((ticketId: string, updatedFields: TicketUpdateFieldsType): void => {
+  const updateTicket = useCallback((ticketId: string, updatedFields: TicketUpdateFields): void => {
     setTickets((prevState) =>
       prevState.map((ticket) => {
         if (ticket._id === ticketId) {
@@ -58,13 +62,44 @@ const TicketsContextProvider = ({ children }: TicketsContextProviderProps): JSX.
     setTickets(incompleteTickets);
   }, [tickets]);
 
-  const handleSetTickets = useCallback((newTickets: TicketInterface[]): void => {
+  const handleSetTickets = useCallback((newTickets: Ticket[]): void => {
     setTickets(newTickets);
   }, []);
 
+  const addSubtaskIdToTicket = (ticketId: string, subtaskId: string): void => {
+    setTickets((prevState) =>
+      prevState.map((ticket) => {
+        if (ticket._id === ticketId) {
+          ticket.subtaskIds = [...ticket.subtaskIds, subtaskId];
+        }
+        return ticket;
+      })
+    );
+  };
+
+  const removeSubtaskIdFromTicket = (ticketId: string, subtaskId: string): void => {
+    setTickets((prevState) =>
+      prevState.map((ticket) => {
+        if (ticket._id === ticketId) {
+          ticket.subtaskIds = ticket.subtaskIds.filter((id) => id !== subtaskId);
+        }
+        return ticket;
+      })
+    );
+  };
+
   return (
     <TicketsContext.Provider
-      value={{ tickets, addTicket, updateTicket, removeCompletedTickets, handleSetTickets, deleteTicket }}
+      value={{
+        tickets,
+        addTicket,
+        updateTicket,
+        removeCompletedTickets,
+        handleSetTickets,
+        deleteTicket,
+        addSubtaskIdToTicket,
+        removeSubtaskIdFromTicket,
+      }}
     >
       {children}
     </TicketsContext.Provider>

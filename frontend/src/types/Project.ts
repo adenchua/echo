@@ -1,9 +1,9 @@
-interface ProjectInterface {
+interface Project {
   _id: string;
   title: string;
   description: string;
   announcement: string;
-  type: ProjectTypeInterface;
+  type: ProjectType;
   adminIds: string[];
   memberIds: string[];
   createdDate: string;
@@ -18,6 +18,6 @@ export type ProjectUpdateFieldsType = {
   description?: string;
 };
 
-type ProjectTypeInterface = "Software Development" | "Exploratory Data Analysis";
+type ProjectType = "Software Development" | "Exploratory Data Analysis";
 
-export default ProjectInterface;
+export default Project;

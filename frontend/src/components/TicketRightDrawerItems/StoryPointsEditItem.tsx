@@ -8,7 +8,7 @@ import Chip from "@mui/material/Chip";
 import EditButton from "./EditButton";
 import UpdateButton from "./UpdateButton";
 import useProductBacklog from "../../hooks/useProductBacklog";
-import { StoryPointsType } from "../../types/TicketInterface";
+import { StoryPointsType } from "../../types/Ticket";
 
 interface StoryPointsEditItemProps {
   ticketId: string;
@@ -32,13 +32,12 @@ const StoryPointsEditItem = (props: StoryPointsEditItemProps): JSX.Element => {
   if (isEditModeOn) {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <Box display='flex' width='100%' mb={2} gap={2}>
+        <Box display='flex' width='100%' mb={1} gap={1}>
           <Typography variant='body2'>Story Points</Typography>
-          <Box flexGrow={1} />
           <UpdateButton onAccept={handleChangeStoryPoints} onCancel={handleToggleEditMode} showUpdateButton={false} />
         </Box>
         <Box mb={2} display='flex' gap={1}>
-          {[1, 2, 3, 5, 8].map((point) => (
+          {[0, 1, 2, 3, 5, 8, 13, 20].map((point) => (
             <Chip
               key={point}
               label={point}
@@ -61,7 +60,7 @@ const StoryPointsEditItem = (props: StoryPointsEditItemProps): JSX.Element => {
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <Box display='flex' justifyContent='space-between' width='100%' mb={1}>
+      <Box display='flex' gap={1} width='100%' mb={1}>
         <Typography variant='body2'>Story Points</Typography>
         <EditButton onStartEdit={handleToggleEditMode} />
       </Box>

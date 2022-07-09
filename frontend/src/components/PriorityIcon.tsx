@@ -4,7 +4,7 @@ import MediumPriorityIcon from "@mui/icons-material/Remove";
 import HighPriorityIcon from "@mui/icons-material/KeyboardArrowUp";
 import Tooltip from "@mui/material/Tooltip";
 
-import { PriorityType } from "../types/TicketInterface";
+import { PriorityType } from "../types/Ticket";
 import HighestPriorityIcon from "./HighestPriorityIcon";
 
 interface PriorityIconProps {

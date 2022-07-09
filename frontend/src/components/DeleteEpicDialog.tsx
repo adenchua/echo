@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import CircularProgress from "@mui/material/CircularProgress";
-import EpicInterface from "../types/EpicInterface";
+import Epic from "../types/Epic";
 import { sleep } from "../utils/sleep";
 import deleteEpic from "../api/epics/deleteEpic";
 import { EpicsContext } from "../contexts/EpicsContextProvider";
@@ -19,7 +19,7 @@ import { TicketsContext } from "../contexts/TicketsContextProvider";
 interface DeleteEpicDialogProps {
   isDialogOpened: boolean;
   onClose: () => void;
-  epic: EpicInterface;
+  epic: Epic;
 }
 
 const DeleteEpicDialog = (props: DeleteEpicDialogProps): JSX.Element => {
@@ -63,14 +63,11 @@ const DeleteEpicDialog = (props: DeleteEpicDialogProps): JSX.Element => {
         <Typography fontSize={14} color='error' paragraph>
           Are you sure you want to delete the following epic:
         </Typography>
-        <Paper
-          sx={{ p: 1, border: "1px solid", borderColor: "grey.200", display: "flex", gap: 1, alignItems: "center" }}
-          elevation={0}
-        >
+        <Paper sx={{ display: "flex", gap: 1, alignItems: "center" }} elevation={0}>
           <Typography variant='body2' noWrap>
             {title}
           </Typography>
-          <Chip label={`${ticketIds.length} tickets`} size='small' />
+          <Chip label={`${ticketIds.length} tickets`} size='small' variant='outlined' />
         </Paper>
       </DialogContent>
       <DialogActions>

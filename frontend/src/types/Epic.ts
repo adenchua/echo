@@ -1,4 +1,4 @@
-interface EpicInterface {
+interface Epic {
   _id: string;
   title: string;
   description: string;
@@ -8,4 +8,4 @@ interface EpicInterface {
   ticketIds: string[];
 }
 
-export default EpicInterface;
+export default Epic;

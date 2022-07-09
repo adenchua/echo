@@ -6,11 +6,11 @@ import ProjectIcon from "@mui/icons-material/GitHub";
 import Link from "@mui/material/Link";
 import { Link as RouterLink } from "react-router-dom";
 
-import ProjectInterface from "../../types/ProjectInterface";
+import Project from "../../types/Project";
 import useQuery from "../../hooks/useQuery";
 
 interface ToolbarContentProps {
-  project: ProjectInterface;
+  project: Project;
 }
 
 const ToolbarContent = (props: ToolbarContentProps): JSX.Element => {

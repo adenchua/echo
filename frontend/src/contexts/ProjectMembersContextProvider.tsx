@@ -1,19 +1,19 @@
 import React, { createContext, useState, ReactNode, useCallback } from "react";
 
-import UserInterface from "../types/UserInterface";
+import User from "../types/User";
 
 interface ProjectMembersContextProviderProps {
   children: ReactNode;
 }
 
 type ProjectMembersStateType = {
-  members: UserInterface[];
-  admins: UserInterface[];
-  handleSetMembers: (newMembers: UserInterface[]) => void;
-  handleSetAdmins: (newAdmins: UserInterface[]) => void;
-  handleAddMembers: (newMembers: UserInterface[]) => void;
-  handleRemoveMember: (memberToRemove: UserInterface) => void;
-  handlePromoteMember: (memberToPromote: UserInterface) => void;
+  members: User[];
+  admins: User[];
+  handleSetMembers: (newMembers: User[]) => void;
+  handleSetAdmins: (newAdmins: User[]) => void;
+  handleAddMembers: (newMembers: User[]) => void;
+  handleRemoveMember: (memberToRemove: User) => void;
+  handlePromoteMember: (memberToPromote: User) => void;
 };
 
 const projectMembersDefaultState: ProjectMembersStateType = {
@@ -29,23 +29,23 @@ const projectMembersDefaultState: ProjectMembersStateType = {
 export const ProjectMembersContext = createContext<ProjectMembersStateType>(projectMembersDefaultState);
 
 const ProjectMembersContextProvider = ({ children }: ProjectMembersContextProviderProps): JSX.Element => {
-  const [members, setMembers] = useState<UserInterface[]>([]);
-  const [admins, setAdmins] = useState<UserInterface[]>([]);
+  const [members, setMembers] = useState<User[]>([]);
+  const [admins, setAdmins] = useState<User[]>([]);
 
-  const handleSetMembers = useCallback((newMembers: UserInterface[]): void => {
+  const handleSetMembers = useCallback((newMembers: User[]): void => {
     setMembers(newMembers);
   }, []);
 
-  const handleSetAdmins = useCallback((newAdmins: UserInterface[]): void => {
+  const handleSetAdmins = useCallback((newAdmins: User[]): void => {
     setAdmins(newAdmins);
   }, []);
 
-  const handleAddMembers = useCallback((newMembers: UserInterface[]): void => {
+  const handleAddMembers = useCallback((newMembers: User[]): void => {
     setMembers((prevState) => [...prevState, ...newMembers]);
   }, []);
 
   const handleRemoveMember = useCallback(
-    (memberToRemove: UserInterface): void => {
+    (memberToRemove: User): void => {
       const remainingMembers = members.filter((member) => member._id !== memberToRemove._id);
       setMembers(remainingMembers);
     },
@@ -53,7 +53,7 @@ const ProjectMembersContextProvider = ({ children }: ProjectMembersContextProvid
   );
 
   const handlePromoteMember = useCallback(
-    (memberToPromote: UserInterface): void => {
+    (memberToPromote: User): void => {
       const remainingMembers = members.filter((member) => member._id !== memberToPromote._id);
       setMembers(remainingMembers);
       setAdmins((prevState) => [...prevState, memberToPromote]);

@@ -1,11 +1,11 @@
 import axios from "axios";
 
-import UserInterface from "../../types/UserInterface";
+import User from "../../types/User";
 import { UMS_API_ENDPOINT } from "../../utils/constants";
 
-const login = async (username: string, password: string): Promise<UserInterface> => {
+const login = async (username: string, password: string): Promise<User> => {
   try {
-    const response = await axios.post<UserInterface>(`${UMS_API_ENDPOINT}/users/user-login`, {
+    const response = await axios.post<User>(`${UMS_API_ENDPOINT}/users/user-login`, {
       username,
       password,
     });

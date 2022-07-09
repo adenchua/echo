@@ -1,11 +1,11 @@
 import axios from "axios";
+import Subtask from "../../types/Subtask";
 
-import Sprint from "../../types/Sprint";
 import { API_ENDPOINT } from "../../utils/constants";
 
-const fetchSprintsByIds = async (sprintIds: string[]): Promise<Sprint[]> => {
+const addTicketSubtask = async (ticketId: string, title: string): Promise<Subtask> => {
   try {
-    const response = await axios.post<Sprint[]>(`${API_ENDPOINT}/sprints/bulk-retrieve`, { sprintIds });
+    const response = await axios.post<Subtask>(`${API_ENDPOINT}/subtasks`, { ticketId, title });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -16,4 +16,4 @@ const fetchSprintsByIds = async (sprintIds: string[]): Promise<Sprint[]> => {
   }
 };
 
-export default fetchSprintsByIds;
+export default addTicketSubtask;
