@@ -3,11 +3,12 @@ import { ListItem, Box, Typography, Divider, ListItemText, TextField } from "@mu
 
 import EditButton from "./EditButton";
 import TextButton from "../common/TextButton";
-import TicketSubtaskItem from "../TicketSubtaskItem";
+import TicketSubtask from "../TicketSubtask";
 import Subtask from "../../types/Subtask";
 import useProductBacklog from "../../hooks/useProductBacklog";
 import fetchSubtasksByIds from "../../api/tickets/fetchSubtasksByIds";
 import updateSubtask from "../../api/tickets/updateSubtask";
+import TicketSubtaskDeletable from "../TicketSubtaskDeletable";
 
 interface SubtaskEditItemProps {
   subtaskIds: string[];
@@ -19,7 +20,7 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const [subtasks, setSubtasks] = useState<Subtask[]>([]);
   const [titleInput, setTitleInput] = useState<string>("");
-  const { onAddSubtaskToTicket } = useProductBacklog();
+  const { onAddSubtaskToTicket, onDeleteSubtaskFromTicket } = useProductBacklog();
 
   useEffect(() => {
     setTitleInput(""); // reset title input upon form activation
@@ -80,6 +81,19 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
     }
   };
 
+  const handleDeleteSubtask = async (subtaskId: string): Promise<void> => {
+    const targetSubtask = subtasks.find((subtask) => subtask._id === subtaskId);
+    if (!targetSubtask) {
+      return;
+    }
+
+    try {
+      onDeleteSubtaskFromTicket(ticketId, subtaskId);
+    } catch {
+      // do nothing
+    }
+  };
+
   if (isEditModeOn) {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
@@ -104,7 +118,7 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
           <Box maxWidth='100%' mt={2}>
             {subtasks.map((subtask) => (
               <Box mb={0.5} key={subtask._id}>
-                <TicketSubtaskItem subtask={subtask} onToggleCompletion={handleToggleSubtaskCompletion} />
+                <TicketSubtaskDeletable subtask={subtask} onDeleteSubtask={handleDeleteSubtask} />
               </Box>
             ))}
           </Box>
@@ -125,7 +139,7 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
         <Box maxWidth='100%' sx={{ mt: 1 }}>
           {subtasks.map((subtask) => (
             <Box mb={0.5} key={subtask._id}>
-              <TicketSubtaskItem subtask={subtask} onToggleCompletion={handleToggleSubtaskCompletion} />
+              <TicketSubtask subtask={subtask} onToggleCompletion={handleToggleSubtaskCompletion} />
             </Box>
           ))}
         </Box>

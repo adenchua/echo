@@ -15,6 +15,7 @@ type TicketsContextStateType = {
   handleSetTickets: (newTickets: Ticket[]) => void;
   deleteTicket: (ticketId: string) => void;
   addSubtaskIdToTicket: (ticketId: string, subtaskId: string) => void;
+  removeSubtaskIdFromTicket: (ticketId: string, subtaskId: string) => void;
 };
 
 const ticketContextDefaultValues: TicketsContextStateType = {
@@ -25,6 +26,7 @@ const ticketContextDefaultValues: TicketsContextStateType = {
   handleSetTickets: () => {},
   deleteTicket: () => {},
   addSubtaskIdToTicket: () => {},
+  removeSubtaskIdFromTicket: () => {},
 };
 
 export const TicketsContext = createContext<TicketsContextStateType>(ticketContextDefaultValues);
@@ -75,6 +77,17 @@ const TicketsContextProvider = ({ children }: TicketsContextProviderProps): JSX.
     );
   };
 
+  const removeSubtaskIdFromTicket = (ticketId: string, subtaskId: string): void => {
+    setTickets((prevState) =>
+      prevState.map((ticket) => {
+        if (ticket._id === ticketId) {
+          ticket.subtaskIds = ticket.subtaskIds.filter((id) => id !== subtaskId);
+        }
+        return ticket;
+      })
+    );
+  };
+
   return (
     <TicketsContext.Provider
       value={{
@@ -85,6 +98,7 @@ const TicketsContextProvider = ({ children }: TicketsContextProviderProps): JSX.
         handleSetTickets,
         deleteTicket,
         addSubtaskIdToTicket,
+        removeSubtaskIdFromTicket,
       }}
     >
       {children}

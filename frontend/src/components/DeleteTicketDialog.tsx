@@ -58,10 +58,7 @@ const DeleteTicketDialog = (props: DeleteTicketDialogProps): JSX.Element => {
         <Typography fontSize={14} color='error' paragraph>
           Are you sure you want to delete the following ticket:
         </Typography>
-        <Paper
-          sx={{ p: 1, border: "1px solid", borderColor: "grey.200", display: "flex", gap: 1, alignItems: "center" }}
-          elevation={0}
-        >
+        <Paper sx={{ display: "flex", gap: 1, alignItems: "center" }} elevation={0}>
           <Typography variant='body2' noWrap>
             {title}
           </Typography>

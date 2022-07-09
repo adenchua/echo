@@ -2,13 +2,14 @@ import { useContext } from "react";
 
 import createTicket from "../api/tickets/createTicket";
 import updateTicket from "../api/tickets/updateTicket";
-import { PriorityType, TicketType, TicketUpdateFields } from "../types/Ticket";
+import { TicketPriority, TicketType, TicketUpdateFields } from "../types/Ticket";
 import { TicketsContext } from "../contexts/TicketsContextProvider";
 import deleteTicket from "../api/tickets/deleteTicket";
 import addTicketToEpic from "../api/epics/addTicketToEpic";
 import { EpicsContext } from "../contexts/EpicsContextProvider";
 import removeTicketFromEpic from "../api/epics/removeTicketFromEpic";
 import addTicketSubtask from "../api/tickets/addTicketSubtask";
+import deleteTicketSubtask from "../api/tickets/deleteTicketSubtask";
 
 const useProductBacklog = () => {
   const {
@@ -16,13 +17,14 @@ const useProductBacklog = () => {
     updateTicket: updateTicketContext,
     deleteTicket: deleteTicketContext,
     addSubtaskIdToTicket: addSubtaskIdToTicketContext,
+    removeSubtaskIdFromTicket: removeSubtaskIdFromTicketContext,
   } = useContext(TicketsContext);
   const { addTicketIdToEpic, deleteTicketIdFromEpic } = useContext(EpicsContext);
 
   const onAddTicket = async (
     title: string,
     projectId: string,
-    priority: PriorityType,
+    priority: TicketPriority,
     type: TicketType
   ): Promise<void> => {
     try {
@@ -83,6 +85,15 @@ const useProductBacklog = () => {
     }
   };
 
+  const onDeleteSubtaskFromTicket = async (ticketId: string, subtaskId: string): Promise<void> => {
+    try {
+      await deleteTicketSubtask(subtaskId);
+      removeSubtaskIdFromTicketContext(ticketId, subtaskId);
+    } catch (error) {
+      throw new Error("Failed to delete subtask from ticket");
+    }
+  };
+
   return {
     onAddTicket,
     onUpdateTicket,
@@ -90,6 +101,7 @@ const useProductBacklog = () => {
     onAddTicketToEpic,
     onRemoveTicketFromEpic,
     onAddSubtaskToTicket,
+    onDeleteSubtaskFromTicket,
   };
 };
 
