@@ -11,12 +11,12 @@ import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import CircularProgress from "@mui/material/CircularProgress";
 import { sleep } from "../utils/sleep";
 import useProductBacklog from "../hooks/useProductBacklog";
-import TicketInterface from "../types/TicketInterface";
+import Ticket from "../types/Ticket";
 
 interface DeleteTicketDialogProps {
   isDialogOpened: boolean;
   onClose: () => void;
-  ticket: TicketInterface;
+  ticket: Ticket;
   projectId: string;
 }
 

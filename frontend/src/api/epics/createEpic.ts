@@ -1,11 +1,11 @@
 import axios from "axios";
 
-import EpicInterface from "../../types/EpicInterface";
+import Epic from "../../types/Epic";
 import { API_ENDPOINT } from "../../utils/constants";
 
-const createEpic = async (title: string, projectId: string): Promise<EpicInterface> => {
+const createEpic = async (title: string, projectId: string): Promise<Epic> => {
   try {
-    const response = await axios.post<EpicInterface>(`${API_ENDPOINT}/epics`, {
+    const response = await axios.post<Epic>(`${API_ENDPOINT}/epics`, {
       title,
       projectId,
     });

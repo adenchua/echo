@@ -9,7 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 
 import EditButton from "./EditButton";
 import useProductBacklog from "../../hooks/useProductBacklog";
-import { StatusType } from "../../types/TicketInterface";
+import { StatusType } from "../../types/Ticket";
 import StatusChipButton from "../StatusChipButton";
 import UpdateButton from "./UpdateButton";
 

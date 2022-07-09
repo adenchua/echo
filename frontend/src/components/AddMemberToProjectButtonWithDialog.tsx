@@ -19,7 +19,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 
-import UserInterface from "../types/UserInterface";
+import User from "../types/User";
 import fetchAllUsers from "../api/users/fetchAllUsers";
 import { ListItemAvatar } from "@mui/material";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
@@ -34,8 +34,8 @@ interface AddMemberToProjectButtonWithDialogProps {
 const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithDialogProps): JSX.Element => {
   const { projectId } = props;
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-  const [availableMembers, setAvailableMembers] = useState<UserInterface[]>([]);
-  const [selectedMembers, setSelectedMembers] = useState<UserInterface[]>([]);
+  const [availableMembers, setAvailableMembers] = useState<User[]>([]);
+  const [selectedMembers, setSelectedMembers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showError, setShowError] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>("");
@@ -65,7 +65,7 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
     setIsDialogOpen(false);
   };
 
-  const handleToggleSelectedMember = (user: UserInterface): void => {
+  const handleToggleSelectedMember = (user: User): void => {
     if (selectedMembers.includes(user)) {
       setSelectedMembers((prevState) => prevState.filter((member) => member._id !== user._id));
     } else {
@@ -88,7 +88,7 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
     }
   };
 
-  const renderMemberListItem = (user: UserInterface): JSX.Element => {
+  const renderMemberListItem = (user: User): JSX.Element => {
     const { _id: userId, displayName, username } = user;
     return (
       <ListItem key={userId} disablePadding disableGutters>
@@ -108,7 +108,7 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
     );
   };
 
-  const renderSelectedMemberChips = (user: UserInterface): JSX.Element => {
+  const renderSelectedMemberChips = (user: User): JSX.Element => {
     const { _id: userId, displayName, username } = user;
     return (
       <Chip
@@ -172,7 +172,7 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
             </Typography>
           )}
           <List dense disablePadding>
-            {availableMembers.map((member: UserInterface) => {
+            {availableMembers.map((member: User) => {
               if (matchString(searchInput, member.username) || matchString(searchInput, member.displayName)) {
                 return renderMemberListItem(member);
               }

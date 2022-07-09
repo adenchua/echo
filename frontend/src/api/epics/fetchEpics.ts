@@ -1,11 +1,11 @@
 import axios from "axios";
 
-import EpicInterface from "../../types/EpicInterface";
+import Epic from "../../types/Epic";
 import { API_ENDPOINT } from "../../utils/constants";
 
-const fetchEpics = async (epicIds: string[]): Promise<EpicInterface[]> => {
+const fetchEpics = async (epicIds: string[]): Promise<Epic[]> => {
   try {
-    const response = await axios.post<EpicInterface[]>(`${API_ENDPOINT}/epics/bulk-retrieve`, { epicIds });
+    const response = await axios.post<Epic[]>(`${API_ENDPOINT}/epics/bulk-retrieve`, { epicIds });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

@@ -5,14 +5,14 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 
-import UserInterface from "../../types/UserInterface";
+import User from "../../types/User";
 import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
 import AddMemberToProjectButtonWithDialog from "../AddMemberToProjectButtonWithDialog";
 import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
-import ProjectInterface from "../../types/ProjectInterface";
+import Project from "../../types/Project";
 
 interface OverviewTabProps {
-  project: ProjectInterface;
+  project: Project;
 }
 
 const OverviewTab = (props: OverviewTabProps): JSX.Element => {
@@ -20,7 +20,7 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
   const { _id: projectId, description } = project;
   const { members, admins } = useContext(ProjectMembersContext);
 
-  const renderMemberCard = (member: UserInterface): JSX.Element => {
+  const renderMemberCard = (member: User): JSX.Element => {
     const { displayName, username } = member;
     return (
       <Paper

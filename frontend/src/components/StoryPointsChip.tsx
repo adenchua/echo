@@ -2,7 +2,7 @@ import React from "react";
 import Chip from "@mui/material/Chip";
 import Tooltip from "@mui/material/Tooltip";
 
-import { StoryPointsType } from "../types/TicketInterface";
+import { StoryPointsType } from "../types/Ticket";
 
 interface StoryPointsChipProps {
   storyPoints: StoryPointsType;

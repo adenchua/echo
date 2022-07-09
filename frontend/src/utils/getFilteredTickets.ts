@@ -1,7 +1,7 @@
 import { TicketFilterType } from "../components/TicketFilter";
-import TicketInterface from "../types/TicketInterface";
+import Ticket from "../types/Ticket";
 
-const getFilteredTickets = (filterSelection: TicketFilterType, tickets: TicketInterface[]): TicketInterface[] => {
+const getFilteredTickets = (filterSelection: TicketFilterType, tickets: Ticket[]): Ticket[] => {
   if (!filterSelection) {
     return tickets;
   }

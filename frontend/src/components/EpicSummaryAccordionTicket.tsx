@@ -11,19 +11,19 @@ import FilledCheckIcon from "@mui/icons-material/CheckCircle";
 
 import TicketTypeIcon from "./TicketTypeIcon";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
-import TicketInterface from "../types/TicketInterface";
-import UserInterface from "../types/UserInterface";
+import Ticket from "../types/Ticket";
+import User from "../types/User";
 import fetchUsersByIds from "../api/users/fetchUsersByIds";
 
 interface EpicSummaryAccordionTicketProps {
-  ticket: TicketInterface;
+  ticket: Ticket;
 }
 
 const EpicSummaryAccordionTicket = (props: EpicSummaryAccordionTicketProps): JSX.Element => {
   const { ticket } = props;
   const { title, ticketNumber, isInSprint, status, type, assigneeId } = ticket;
 
-  const [assignee, setAssignee] = useState<UserInterface | null>(null);
+  const [assignee, setAssignee] = useState<User | null>(null);
 
   useEffect(() => {
     const getAssigneeDetails = async () => {

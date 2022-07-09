@@ -3,7 +3,7 @@ import { Redirect, useParams } from "react-router-dom";
 import _ from "lodash";
 
 import PageLayoutWrapper from "../components/common/PageLayoutWrapper";
-import ProjectInterface, { ProjectUpdateFieldsType } from "../types/ProjectInterface";
+import Project, { ProjectUpdateFieldsType } from "../types/Project";
 import fetchProject from "../api/projects/fetchProject";
 import ErrorBanner from "../components/common/ErrorBanner";
 import ToolbarContent from "../components/DetailedProject/ToolbarContent";
@@ -31,7 +31,7 @@ const DetailedProjectPage = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
   const query = useQuery();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [project, setProject] = useState<ProjectInterface | null>(null);
+  const [project, setProject] = useState<Project | null>(null);
   const { handleSetTickets } = useContext(TicketsContext);
   const { handleSetMembers, handleSetAdmins } = useContext(ProjectMembersContext);
   const { handleSetEpics } = useContext(EpicsContext);

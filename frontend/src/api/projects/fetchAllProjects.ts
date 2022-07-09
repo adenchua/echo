@@ -1,11 +1,11 @@
 import axios from "axios";
 
-import ProjectInterface from "../../types/ProjectInterface";
+import Project from "../../types/Project";
 import { API_ENDPOINT } from "../../utils/constants";
 
-const fetchAllProjects = async (): Promise<ProjectInterface[]> => {
+const fetchAllProjects = async (): Promise<Project[]> => {
   try {
-    const response = await axios.get<ProjectInterface[]>(`${API_ENDPOINT}/projects`);
+    const response = await axios.get<Project[]>(`${API_ENDPOINT}/projects`);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

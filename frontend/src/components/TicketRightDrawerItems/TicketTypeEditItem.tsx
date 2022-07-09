@@ -9,7 +9,7 @@ import EditButton from "./EditButton";
 import UpdateButton from "./UpdateButton";
 import TicketTypeIcon from "../TicketTypeIcon";
 import useProductBacklog from "../../hooks/useProductBacklog";
-import { TicketType } from "../../types/TicketInterface";
+import { TicketType } from "../../types/Ticket";
 import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter";
 import FormTicketTypeToggleButtons from "../FormTicketTypeToggleButtons";
 

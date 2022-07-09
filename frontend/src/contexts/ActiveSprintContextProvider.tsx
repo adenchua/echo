@@ -1,14 +1,14 @@
 import React, { createContext, useState, ReactNode, useCallback } from "react";
 
-import SprintInterface from "../types/SprintInterface";
+import Sprint from "../types/Sprint";
 
 interface ActiveSprintContextProviderProps {
   children: ReactNode;
 }
 
 type ActiveSprintContextStateType = {
-  activeSprint: SprintInterface | null;
-  handleSetActiveSprint: (newActiveSprint: SprintInterface) => void;
+  activeSprint: Sprint | null;
+  handleSetActiveSprint: (newActiveSprint: Sprint) => void;
   handleRemoveActiveSprint: () => void;
 };
 
@@ -21,9 +21,9 @@ const activeContextDefaultState: ActiveSprintContextStateType = {
 export const ActiveSprintContext = createContext<ActiveSprintContextStateType>(activeContextDefaultState);
 
 const ActiveSprintContextProvider = ({ children }: ActiveSprintContextProviderProps): JSX.Element => {
-  const [activeSprint, setActiveSprint] = useState<SprintInterface | null>(null);
+  const [activeSprint, setActiveSprint] = useState<Sprint | null>(null);
 
-  const handleSetActiveSprint = useCallback((newActiveSprint: SprintInterface) => {
+  const handleSetActiveSprint = useCallback((newActiveSprint: Sprint) => {
     setActiveSprint(newActiveSprint);
   }, []);
 

@@ -8,7 +8,7 @@ import Chip from "@mui/material/Chip";
 import EditButton from "./EditButton";
 import UpdateButton from "./UpdateButton";
 import useProductBacklog from "../../hooks/useProductBacklog";
-import { StoryPointsType } from "../../types/TicketInterface";
+import { StoryPointsType } from "../../types/Ticket";
 
 interface StoryPointsEditItemProps {
   ticketId: string;

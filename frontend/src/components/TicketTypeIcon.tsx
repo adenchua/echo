@@ -4,7 +4,7 @@ import TaskIcon from "@mui/icons-material/TaskOutlined";
 import UserStoryIcon from "@mui/icons-material/HistoryEduOutlined";
 import Tooltip from "@mui/material/Tooltip";
 
-import { TicketType } from "../types/TicketInterface";
+import { TicketType } from "../types/Ticket";
 
 interface TicketTypeIconProps {
   type: TicketType;

@@ -11,24 +11,24 @@ import CircularProgress from "@mui/material/CircularProgress";
 import SprintEndIcon from "@mui/icons-material/DirectionsWalk";
 import TickIcon from "@mui/icons-material/Check";
 
-import TicketInterface from "../types/TicketInterface";
-import SprintInterface from "../types/SprintInterface";
+import Ticket from "../types/Ticket";
+import Sprint from "../types/Sprint";
 import { sleep } from "../utils/sleep";
 
 interface SprintEndDialogProps {
   showEndSprintDialog: boolean;
   onClose: () => void;
-  onEndSprint: (projectId: string, sprintId: string) => Promise<SprintInterface>;
+  onEndSprint: (projectId: string, sprintId: string) => Promise<Sprint>;
   projectId: string;
   sprintId: string | undefined;
-  sprintTickets: TicketInterface[];
+  sprintTickets: Ticket[];
 }
 
 const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
   const { onEndSprint, projectId, sprintId, sprintTickets, showEndSprintDialog, onClose } = props;
   const [showError, setShowError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [completedSprint, setCompletedSprint] = useState<SprintInterface | null>(null);
+  const [completedSprint, setCompletedSprint] = useState<Sprint | null>(null);
   const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
   const completedTickets = sprintTickets.filter((ticket) => ticket.status === "completed");
 

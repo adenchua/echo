@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 import createTicket from "../api/tickets/createTicket";
 import updateTicket from "../api/tickets/updateTicket";
-import { PriorityType, TicketType, TicketUpdateFieldsType } from "../types/TicketInterface";
+import { PriorityType, TicketType, TicketUpdateFields } from "../types/Ticket";
 import { TicketsContext } from "../contexts/TicketsContextProvider";
 import deleteTicket from "../api/tickets/deleteTicket";
 import addTicketToEpic from "../api/epics/addTicketToEpic";
@@ -33,7 +33,7 @@ const useProductBacklog = () => {
     }
   };
 
-  const onUpdateTicket = async (ticketId: string, updatedFields: TicketUpdateFieldsType): Promise<void> => {
+  const onUpdateTicket = async (ticketId: string, updatedFields: TicketUpdateFields): Promise<void> => {
     try {
       await updateTicket(ticketId, updatedFields);
       updateTicketContext(ticketId, updatedFields);

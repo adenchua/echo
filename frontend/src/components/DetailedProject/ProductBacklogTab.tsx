@@ -9,7 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import AddIcon from "@mui/icons-material/Add";
 
-import ProjectInterface from "../../types/ProjectInterface";
+import Project from "../../types/Project";
 import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
 import { TicketsContext } from "../../contexts/TicketsContextProvider";
 import TicketSortSelectDropdown, { TicketSortType } from "../TicketSortSelectDropdown";
@@ -23,7 +23,7 @@ import getTicketsByEpics from "../../utils/getTicketsByEpics";
 import TicketSection from "../TicketSection";
 
 interface ProductBacklogTabProps {
-  project: ProjectInterface;
+  project: Project;
 }
 
 const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {

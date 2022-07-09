@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import TicketInterface, { PriorityType, TicketType } from "../../types/TicketInterface";
+import Ticket, { PriorityType, TicketType } from "../../types/Ticket";
 import { API_ENDPOINT } from "../../utils/constants";
 
 const createTicket = async (
@@ -8,9 +8,9 @@ const createTicket = async (
   projectId: string,
   priority: PriorityType,
   type: TicketType
-): Promise<TicketInterface> => {
+): Promise<Ticket> => {
   try {
-    const response = await axios.post<TicketInterface>(`${API_ENDPOINT}/tickets`, { title, projectId, priority, type });
+    const response = await axios.post<Ticket>(`${API_ENDPOINT}/tickets`, { title, projectId, priority, type });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

@@ -8,24 +8,24 @@ import Hidden from "@mui/material/Hidden";
 import ProjectIcon from "@mui/icons-material/GitHub";
 import _ from "lodash";
 
-import ProjectInterface from "../types/ProjectInterface";
+import Project from "../types/Project";
 import ProgressBarWithPercentage from "./ProgressBarWithPercentage";
-import SprintInterface from "../types/SprintInterface";
+import Sprint from "../types/Sprint";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
-import UserInterface from "../types/UserInterface";
+import User from "../types/User";
 import fetchSprintsByIds from "../api/sprints/fetchSprintsByIds";
 import fetchUsersByIds from "../api/users/fetchUsersByIds";
 import fetchTicketsByIds from "../api/tickets/fetchTicketsByIds";
 
 interface ProjectListingItemProps {
-  project: ProjectInterface;
+  project: Project;
 }
 
 const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
   const { project } = props;
   const { _id: projectId, title, type, sprintIds, adminIds, memberIds, backlogIds } = project;
-  const [sprints, setSprints] = useState<SprintInterface[]>([]);
-  const [users, setUsers] = useState<UserInterface[]>([]);
+  const [sprints, setSprints] = useState<Sprint[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [activeSprintProgressPercentage, setActiveSprintProgressPercentage] = useState<number>(0);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
       } catch (error) {}
     };
 
-    const getActiveSprintProgressPercentage = async (sprints: SprintInterface[]) => {
+    const getActiveSprintProgressPercentage = async (sprints: Sprint[]) => {
       try {
         const activeSprint = sprints.find((sprint) => sprint.hasEnded === false);
         if (!activeSprint) {
@@ -69,7 +69,7 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
     getUsers();
   }, [backlogIds, sprintIds, adminIds, memberIds]);
 
-  const renderSprintStatusSpan = (sprints: SprintInterface[]): JSX.Element => {
+  const renderSprintStatusSpan = (sprints: Sprint[]): JSX.Element => {
     let span = (
       <Typography component='span' fontSize='inherit' sx={{ color: "error.main" }}>
         Stopped
@@ -87,7 +87,7 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
     return span;
   };
 
-  const renderAvatarGroups = (users: UserInterface[]): JSX.Element => {
+  const renderAvatarGroups = (users: User[]): JSX.Element => {
     const shuffledUsers = _.shuffle(users); // so that same members do not always appear first
     return (
       <AvatarGroup max={4} sx={{ flexShrink: 1 }}>

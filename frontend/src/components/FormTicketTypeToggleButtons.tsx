@@ -5,7 +5,7 @@ import UserStoryIcon from "@mui/icons-material/HistoryEduOutlined";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 
-import { TicketType } from "../types/TicketInterface";
+import { TicketType } from "../types/Ticket";
 
 interface FormTicketTypeToggleButtonsProps {
   value: TicketType;

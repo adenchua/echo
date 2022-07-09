@@ -1,11 +1,11 @@
 import axios from "axios";
 
-import TicketInterface from "../../types/TicketInterface";
+import Ticket from "../../types/Ticket";
 import { API_ENDPOINT } from "../../utils/constants";
 
-const fetchTicketsByIds = async (ticketIds: string[]): Promise<TicketInterface[]> => {
+const fetchTicketsByIds = async (ticketIds: string[]): Promise<Ticket[]> => {
   try {
-    const response = await axios.post<TicketInterface[]>(`${API_ENDPOINT}/tickets/bulk-retrieve`, { ticketIds });
+    const response = await axios.post<Ticket[]>(`${API_ENDPOINT}/tickets/bulk-retrieve`, { ticketIds });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

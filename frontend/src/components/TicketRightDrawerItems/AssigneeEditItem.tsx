@@ -15,7 +15,7 @@ import EditButton from "./EditButton";
 import useProductBacklog from "../../hooks/useProductBacklog";
 import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
 import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
-import UserInterface from "../../types/UserInterface";
+import User from "../../types/User";
 import UpdateButton from "./UpdateButton";
 import fetchUsersByIds from "../../api/users/fetchUsersByIds";
 import { sliceLongString } from "../../utils/sliceLongString";
@@ -30,7 +30,7 @@ interface AssigneeEditItemProps {
 const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
   const { assigneeId, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
-  const [assignee, setAssignee] = useState<UserInterface | null>(null);
+  const [assignee, setAssignee] = useState<User | null>(null);
 
   const { onUpdateTicket } = useProductBacklog();
   const { members, admins } = useContext(ProjectMembersContext);

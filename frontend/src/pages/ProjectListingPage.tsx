@@ -10,7 +10,7 @@ import Link from "@mui/material/Link";
 import { Link as RouterLink, Redirect } from "react-router-dom";
 
 import PageLayoutWrapper from "../components/common/PageLayoutWrapper";
-import ProjectInterface from "../types/ProjectInterface";
+import Project from "../types/Project";
 import ProjectListingItem from "../components/ProjectListingItem";
 import CreateProjectButtonWithDialog from "../components/CreateProjectButtonWithDialog";
 import { UserProjectsContext } from "../contexts/UserProjectsContextProvider";
@@ -80,7 +80,7 @@ const ProjectListingPage = (): JSX.Element => {
       <Divider sx={{ mt: 3, mb: 3 }} />
       {projects.length > 0 && renderTitleHeaders()}
       {projects.length === 0 && renderNoProjectsMessage()}
-      {projects.map((project: ProjectInterface) => {
+      {projects.map((project: Project) => {
         if (matchString(searchInput, project.title)) {
           return (
             <Link

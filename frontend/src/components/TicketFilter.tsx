@@ -15,7 +15,7 @@ import Divider from "@mui/material/Divider";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 
-import { StatusType } from "../types/TicketInterface";
+import { StatusType } from "../types/Ticket";
 import StatusChipButton from "./StatusChipButton";
 import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";

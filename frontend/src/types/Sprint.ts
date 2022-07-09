@@ -1,4 +1,4 @@
-interface SprintInterface {
+interface Sprint {
   _id: string;
   number: number;
   startDate: string;
@@ -8,4 +8,4 @@ interface SprintInterface {
   hasEnded: boolean;
 }
 
-export default SprintInterface;
+export default Sprint;

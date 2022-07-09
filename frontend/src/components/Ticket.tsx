@@ -8,14 +8,14 @@ import Tooltip from "@mui/material/Tooltip";
 import Avatar from "@mui/material/Avatar";
 import { format, compareAsc } from "date-fns";
 
-import TicketInterface from "../types/TicketInterface";
+import TicketInterface from "../types/Ticket";
 import PriorityIcon from "./PriorityIcon";
 import TicketTypeIcon from "./TicketTypeIcon";
 import useProductBacklog from "../hooks/useProductBacklog";
 import StatusChipButton from "./StatusChipButton";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
 import fetchUsersByIds from "../api/users/fetchUsersByIds";
-import UserInterface from "../types/UserInterface";
+import User from "../types/User";
 import StoryPointsChip from "./StoryPointsChip";
 
 interface TicketProps {
@@ -26,7 +26,7 @@ interface TicketProps {
 
 const Ticket = (props: TicketProps): JSX.Element => {
   const { ticket, showSprintToggleCheckBox, bgGrey } = props;
-  const [assignee, setAssignee] = useState<UserInterface | null>(null);
+  const [assignee, setAssignee] = useState<User | null>(null);
   const { onUpdateTicket } = useProductBacklog();
   const { priority, title, type, isInSprint, _id: id, dueDate, status, assigneeId, ticketNumber, storyPoints } = ticket;
   const formattedDueDate = dueDate ? format(new Date(dueDate), "LLL dd") : "";

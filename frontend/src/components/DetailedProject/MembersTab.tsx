@@ -21,22 +21,22 @@ import SearchIcon from "@mui/icons-material/Search";
 import ContainerWrapper from "../common/ContainerWrapper";
 import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
 import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
-import UserInterface from "../../types/UserInterface";
+import User from "../../types/User";
 import { matchString } from "../../utils/matchString";
 import removeMemberFromProject from "../../api/projects/removeMemberFromProject";
-import ProjectInterface from "../../types/ProjectInterface";
+import Project from "../../types/Project";
 import promoteMemberToAdmin from "../../api/projects/promoteMemberToAdmin";
 import AddMemberToProjectButtonWithDialog from "../AddMemberToProjectButtonWithDialog";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
 
 interface RowUserInterface {
-  user: UserInterface;
+  user: User;
   isAdmin: boolean;
 }
 
 interface MembersTabProps {
-  project: ProjectInterface;
+  project: Project;
 }
 
 const MembersTab = (props: MembersTabProps): JSX.Element => {
@@ -52,14 +52,14 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>("");
   const isLoggedInUserAnAdmin = admins.map((admin) => admin._id).includes(loggedInUserId ?? "-1");
 
-  const getTableRows = (rows: UserInterface[], isAdmin: boolean): RowUserInterface[] => {
+  const getTableRows = (rows: User[], isAdmin: boolean): RowUserInterface[] => {
     const updatedRows: RowUserInterface[] = rows.map((row) => {
       return { user: row, isAdmin };
     });
     return updatedRows;
   };
 
-  const handleRemoveMember = async (member: UserInterface): Promise<void> => {
+  const handleRemoveMember = async (member: User): Promise<void> => {
     try {
       await removeMemberFromProject(projectId, member._id);
       handleRemoveMemberInContext(member);
@@ -68,7 +68,7 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
     }
   };
 
-  const handlePromoteMember = async (member: UserInterface): Promise<void> => {
+  const handlePromoteMember = async (member: User): Promise<void> => {
     try {
       await promoteMemberToAdmin(projectId, member._id);
       handlePromoteMemberInContext(member);

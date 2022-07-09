@@ -1,9 +1,9 @@
-import TicketInterface from "../types/TicketInterface";
-import { TicketsByEpicInterface } from "../types/TicketsByEpicInterface";
+import Ticket from "../types/Ticket";
+import { TicketsByEpic } from "../types/TicketsByEpic";
 
-const getTicketsByEpics = (tickets: TicketInterface[]): TicketsByEpicInterface[] => {
-  let ticketsByEpics: TicketsByEpicInterface[] = [];
-  let temp: { [key: string]: TicketInterface[] } = {
+const getTicketsByEpics = (tickets: Ticket[]): TicketsByEpic[] => {
+  let ticketsByEpics: TicketsByEpic[] = [];
+  let temp: { [key: string]: Ticket[] } = {
     others: [], // others as default key for tickets without any epic
   };
 

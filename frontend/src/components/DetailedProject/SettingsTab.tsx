@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { useHistory } from "react-router-dom";
 
-import ProjectInterface, { ProjectUpdateFieldsType } from "../../types/ProjectInterface";
+import Project, { ProjectUpdateFieldsType } from "../../types/Project";
 import updateProject from "../../api/projects/updateProject";
 import { sleep } from "../../utils/sleep";
 import { UserProjectsContext } from "../../contexts/UserProjectsContextProvider";
@@ -16,7 +16,7 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
 
 interface SettingsTabProps {
-  project: ProjectInterface;
+  project: Project;
   handleUpdateProjectFields: (updatedFields: ProjectUpdateFieldsType) => void;
 }
 

@@ -1,11 +1,11 @@
 import axios from "axios";
 
-import TicketInterface, { TicketUpdateFieldsType } from "../../types/TicketInterface";
+import Ticket, { TicketUpdateFields } from "../../types/Ticket";
 import { API_ENDPOINT } from "../../utils/constants";
 
-const updateTicket = async (ticketId: string, fieldsToUpdate: TicketUpdateFieldsType): Promise<TicketInterface> => {
+const updateTicket = async (ticketId: string, fieldsToUpdate: TicketUpdateFields): Promise<Ticket> => {
   try {
-    const response = await axios.patch<TicketInterface>(`${API_ENDPOINT}/tickets/id/${ticketId}`, fieldsToUpdate);
+    const response = await axios.patch<Ticket>(`${API_ENDPOINT}/tickets/id/${ticketId}`, fieldsToUpdate);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

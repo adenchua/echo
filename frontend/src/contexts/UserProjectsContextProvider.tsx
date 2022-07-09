@@ -1,16 +1,16 @@
 import React, { createContext, useState, ReactNode, useCallback } from "react";
 import _ from "lodash";
 
-import ProjectInterface, { ProjectUpdateFieldsType } from "../types/ProjectInterface";
+import Project, { ProjectUpdateFieldsType } from "../types/Project";
 
 interface UserProjectsContextProviderProps {
   children: ReactNode;
 }
 
 type UserProjectsContextStateType = {
-  projects: ProjectInterface[];
-  addProject: (project: ProjectInterface) => void;
-  handleSetProject: (projects: ProjectInterface[]) => void;
+  projects: Project[];
+  addProject: (project: Project) => void;
+  handleSetProject: (projects: Project[]) => void;
   updateProject: (projectId: string, updatedFields: ProjectUpdateFieldsType) => void;
 };
 
@@ -24,13 +24,13 @@ const userProjectsContextDefaultValues: UserProjectsContextStateType = {
 export const UserProjectsContext = createContext<UserProjectsContextStateType>(userProjectsContextDefaultValues);
 
 const UserProjectsContextProvider = ({ children }: UserProjectsContextProviderProps): JSX.Element => {
-  const [projects, setProjects] = useState<ProjectInterface[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
 
-  const addProject = useCallback((newProject: ProjectInterface): void => {
+  const addProject = useCallback((newProject: Project): void => {
     setProjects((prevState) => [...prevState, newProject]);
   }, []);
 
-  const handleSetProject = useCallback((newProjects: ProjectInterface[]): void => {
+  const handleSetProject = useCallback((newProjects: Project[]): void => {
     setProjects(newProjects);
   }, []);
 

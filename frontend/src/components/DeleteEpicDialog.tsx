@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import CircularProgress from "@mui/material/CircularProgress";
-import EpicInterface from "../types/EpicInterface";
+import Epic from "../types/Epic";
 import { sleep } from "../utils/sleep";
 import deleteEpic from "../api/epics/deleteEpic";
 import { EpicsContext } from "../contexts/EpicsContextProvider";
@@ -19,7 +19,7 @@ import { TicketsContext } from "../contexts/TicketsContextProvider";
 interface DeleteEpicDialogProps {
   isDialogOpened: boolean;
   onClose: () => void;
-  epic: EpicInterface;
+  epic: Epic;
 }
 
 const DeleteEpicDialog = (props: DeleteEpicDialogProps): JSX.Element => {
