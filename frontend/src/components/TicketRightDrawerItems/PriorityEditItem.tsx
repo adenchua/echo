@@ -8,14 +8,14 @@ import Chip from "@mui/material/Chip";
 import EditButton from "./EditButton";
 import UpdateButton from "./UpdateButton";
 import useProductBacklog from "../../hooks/useProductBacklog";
-import { PriorityType } from "../../types/Ticket";
+import { TicketPriority } from "../../types/Ticket";
 import FormPriorityToggleButtons from "../FormPriorityToggleButtons";
 import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter";
 import PriorityIcon from "../PriorityIcon";
 
 interface PriorityEditItemProps {
   ticketId: string;
-  priority: PriorityType;
+  priority: TicketPriority;
 }
 
 const PriorityEditItem = (props: PriorityEditItemProps): JSX.Element => {
@@ -27,7 +27,7 @@ const PriorityEditItem = (props: PriorityEditItemProps): JSX.Element => {
     setIsEditModeOn(!isEditModeOn);
   };
 
-  const handleChangePriority = (event: React.MouseEvent<HTMLElement>, newPriority: PriorityType): void => {
+  const handleChangePriority = (event: React.MouseEvent<HTMLElement>, newPriority: TicketPriority): void => {
     if (!newPriority) {
       return; // prevent deselecting a button
     }

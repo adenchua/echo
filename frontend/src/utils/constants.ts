@@ -2,7 +2,7 @@ export const API_ENDPOINT = "/api";
 
 export const UMS_API_ENDPOINT = "http://localhost:5100/api";
 
-export const APP_VERSION = "1.4.0-a";
+export const APP_VERSION = "1.4.1-a";
 
 export const TICKET_DRAWER_WIDTH = 480;
 

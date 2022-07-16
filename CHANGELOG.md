@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.4.0-1] - 2022-06-28
+## [1.4.1-a] - 2022-07-16
+
+### FIXED
+
+- ticket creation form to overflow on smaller screens
+
+## [1.4.0-a] - 2022-06-28
 
 ### ADDED
 
