@@ -4,11 +4,11 @@ import MediumPriorityIcon from "@mui/icons-material/Remove";
 import HighPriorityIcon from "@mui/icons-material/KeyboardArrowUp";
 import Tooltip from "@mui/material/Tooltip";
 
-import { PriorityType } from "../types/Ticket";
+import { TicketPriority } from "../types/Ticket";
 import HighestPriorityIcon from "./HighestPriorityIcon";
 
 interface PriorityIconProps {
-  priority: PriorityType;
+  priority: TicketPriority;
   hideMedium: boolean;
   fontSize?: "medium" | "small" | "inherit" | "large";
 }

@@ -1,12 +1,12 @@
 import axios from "axios";
 
-import Ticket, { PriorityType, TicketType } from "../../types/Ticket";
+import Ticket, { TicketPriority, TicketType } from "../../types/Ticket";
 import { API_ENDPOINT } from "../../utils/constants";
 
 const createTicket = async (
   title: string,
   projectId: string,
-  priority: PriorityType,
+  priority: TicketPriority,
   type: TicketType
 ): Promise<Ticket> => {
   try {
