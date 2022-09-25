@@ -103,13 +103,13 @@ const CreateProjectButtonWithDialog = (): JSX.Element => {
             label='Project Title'
             type='text'
             fullWidth
-            variant='standard'
+            variant='filled'
             sx={{ mb: 4 }}
             value={projectTitle}
             onChange={(e) => setProjectTitle(e.target.value)}
           />
           <Box mb={4}>
-            <FormControl fullWidth variant='standard'>
+            <FormControl fullWidth variant='filled'>
               <InputLabel>Project Type</InputLabel>
               <Select value={projectType} label='Project Type' onChange={handleProjectTypeChange}>
                 {PROJECT_TYPES.map((projectType) => (

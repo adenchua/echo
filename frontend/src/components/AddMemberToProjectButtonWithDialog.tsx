@@ -165,14 +165,19 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
             onChange={(e) => setSearchInput(e.target.value)}
           />
         </DialogContent>
-        <DialogContent dividers sx={{ height: "300px" }}>
+        <DialogContent dividers sx={{ maxHeight: 300 }}>
           {showError && (
             <Typography color='error' variant='caption'>
               Something went wrong. Please try again later.
             </Typography>
           )}
           <List dense disablePadding>
-            {availableMembers.map((member: User) => {
+            {availableMembers && availableMembers.length === 0 && (
+              <Typography variant='body2' fontStyle='italic' color='GrayText'>
+                No available members to add to the project.
+              </Typography>
+            )}
+            {availableMembers?.map((member: User) => {
               if (matchString(searchInput, member.username) || matchString(searchInput, member.displayName)) {
                 return renderMemberListItem(member);
               }

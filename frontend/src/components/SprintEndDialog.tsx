@@ -8,7 +8,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import CircularProgress from "@mui/material/CircularProgress";
-import SprintEndIcon from "@mui/icons-material/DirectionsWalk";
+import SprintEndIcon from "@mui/icons-material/EventRepeatOutlined";
 import TickIcon from "@mui/icons-material/Check";
 
 import Ticket from "../types/Ticket";

@@ -15,6 +15,8 @@ const getFilteredTickets = (filterSelection: TicketFilterType, tickets: Ticket[]
       return tickets.filter((ticket) => ticket.status !== filterValue);
     case "status":
       return tickets.filter((ticket) => ticket.status === filterValue);
+    case "not_in_sprint":
+      return tickets.filter((ticket) => ticket.isInSprint === false);
     default:
       return tickets; // invalid filter
   }

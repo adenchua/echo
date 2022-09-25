@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.0-a] - 2022-09-25
+
+### ADDED
+
+- temporary confirmation dialog when trying to delete a subtask
+- temporary confirmation dialog when trying to remove a member from the project
+- text hint to team members dialog if there are no available members to add into the project
+- additional filter to show tickets not in any sprint for both product and sprint backlogs
+
+### CHANGED
+
+- members in the project will now reflect a proper title instead of software engineer
+- introduced maximum height for assignee popper
+- icon of start and end sprint to a calendar icon
+- team objectives term to epic to reduce confusion
+
 ## [1.4.1-a] - 2022-07-16
 
 ### FIXED

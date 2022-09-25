@@ -39,7 +39,7 @@ const ToolbarContent = (props: ToolbarContentProps): JSX.Element => {
           {renderTabLink("Overview", "overview")}
           {renderTabLink("Product Backlog", "product-backlog")}
           {renderTabLink("Sprint Backlog", "sprint-backlog")}
-          {renderTabLink("Team Objectives", "objectives")}
+          {renderTabLink("Epics", "epics")}
           {renderTabLink("Members", "members")}
           {renderTabLink("Settings", "settings")}
         </Box>

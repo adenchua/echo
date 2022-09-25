@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import SprintIcon from "@mui/icons-material/DirectionsRun";
+import SprintIcon from "@mui/icons-material/EventAvailableOutlined";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -9,7 +9,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import DatePicker from "@mui/lab/DatePicker";
+import { DatePicker } from "@mui/x-date-pickers";
 import CircularProgress from "@mui/material/CircularProgress";
 import { isValid, format, differenceInCalendarDays } from "date-fns";
 
@@ -142,7 +142,7 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
           <Box sx={{ mb: 2 }}>
             <DatePicker
               value={endDateInput}
-              onChange={(newValue: Date) => {
+              onChange={(newValue) => {
                 if (isValid(newValue)) {
                   setEndDateInput(newValue);
                 }

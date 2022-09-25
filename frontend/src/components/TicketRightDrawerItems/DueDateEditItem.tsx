@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import { format, compareAsc } from "date-fns";
-import DatePicker from "@mui/lab/DatePicker";
+import { DatePicker } from "@mui/x-date-pickers";
 import Button from "@mui/material/Button";
 import ListItemText from "@mui/material/ListItemText";
 
@@ -43,7 +43,7 @@ const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
         <Box mb={3} width='100%'>
           <DatePicker
             value={isDue ? null : dueDate}
-            onChange={(newSelectedDate: Date) => {
+            onChange={(newSelectedDate) => {
               handleUpdateTicketDueDate(newSelectedDate);
             }}
             minDate={new Date()}

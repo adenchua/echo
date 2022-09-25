@@ -10,6 +10,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import PersonIcon from "@mui/icons-material/PersonOutline";
 import RuleIcon from "@mui/icons-material/RuleOutlined";
+import NotInSprintIcon from "@mui/icons-material/PauseCircleOutline";
 import CloseIcon from "@mui/icons-material/RestartAltOutlined";
 import Divider from "@mui/material/Divider";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
@@ -23,7 +24,12 @@ import { sliceLongString } from "../utils/sliceLongString";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
-export type TicketFilterType = null | `assignee-${string}` | `not_status-${TicketStatus}` | `status-${TicketStatus}`;
+export type TicketFilterType =
+  | null
+  | `assignee-${string}`
+  | `not_status-${TicketStatus}`
+  | `status-${TicketStatus}`
+  | `not_in_sprint-${boolean}`;
 
 const statusToTextMapping: Record<TicketStatus, string> = {
   todo: "To Do",
@@ -142,7 +148,13 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
             <ListItemIcon>
               <RuleIcon fontSize='small' />
             </ListItemIcon>
-            <ListItemText>Not Done</ListItemText>
+            <ListItemText>Not done</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={() => handleSelectNewFilter(`not_in_sprint-true`, "Not in sprint")}>
+            <ListItemIcon>
+              <NotInSprintIcon fontSize='small' />
+            </ListItemIcon>
+            <ListItemText>Not in sprint</ListItemText>
           </MenuItem>
           <Divider />
 
@@ -182,6 +194,11 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
                 style: {
                   padding: "6px 8px",
                   background: "#00000014",
+                },
+              }}
+              MenuProps={{
+                style: {
+                  maxHeight: 300,
                 },
               }}
             >

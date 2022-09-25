@@ -51,7 +51,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
     if (!epicToDisplay) {
       return (
         <Typography variant='body2' color='textSecondary' sx={{ mb: 2 }}>
-          Invalid Objective
+          Invalid Epic
         </Typography>
       );
     }
@@ -67,7 +67,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
         <Box display='flex' width='100%' mb={1} gap={1}>
-          <Typography variant='body2'>Objectives Link</Typography>
+          <Typography variant='body2'>Epic</Typography>
           <UpdateButton
             onAccept={handleUpdateTicketEpicLink}
             onCancel={handleToggleEditMode}
@@ -122,7 +122,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
       <Box display='flex' gap={1} width='100%' mb={1}>
-        <Typography variant='body2'>Objectives Link</Typography>
+        <Typography variant='body2'>Epic</Typography>
         <EditButton onStartEdit={handleToggleEditMode} />
       </Box>
       {renderEpicTypography()}

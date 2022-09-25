@@ -138,7 +138,7 @@ const DetailedProjectPage = (): JSX.Element => {
       { tabKey: "overview", component: <OverviewTab project={project} /> },
       { tabKey: "product-backlog", component: <ProductBacklogTab project={project} /> },
       { tabKey: "sprint-backlog", component: <SprintBacklogTab project={project} /> },
-      { tabKey: "objectives", component: <TeamObjectivesTab project={project} /> },
+      { tabKey: "epics", component: <TeamObjectivesTab project={project} /> },
       { tabKey: "members", component: <MembersTab project={project} /> },
       {
         tabKey: "settings",

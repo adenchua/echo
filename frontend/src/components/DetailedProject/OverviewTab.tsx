@@ -21,7 +21,7 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
   const { members, admins } = useContext(ProjectMembersContext);
 
   const renderMemberCard = (member: User): JSX.Element => {
-    const { displayName, username } = member;
+    const { displayName, username, title } = member;
     return (
       <Paper
         sx={{ p: 1, display: "flex", alignItems: "center", gap: 1, border: "1px solid", borderColor: "grey.300" }}
@@ -38,7 +38,7 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
             {displayName}
           </Typography>
           <Typography noWrap variant='caption' component='div' color='grey.500'>
-            Software Engineer
+            {title}
           </Typography>
         </Box>
       </Paper>

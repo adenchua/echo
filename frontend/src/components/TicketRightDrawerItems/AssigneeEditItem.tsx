@@ -109,6 +109,11 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
                 height: 32,
               },
             }}
+            MenuProps={{
+              style: {
+                maxHeight: 300,
+              },
+            }}
           >
             {[...admins, ...members].map((user) => {
               const { displayName, _id: userId, username } = user;
