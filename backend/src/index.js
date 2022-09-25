@@ -10,7 +10,7 @@ const ticketRoute = require("./routes/ticket");
 
 const app = express();
 const PORT = 5084;
-const URI = "mongodb://localhost:27017/echo";
+const URI = "mongodb://mongodb:27017/echo";
 const API_PREPEND = "/api";
 
 app.use(express.json());
