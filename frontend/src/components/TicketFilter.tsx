@@ -1,4 +1,4 @@
-import React, { useContext, useState, useCallback } from "react";
+import { useContext, useState, useCallback } from "react";
 import Button from "@mui/material/Button";
 import Popover from "@mui/material/Popover";
 import MenuItem from "@mui/material/MenuItem";
@@ -10,12 +10,13 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import PersonIcon from "@mui/icons-material/PersonOutline";
 import RuleIcon from "@mui/icons-material/RuleOutlined";
+import NotInSprintIcon from "@mui/icons-material/PauseCircleOutline";
 import CloseIcon from "@mui/icons-material/RestartAltOutlined";
 import Divider from "@mui/material/Divider";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 
-import { StatusType } from "../types/Ticket";
+import { TicketStatus } from "../types/Ticket";
 import StatusChipButton from "./StatusChipButton";
 import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
@@ -23,9 +24,14 @@ import { sliceLongString } from "../utils/sliceLongString";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
-export type TicketFilterType = null | `assignee-${string}` | `not_status-${StatusType}` | `status-${StatusType}`;
+export type TicketFilterType =
+  | null
+  | `assignee-${string}`
+  | `not_status-${TicketStatus}`
+  | `status-${TicketStatus}`
+  | `not_in_sprint-${boolean}`;
 
-const statusToTextMapping: Record<StatusType, string> = {
+const statusToTextMapping: Record<TicketStatus, string> = {
   todo: "To Do",
   progress: "In Progress",
   review: "To Review",
@@ -142,7 +148,13 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
             <ListItemIcon>
               <RuleIcon fontSize='small' />
             </ListItemIcon>
-            <ListItemText>Not Done</ListItemText>
+            <ListItemText>Not done</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={() => handleSelectNewFilter(`not_in_sprint-true`, "Not in sprint")}>
+            <ListItemIcon>
+              <NotInSprintIcon fontSize='small' />
+            </ListItemIcon>
+            <ListItemText>Not in sprint</ListItemText>
           </MenuItem>
           <Divider />
 
@@ -152,8 +164,8 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
               defaultValue=''
               onChange={(e: SelectChangeEvent) =>
                 handleSelectNewFilter(
-                  `status-${e.target.value as StatusType}`,
-                  statusToTextMapping[e.target.value as StatusType]
+                  `status-${e.target.value as TicketStatus}`,
+                  statusToTextMapping[e.target.value as TicketStatus]
                 )
               }
               SelectDisplayProps={{
@@ -165,7 +177,7 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
             >
               {["todo", "progress", "review", "completed", "stuck", "hold"].map((ticketStatus) => (
                 <MenuItem key={ticketStatus} value={ticketStatus} sx={{ display: "flex", justifyContent: "center" }}>
-                  <StatusChipButton status={ticketStatus as StatusType} size='small' />
+                  <StatusChipButton status={ticketStatus as TicketStatus} size='small' />
                 </MenuItem>
               ))}
             </Select>
@@ -182,6 +194,11 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
                 style: {
                   padding: "6px 8px",
                   background: "#00000014",
+                },
+              }}
+              MenuProps={{
+                style: {
+                  maxHeight: 300,
                 },
               }}
             >

@@ -1,4 +1,3 @@
-import React from "react";
 import { HighlightOffOutlined as DeleteIcon } from "@mui/icons-material";
 import { Typography, Box } from "@mui/material";
 
@@ -25,7 +24,11 @@ const TicketSubtaskDeletable = (props: TicketSubtaskDeletableProps): JSX.Element
         },
         color: "#00000077",
       }}
-      onClick={() => onDeleteSubtask(id)}
+      onClick={() => {
+        if (window.confirm("Delete subtask?")) {
+          onDeleteSubtask(id);
+        }
+      }}
     >
       <DeleteIcon fontSize='small' color='inherit' />
       <Typography variant='body2' noWrap color='inherit'>

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import ListItem from "@mui/material/ListItem";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
@@ -107,6 +107,11 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
                 margin: 0,
                 background: "#00000014",
                 height: 32,
+              },
+            }}
+            MenuProps={{
+              style: {
+                maxHeight: 300,
               },
             }}
           >

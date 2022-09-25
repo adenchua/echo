@@ -1,14 +1,13 @@
-import React from "react";
 import Chip from "@mui/material/Chip";
 
-import { StatusType } from "../types/Ticket";
+import { TicketStatus } from "../types/Ticket";
 
 const CHIP_MIN_WIDTH = "92px";
 
 type MuiChipSizeType = "small" | "medium" | undefined;
 
 interface StatusChipButtonProps {
-  status: StatusType;
+  status: TicketStatus;
   size: MuiChipSizeType;
 }
 

@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import Project, { ProjectUpdateFieldsType } from "../../types/Project";
 import updateProject from "../../api/projects/updateProject";
@@ -30,7 +30,7 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
   const [deletionInput, setDeletionInput] = useState<string>("");
   const { updateProject: updateProjectInContext } = useContext(UserProjectsContext);
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
-  const history = useHistory();
+  const navigate = useNavigate();
   const isLoggedInUserAdmin = loggedInUserId && adminIds.includes(loggedInUserId);
 
   const handleUpdateProject = async (): Promise<void> => {
@@ -59,7 +59,7 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
       setShowButtonDeleting(true);
       await sleep(1000);
       await deleteProject(projectId);
-      history.push("/projects");
+      navigate("/projects");
     } catch (error) {
       // do nothing
     }

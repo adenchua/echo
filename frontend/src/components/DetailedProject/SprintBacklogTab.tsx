@@ -1,10 +1,10 @@
-import React, { useContext, useState, useMemo } from "react";
+import { useContext, useState, useMemo } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import SprintEndIcon from "@mui/icons-material/DirectionsWalk";
+import SprintEndIcon from "@mui/icons-material/EventRepeatOutlined";
 import InputBase from "@mui/material/InputBase";
-import SprintStartIcon from "@mui/icons-material/DirectionsRun";
+import SprintStartIcon from "@mui/icons-material/EventAvailableOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { format, differenceInBusinessDays } from "date-fns";
@@ -188,7 +188,6 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
         {(!activeSprint || activeSprint.hasEnded) && (
           <Button
             size='small'
-            variant='outlined'
             startIcon={<SprintStartIcon />}
             sx={{ whiteSpace: "nowrap" }}
             onClick={() => setShowStartSprintDialog(true)}
@@ -199,10 +198,9 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
         {activeSprint && !activeSprint.hasEnded && (
           <Button
             size='small'
-            variant='outlined'
             startIcon={<SprintEndIcon />}
             color='error'
-            sx={{ minWidth: "132px", whiteSpace: "nowrap" }}
+            sx={{ whiteSpace: "nowrap" }}
             onClick={() => setShowEndSprintDialog(true)}
           >
             End Sprint

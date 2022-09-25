@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import SprintIcon from "@mui/icons-material/DirectionsRun";
+import { useState, useEffect } from "react";
+import SprintIcon from "@mui/icons-material/EventAvailableOutlined";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -9,7 +9,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import DatePicker from "@mui/lab/DatePicker";
+import { DatePicker } from "@mui/x-date-pickers";
 import CircularProgress from "@mui/material/CircularProgress";
 import { isValid, format, differenceInCalendarDays } from "date-fns";
 
@@ -159,22 +159,25 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
                   border: "1px solid",
                 },
               }}
-              renderInput={({ inputRef, inputProps, InputProps }) => (
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1, ml: -0.5 }} ref={inputRef}>
-                  <input {...inputProps} style={{ display: "none" }} />
-                  <div>{InputProps?.endAdornment}</div>
-                  {!endDateInput && (
-                    <Typography variant='body2' color='textSecondary'>
-                      Set end date
-                    </Typography>
-                  )}
-                  {endDateInput && (
-                    <Typography variant='body2' color='textSecondary'>
-                      {format(new Date(endDateInput), " dd MMM yyyy")}
-                    </Typography>
-                  )}
-                </Box>
-              )}
+              renderInput={(inputParams: any) => {
+                const { inputRef, inputProps, InputProps } = inputParams;
+                return (
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, ml: -0.5 }} ref={inputRef}>
+                    <input {...inputProps} style={{ display: "none" }} />
+                    <div>{InputProps?.endAdornment}</div>
+                    {!endDateInput && (
+                      <Typography variant='body2' color='textSecondary'>
+                        Set end date
+                      </Typography>
+                    )}
+                    {endDateInput && (
+                      <Typography variant='body2' color='textSecondary'>
+                        {format(new Date(endDateInput), " dd MMM yyyy")}
+                      </Typography>
+                    )}
+                  </Box>
+                );
+              }}
             />
           </Box>
         )}

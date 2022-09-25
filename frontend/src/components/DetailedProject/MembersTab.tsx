@@ -1,4 +1,4 @@
-import React, { useState, useContext, useMemo } from "react";
+import { useState, useContext, useMemo } from "react";
 import Typography from "@mui/material/Typography";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -104,7 +104,11 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
           />
           <AddMemberToProjectButtonWithDialog projectId={projectId} />
         </Box>
-        <TableContainer component={Paper} elevation={0} sx={{ border: "1px solid", borderColor: "grey.300" }}>
+        <TableContainer
+          component={Paper}
+          elevation={0}
+          sx={{ border: "1px solid", borderColor: "grey.300", maxHeight: 400 }}
+        >
           <Table sx={{ minWidth: 650 }} size='small'>
             <TableHead>
               <TableRow>
@@ -117,7 +121,7 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
             <TableBody>
               {tableRows.map((row: RowUserInterface) => {
                 const { user, isAdmin } = row;
-                const { _id: userId, username, displayName } = user;
+                const { _id: userId, username, displayName, title } = user;
 
                 if (matchString(searchInput, username) || matchString(searchInput, displayName)) {
                   return (
@@ -136,7 +140,7 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
                         />
                       </TableCell>
                       <TableCell align='left'>
-                        <Typography fontSize={12}>Software Engineer</Typography>
+                        <Typography fontSize={12}>{title}</Typography>
                       </TableCell>
                       <TableCell align='left'>
                         {isAdmin && (
@@ -160,7 +164,11 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
                               <IconButton
                                 size='small'
                                 color='error'
-                                onClick={() => handleRemoveMember(user)}
+                                onClick={() => {
+                                  if (window.confirm("Remove user from project?")) {
+                                    handleRemoveMember(user);
+                                  }
+                                }}
                                 disabled={loggedInUserId === userId}
                                 sx={{ ml: 1 }}
                               >

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -23,15 +23,15 @@ const TeamObjectivesTab = (props: TeamObjectivesTabProps): JSX.Element => {
   return (
     <Box p={3}>
       <Typography variant='h5' paragraph>
-        Team Objectives
+        Epics
       </Typography>
       <Button variant='outlined' startIcon={<AddIcon />} sx={{ mb: 3 }} onClick={() => setShowCreationForm(true)}>
-        Add Objective
+        Add Epic
       </Button>
       {showCreationForm && <EpicCreationForm onClose={() => setShowCreationForm(false)} projectId={projectId} />}
       {epics.length === 0 && (
         <Typography variant='body2' color='textSecondary' fontStyle='italic'>
-          There are no objectives created.
+          There are no epics created.
         </Typography>
       )}
       <div>{epics && epics.map((epic) => <EpicSummaryAccordion key={epic._id} epic={epic} />)}</div>

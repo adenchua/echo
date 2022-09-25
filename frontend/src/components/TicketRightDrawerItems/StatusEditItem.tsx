@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ListItem from "@mui/material/ListItem";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
@@ -9,13 +9,13 @@ import MenuItem from "@mui/material/MenuItem";
 
 import EditButton from "./EditButton";
 import useProductBacklog from "../../hooks/useProductBacklog";
-import { StatusType } from "../../types/Ticket";
+import { TicketStatus } from "../../types/Ticket";
 import StatusChipButton from "../StatusChipButton";
 import UpdateButton from "./UpdateButton";
 
 interface StatusEditItemProps {
   ticketId: string;
-  status: StatusType;
+  status: TicketStatus;
 }
 
 const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
@@ -27,7 +27,7 @@ const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
     setIsEditModeOn(!isEditModeOn);
   };
 
-  const handleUpdateTicketStatus = (newStatus: StatusType): void => {
+  const handleUpdateTicketStatus = (newStatus: TicketStatus): void => {
     onUpdateTicket(ticketId, { status: newStatus });
     handleToggleEditMode();
   };
@@ -43,7 +43,7 @@ const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
           <Select
             size='small'
             value={status}
-            onChange={(e: SelectChangeEvent) => handleUpdateTicketStatus(e.target.value as StatusType)}
+            onChange={(e: SelectChangeEvent) => handleUpdateTicketStatus(e.target.value as TicketStatus)}
             fullWidth
             SelectDisplayProps={{
               style: {
@@ -63,7 +63,7 @@ const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
                 dense
                 sx={{ display: "flex", justifyContent: "center" }}
               >
-                <StatusChipButton status={ticketStatus as StatusType} size='small' />
+                <StatusChipButton status={ticketStatus as TicketStatus} size='small' />
               </MenuItem>
             ))}
           </Select>

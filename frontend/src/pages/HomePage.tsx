@@ -1,5 +1,4 @@
-import React from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
@@ -14,7 +13,7 @@ const HomePage = (): JSX.Element => {
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
 
   if (!loggedInUserId) {
-    return <Redirect to='/' />;
+    return <Navigate to='/' />;
   }
 
   const renderFeatureCard = (title: string, subtitle: string): JSX.Element => {

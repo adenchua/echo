@@ -1,4 +1,4 @@
-import React, { createContext, useState, ReactNode, useCallback } from "react";
+import { createContext, useState, ReactNode, useCallback } from "react";
 
 import Sprint from "../types/Sprint";
 

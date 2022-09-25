@@ -1,4 +1,3 @@
-import React from "react";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -40,7 +39,7 @@ const ToolbarContent = (props: ToolbarContentProps): JSX.Element => {
           {renderTabLink("Overview", "overview")}
           {renderTabLink("Product Backlog", "product-backlog")}
           {renderTabLink("Sprint Backlog", "sprint-backlog")}
-          {renderTabLink("Team Objectives", "objectives")}
+          {renderTabLink("Epics", "epics")}
           {renderTabLink("Members", "members")}
           {renderTabLink("Settings", "settings")}
         </Box>

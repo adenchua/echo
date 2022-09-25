@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
@@ -14,7 +14,7 @@ import Button from "@mui/material/Button";
 import ListSubheader from "@mui/material/ListSubheader";
 import Toolbar from "@mui/material/Toolbar";
 import Avatar from "@mui/material/Avatar";
-import { Link, useLocation, useParams, useHistory } from "react-router-dom";
+import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
 
 import fetchAllProjectsByUser from "../../api/projects/fetchAllProjectsByUser";
 import { UserProjectsContext } from "../../contexts/UserProjectsContextProvider";
@@ -39,7 +39,7 @@ const Navbar = (): JSX.Element => {
   const { id: selectedProjectId } = useParams<{ id: string }>();
   const { projects, handleSetProject } = useContext(UserProjectsContext);
   const { storedValue: loggedInUserId, removeKeyValue } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getUserProjects = async () => {
@@ -60,7 +60,7 @@ const Navbar = (): JSX.Element => {
 
   const handleLogout = (): void => {
     removeKeyValue();
-    history.push("/"); //returns to login screen
+    navigate("/"); //returns to login screen
   };
 
   return (

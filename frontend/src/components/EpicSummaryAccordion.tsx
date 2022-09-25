@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -122,7 +122,7 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
         {tickets && tickets.length === 0 && (
           <Box py={1} px={4}>
             <Typography variant='body2' color='textSecondary'>
-              There are no tickets tagged to this objective.
+              There are no tickets tagged to this epic.
             </Typography>
           </Box>
         )}

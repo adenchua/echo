@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
@@ -56,7 +56,7 @@ const EpicCreationForm = (props: EpicCreationFormProps): JSX.Element => {
             </Typography>
           )}
           <Typography variant='body2' gutterBottom>
-            New Objective
+            New Epic
           </Typography>
           <TextField
             size='small'
@@ -78,7 +78,7 @@ const EpicCreationForm = (props: EpicCreationFormProps): JSX.Element => {
             disabled={!titleInput || isLoading}
             startIcon={isLoading && <CircularProgress sx={{ color: "inherit" }} size={14} />}
           >
-            {isLoading ? "Adding..." : "Add Objective"}
+            {isLoading ? "Adding..." : "Add Epic"}
           </Button>
         </Box>
       </form>

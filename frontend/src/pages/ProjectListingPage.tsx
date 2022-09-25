@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -7,7 +7,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import Divider from "@mui/material/Divider";
 import Hidden from "@mui/material/Hidden";
 import Link from "@mui/material/Link";
-import { Link as RouterLink, Redirect } from "react-router-dom";
+import { Link as RouterLink, Navigate } from "react-router-dom";
 
 import PageLayoutWrapper from "../components/common/PageLayoutWrapper";
 import Project from "../types/Project";
@@ -24,7 +24,7 @@ const ProjectListingPage = (): JSX.Element => {
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
 
   if (!loggedInUserId) {
-    return <Redirect to='/' />;
+    return <Navigate to='/' />;
   }
 
   const renderTitleHeaders = (): JSX.Element => {
