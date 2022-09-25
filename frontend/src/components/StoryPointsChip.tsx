@@ -1,11 +1,10 @@
-import React from "react";
 import Chip from "@mui/material/Chip";
 import Tooltip from "@mui/material/Tooltip";
 
-import { StoryPointsType } from "../types/Ticket";
+import { StoryPoints } from "../types/Ticket";
 
 interface StoryPointsChipProps {
-  storyPoints: StoryPointsType;
+  storyPoints: StoryPoints;
 }
 
 const StoryPointsChip = (props: StoryPointsChipProps): JSX.Element => {

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -17,7 +17,7 @@ interface PageLayoutWrapperProps {
 
 const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
   const { children, toolbarContent, disablePadding = false } = props;
-  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);

@@ -1,5 +1,4 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import UserProjectsContextProvider from "./contexts/UserProjectsContextProvider";
 import DetailedProjectPageWrapper from "./pages/DetailedProjectPageWrapper";
@@ -11,25 +10,15 @@ import ProjectListingPage from "./pages/ProjectListingPage";
 function App() {
   return (
     <UserProjectsContextProvider>
-      <Router>
-        <Switch>
-          <Route exact path='/'>
-            <LoginPage />
-          </Route>
-          <Route path='/home'>
-            <HomePage />
-          </Route>
-          <Route exact path='/projects'>
-            <ProjectListingPage />
-          </Route>
-          <Route path='/projects/id/:id'>
-            <DetailedProjectPageWrapper />
-          </Route>
-          <Route path='*'>
-            <NotFoundPage />
-          </Route>
-        </Switch>
-      </Router>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<LoginPage />} />
+          <Route path='/home' element={<HomePage />} />
+          <Route path='/projects' element={<ProjectListingPage />} />
+          <Route path='/projects/id/:id' element={<DetailedProjectPageWrapper />} />
+          <Route path='*' element={<NotFoundPage />} />
+        </Routes>
+      </BrowserRouter>
     </UserProjectsContextProvider>
   );
 }

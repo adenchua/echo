@@ -1,5 +1,3 @@
-import React from "react";
-
 import ProjectMembersContextProvider from "../contexts/ProjectMembersContextProvider";
 import TicketsContextProvider from "../contexts/TicketsContextProvider";
 import DetailedProjectPage from "./DetailedProjectPage";

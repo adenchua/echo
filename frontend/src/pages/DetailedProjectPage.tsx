@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Redirect, useParams } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { Navigate, useParams } from "react-router-dom";
 import _ from "lodash";
 
 import PageLayoutWrapper from "../components/common/PageLayoutWrapper";
@@ -72,6 +72,9 @@ const DetailedProjectPage = (): JSX.Element => {
 
     const getProject = async (): Promise<void> => {
       try {
+        if (!id) {
+          return;
+        }
         setIsLoading(true);
         const response = await fetchProject(id);
         const { backlogIds, adminIds, memberIds, epicIds, sprintIds } = response;
@@ -114,7 +117,7 @@ const DetailedProjectPage = (): JSX.Element => {
   };
 
   if (!loggedInUserId) {
-    return <Redirect to='/' />;
+    return <Navigate to='/' />;
   }
 
   if (isLoading) {

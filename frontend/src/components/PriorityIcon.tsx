@@ -1,4 +1,3 @@
-import React from "react";
 import LowPriorityIcon from "@mui/icons-material/KeyboardArrowDown";
 import MediumPriorityIcon from "@mui/icons-material/Remove";
 import HighPriorityIcon from "@mui/icons-material/KeyboardArrowUp";

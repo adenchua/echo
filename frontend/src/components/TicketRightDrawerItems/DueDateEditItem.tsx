@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ListItem from "@mui/material/ListItem";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
@@ -43,7 +43,7 @@ const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
         <Box mb={3} width='100%'>
           <DatePicker
             value={isDue ? null : dueDate}
-            onChange={(newSelectedDate) => {
+            onChange={(newSelectedDate: Date) => {
               handleUpdateTicketDueDate(newSelectedDate);
             }}
             minDate={new Date()}
@@ -58,22 +58,25 @@ const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
                 border: "1px solid",
               },
             }}
-            renderInput={({ inputRef, inputProps, InputProps }) => (
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }} ref={inputRef}>
-                <input {...inputProps} style={{ display: "none" }} />
-                <div>{InputProps?.endAdornment}</div>
-                {!dueDate && (
-                  <Typography variant='body2' color='textSecondary'>
-                    None
-                  </Typography>
-                )}
-                {dueDate && (
-                  <Typography variant='body2' color='textSecondary'>
-                    {format(new Date(dueDate), " dd MMMM yyyy")}
-                  </Typography>
-                )}
-              </Box>
-            )}
+            renderInput={(inputParams: any) => {
+              const { inputRef, inputProps, InputProps } = inputParams;
+              return (
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }} ref={inputRef}>
+                  <input {...inputProps} style={{ display: "none" }} />
+                  <div>{InputProps?.endAdornment}</div>
+                  {!dueDate && (
+                    <Typography variant='body2' color='textSecondary'>
+                      None
+                    </Typography>
+                  )}
+                  {dueDate && (
+                    <Typography variant='body2' color='textSecondary'>
+                      {format(new Date(dueDate), " dd MMMM yyyy")}
+                    </Typography>
+                  )}
+                </Box>
+              );
+            }}
           />
           {dueDate && (
             <Button

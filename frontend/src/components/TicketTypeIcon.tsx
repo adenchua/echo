@@ -1,4 +1,3 @@
-import React from "react";
 import BugIcon from "@mui/icons-material/BugReportOutlined";
 import TaskIcon from "@mui/icons-material/TaskOutlined";
 import UserStoryIcon from "@mui/icons-material/HistoryEduOutlined";

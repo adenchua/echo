@@ -1,5 +1,3 @@
-import React from "react";
-
 import TextButton from "../common/TextButton";
 
 interface UpdateButtonProps {

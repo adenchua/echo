@@ -1,4 +1,3 @@
-import React from "react";
 import { CheckCircleOutlined } from "@mui/icons-material";
 import { Typography, Box } from "@mui/material";
 

@@ -1,4 +1,3 @@
-import React from "react";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 import LowPriorityIcon from "@mui/icons-material/KeyboardArrowDown";

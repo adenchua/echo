@@ -1,22 +1,24 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
-import DateAdapter from "@mui/lab/AdapterDateFns";
-import { LocalizationProvider } from "@mui/lab";
+import AdapterDateFns from "@date-io/date-fns";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 import auLocale from "date-fns/locale/en-AU";
 
 import App from "./App";
 import theme from "./utils/theme";
 
-ReactDOM.render(
+const container = document.getElementById("root");
+const root = createRoot(container!);
+
+root.render(
   <React.StrictMode>
-    <LocalizationProvider dateAdapter={DateAdapter} locale={auLocale}>
+    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={auLocale}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <App />
       </ThemeProvider>
     </LocalizationProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );

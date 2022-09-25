@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import SprintIcon from "@mui/icons-material/DirectionsRun";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -142,7 +142,7 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
           <Box sx={{ mb: 2 }}>
             <DatePicker
               value={endDateInput}
-              onChange={(newValue) => {
+              onChange={(newValue: Date) => {
                 if (isValid(newValue)) {
                   setEndDateInput(newValue);
                 }
@@ -159,22 +159,25 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
                   border: "1px solid",
                 },
               }}
-              renderInput={({ inputRef, inputProps, InputProps }) => (
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1, ml: -0.5 }} ref={inputRef}>
-                  <input {...inputProps} style={{ display: "none" }} />
-                  <div>{InputProps?.endAdornment}</div>
-                  {!endDateInput && (
-                    <Typography variant='body2' color='textSecondary'>
-                      Set end date
-                    </Typography>
-                  )}
-                  {endDateInput && (
-                    <Typography variant='body2' color='textSecondary'>
-                      {format(new Date(endDateInput), " dd MMM yyyy")}
-                    </Typography>
-                  )}
-                </Box>
-              )}
+              renderInput={(inputParams: any) => {
+                const { inputRef, inputProps, InputProps } = inputParams;
+                return (
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, ml: -0.5 }} ref={inputRef}>
+                    <input {...inputProps} style={{ display: "none" }} />
+                    <div>{InputProps?.endAdornment}</div>
+                    {!endDateInput && (
+                      <Typography variant='body2' color='textSecondary'>
+                        Set end date
+                      </Typography>
+                    )}
+                    {endDateInput && (
+                      <Typography variant='body2' color='textSecondary'>
+                        {format(new Date(endDateInput), " dd MMM yyyy")}
+                      </Typography>
+                    )}
+                  </Box>
+                );
+              }}
             />
           </Box>
         )}

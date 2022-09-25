@@ -1,4 +1,3 @@
-import React from "react";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";

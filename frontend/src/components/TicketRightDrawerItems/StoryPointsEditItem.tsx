@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ListItem from "@mui/material/ListItem";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
@@ -8,11 +8,11 @@ import Chip from "@mui/material/Chip";
 import EditButton from "./EditButton";
 import UpdateButton from "./UpdateButton";
 import useProductBacklog from "../../hooks/useProductBacklog";
-import { StoryPointsType } from "../../types/Ticket";
+import { StoryPoints } from "../../types/Ticket";
 
 interface StoryPointsEditItemProps {
   ticketId: string;
-  storyPoints: StoryPointsType;
+  storyPoints: StoryPoints;
 }
 
 const StoryPointsEditItem = (props: StoryPointsEditItemProps): JSX.Element => {
@@ -24,7 +24,7 @@ const StoryPointsEditItem = (props: StoryPointsEditItemProps): JSX.Element => {
     setIsEditModeOn(!isEditModeOn);
   };
 
-  const handleChangeStoryPoints = (newStoryPoints: StoryPointsType): void => {
+  const handleChangeStoryPoints = (newStoryPoints: StoryPoints): void => {
     onUpdateTicket(ticketId, { storyPoints: newStoryPoints });
     handleToggleEditMode();
   };
@@ -49,7 +49,7 @@ const StoryPointsEditItem = (props: StoryPointsEditItemProps): JSX.Element => {
                   transition: "ease-in",
                 },
               }}
-              onClick={() => handleChangeStoryPoints(point as StoryPointsType)}
+              onClick={() => handleChangeStoryPoints(point as StoryPoints)}
             />
           ))}
         </Box>

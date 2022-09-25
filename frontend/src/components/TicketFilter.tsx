@@ -1,4 +1,4 @@
-import React, { useContext, useState, useCallback } from "react";
+import { useContext, useState, useCallback } from "react";
 import Button from "@mui/material/Button";
 import Popover from "@mui/material/Popover";
 import MenuItem from "@mui/material/MenuItem";
@@ -15,7 +15,7 @@ import Divider from "@mui/material/Divider";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 
-import { StatusType } from "../types/Ticket";
+import { TicketStatus } from "../types/Ticket";
 import StatusChipButton from "./StatusChipButton";
 import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
@@ -23,9 +23,9 @@ import { sliceLongString } from "../utils/sliceLongString";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
-export type TicketFilterType = null | `assignee-${string}` | `not_status-${StatusType}` | `status-${StatusType}`;
+export type TicketFilterType = null | `assignee-${string}` | `not_status-${TicketStatus}` | `status-${TicketStatus}`;
 
-const statusToTextMapping: Record<StatusType, string> = {
+const statusToTextMapping: Record<TicketStatus, string> = {
   todo: "To Do",
   progress: "In Progress",
   review: "To Review",
@@ -152,8 +152,8 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
               defaultValue=''
               onChange={(e: SelectChangeEvent) =>
                 handleSelectNewFilter(
-                  `status-${e.target.value as StatusType}`,
-                  statusToTextMapping[e.target.value as StatusType]
+                  `status-${e.target.value as TicketStatus}`,
+                  statusToTextMapping[e.target.value as TicketStatus]
                 )
               }
               SelectDisplayProps={{
@@ -165,7 +165,7 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
             >
               {["todo", "progress", "review", "completed", "stuck", "hold"].map((ticketStatus) => (
                 <MenuItem key={ticketStatus} value={ticketStatus} sx={{ display: "flex", justifyContent: "center" }}>
-                  <StatusChipButton status={ticketStatus as StatusType} size='small' />
+                  <StatusChipButton status={ticketStatus as TicketStatus} size='small' />
                 </MenuItem>
               ))}
             </Select>
