@@ -94,7 +94,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
 
   const renderMobileTicketNavbar = (): JSX.Element => (
     <Box sx={{ display: { xs: "block", lg: "none" } }}>
-      <TicketNavbarWrapper>
+      <TicketNavbarWrapper isTicketSelected={!!selectedTicketId}>
         <IconButton
           onClick={() => setShowTicketCreationForm(true)}
           color='primary'
@@ -121,7 +121,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
 
   const renderDesktopTicketNavbar = (): JSX.Element => (
     <Box sx={{ display: { xs: "none", lg: "block" } }}>
-      <TicketNavbarWrapper>
+      <TicketNavbarWrapper isTicketSelected={!!selectedTicketId}>
         <Typography color='grey.500' variant='caption' fontStyle='italic'>
           Product Backlog <span>&#8729;</span> {`${tickets.length} ticket(s)`}
         </Typography>
@@ -162,7 +162,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
       <Box sx={{ mr: selectedTicketId ? `${TICKET_DRAWER_WIDTH}px` : "" }}>
         {renderMobileTicketNavbar()}
         {renderDesktopTicketNavbar()}
-        <Box p={3}>
+        <Box p={3} mt={5}>
           {showTicketCreationForm && (
             <Box mb={4}>
               <CreateTicketForm projectId={projectId} onClose={() => setShowTicketCreationForm(false)} />

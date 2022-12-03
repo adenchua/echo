@@ -142,7 +142,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
 
   const renderMobileTicketNavbar = (): JSX.Element => (
     <Box sx={{ display: { xs: "block", lg: "none" } }}>
-      <TicketNavbarWrapper>
+      <TicketNavbarWrapper isTicketSelected={!!selectedTicketId}>
         {renderSprintDetails()}
         {(!activeSprint || activeSprint.hasEnded) && (
           <IconButton
@@ -182,7 +182,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
 
   const renderDesktopTicketNavbar = (): JSX.Element => (
     <Box sx={{ display: { xs: "none", lg: "block" } }}>
-      <TicketNavbarWrapper>
+      <TicketNavbarWrapper isTicketSelected={!!selectedTicketId}>
         {renderSprintDetails()}
         <Box flexGrow={1} />
         {(!activeSprint || activeSprint.hasEnded) && (
@@ -233,7 +233,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
     <Box sx={{ mr: selectedTicketId ? `${TICKET_DRAWER_WIDTH}px` : "" }}>
       {renderMobileTicketNavbar()}
       {renderDesktopTicketNavbar()}
-      <Box p={3}>
+      <Box p={3} mt={5}>
         {sprintTickets && sprintTickets.length === 0 && (
           <Typography variant='body2' color='GrayText'>
             There are no tickets in the backlog.
