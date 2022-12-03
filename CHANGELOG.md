@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.0-a] - 2022-12-03
+
+### CHANGED
+
+- ticket filter bar is now fixed for product and sprint backlogs when scrolling so its visible at all times.
+
 ## [1.5.0-a] - 2022-09-25
 
 ### ADDED
