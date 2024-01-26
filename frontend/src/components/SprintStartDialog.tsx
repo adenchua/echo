@@ -1,20 +1,19 @@
-import { useState, useEffect } from "react";
 import SprintIcon from "@mui/icons-material/EventAvailableOutlined";
+import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
+import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
 import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
-import { DatePicker } from "@mui/x-date-pickers";
-import CircularProgress from "@mui/material/CircularProgress";
-import { isValid, format, differenceInCalendarDays } from "date-fns";
+import { differenceInCalendarDays, format, isValid } from "date-fns";
+import { useEffect, useState } from "react";
 
 import Sprint from "../types/Sprint";
 import { sleep } from "../utils/sleep";
+import { DateCalendar } from "@mui/x-date-pickers";
 
 interface SprintStartDialogProps {
   showStartSprintDialog: boolean;
@@ -139,47 +138,19 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
           </DialogContentText>
         )}
         {sprintTicketsCount > 0 && (
-          <Box sx={{ mb: 2 }}>
-            <DatePicker
+          <div>
+            <Typography>Select sprint end date:</Typography>
+            <DateCalendar
               value={endDateInput}
               onChange={(newValue) => {
                 if (isValid(newValue)) {
                   setEndDateInput(newValue);
                 }
               }}
-              minDate={new Date()}
+              disablePast
               reduceAnimations
-              OpenPickerButtonProps={{
-                disableRipple: true,
-                disableTouchRipple: true,
-                size: "small",
-                color: "primary",
-                edge: "start",
-                sx: {
-                  border: "1px solid",
-                },
-              }}
-              renderInput={(inputParams: any) => {
-                const { inputRef, inputProps, InputProps } = inputParams;
-                return (
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, ml: -0.5 }} ref={inputRef}>
-                    <input {...inputProps} style={{ display: "none" }} />
-                    <div>{InputProps?.endAdornment}</div>
-                    {!endDateInput && (
-                      <Typography variant='body2' color='textSecondary'>
-                        Set end date
-                      </Typography>
-                    )}
-                    {endDateInput && (
-                      <Typography variant='body2' color='textSecondary'>
-                        {format(new Date(endDateInput), " dd MMM yyyy")}
-                      </Typography>
-                    )}
-                  </Box>
-                );
-              }}
             />
-          </Box>
+          </div>
         )}
       </DialogContent>
       <DialogActions>
@@ -201,7 +172,7 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
 
   return (
     <>
-      <Dialog open={showStartSprintDialog} onClose={handleClose} maxWidth='sm' fullWidth>
+      <Dialog open={showStartSprintDialog} onClose={handleClose}>
         {showSuccessMessage && renderSuccessMessageContent()}
         {!showSuccessMessage && renderDialogContent()}
       </Dialog>

@@ -1,14 +1,13 @@
-import { createAvatar } from "@dicebear/avatars";
-import * as style from "@dicebear/avatars-bottts-sprites";
+import { createAvatar } from "@dicebear/core";
+import { bottts } from "@dicebear/collection";
 
 const getUserAvatarSVG = (username: string): string => {
-  const svg = createAvatar(style, {
+  const svg = createAvatar(bottts, {
     seed: username,
-    dataUri: true,
-    backgroundColor: "#eeeeee",
+    backgroundColor: ["#eeeeee"],
   });
 
-  return svg;
+  return svg.toDataUriSync();
 };
 
 export default getUserAvatarSVG;

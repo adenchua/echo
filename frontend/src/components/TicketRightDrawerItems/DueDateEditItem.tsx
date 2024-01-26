@@ -1,16 +1,16 @@
-import { useState } from "react";
-import ListItem from "@mui/material/ListItem";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
-import { format, compareAsc } from "date-fns";
-import { DatePicker } from "@mui/x-date-pickers";
 import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import Typography from "@mui/material/Typography";
+import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
+import { compareAsc, format } from "date-fns";
+import { useState } from "react";
 
+import useProductBacklog from "../../hooks/useProductBacklog";
 import EditButton from "./EditButton";
 import UpdateButton from "./UpdateButton";
-import useProductBacklog from "../../hooks/useProductBacklog";
 
 interface DueDateEditItemProps {
   ticketId: string;
@@ -41,46 +41,16 @@ const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
           <UpdateButton onAccept={handleUpdateTicketDueDate} onCancel={handleToggleEditMode} showUpdateButton={false} />
         </Box>
         <Box mb={3} width='100%'>
-          <DatePicker
+          <DateCalendar
             value={isDue ? null : dueDate}
             onChange={(newSelectedDate) => {
-              handleUpdateTicketDueDate(newSelectedDate);
+              handleUpdateTicketDueDate(newSelectedDate ? new Date(newSelectedDate) : null);
             }}
-            minDate={new Date()}
+            disablePast
             reduceAnimations
-            OpenPickerButtonProps={{
-              disableRipple: true,
-              disableTouchRipple: true,
-              size: "small",
-              color: "primary",
-              edge: "start",
-              sx: {
-                border: "1px solid",
-              },
-            }}
-            renderInput={(inputParams: any) => {
-              const { inputRef, inputProps, InputProps } = inputParams;
-              return (
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }} ref={inputRef}>
-                  <input {...inputProps} style={{ display: "none" }} />
-                  <div>{InputProps?.endAdornment}</div>
-                  {!dueDate && (
-                    <Typography variant='body2' color='textSecondary'>
-                      None
-                    </Typography>
-                  )}
-                  {dueDate && (
-                    <Typography variant='body2' color='textSecondary'>
-                      {format(new Date(dueDate), " dd MMMM yyyy")}
-                    </Typography>
-                  )}
-                </Box>
-              );
-            }}
           />
           {dueDate && (
             <Button
-              sx={{ mt: 3 }}
               onClick={() => handleUpdateTicketDueDate(null)}
               fullWidth
               variant='outlined'

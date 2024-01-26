@@ -43,7 +43,10 @@ const DescriptionEditItem = (props: DescriptionEditItemProps): JSX.Element => {
           <Typography variant='body2'>Notes</Typography>
           <EditButton onStartEdit={handleToggleEditMode} />
         </Box>
-        <ListItemText secondary={!description || description === "" ? "None" : description} sx={{ mb: 2 }} />
+        <ListItemText
+          secondary={!description || description === "" ? "None" : description}
+          sx={{ mb: 2, whiteSpace: "pre-wrap" }}
+        />
         <Divider flexItem />
       </ListItem>
     );
@@ -63,7 +66,7 @@ const DescriptionEditItem = (props: DescriptionEditItemProps): JSX.Element => {
         margin='dense'
         size='small'
         multiline
-        rows={3}
+        maxRows={10}
         sx={{ mb: 2 }}
         autoFocus
       />
