@@ -1,26 +1,26 @@
-import { useState, useContext, useEffect } from "react";
-import ListItem from "@mui/material/ListItem";
+import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
+import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
-import Avatar from "@mui/material/Avatar";
-import Chip from "@mui/material/Chip";
-import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Typography from "@mui/material/Typography";
+import { useContext, useEffect, useState } from "react";
 
-import EditButton from "./EditButton";
-import useProductBacklog from "../../hooks/useProductBacklog";
-import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
-import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
-import User from "../../types/User";
-import UpdateButton from "./UpdateButton";
 import fetchUsersByIds from "../../api/users/fetchUsersByIds";
-import { sliceLongString } from "../../utils/sliceLongString";
+import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+import useProductBacklog from "../../hooks/useProductBacklog";
+import User from "../../types/User";
 import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
+import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
+import { sliceLongString } from "../../utils/sliceLongString";
+import EditButton from "./EditButton";
+import UpdateButton from "./UpdateButton";
 
 interface AssigneeEditItemProps {
   ticketId: string;
@@ -76,7 +76,6 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
         key={userId}
         avatar={<Avatar src={getUserAvatarSVG(username)} />}
         label={sliceLongString(displayName, 24)}
-        size='small'
       />
     );
   };

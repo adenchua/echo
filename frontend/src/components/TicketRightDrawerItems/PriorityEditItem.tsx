@@ -1,17 +1,17 @@
-import { useState } from "react";
-import ListItem from "@mui/material/ListItem";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import Typography from "@mui/material/Typography";
+import { useState } from "react";
 
-import EditButton from "./EditButton";
-import UpdateButton from "./UpdateButton";
 import useProductBacklog from "../../hooks/useProductBacklog";
 import { TicketPriority } from "../../types/Ticket";
-import FormPriorityToggleButtons from "../FormPriorityToggleButtons";
 import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter";
+import FormPriorityToggleButtons from "../FormPriorityToggleButtons";
 import PriorityIcon from "../PriorityIcon";
+import EditButton from "./EditButton";
+import UpdateButton from "./UpdateButton";
 
 interface PriorityEditItemProps {
   ticketId: string;
@@ -58,10 +58,9 @@ const PriorityEditItem = (props: PriorityEditItemProps): JSX.Element => {
       </Box>
       <Chip
         label={`${capitalizeFirstLetter(priority)} Priority`}
-        size='small'
         icon={
           <Box display='flex' alignItems='center'>
-            <PriorityIcon priority={priority} hideMedium={false} />
+            <PriorityIcon priority={priority} />
           </Box>
         }
         sx={{ mb: 2 }}

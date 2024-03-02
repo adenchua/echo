@@ -1,14 +1,14 @@
-import { useState } from "react";
-import ListItem from "@mui/material/ListItem";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import Typography from "@mui/material/Typography";
+import { useState } from "react";
 
-import EditButton from "./EditButton";
-import UpdateButton from "./UpdateButton";
 import useProductBacklog from "../../hooks/useProductBacklog";
 import { StoryPoints } from "../../types/Ticket";
+import EditButton from "./EditButton";
+import UpdateButton from "./UpdateButton";
 
 interface StoryPointsEditItemProps {
   ticketId: string;
@@ -65,7 +65,7 @@ const StoryPointsEditItem = (props: StoryPointsEditItemProps): JSX.Element => {
         <EditButton onStartEdit={handleToggleEditMode} />
       </Box>
       <Box mb={2}>
-        <Chip label={storyPoints} size='small' />
+        <Chip label={storyPoints} />
       </Box>
       <Divider flexItem />
     </ListItem>

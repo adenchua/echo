@@ -1,19 +1,19 @@
-import { useState, useEffect } from "react";
+import FilledCheckIcon from "@mui/icons-material/CheckCircle";
+import CheckIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import FilledSprintIcon from "@mui/icons-material/RunCircle";
+import SprintIcon from "@mui/icons-material/RunCircleOutlined";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
-import Tooltip from "@mui/material/Tooltip";
-import Box from "@mui/material/Box";
-import SprintIcon from "@mui/icons-material/RunCircleOutlined";
-import FilledSprintIcon from "@mui/icons-material/RunCircle";
-import CheckIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
-import FilledCheckIcon from "@mui/icons-material/CheckCircle";
+import { useEffect, useState } from "react";
 
-import TicketTypeIcon from "./TicketTypeIcon";
-import getUserAvatarSVG from "../utils/getUserAvatarSVG";
+import fetchUsersByIds from "../api/users/fetchUsersByIds";
 import Ticket from "../types/Ticket";
 import User from "../types/User";
-import fetchUsersByIds from "../api/users/fetchUsersByIds";
+import getUserAvatarSVG from "../utils/getUserAvatarSVG";
+import TicketTypeIcon from "./TicketTypeIcon";
+import Tooltip from "./common/Tooltip";
 
 interface EpicSummaryAccordionTicketProps {
   ticket: Ticket;
@@ -54,22 +54,22 @@ const EpicSummaryAccordionTicket = (props: EpicSummaryAccordionTicketProps): JSX
       }}
     >
       {status !== "completed" && (
-        <Tooltip title='Not done' disableInteractive>
+        <Tooltip title='Not done'>
           <CheckIcon color='disabled' />
         </Tooltip>
       )}
       {status === "completed" && (
-        <Tooltip title='Done' disableInteractive>
+        <Tooltip title='Done'>
           <FilledCheckIcon sx={{ color: "success.light" }} />
         </Tooltip>
       )}
       {isInSprint && (
-        <Tooltip title='In sprint' disableInteractive>
+        <Tooltip title='In sprint'>
           <FilledSprintIcon sx={{ color: "warning.light" }} />
         </Tooltip>
       )}
       {!isInSprint && (
-        <Tooltip title='Not in sprint' disableInteractive>
+        <Tooltip title='Not in sprint'>
           <SprintIcon color='disabled' />
         </Tooltip>
       )}

@@ -1,13 +1,13 @@
-import { useContext, useState } from "react";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
 import AddIcon from "@mui/icons-material/AddOutlined";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import { useContext, useState } from "react";
 
-import Project from "../../types/Project";
-import EpicSummaryAccordion from "../EpicSummaryAccordion";
 import { EpicsContext } from "../../contexts/EpicsContextProvider";
+import Project from "../../types/Project";
 import EpicCreationForm from "../EpicCreationForm";
+import EpicSummaryAccordion from "../EpicSummaryAccordion";
+import CTAButton from "../common/CTAButton";
 
 interface TeamObjectivesTabProps {
   project: Project;
@@ -25,9 +25,8 @@ const TeamObjectivesTab = (props: TeamObjectivesTabProps): JSX.Element => {
       <Typography variant='h5' paragraph>
         Epics
       </Typography>
-      <Button variant='outlined' startIcon={<AddIcon />} sx={{ mb: 3 }} onClick={() => setShowCreationForm(true)}>
-        Add Epic
-      </Button>
+      <CTAButton icon={<AddIcon />} onClick={() => setShowCreationForm(true)} text='Add Epic' />
+      <Box mb={3} />
       {showCreationForm && <EpicCreationForm onClose={() => setShowCreationForm(false)} projectId={projectId} />}
       {epics.length === 0 && (
         <Typography variant='body2' color='textSecondary' fontStyle='italic'>

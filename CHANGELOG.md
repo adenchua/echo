@@ -7,11 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.0] - 2024-03-02
 
+### ADDED
+
+- tooltip to subtask actions for clarity
+
 ### CHANGED
 
 - docker configurations to use values from env instead of modifying url directly
 - project description to show line breaks correctly
 - saving project settings state to show success state upon saving
+- subtask look and design
+- tickets look and design
+- user avatar to be consistent in design
+- team members table look and feel
+- CTA buttons from outline variant to contained variant for consistency
 
 ## [1.0.0] - 2024-03-01
 

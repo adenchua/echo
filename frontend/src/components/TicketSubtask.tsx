@@ -2,6 +2,7 @@ import { CheckCircleOutlined } from "@mui/icons-material";
 import { Typography, Box } from "@mui/material";
 
 import Subtask from "../types/Subtask";
+import Tooltip from "./common/Tooltip";
 
 interface TicketSubtaskProps {
   subtask: Subtask;
@@ -13,24 +14,27 @@ const TicketSubtask = (props: TicketSubtaskProps): JSX.Element => {
   const { _id: id, title, isCompleted } = subtask;
 
   return (
-    <Box
-      display='flex'
-      alignItems='center'
-      gap={1}
-      sx={{
-        "&:hover": {
-          cursor: "pointer",
-          color: isCompleted ? "#00000099" : "success.main",
-        },
-        color: isCompleted ? "success.light" : "#00000077",
-      }}
-      onClick={() => onToggleCompletion(id)}
-    >
-      <CheckCircleOutlined fontSize='small' color='inherit' />
-      <Typography variant='body2' noWrap color='inherit'>
-        {title}
-      </Typography>
-    </Box>
+    <Tooltip title={isCompleted ? "Mark as undone" : "Mark as done"}>
+      <Box
+        display='flex'
+        alignItems='center'
+        gap={1}
+        sx={{
+          "&:hover": {
+            cursor: "pointer",
+            textDecoration: isCompleted ? "none" : "line-through",
+          },
+          color: isCompleted ? "primary.main" : "Gray",
+          textDecoration: isCompleted ? "line-through" : "none",
+        }}
+        onClick={() => onToggleCompletion(id)}
+      >
+        {<CheckCircleOutlined fontSize='small' color='inherit' />}
+        <Typography variant='body2' noWrap color='inherit'>
+          {title}
+        </Typography>
+      </Box>
+    </Tooltip>
   );
 };
 

@@ -1,14 +1,14 @@
+import { Box, Divider, ListItem, ListItemText, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { ListItem, Box, Typography, Divider, ListItemText, TextField } from "@mui/material";
 
-import EditButton from "./EditButton";
-import TextButton from "../common/TextButton";
-import TicketSubtask from "../TicketSubtask";
-import Subtask from "../../types/Subtask";
-import useProductBacklog from "../../hooks/useProductBacklog";
 import fetchSubtasksByIds from "../../api/tickets/fetchSubtasksByIds";
 import updateSubtask from "../../api/tickets/updateSubtask";
+import useProductBacklog from "../../hooks/useProductBacklog";
+import Subtask from "../../types/Subtask";
+import TicketSubtask from "../TicketSubtask";
 import TicketSubtaskDeletable from "../TicketSubtaskDeletable";
+import TextButton from "../common/TextButton";
+import EditButton from "./EditButton";
 
 interface SubtaskEditItemProps {
   subtaskIds: string[];
@@ -117,7 +117,7 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
         {subtasks.length > 0 && (
           <Box maxWidth='100%' mt={2}>
             {subtasks.map((subtask) => (
-              <Box mb={0.5} key={subtask._id}>
+              <Box mb={1} key={subtask._id}>
                 <TicketSubtaskDeletable subtask={subtask} onDeleteSubtask={handleDeleteSubtask} />
               </Box>
             ))}
@@ -138,7 +138,7 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
       {subtasks.length > 0 && (
         <Box maxWidth='100%' sx={{ mt: 1 }}>
           {subtasks.map((subtask) => (
-            <Box mb={0.5} key={subtask._id}>
+            <Box mb={1} key={subtask._id}>
               <TicketSubtask subtask={subtask} onToggleCompletion={handleToggleSubtaskCompletion} />
             </Box>
           ))}

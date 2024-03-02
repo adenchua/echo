@@ -1,16 +1,16 @@
-import { useState } from "react";
-import ListItem from "@mui/material/ListItem";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
 import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Typography from "@mui/material/Typography";
+import { useState } from "react";
 
-import EditButton from "./EditButton";
 import useProductBacklog from "../../hooks/useProductBacklog";
 import { TicketStatus } from "../../types/Ticket";
 import StatusChipButton from "../StatusChipButton";
+import EditButton from "./EditButton";
 import UpdateButton from "./UpdateButton";
 
 interface StatusEditItemProps {
@@ -91,7 +91,7 @@ const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
         <EditButton onStartEdit={handleToggleEditMode} />
       </Box>
       <Box mb={2}>
-        <StatusChipButton status={status} size='small' />
+        <StatusChipButton status={status} size='medium' />
       </Box>
       <Divider flexItem />
     </ListItem>

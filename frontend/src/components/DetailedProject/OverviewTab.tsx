@@ -1,4 +1,3 @@
-import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -8,8 +7,8 @@ import { useContext } from "react";
 import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
 import Project from "../../types/Project";
 import User from "../../types/User";
-import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
 import AddMemberToProjectButtonWithDialog from "../AddMemberToProjectButtonWithDialog";
+import UserAvatar from "../common/UserAvatar";
 
 interface OverviewTabProps {
   project: Project;
@@ -23,16 +22,8 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
   const renderMemberCard = (member: User): JSX.Element => {
     const { displayName, username, title } = member;
     return (
-      <Paper
-        sx={{ p: 1, display: "flex", alignItems: "center", gap: 1, border: "1px solid", borderColor: "grey.300" }}
-        elevation={0}
-      >
-        <Avatar
-          src={getUserAvatarSVG(username)}
-          sx={{ height: 32, width: 32, border: "1px solid", borderColor: "grey.300" }}
-        >
-          {displayName}
-        </Avatar>
+      <Paper sx={{ p: 1, display: "flex", alignItems: "center", gap: 1 }} elevation={0}>
+        <UserAvatar username={username} displayName={displayName} />
         <Box width='160px'>
           <Typography noWrap variant='body2' component='div'>
             {displayName}
