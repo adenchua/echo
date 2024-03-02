@@ -141,6 +141,8 @@ const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
         <DialogContentText sx={{ fontSize: 14 }}>
           <b>{`${completedTickets.length} of ${sprintTickets.length}`}</b> ticket(s) completed in this sprint. Are you
           sure you want to end this sprint?
+          <br />
+          <br />
           <span style={{ color: "crimson" }}> This action will also archive all completed tickets. </span>
         </DialogContentText>
       </DialogContent>

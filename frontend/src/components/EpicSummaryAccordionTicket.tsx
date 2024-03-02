@@ -1,7 +1,3 @@
-import FilledCheckIcon from "@mui/icons-material/CheckCircle";
-import CheckIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
-import FilledSprintIcon from "@mui/icons-material/RunCircle";
-import SprintIcon from "@mui/icons-material/RunCircleOutlined";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -14,6 +10,9 @@ import User from "../types/User";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
 import TicketTypeIcon from "./TicketTypeIcon";
 import Tooltip from "./common/Tooltip";
+import SprintActiveIcon from "./icons/SprintActiveIcon";
+import SprintInactiveIcon from "./icons/SprintInactiveIcon";
+import StatusChipButton from "./StatusChipButton";
 
 interface EpicSummaryAccordionTicketProps {
   ticket: Ticket;
@@ -53,24 +52,17 @@ const EpicSummaryAccordionTicket = (props: EpicSummaryAccordionTicketProps): JSX
         "&: last-child": { borderBottom: 0 },
       }}
     >
-      {status !== "completed" && (
-        <Tooltip title='Not done'>
-          <CheckIcon color='disabled' />
-        </Tooltip>
-      )}
-      {status === "completed" && (
-        <Tooltip title='Done'>
-          <FilledCheckIcon sx={{ color: "success.light" }} />
-        </Tooltip>
-      )}
+      <Tooltip title='Done'>
+        <StatusChipButton status={status} size='small' />
+      </Tooltip>
       {isInSprint && (
         <Tooltip title='In sprint'>
-          <FilledSprintIcon sx={{ color: "warning.light" }} />
+          <SprintActiveIcon sx={{ color: "warning.light" }} />
         </Tooltip>
       )}
       {!isInSprint && (
         <Tooltip title='Not in sprint'>
-          <SprintIcon color='disabled' />
+          <SprintInactiveIcon color='disabled' />
         </Tooltip>
       )}
       <TicketTypeIcon type={type} />

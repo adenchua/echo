@@ -6,6 +6,8 @@ import Typography from "@mui/material/Typography";
 import { compareAsc, format } from "date-fns";
 import { useEffect, useState } from "react";
 
+import SprintActiveIcon from "./icons/SprintActiveIcon";
+import SprintInactiveIcon from "./icons/SprintInactiveIcon";
 import fetchUsersByIds from "../api/users/fetchUsersByIds";
 import useProductBacklog from "../hooks/useProductBacklog";
 import TicketInterface from "../types/Ticket";
@@ -67,7 +69,8 @@ const Ticket = (props: TicketProps): JSX.Element => {
       {showSprintToggleCheckBox && (
         <Tooltip title={isInSprint ? "Remove from sprint backlog" : "Put in sprint backlog"}>
           <Checkbox
-            size='small'
+            icon={<SprintInactiveIcon color='disabled' />}
+            checkedIcon={<SprintActiveIcon />}
             sx={{
               padding: 0,
             }}

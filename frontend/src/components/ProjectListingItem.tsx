@@ -88,7 +88,11 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
 
   const renderAvatarGroups = (users: User[]): JSX.Element => {
     return (
-      <AvatarGroup max={4}>
+      <AvatarGroup
+        sx={{
+          "& .MuiAvatar-root": { width: 32, height: 32, fontSize: 16 },
+        }}
+      >
         {users.map((user) => {
           const { username, _id: userId, displayName } = user;
           return <UserAvatar key={userId} username={username} displayName={displayName} />;
