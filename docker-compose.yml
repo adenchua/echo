@@ -12,9 +12,13 @@ services:
     restart: always
     depends_on:
       - mongodb
+    env_file:
+      - ./backend/.env
 
   nginx:
     build: ./frontend
     restart: always
     ports:
       - 3200:80
+    env_file:
+      - ./frontend/.env
