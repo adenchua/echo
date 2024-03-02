@@ -1,13 +1,12 @@
-import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 
 import useProductBacklog from "../../hooks/useProductBacklog";
 import EditButton from "./EditButton";
+import RightDrawerTitle from "./RightDrawerTitle";
 import UpdateButton from "./UpdateButton";
 
 interface DescriptionEditItemProps {
@@ -39,10 +38,7 @@ const DescriptionEditItem = (props: DescriptionEditItemProps): JSX.Element => {
   if (!isEditModeOn) {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <Box display='flex' gap={1} width='100%' mb={0.5}>
-          <Typography variant='body2'>Notes</Typography>
-          <EditButton onStartEdit={handleToggleEditMode} />
-        </Box>
+        <RightDrawerTitle title='Notes' actionButton={<EditButton onStartEdit={handleToggleEditMode} />} />
         <ListItemText
           secondary={!description || description === "" ? "None" : description}
           sx={{ mb: 2, whiteSpace: "pre-wrap" }}
@@ -54,10 +50,10 @@ const DescriptionEditItem = (props: DescriptionEditItemProps): JSX.Element => {
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <Box display='flex' width='100%' mb={0.5} gap={1}>
-        <Typography variant='body2'>Notes</Typography>
-        <UpdateButton onAccept={handleUpdateTicket} onCancel={handleToggleEditMode} showUpdateButton />
-      </Box>
+      <RightDrawerTitle
+        title='Notes'
+        actionButton={<UpdateButton onAccept={handleUpdateTicket} onCancel={handleToggleEditMode} showSaveButton />}
+      />
       <TextField
         value={descriptionInput}
         variant='filled'

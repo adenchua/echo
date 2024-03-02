@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - user avatar to be consistent in design
 - team members table look and feel
 - CTA buttons from outline variant to contained variant for consistency
+- drawer action buttons look and design
+- size of drawer items to medium
 
 ## [1.0.0] - 2024-03-01
 

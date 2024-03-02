@@ -7,8 +7,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Typography from "@mui/material/Typography";
 import { useContext, useEffect, useState } from "react";
 
 import fetchUsersByIds from "../../api/users/fetchUsersByIds";
@@ -19,7 +17,10 @@ import User from "../../types/User";
 import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
 import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
 import { sliceLongString } from "../../utils/sliceLongString";
+import Select from "../common/Select";
+import UserAvatar from "../common/UserAvatar";
 import EditButton from "./EditButton";
+import RightDrawerTitle from "./RightDrawerTitle";
 import UpdateButton from "./UpdateButton";
 
 interface AssigneeEditItemProps {
@@ -83,43 +84,27 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
   if (isEditModeOn) {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <Box display='flex' width='100%' mb={1} gap={1}>
-          <Typography variant='body2'>Assignee</Typography>
-          <UpdateButton
-            onAccept={handleUpdateTicketAssignee}
-            onCancel={handleToggleEditMode}
-            showUpdateButton={false}
-          />
-        </Box>
+        <RightDrawerTitle
+          title='Assignee'
+          actionButton={
+            <UpdateButton
+              onAccept={handleUpdateTicketAssignee}
+              onCancel={handleToggleEditMode}
+              showSaveButton={false}
+            />
+          }
+        />
         <Box mb={2} width='100%'>
           <Select
-            size='small'
-            onChange={(e: SelectChangeEvent) => handleUpdateTicketAssignee(e.target.value)}
+            onChange={(e) => handleUpdateTicketAssignee(e.target.value as string)}
             value={assigneeId ? assigneeId : ""}
-            fullWidth
-            SelectDisplayProps={{
-              style: {
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "flex-start",
-                padding: "0px 8px",
-                margin: 0,
-                background: "#00000014",
-                height: 32,
-              },
-            }}
-            MenuProps={{
-              style: {
-                maxHeight: 300,
-              },
-            }}
           >
             {[...admins, ...members].map((user) => {
               const { displayName, _id: userId, username } = user;
               return (
-                <MenuItem key={userId} value={userId} dense>
+                <MenuItem key={userId} value={userId}>
                   <ListItemAvatar>
-                    <Avatar sx={{ height: 24, width: 24 }} src={getUserAvatarSVG(username)} />
+                    <UserAvatar username={username} displayName={displayName} />
                   </ListItemAvatar>
                   <ListItemText>{displayName}</ListItemText>
                 </MenuItem>
@@ -159,10 +144,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <Box display='flex' width='100%' gap={1} mb={1}>
-        <Typography variant='body2'>Assignee</Typography>
-        <EditButton onStartEdit={handleToggleEditMode} />
-      </Box>
+      <RightDrawerTitle title='Assignee' actionButton={<EditButton onStartEdit={handleToggleEditMode} />} />
       <Box mb={2}>{renderAssigneeChip()}</Box>
       <Divider flexItem />
     </ListItem>

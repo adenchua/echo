@@ -3,14 +3,14 @@ import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Typography from "@mui/material/Typography";
 import { useState } from "react";
 
 import useProductBacklog from "../../hooks/useProductBacklog";
 import { TicketStatus } from "../../types/Ticket";
 import StatusChipButton from "../StatusChipButton";
+import Select from "../common/Select";
 import EditButton from "./EditButton";
+import RightDrawerTitle from "./RightDrawerTitle";
 import UpdateButton from "./UpdateButton";
 
 interface StatusEditItemProps {
@@ -35,35 +35,17 @@ const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
   if (isEditModeOn) {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <Box display='flex' width='100%' mb={1} gap={1}>
-          <Typography variant='body2'>Status</Typography>
-          <UpdateButton onAccept={handleUpdateTicketStatus} onCancel={handleToggleEditMode} showUpdateButton={false} />
-        </Box>
+        <RightDrawerTitle
+          title='Status'
+          actionButton={
+            <UpdateButton onAccept={handleUpdateTicketStatus} onCancel={handleToggleEditMode} showSaveButton={false} />
+          }
+        />
         <Box mb={2} width='100%'>
-          <Select
-            size='small'
-            value={status}
-            onChange={(e: SelectChangeEvent) => handleUpdateTicketStatus(e.target.value as TicketStatus)}
-            fullWidth
-            SelectDisplayProps={{
-              style: {
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "4px 8px",
-                margin: 0,
-                background: "#00000014",
-              },
-            }}
-          >
+          <Select value={status} onChange={(e) => handleUpdateTicketStatus(e.target.value as TicketStatus)}>
             {["todo", "progress", "review", "completed", "stuck", "hold"].map((ticketStatus) => (
-              <MenuItem
-                key={ticketStatus}
-                value={ticketStatus}
-                dense
-                sx={{ display: "flex", justifyContent: "center" }}
-              >
-                <StatusChipButton status={ticketStatus as TicketStatus} size='small' />
+              <MenuItem key={ticketStatus} value={ticketStatus} sx={{ display: "flex", justifyContent: "center" }}>
+                <StatusChipButton status={ticketStatus as TicketStatus} size='medium' />
               </MenuItem>
             ))}
           </Select>
@@ -86,10 +68,7 @@ const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <Box display='flex' gap={1} width='100%' mb={1}>
-        <Typography variant='body2'>Status</Typography>
-        <EditButton onStartEdit={handleToggleEditMode} />
-      </Box>
+      <RightDrawerTitle title='Status' actionButton={<EditButton onStartEdit={handleToggleEditMode} />} />
       <Box mb={2}>
         <StatusChipButton status={status} size='medium' />
       </Box>

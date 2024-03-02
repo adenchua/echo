@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
-import ListItem from "@mui/material/ListItem";
-import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
+import { useEffect, useState } from "react";
 
-import EditButton from "./EditButton";
-import UpdateButton from "./UpdateButton";
 import useProductBacklog from "../../hooks/useProductBacklog";
+import EditButton from "./EditButton";
+import RightDrawerTitle from "./RightDrawerTitle";
+import UpdateButton from "./UpdateButton";
 
 interface TitleEditItemProps {
   ticketId: string;
@@ -39,18 +38,17 @@ const TitleEditItem = (props: TitleEditItemProps): JSX.Element => {
   if (isEditModeOn) {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <Box display='flex' width='100%' mb={0.5} gap={1}>
-          <Typography variant='body2'>Ticket</Typography>
-          <UpdateButton onAccept={handleUpdateTicket} onCancel={handleToggleEditMode} showUpdateButton />
-        </Box>
+        <RightDrawerTitle
+          title='Ticket'
+          actionButton={<UpdateButton onAccept={handleUpdateTicket} onCancel={handleToggleEditMode} showSaveButton />}
+        />
         <TextField
           value={titleInput}
           variant='filled'
           fullWidth
           onChange={(e) => setTitleInput(e.target.value)}
           margin='dense'
-          size='small'
-          multiline
+          inputProps={{ style: { padding: 7 } }}
           sx={{ mb: 2 }}
           autoFocus
         />
@@ -61,10 +59,7 @@ const TitleEditItem = (props: TitleEditItemProps): JSX.Element => {
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <Box display='flex' gap={1} width='100%' mb={0.5}>
-        <Typography variant='body2'>Ticket</Typography>
-        <EditButton onStartEdit={handleToggleEditMode} />
-      </Box>
+      <RightDrawerTitle title='Ticket' actionButton={<EditButton onStartEdit={handleToggleEditMode} />} />
       <ListItemText secondary={title} sx={{ mb: 2 }} />
       <Divider flexItem />
     </ListItem>

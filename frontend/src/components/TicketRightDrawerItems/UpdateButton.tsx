@@ -1,18 +1,24 @@
-import TextButton from "../common/TextButton";
+import Button from "@mui/material/Button";
 
 interface UpdateButtonProps {
-  showUpdateButton: boolean;
+  showSaveButton: boolean;
   onAccept: any;
   onCancel: any;
 }
 
 const UpdateButton = (props: UpdateButtonProps): JSX.Element => {
-  const { onAccept, onCancel, showUpdateButton } = props;
+  const { onAccept, onCancel, showSaveButton } = props;
 
   return (
     <>
-      <TextButton handleOnClick={onCancel} text='Cancel' />
-      {showUpdateButton && <TextButton handleOnClick={onAccept} text='Save' />}
+      <Button variant='text' onClick={onCancel} size='small'>
+        Cancel
+      </Button>
+      {showSaveButton && (
+        <Button variant='text' onClick={onAccept} size='small'>
+          Save
+        </Button>
+      )}
     </>
   );
 };
