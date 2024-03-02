@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### CHANGED
 
 - docker configurations to use values from env instead of modifying url directly
+- project description to show line breaks correctly
+- saving project settings state to show success state upon saving
 
 ## [1.0.0] - 2024-03-01
 

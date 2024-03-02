@@ -1,15 +1,15 @@
-import { useContext } from "react";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import { useContext } from "react";
 
+import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
+import Project from "../../types/Project";
 import User from "../../types/User";
 import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
 import AddMemberToProjectButtonWithDialog from "../AddMemberToProjectButtonWithDialog";
-import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
-import Project from "../../types/Project";
 
 interface OverviewTabProps {
   project: Project;
@@ -50,7 +50,7 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
       <Typography variant='h5' paragraph>
         Description
       </Typography>
-      <Typography fontSize={14} color='grey.600' textAlign='justify' mb={5}>
+      <Typography fontSize={14} color='grey.600' textAlign='justify' mb={5} sx={{ whiteSpace: "pre-wrap" }}>
         {description ?? "No project description."}
       </Typography>
       <Box display='flex' alignItems='center' gap={2} mb={2}>
