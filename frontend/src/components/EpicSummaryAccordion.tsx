@@ -1,21 +1,20 @@
-import { useState, useEffect, useMemo } from "react";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import Chip from "@mui/material/Chip";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
-import Typography from "@mui/material/Typography";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
 import Box from "@mui/material/Box";
-import { format } from "date-fns";
+import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
+import Typography from "@mui/material/Typography";
+import { useEffect, useMemo, useState } from "react";
 
-import ProgressBarWithPercentage from "./ProgressBarWithPercentage";
-import EpicSummaryAccordionTicket from "./EpicSummaryAccordionTicket";
+import fetchTicketsByIds from "../api/tickets/fetchTicketsByIds";
 import Epic from "../types/Epic";
 import Ticket from "../types/Ticket";
-import fetchTicketsByIds from "../api/tickets/fetchTicketsByIds";
 import DeleteEpicDialog from "./DeleteEpicDialog";
+import EpicSummaryAccordionTicket from "./EpicSummaryAccordionTicket";
+import ProgressBarWithPercentage from "./ProgressBarWithPercentage";
+import Tooltip from "./common/Tooltip";
 
 interface EpicSummaryAccordionProps {
   epic: Epic;
@@ -23,7 +22,7 @@ interface EpicSummaryAccordionProps {
 
 const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => {
   const { epic } = props;
-  const { title, ticketIds, startDate, endDate } = epic;
+  const { title, ticketIds } = epic;
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [isDeleteEpicDialogOpened, setIsDeleteEpicDialogOpened] = useState<boolean>(false);
 
@@ -56,27 +55,14 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
     getTickets();
   }, [ticketIds]);
 
-  const getDateString = (startDate: string, endDate: string): string => {
-    if (!startDate && !endDate) {
-      return "-";
-    }
-
-    const formattedStartDate = startDate ? format(new Date(startDate), "dd MMM") : "N.A.";
-    const formattedEndDate = endDate ? format(new Date(endDate), "dd MMM") : "N.A.";
-
-    return `${formattedStartDate} - ${formattedEndDate}`;
-  };
-
   return (
     <Accordion
-      square
       elevation={0}
       sx={{
         "& .MuiAccordionDetails-root": {
           padding: 0,
         },
       }}
-      TransitionProps={{ unmountOnExit: true }}
     >
       <AccordionSummary
         expandIcon={<ArrowForwardIosSharpIcon color='primary' sx={{ fontSize: "0.9rem", mt: 0.5 }} />}
@@ -87,7 +73,7 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
           },
           "& .MuiAccordionSummary-content": {
             ml: 2,
-            gap: 5,
+            gap: 2,
             alignItems: "center",
             overflowX: "hidden",
           },
@@ -96,17 +82,23 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
         <Typography noWrap variant='body2'>
           {title}
         </Typography>
-        <Chip label={ticketIds.length} size='small' />
+        <Chip label={`${ticketIds.length} tickets`} size='small' />
         <Box flexGrow={1} />
         <Box sx={{ width: 180, flexShrink: 0 }}>
+          <Typography variant='caption'>Progress:</Typography>
           <ProgressBarWithPercentage value={epicProgressionPercentage} />
         </Box>
-        <Typography fontSize={14} color='textSecondary' noWrap sx={{ flexShrink: 0, minWidth: 120 }} align='center'>
-          {getDateString(startDate, endDate)}
-        </Typography>
-        <IconButton size='small' color='error' sx={{ padding: 0 }} onClick={() => setIsDeleteEpicDialogOpened(true)}>
-          <DeleteIcon />
-        </IconButton>
+        <Tooltip title='Delete epic'>
+          <Button
+            variant='outlined'
+            size='small'
+            color='error'
+            onClick={() => setIsDeleteEpicDialogOpened(true)}
+            sx={{ ml: 4 }}
+          >
+            Delete epic
+          </Button>
+        </Tooltip>
         <DeleteEpicDialog
           isDialogOpened={isDeleteEpicDialogOpened}
           onClose={() => setIsDeleteEpicDialogOpened(false)}

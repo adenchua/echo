@@ -9,6 +9,7 @@ import Project from "../../types/Project";
 import User from "../../types/User";
 import AddMemberToProjectButtonWithDialog from "../AddMemberToProjectButtonWithDialog";
 import UserAvatar from "../common/UserAvatar";
+import Grow from "../common/Grow";
 
 interface OverviewTabProps {
   project: Project;
@@ -22,17 +23,19 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
   const renderMemberCard = (member: User): JSX.Element => {
     const { displayName, username, title } = member;
     return (
-      <Paper sx={{ p: 1, display: "flex", alignItems: "center", gap: 1 }} elevation={0}>
-        <UserAvatar username={username} displayName={displayName} />
-        <Box width='160px'>
-          <Typography noWrap variant='body2' component='div'>
-            {displayName}
-          </Typography>
-          <Typography noWrap variant='caption' component='div' color='grey.500'>
-            {title}
-          </Typography>
-        </Box>
-      </Paper>
+      <Grow>
+        <Paper sx={{ p: 1, display: "flex", alignItems: "center", gap: 1 }} elevation={0}>
+          <UserAvatar username={username} displayName={displayName} />
+          <Box width='160px'>
+            <Typography noWrap variant='body2' component='div'>
+              {displayName}
+            </Typography>
+            <Typography noWrap variant='caption' component='div' color='grey.500'>
+              {title}
+            </Typography>
+          </Box>
+        </Paper>
+      </Grow>
     );
   };
 
