@@ -1,21 +1,20 @@
-import { useState, useEffect } from "react";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
+import ProjectIcon from "@mui/icons-material/GitHub";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
+import Box from "@mui/material/Box";
 import Hidden from "@mui/material/Hidden";
-import ProjectIcon from "@mui/icons-material/GitHub";
-import _ from "lodash";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import { useEffect, useState } from "react";
 
-import Project from "../types/Project";
-import ProgressBarWithPercentage from "./ProgressBarWithPercentage";
-import Sprint from "../types/Sprint";
-import getUserAvatarSVG from "../utils/getUserAvatarSVG";
-import User from "../types/User";
 import fetchSprintsByIds from "../api/sprints/fetchSprintsByIds";
-import fetchUsersByIds from "../api/users/fetchUsersByIds";
 import fetchTicketsByIds from "../api/tickets/fetchTicketsByIds";
+import fetchUsersByIds from "../api/users/fetchUsersByIds";
+import Project from "../types/Project";
+import Sprint from "../types/Sprint";
+import User from "../types/User";
+import ProgressBarWithPercentage from "./ProgressBarWithPercentage";
+import UserAvatar from "./common/UserAvatar";
 
 interface ProjectListingItemProps {
   project: Project;
@@ -88,16 +87,15 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
   };
 
   const renderAvatarGroups = (users: User[]): JSX.Element => {
-    const shuffledUsers = _.shuffle(users); // so that same members do not always appear first
     return (
-      <AvatarGroup max={4} sx={{ flexShrink: 1 }}>
-        {shuffledUsers.map((user) => {
+      <AvatarGroup
+        sx={{
+          "& .MuiAvatar-root": { width: 32, height: 32, fontSize: 16 },
+        }}
+      >
+        {users.map((user) => {
           const { username, _id: userId, displayName } = user;
-          return (
-            <Avatar key={userId} src={getUserAvatarSVG(username)}>
-              {displayName}
-            </Avatar>
-          );
+          return <UserAvatar key={userId} username={username} displayName={displayName} />;
         })}
       </AvatarGroup>
     );
@@ -105,7 +103,7 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
 
   return (
     <Paper
-      sx={{ padding: 0.5, mb: 0.5, display: "flex", alignItems: "center", gap: 8, overflowX: "hidden" }}
+      sx={{ padding: 1, mb: 1, display: "flex", alignItems: "center", gap: 7, overflowX: "hidden" }}
       square
       elevation={0}
       key={projectId}

@@ -21,7 +21,16 @@ const ToolbarContent = (props: ToolbarContentProps): JSX.Element => {
     const isTabSelected = query.get("tab") === tabKey;
     return (
       <Link component={RouterLink} to={`/projects/id/${project._id}?tab=${tabKey}`} underline='none'>
-        <Typography variant='caption' color={isTabSelected ? "primary.main" : "grey.500"} component='div'>
+        <Typography
+          variant='body2'
+          color={isTabSelected ? "primary.main" : "grey.500"}
+          sx={{
+            "&:hover": {
+              color: isTabSelected ? "primary.light" : "primary.main",
+            },
+          }}
+          component='div'
+        >
           {displayedTitle}
         </Typography>
       </Link>
@@ -34,7 +43,9 @@ const ToolbarContent = (props: ToolbarContentProps): JSX.Element => {
         <ProjectIcon />
       </Avatar>
       <div>
-        <Typography noWrap>{title}</Typography>
+        <Typography noWrap variant='h6'>
+          {title}
+        </Typography>
         <Box display='flex' gap={3} whiteSpace='nowrap'>
           {renderTabLink("Overview", "overview")}
           {renderTabLink("Product Backlog", "product-backlog")}

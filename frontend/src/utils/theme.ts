@@ -32,21 +32,7 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           textTransform: "none",
-          borderRadius: 0,
-        },
-      },
-    },
-    MuiTextField: {
-      defaultProps: {
-        inputProps: {
-          style: {
-            fontSize: 14,
-          },
-        },
-        InputProps: {
-          style: {
-            borderRadius: 0,
-          },
+          borderRadius: 100,
         },
       },
     },

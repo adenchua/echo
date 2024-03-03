@@ -1,19 +1,26 @@
-import { useContext, useState } from "react";
-import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Project, { ProjectUpdateFieldsType } from "../../types/Project";
-import updateProject from "../../api/projects/updateProject";
-import { sleep } from "../../utils/sleep";
-import { UserProjectsContext } from "../../contexts/UserProjectsContextProvider";
 import deleteProject from "../../api/projects/deleteProject";
+import updateProject from "../../api/projects/updateProject";
+import { UserProjectsContext } from "../../contexts/UserProjectsContextProvider";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+import Project, { ProjectUpdateFieldsType } from "../../types/Project";
 import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
+import { sleep } from "../../utils/sleep";
+
+const saveButtonStates = {
+  default: "Update project details",
+  loading: "Saving...",
+  success: "Saved!",
+} as const;
+type SaveButtonStateKey = keyof typeof saveButtonStates;
 
 interface SettingsTabProps {
   project: Project;
@@ -25,7 +32,7 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
   const { title, description, _id: projectId, adminIds } = project;
   const [titleInput, setTitleInput] = useState<string>(title);
   const [descriptionInput, setDescriptionInput] = useState<string>(description);
-  const [showButtonSaving, setShowButtonSaving] = useState<boolean>(false);
+  const [saveButtonState, setSaveButtonState] = useState<SaveButtonStateKey>("default");
   const [showButtonDeleting, setShowButtonDeleting] = useState<boolean>(false);
   const [deletionInput, setDeletionInput] = useState<string>("");
   const { updateProject: updateProjectInContext } = useContext(UserProjectsContext);
@@ -41,16 +48,17 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
     const updatableFields = { title: titleInput, description: descriptionInput };
 
     try {
-      setShowButtonSaving(true);
+      setSaveButtonState("loading");
       await sleep(1000);
       await updateProject(projectId, titleInput, descriptionInput);
       updateProjectInContext(projectId, updatableFields);
       handleUpdateProjectFields(updatableFields); // updates in overview page
-      setShowButtonSaving(false);
+      setSaveButtonState("success");
     } catch (error) {
       // do nothing
     } finally {
-      setShowButtonSaving(false);
+      await sleep(1000);
+      setSaveButtonState("default");
     }
   };
 
@@ -106,12 +114,12 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
             placeholder='Give your project a detailed description'
           />
           <Button
-            sx={{ display: "block" }}
+            sx={{ display: "block", width: "200px" }}
             variant='contained'
             onClick={handleUpdateProject}
-            disabled={showButtonSaving || titleInput.length === 0}
+            disabled={saveButtonState !== "default" || titleInput.length === 0}
           >
-            {showButtonSaving ? "Saving..." : "Save"}
+            {saveButtonStates[saveButtonState]}
           </Button>
         </Grid>
       </Grid>

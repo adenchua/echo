@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 5084
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "start:prod"]

@@ -1,17 +1,17 @@
-import { useState } from "react";
-import ListItem from "@mui/material/ListItem";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import { useState } from "react";
 
-import EditButton from "./EditButton";
-import UpdateButton from "./UpdateButton";
-import TicketTypeIcon from "../TicketTypeIcon";
 import useProductBacklog from "../../hooks/useProductBacklog";
 import { TicketType } from "../../types/Ticket";
 import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter";
 import FormTicketTypeToggleButtons from "../FormTicketTypeToggleButtons";
+import TicketTypeIcon from "../TicketTypeIcon";
+import EditButton from "./EditButton";
+import RightDrawerTitle from "./RightDrawerTitle";
+import UpdateButton from "./UpdateButton";
 
 interface TicketTypeEditItemProps {
   ticketId: string;
@@ -38,10 +38,12 @@ const TicketTypeEditItem = (props: TicketTypeEditItemProps): JSX.Element => {
   if (isEditModeOn) {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <Box display='flex' width='100%' mb={1} gap={1}>
-          <Typography variant='body2'>Type</Typography>
-          <UpdateButton onAccept={handleChangeTicketType} onCancel={handleToggleEditMode} showUpdateButton={false} />
-        </Box>
+        <RightDrawerTitle
+          title='Type'
+          actionButton={
+            <UpdateButton onAccept={handleChangeTicketType} onCancel={handleToggleEditMode} showSaveButton={false} />
+          }
+        />
         <Box mb={2}>
           <FormTicketTypeToggleButtons value={type} onChangeHandler={handleChangeTicketType} />
         </Box>
@@ -52,13 +54,9 @@ const TicketTypeEditItem = (props: TicketTypeEditItemProps): JSX.Element => {
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <Box display='flex' gap={1} width='100%' mb={1}>
-        <Typography variant='body2'>Type</Typography>
-        <EditButton onStartEdit={handleToggleEditMode} />
-      </Box>
+      <RightDrawerTitle title='Type' actionButton={<EditButton onStartEdit={handleToggleEditMode} />} />
       <Chip
         label={`${capitalizeFirstLetter(type)}`}
-        size='small'
         icon={
           <Box display='flex' alignItems='center'>
             <TicketTypeIcon type={type} />

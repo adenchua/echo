@@ -1,34 +1,32 @@
-import { useState, useContext, useMemo } from "react";
-import Typography from "@mui/material/Typography";
+import PromoteAdminIcon from "@mui/icons-material/AddModeratorOutlined";
+import DeleteIcon from "@mui/icons-material/PersonRemoveAlt1Outlined";
+import SearchIcon from "@mui/icons-material/Search";
+import Box from "@mui/material/Box";
+import CardHeader from "@mui/material/CardHeader";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import IconButton from "@mui/material/IconButton";
-import CardHeader from "@mui/material/CardHeader";
-import PromoteAdminIcon from "@mui/icons-material/AddModeratorOutlined";
-import DeleteIcon from "@mui/icons-material/PersonRemoveAlt1Outlined";
 import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
-import Tooltip from "@mui/material/Tooltip";
-import Paper from "@mui/material/Paper";
-import InputAdornment from "@mui/material/InputAdornment";
-import SearchIcon from "@mui/icons-material/Search";
+import Typography from "@mui/material/Typography";
+import { useContext, useMemo, useState } from "react";
 
-import ContainerWrapper from "../common/ContainerWrapper";
-import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
-import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
-import User from "../../types/User";
-import { matchString } from "../../utils/matchString";
-import removeMemberFromProject from "../../api/projects/removeMemberFromProject";
-import Project from "../../types/Project";
 import promoteMemberToAdmin from "../../api/projects/promoteMemberToAdmin";
-import AddMemberToProjectButtonWithDialog from "../AddMemberToProjectButtonWithDialog";
+import removeMemberFromProject from "../../api/projects/removeMemberFromProject";
+import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+import Project from "../../types/Project";
+import User from "../../types/User";
 import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
+import { matchString } from "../../utils/matchString";
+import AddMemberToProjectButtonWithDialog from "../AddMemberToProjectButtonWithDialog";
+import Tooltip from "../common/Tooltip";
+import UserAvatar from "../common/UserAvatar";
 
 interface RowUserInterface {
   user: User;
@@ -81,113 +79,104 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
 
   return (
     <Box p={3}>
-      <ContainerWrapper>
-        <Typography variant='h5' paragraph>
-          Team Members
-        </Typography>
-        <Box display='flex' alignItems='center' gap={2} mb={2}>
-          <TextField
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position='start'>
-                  <SearchIcon fontSize='small' />
-                </InputAdornment>
-              ),
-              style: {
-                borderRadius: 0,
-              },
-            }}
-            size='small'
-            placeholder='Search...'
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-          />
-          <AddMemberToProjectButtonWithDialog projectId={projectId} />
-        </Box>
-        <TableContainer
-          component={Paper}
-          elevation={0}
-          sx={{ border: "1px solid", borderColor: "grey.300", maxHeight: 400 }}
-        >
-          <Table sx={{ minWidth: 650 }} size='small'>
-            <TableHead>
-              <TableRow>
-                <TableCell>Member</TableCell>
-                <TableCell align='left'>Title</TableCell>
-                <TableCell align='left'>Type</TableCell>
-                {isLoggedInUserAnAdmin && <TableCell align='center'>Actions</TableCell>}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {tableRows.map((row: RowUserInterface) => {
-                const { user, isAdmin } = row;
-                const { _id: userId, username, displayName, title } = user;
+      <Typography variant='h5' paragraph>
+        Team Members
+      </Typography>
+      <Box display='flex' alignItems='center' gap={2} mb={2}>
+        <TextField
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position='start'>
+                <SearchIcon fontSize='small' />
+              </InputAdornment>
+            ),
+          }}
+          size='small'
+          placeholder='Search...'
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+        />
+        <AddMemberToProjectButtonWithDialog projectId={projectId} />
+      </Box>
+      <TableContainer component={Paper} elevation={0} sx={{ maxHeight: 640 }}>
+        <Table stickyHeader size='small'>
+          <TableHead>
+            <TableRow>
+              <TableCell>Member</TableCell>
+              <TableCell align='left'>Title</TableCell>
+              <TableCell align='left'>Type</TableCell>
+              {isLoggedInUserAnAdmin && <TableCell align='center'>Actions</TableCell>}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {tableRows.map((row: RowUserInterface) => {
+              const { user, isAdmin } = row;
+              const { _id: userId, username, displayName, title } = user;
 
-                if (matchString(searchInput, username) || matchString(searchInput, displayName)) {
-                  return (
-                    <TableRow key={userId} sx={{ "&:last-child td, &:last-child th": { border: 0 } }} hover>
-                      <TableCell>
-                        <CardHeader
-                          sx={{ padding: 0 }}
-                          avatar={<Avatar sx={{ height: 24, width: 24 }} src={getUserAvatarSVG(username)} />}
-                          title={
-                            <>
-                              <Typography fontSize={12} display='inline'>{`${displayName} `}</Typography>{" "}
-                              <Typography fontSize={12} color='grey.500' display='inline'>{`@${username}`}</Typography>
-                            </>
-                          }
-                          disableTypography
-                        />
-                      </TableCell>
-                      <TableCell align='left'>
-                        <Typography fontSize={12}>{title}</Typography>
-                      </TableCell>
-                      <TableCell align='left'>
-                        {isAdmin && (
-                          <Typography fontSize={12} color='error'>
-                            Admin
-                          </Typography>
-                        )}
-                        {!isAdmin && <Typography fontSize={12}>Member</Typography>}
-                      </TableCell>
-                      {isLoggedInUserAnAdmin && (
-                        <TableCell align='center'>
-                          {!isAdmin && (
-                            <Tooltip title='Promote to Admin' disableInteractive>
-                              <IconButton size='small' color='primary' onClick={() => handlePromoteMember(user)}>
-                                <PromoteAdminIcon fontSize='small' />
-                              </IconButton>
-                            </Tooltip>
-                          )}
-                          <Tooltip title='Remove from project' disableInteractive>
-                            <span>
-                              <IconButton
-                                size='small'
-                                color='error'
-                                onClick={() => {
-                                  if (window.confirm("Remove user from project?")) {
-                                    handleRemoveMember(user);
-                                  }
-                                }}
-                                disabled={loggedInUserId === userId}
-                                sx={{ ml: 1 }}
-                              >
-                                <DeleteIcon fontSize='small' />
-                              </IconButton>
-                            </span>
-                          </Tooltip>
-                        </TableCell>
+              if (matchString(searchInput, username) || matchString(searchInput, displayName)) {
+                return (
+                  <TableRow key={userId} sx={{ "&:last-child td, &:last-child th": { border: 0 } }} hover>
+                    <TableCell>
+                      <CardHeader
+                        sx={{ padding: 0 }}
+                        avatar={<UserAvatar username={username} displayName={displayName} />}
+                        title={
+                          <>
+                            <Typography variant='body2' display='inline'>{`${displayName} `}</Typography>{" "}
+                            <Typography variant='body2' color='grey.500' display='inline'>{`@${username}`}</Typography>
+                          </>
+                        }
+                        disableTypography
+                      />
+                    </TableCell>
+                    <TableCell align='left'>
+                      <Typography variant='body2'>{title}</Typography>
+                    </TableCell>
+                    <TableCell align='left'>
+                      {isAdmin && (
+                        <Typography color='error' variant='body2'>
+                          Admin
+                        </Typography>
                       )}
-                    </TableRow>
-                  );
-                }
+                      {!isAdmin && <Typography variant='body2'>Member</Typography>}
+                    </TableCell>
+                    {isLoggedInUserAnAdmin && (
+                      <TableCell align='center'>
+                        {!isAdmin && (
+                          <Tooltip title='Promote to Admin'>
+                            <IconButton color='primary' onClick={() => handlePromoteMember(user)}>
+                              <PromoteAdminIcon fontSize='small' />
+                            </IconButton>
+                          </Tooltip>
+                        )}
+                        <Tooltip title='Remove from project'>
+                          <span>
+                            <IconButton
+                              size='small'
+                              color='error'
+                              onClick={() => {
+                                if (window.confirm("Remove user from project?")) {
+                                  handleRemoveMember(user);
+                                }
+                              }}
+                              disabled={loggedInUserId === userId}
+                              sx={{ ml: 1 }}
+                            >
+                              <DeleteIcon fontSize='small' />
+                            </IconButton>
+                          </span>
+                        </Tooltip>
+                      </TableCell>
+                    )}
+                  </TableRow>
+                );
+              }
 
-                return null;
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </ContainerWrapper>
+              return null;
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Box>
   );
 };

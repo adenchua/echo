@@ -1,31 +1,33 @@
-import { useState, useContext, useEffect } from "react";
-import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import SearchIcon from "@mui/icons-material/Search";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import Chip from "@mui/material/Chip";
 import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import Avatar from "@mui/material/Avatar";
-import SearchIcon from "@mui/icons-material/Search";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import DialogTitle from "@mui/material/DialogTitle";
 import InputAdornment from "@mui/material/InputAdornment";
-import Chip from "@mui/material/Chip";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import Checkbox from "@mui/material/Checkbox";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { useContext, useEffect, useState } from "react";
 
-import User from "../types/User";
-import fetchAllUsers from "../api/users/fetchAllUsers";
 import { ListItemAvatar } from "@mui/material";
+import addMembersToProject from "../api/projects/addMembersToProject";
+import fetchAllUsers from "../api/users/fetchAllUsers";
+import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
+import User from "../types/User";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
 import { matchString } from "../utils/matchString";
-import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
-import addMembersToProject from "../api/projects/addMembersToProject";
+import CTAButton from "./common/CTAButton";
+import UserAvatar from "./common/UserAvatar";
 
 interface AddMemberToProjectButtonWithDialogProps {
   projectId: string;
@@ -100,7 +102,7 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
         >
           <Checkbox edge='start' checked={selectedMembers.includes(user)} size='small' />
           <ListItemAvatar>
-            <Avatar src={getUserAvatarSVG(username)} />
+            <UserAvatar username={username} displayName={displayName} />
           </ListItemAvatar>
           <ListItemText primary={displayName} secondary={`@${username}`} />
         </ListItemButton>
@@ -116,16 +118,13 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
         avatar={<Avatar src={getUserAvatarSVG(username)} />}
         label={displayName}
         onDelete={() => handleToggleSelectedMember(user)}
-        size='small'
       />
     );
   };
 
   return (
     <>
-      <Button startIcon={<AddIcon fontSize='small' />} size='small' onClick={() => setIsDialogOpen(true)}>
-        Add Member
-      </Button>
+      <CTAButton icon={<AddIcon />} onClick={() => setIsDialogOpen(true)} text='Add Member' />
       <Dialog open={isDialogOpen} onClose={handleCloseDialog} maxWidth='sm' fullWidth>
         <DialogTitle
           sx={{
@@ -157,9 +156,6 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
                   <SearchIcon />
                 </InputAdornment>
               ),
-              style: {
-                borderRadius: 0,
-              },
             }}
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}

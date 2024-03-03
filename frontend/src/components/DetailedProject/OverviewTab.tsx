@@ -1,15 +1,14 @@
-import { useContext } from "react";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import Avatar from "@mui/material/Avatar";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import { useContext } from "react";
 
-import User from "../../types/User";
-import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
-import AddMemberToProjectButtonWithDialog from "../AddMemberToProjectButtonWithDialog";
 import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
 import Project from "../../types/Project";
+import User from "../../types/User";
+import AddMemberToProjectButtonWithDialog from "../AddMemberToProjectButtonWithDialog";
+import UserAvatar from "../common/UserAvatar";
 
 interface OverviewTabProps {
   project: Project;
@@ -23,16 +22,8 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
   const renderMemberCard = (member: User): JSX.Element => {
     const { displayName, username, title } = member;
     return (
-      <Paper
-        sx={{ p: 1, display: "flex", alignItems: "center", gap: 1, border: "1px solid", borderColor: "grey.300" }}
-        elevation={0}
-      >
-        <Avatar
-          src={getUserAvatarSVG(username)}
-          sx={{ height: 32, width: 32, border: "1px solid", borderColor: "grey.300" }}
-        >
-          {displayName}
-        </Avatar>
+      <Paper sx={{ p: 1, display: "flex", alignItems: "center", gap: 1 }} elevation={0}>
+        <UserAvatar username={username} displayName={displayName} />
         <Box width='160px'>
           <Typography noWrap variant='body2' component='div'>
             {displayName}
@@ -50,7 +41,7 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
       <Typography variant='h5' paragraph>
         Description
       </Typography>
-      <Typography fontSize={14} color='grey.600' textAlign='justify' mb={5}>
+      <Typography fontSize={14} color='grey.600' textAlign='justify' mb={5} sx={{ whiteSpace: "pre-wrap" }}>
         {description ?? "No project description."}
       </Typography>
       <Box display='flex' alignItems='center' gap={2} mb={2}>

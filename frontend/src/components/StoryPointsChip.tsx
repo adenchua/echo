@@ -1,7 +1,7 @@
 import Chip from "@mui/material/Chip";
-import Tooltip from "@mui/material/Tooltip";
 
 import { StoryPoints } from "../types/Ticket";
+import Tooltip from "./common/Tooltip";
 
 interface StoryPointsChipProps {
   storyPoints: StoryPoints;
@@ -11,7 +11,7 @@ const StoryPointsChip = (props: StoryPointsChipProps): JSX.Element => {
   const { storyPoints } = props;
 
   return (
-    <Tooltip disableInteractive title='Story points'>
+    <Tooltip title='Story points'>
       <Chip
         size='small'
         label={storyPoints}

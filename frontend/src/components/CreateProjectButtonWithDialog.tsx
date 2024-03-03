@@ -1,25 +1,26 @@
-import { useState, useContext, useEffect } from "react";
-import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
+import ProjectIcon from "@mui/icons-material/GitHub";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import Avatar from "@mui/material/Avatar";
-import ProjectIcon from "@mui/icons-material/GitHub";
+import DialogTitle from "@mui/material/DialogTitle";
 import FormControl from "@mui/material/FormControl";
-import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
-import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import CircularProgress from "@mui/material/CircularProgress";
+import { useContext, useEffect, useState } from "react";
 
 import createProject from "../api/projects/createProject";
 import { UserProjectsContext } from "../contexts/UserProjectsContextProvider";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
+import CTAButton from "./common/CTAButton";
 
 const PROJECT_TYPES: ProjectType[] = ["Software Engineering", "Exploratory Data Analysis", "UX Design"];
 
@@ -72,9 +73,7 @@ const CreateProjectButtonWithDialog = (): JSX.Element => {
 
   return (
     <>
-      <Button startIcon={<AddIcon />} variant='outlined' onClick={() => setIsDialogOpen(true)}>
-        New Project
-      </Button>
+      <CTAButton icon={<AddIcon />} text='New Project' onClick={() => setIsDialogOpen(true)} />
       <Dialog open={isDialogOpen} onClose={handleCloseDialog} maxWidth='sm' fullWidth>
         <DialogTitle
           sx={{

@@ -1,14 +1,15 @@
+import { Box, Divider, ListItem, ListItemText, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
-import { ListItem, Box, Typography, Divider, ListItemText, TextField } from "@mui/material";
 
-import EditButton from "./EditButton";
-import TextButton from "../common/TextButton";
-import TicketSubtask from "../TicketSubtask";
-import Subtask from "../../types/Subtask";
-import useProductBacklog from "../../hooks/useProductBacklog";
 import fetchSubtasksByIds from "../../api/tickets/fetchSubtasksByIds";
 import updateSubtask from "../../api/tickets/updateSubtask";
+import useProductBacklog from "../../hooks/useProductBacklog";
+import Subtask from "../../types/Subtask";
+import TicketSubtask from "../TicketSubtask";
 import TicketSubtaskDeletable from "../TicketSubtaskDeletable";
+import EditButton from "./EditButton";
+import RightDrawerTitle from "./RightDrawerTitle";
+import UpdateButton from "./UpdateButton";
 
 interface SubtaskEditItemProps {
   subtaskIds: string[];
@@ -97,17 +98,18 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
   if (isEditModeOn) {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <Box display='flex' gap={1} width='100%' mb={1}>
-          <Typography variant='body2'>Subtasks</Typography>
-          <TextButton handleOnClick={handleToggleEditMode} text='Done' />
-        </Box>
+        <RightDrawerTitle
+          title='Subtasks'
+          actionButton={
+            <UpdateButton onAccept={handleToggleEditMode} onCancel={handleToggleEditMode} showSaveButton={false} />
+          }
+        />
         <form onSubmit={(e) => handleAddSubtask(e)} style={{ width: "100%" }}>
           <TextField
-            size='small'
             variant='filled'
             autoFocus
             fullWidth
-            inputProps={{ style: { padding: 7, fontSize: 14 } }}
+            inputProps={{ style: { padding: 7 } }}
             placeholder='Type and press enter to add subtask'
             value={titleInput}
             onChange={(e) => setTitleInput(e.target.value)}
@@ -117,7 +119,7 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
         {subtasks.length > 0 && (
           <Box maxWidth='100%' mt={2}>
             {subtasks.map((subtask) => (
-              <Box mb={0.5} key={subtask._id}>
+              <Box mb={1} key={subtask._id}>
                 <TicketSubtaskDeletable subtask={subtask} onDeleteSubtask={handleDeleteSubtask} />
               </Box>
             ))}
@@ -130,15 +132,12 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <Box display='flex' gap={1} width='100%'>
-        <Typography variant='body2'>Subtasks</Typography>
-        <EditButton onStartEdit={handleToggleEditMode} />
-      </Box>
+      <RightDrawerTitle title='Subtasks' actionButton={<EditButton onStartEdit={handleToggleEditMode} />} />
       {subtaskIds.length === 0 && <ListItemText secondary='None' sx={{ mt: 0.5 }} />}
       {subtasks.length > 0 && (
         <Box maxWidth='100%' sx={{ mt: 1 }}>
           {subtasks.map((subtask) => (
-            <Box mb={0.5} key={subtask._id}>
+            <Box mb={1} key={subtask._id}>
               <TicketSubtask subtask={subtask} onToggleCompletion={handleToggleSubtaskCompletion} />
             </Box>
           ))}

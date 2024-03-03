@@ -1,15 +1,16 @@
-import { useState, useContext } from "react";
-import ListItem from "@mui/material/ListItem";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
 import MenuItem from "@mui/material/MenuItem";
+import Typography from "@mui/material/Typography";
+import { useContext, useState } from "react";
 
-import EditButton from "./EditButton";
-import useProductBacklog from "../../hooks/useProductBacklog";
 import { EpicsContext } from "../../contexts/EpicsContextProvider";
+import useProductBacklog from "../../hooks/useProductBacklog";
+import Select from "../common/Select";
+import EditButton from "./EditButton";
+import RightDrawerTitle from "./RightDrawerTitle";
 import UpdateButton from "./UpdateButton";
 
 interface EpicLinkEditItemProps {
@@ -66,38 +67,26 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
   if (isEditModeOn) {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <Box display='flex' width='100%' mb={1} gap={1}>
-          <Typography variant='body2'>Epic</Typography>
-          <UpdateButton
-            onAccept={handleUpdateTicketEpicLink}
-            onCancel={handleToggleEditMode}
-            showUpdateButton={false}
-          />
-        </Box>
+        <RightDrawerTitle
+          title='Epic'
+          actionButton={
+            <UpdateButton
+              onAccept={handleUpdateTicketEpicLink}
+              onCancel={handleToggleEditMode}
+              showSaveButton={false}
+            />
+          }
+        />
         <Box mb={2} width='100%'>
           <Select
-            size='small'
-            fullWidth
             value={epicId ? epicId : ""}
-            onChange={(e: SelectChangeEvent) => {
-              handleUpdateTicketEpicLink(e.target.value);
-            }}
-            SelectDisplayProps={{
-              style: {
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "4px 8px",
-                margin: 0,
-                background: "#00000014",
-              },
+            onChange={(e) => {
+              handleUpdateTicketEpicLink(e.target.value as string);
             }}
           >
             {epics?.map((epic) => (
-              <MenuItem key={epic._id} value={epic._id} dense sx={{ display: "flex", justifyContent: "center" }}>
-                <Typography fontSize={14} maxWidth='80%' noWrap>
-                  {epic.title}
-                </Typography>
+              <MenuItem key={epic._id} value={epic._id}>
+                <Typography noWrap>{epic.title}</Typography>
               </MenuItem>
             ))}
           </Select>
@@ -121,10 +110,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <Box display='flex' gap={1} width='100%' mb={1}>
-        <Typography variant='body2'>Epic</Typography>
-        <EditButton onStartEdit={handleToggleEditMode} />
-      </Box>
+      <RightDrawerTitle title='Epic' actionButton={<EditButton onStartEdit={handleToggleEditMode} />} />
       {renderEpicTypography()}
       <Divider flexItem />
     </ListItem>

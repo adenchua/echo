@@ -1,9 +1,9 @@
 import BugIcon from "@mui/icons-material/BugReportOutlined";
-import TaskIcon from "@mui/icons-material/TaskOutlined";
 import UserStoryIcon from "@mui/icons-material/HistoryEduOutlined";
-import Tooltip from "@mui/material/Tooltip";
+import TaskIcon from "@mui/icons-material/TaskOutlined";
 
 import { TicketType } from "../types/Ticket";
+import Tooltip from "./common/Tooltip";
 
 interface TicketTypeIconProps {
   type: TicketType;
@@ -16,19 +16,19 @@ const TicketTypeIcon = (props: TicketTypeIconProps): JSX.Element => {
   switch (type) {
     case "bug":
       return (
-        <Tooltip title='Bug' disableInteractive>
+        <Tooltip title='Bug'>
           <BugIcon fontSize={fontSize} color='error' />
         </Tooltip>
       );
     case "story":
       return (
-        <Tooltip title='User Story' disableInteractive>
+        <Tooltip title='User Story'>
           <UserStoryIcon fontSize={fontSize} color='info' />
         </Tooltip>
       );
     case "task":
       return (
-        <Tooltip title='Task' disableInteractive>
+        <Tooltip title='Task'>
           <TaskIcon fontSize={fontSize} color='secondary' />
         </Tooltip>
       );

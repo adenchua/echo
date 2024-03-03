@@ -1,22 +1,23 @@
-import { useEffect, useState } from "react";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import Chip from "@mui/material/Chip";
-import Tooltip from "@mui/material/Tooltip";
-import Avatar from "@mui/material/Avatar";
-import { format, compareAsc } from "date-fns";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import { compareAsc, format } from "date-fns";
+import { useEffect, useState } from "react";
 
-import TicketInterface from "../types/Ticket";
-import PriorityIcon from "./PriorityIcon";
-import TicketTypeIcon from "./TicketTypeIcon";
-import useProductBacklog from "../hooks/useProductBacklog";
-import StatusChipButton from "./StatusChipButton";
-import getUserAvatarSVG from "../utils/getUserAvatarSVG";
+import SprintActiveIcon from "./icons/SprintActiveIcon";
+import SprintInactiveIcon from "./icons/SprintInactiveIcon";
 import fetchUsersByIds from "../api/users/fetchUsersByIds";
+import useProductBacklog from "../hooks/useProductBacklog";
+import TicketInterface from "../types/Ticket";
 import User from "../types/User";
+import PriorityIcon from "./PriorityIcon";
+import StatusChipButton from "./StatusChipButton";
 import StoryPointsChip from "./StoryPointsChip";
+import TicketTypeIcon from "./TicketTypeIcon";
+import Tooltip from "./common/Tooltip";
+import UserAvatar from "./common/UserAvatar";
 
 interface TicketProps {
   ticket: TicketInterface;
@@ -56,22 +57,20 @@ const Ticket = (props: TicketProps): JSX.Element => {
         "&:hover": {
           backgroundColor: "grey.200",
         },
-        borderBottom: "1px solid",
-        borderColor: "grey.300",
         display: "flex",
         alignItems: "center",
-        gap: 1.5,
+        gap: 1,
         py: 0.5,
         px: 1,
-        overflowX: "hidden",
+        overflow: "hidden",
       }}
-      square
       elevation={0}
     >
       {showSprintToggleCheckBox && (
-        <Tooltip title={isInSprint ? "Remove from sprint backlog" : "Put in sprint backlog"} disableInteractive>
+        <Tooltip title={isInSprint ? "Remove from sprint backlog" : "Put in sprint backlog"}>
           <Checkbox
-            size='small'
+            icon={<SprintInactiveIcon color='disabled' />}
+            checkedIcon={<SprintActiveIcon />}
             sx={{
               padding: 0,
             }}
@@ -81,7 +80,7 @@ const Ticket = (props: TicketProps): JSX.Element => {
           />
         </Tooltip>
       )}
-      <PriorityIcon priority={priority} hideMedium />
+      <PriorityIcon priority={priority} />
       <TicketTypeIcon type={type} />
       <StoryPointsChip storyPoints={storyPoints} />
       <Typography variant='caption' color='grey.500' noWrap sx={{ minWidth: 24 }}>
@@ -94,7 +93,6 @@ const Ticket = (props: TicketProps): JSX.Element => {
       {status !== "completed" && (
         <Chip
           label={formattedDueDate}
-          size='small'
           sx={{
             display: dueDate ? "" : "none",
             bgcolor: isDue ? "error.light" : "",
@@ -102,16 +100,7 @@ const Ticket = (props: TicketProps): JSX.Element => {
           }}
         />
       )}
-      {assignee && (
-        <Avatar
-          style={{
-            height: 32,
-            width: 32,
-            display: assigneeId ? "" : "none",
-          }}
-          src={getUserAvatarSVG(assignee.username)}
-        />
-      )}
+      {assignee && <UserAvatar username={assignee.username} displayName={assignee.displayName} />}
       <StatusChipButton status={status} size='medium' />
     </Paper>
   );

@@ -52,18 +52,18 @@ const TicketSection = (props: TicketSectionProps): JSX.Element => {
         <Typography noWrap>{getEpicDisplayTitle(epicId)}</Typography>
       </Box>
       {showTickets && (
-        <Box sx={{ border: "1px solid", borderColor: "grey.300", borderBottom: 0 }}>
+        <div>
           {tickets.map((ticket) => {
             if (matchString(searchInput, ticket.title)) {
               return (
-                <Box key={ticket._id} onClick={() => onSelectTicket(ticket._id)}>
+                <Box key={ticket._id} onClick={() => onSelectTicket(ticket._id)} mb={0.5}>
                   <Ticket ticket={ticket} showSprintToggleCheckBox bgGrey={ticket._id === selectedTicketId} />
                 </Box>
               );
             }
             return null;
           })}
-        </Box>
+        </div>
       )}
     </>
   );

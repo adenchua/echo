@@ -1,22 +1,22 @@
-import { useState, useContext } from "react";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
+import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Hidden from "@mui/material/Hidden";
+import InputAdornment from "@mui/material/InputAdornment";
 import Link from "@mui/material/Link";
-import { Link as RouterLink, Navigate } from "react-router-dom";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { useContext, useState } from "react";
+import { Navigate, Link as RouterLink } from "react-router-dom";
 
-import PageLayoutWrapper from "../components/common/PageLayoutWrapper";
-import Project from "../types/Project";
-import ProjectListingItem from "../components/ProjectListingItem";
 import CreateProjectButtonWithDialog from "../components/CreateProjectButtonWithDialog";
+import ProjectListingItem from "../components/ProjectListingItem";
+import PageLayoutWrapper from "../components/common/PageLayoutWrapper";
 import { UserProjectsContext } from "../contexts/UserProjectsContextProvider";
-import { matchString } from "../utils/matchString";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import Project from "../types/Project";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
+import { matchString } from "../utils/matchString";
 
 const ProjectListingPage = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>("");
@@ -71,9 +71,6 @@ const ProjectListingPage = (): JSX.Element => {
                 <SearchIcon />
               </InputAdornment>
             ),
-            style: {
-              borderRadius: 0,
-            },
           }}
         />
       </Box>
