@@ -1,14 +1,15 @@
-import { useState, useCallback, useContext } from "react";
-import Typography from "@mui/material/Typography";
+import ExpandLessIcon from "@mui/icons-material/ExpandLessOutlined";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMoreOutlined";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMoreOutlined";
-import ExpandLessIcon from "@mui/icons-material/ExpandLessOutlined";
+import Typography from "@mui/material/Typography";
+import { useCallback, useContext, useState } from "react";
 
+import { EpicsContext } from "../contexts/EpicsContextProvider";
+import TicketInterface from "../types/Ticket";
 import { matchString } from "../utils/matchString";
 import Ticket from "./Ticket";
-import TicketInterface from "../types/Ticket";
-import { EpicsContext } from "../contexts/EpicsContextProvider";
+import Slide from "./common/Slide";
 
 interface TicketSectionProps {
   tickets: TicketInterface[];
@@ -56,9 +57,11 @@ const TicketSection = (props: TicketSectionProps): JSX.Element => {
           {tickets.map((ticket) => {
             if (matchString(searchInput, ticket.title)) {
               return (
-                <Box key={ticket._id} onClick={() => onSelectTicket(ticket._id)} mb={0.5}>
-                  <Ticket ticket={ticket} showSprintToggleCheckBox bgGrey={ticket._id === selectedTicketId} />
-                </Box>
+                <Slide key={ticket._id} timeout={400}>
+                  <Box onClick={() => onSelectTicket(ticket._id)} mb={0.5}>
+                    <Ticket ticket={ticket} showSprintToggleCheckBox bgGrey={ticket._id === selectedTicketId} />
+                  </Box>
+                </Slide>
               );
             }
             return null;

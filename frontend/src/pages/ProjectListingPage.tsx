@@ -17,6 +17,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import Project from "../types/Project";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import { matchString } from "../utils/matchString";
+import Grow from "../components/common/Grow";
 
 const ProjectListingPage = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>("");
@@ -86,7 +87,11 @@ const ProjectListingPage = (): JSX.Element => {
               key={project._id}
               underline='none'
             >
-              <ProjectListingItem project={project} />
+              <Grow timeout={400}>
+                <div>
+                  <ProjectListingItem project={project} />
+                </div>
+              </Grow>
             </Link>
           );
         }

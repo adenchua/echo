@@ -1,25 +1,25 @@
-import { useContext, useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
+import { useContext, useState } from "react";
 
-import Ticket from "../types/Ticket";
 import { EpicsContext } from "../contexts/EpicsContextProvider";
-import TitleEditItem from "./TicketRightDrawerItems/TitleEditItem";
-import DescriptionEditItem from "./TicketRightDrawerItems/DescriptionEditItem";
-import PriorityEditItem from "./TicketRightDrawerItems/PriorityEditItem";
-import TicketTypeEditItem from "./TicketRightDrawerItems/TicketTypeEditItem";
-import StatusEditItem from "./TicketRightDrawerItems/StatusEditItem";
-import DueDateEditItem from "./TicketRightDrawerItems/DueDateEditItem";
-import AssigneeEditItem from "./TicketRightDrawerItems/AssigneeEditItem";
-import EpicLinkEditItem from "./TicketRightDrawerItems/EpicLinkEditItem";
-import StoryPointsEditItem from "./TicketRightDrawerItems/StoryPointsEditItem";
-import DeleteTicketDialog from "./DeleteTicketDialog";
+import Ticket from "../types/Ticket";
 import { TICKET_DRAWER_WIDTH } from "../utils/constants";
+import DeleteTicketDialog from "./DeleteTicketDialog";
+import AssigneeEditItem from "./TicketRightDrawerItems/AssigneeEditItem";
+import DescriptionEditItem from "./TicketRightDrawerItems/DescriptionEditItem";
+import DueDateEditItem from "./TicketRightDrawerItems/DueDateEditItem";
+import EpicLinkEditItem from "./TicketRightDrawerItems/EpicLinkEditItem";
+import PriorityEditItem from "./TicketRightDrawerItems/PriorityEditItem";
+import StatusEditItem from "./TicketRightDrawerItems/StatusEditItem";
+import StoryPointsEditItem from "./TicketRightDrawerItems/StoryPointsEditItem";
 import SubtaskEditItem from "./TicketRightDrawerItems/SubtaskEditItem";
+import TicketTypeEditItem from "./TicketRightDrawerItems/TicketTypeEditItem";
+import TitleEditItem from "./TicketRightDrawerItems/TitleEditItem";
 
 interface TicketDetailsRightDrawerProps {
   ticket: Ticket;
