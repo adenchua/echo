@@ -44,7 +44,7 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
       <Typography variant='h5' paragraph>
         Description
       </Typography>
-      <Typography fontSize={14} color='grey.600' textAlign='justify' mb={5} sx={{ whiteSpace: "pre-wrap" }}>
+      <Typography color='textSecondary' textAlign='justify' mb={5} sx={{ whiteSpace: "pre-wrap" }}>
         {description ?? "No project description."}
       </Typography>
       <Box display='flex' alignItems='center' gap={2} mb={2}>

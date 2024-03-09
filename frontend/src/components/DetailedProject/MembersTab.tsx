@@ -16,12 +16,14 @@ import { useContext, useMemo, useState } from "react";
 import promoteMemberToAdmin from "../../api/projects/promoteMemberToAdmin";
 import removeMemberFromProject from "../../api/projects/removeMemberFromProject";
 import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
+import useLoad from "../../hooks/useLoad";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import Project from "../../types/Project";
 import User from "../../types/User";
 import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
 import { matchString } from "../../utils/matchString";
 import AddMemberToProjectButtonWithDialog from "../AddMemberToProjectButtonWithDialog";
+import SnackbarError from "../common/SnackbarError";
 import UserAvatar from "../common/UserAvatar";
 import PromoteMemberIconButton from "./PromoteMemberIconButton";
 import RemoveMemberIconButton from "./RemoveMemberIconButton";
@@ -47,6 +49,7 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
   const [searchInput, setSearchInput] = useState<string>("");
   const isLoggedInUserAnAdmin = admins.map((admin) => admin._id).includes(loggedInUserId ?? "-1");
+  const { currentLoadState, handleSetLoadingState } = useLoad();
 
   const getTableRows = (rows: User[], isAdmin: boolean): RowUserInterface[] => {
     const updatedRows: RowUserInterface[] = rows.map((row) => {
@@ -57,19 +60,23 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
 
   const handleRemoveMember = async (member: User): Promise<void> => {
     try {
+      handleSetLoadingState("LOADING");
       await removeMemberFromProject(projectId, member._id);
+      handleSetLoadingState("DEFAULT");
       handleRemoveMemberInContext(member);
     } catch (error) {
-      // do nothing
+      handleSetLoadingState("ERROR");
     }
   };
 
   const handlePromoteMember = async (member: User): Promise<void> => {
     try {
+      handleSetLoadingState("LOADING");
       await promoteMemberToAdmin(projectId, member._id);
+      handleSetLoadingState("DEFAULT");
       handlePromoteMemberInContext(member);
     } catch (error) {
-      // do nothing
+      handleSetLoadingState("ERROR");
     }
   };
 
@@ -157,6 +164,7 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
           </TableBody>
         </Table>
       </TableContainer>
+      <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
     </Box>
   );
 };

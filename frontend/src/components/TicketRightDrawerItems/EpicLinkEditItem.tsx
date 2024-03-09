@@ -7,8 +7,10 @@ import Typography from "@mui/material/Typography";
 import { useContext, useState } from "react";
 
 import { EpicsContext } from "../../contexts/EpicsContextProvider";
+import useLoad from "../../hooks/useLoad";
 import useProductBacklog from "../../hooks/useProductBacklog";
 import Select from "../common/Select";
+import SnackbarError from "../common/SnackbarError";
 import EditButton from "./EditButton";
 import RightDrawerTitle from "./RightDrawerTitle";
 import UpdateButton from "./UpdateButton";
@@ -22,20 +24,29 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
   const { epicId, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const { onAddTicketToEpic, onRemoveTicketFromEpic } = useProductBacklog();
+  const { currentLoadState, handleSetLoadingState } = useLoad();
   const { epics } = useContext(EpicsContext);
 
   const handleToggleEditMode = (): void => {
     setIsEditModeOn(!isEditModeOn);
   };
 
-  const handleUpdateTicketEpicLink = (newEpicLinkId: string): void => {
-    onAddTicketToEpic(ticketId, newEpicLinkId);
-    handleToggleEditMode();
+  const handleUpdateTicketEpicLink = async (newEpicLinkId: string): Promise<void> => {
+    try {
+      await onAddTicketToEpic(ticketId, newEpicLinkId);
+      handleToggleEditMode();
+    } catch (error) {
+      handleSetLoadingState("ERROR");
+    }
   };
 
-  const handleDeleteTicketEpicLink = (): void => {
-    onRemoveTicketFromEpic(ticketId, epicId);
-    handleToggleEditMode();
+  const handleDeleteTicketEpicLink = async (): Promise<void> => {
+    try {
+      await onRemoveTicketFromEpic(ticketId, epicId);
+      handleToggleEditMode();
+    } catch (error) {
+      handleSetLoadingState("ERROR");
+    }
   };
 
   const renderEpicTypography = (): JSX.Element => {
@@ -66,45 +77,48 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
 
   if (isEditModeOn) {
     return (
-      <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <RightDrawerTitle
-          title='Epic'
-          actionButton={
-            <UpdateButton
-              onAccept={handleUpdateTicketEpicLink}
-              onCancel={handleToggleEditMode}
-              showSaveButton={false}
-            />
-          }
-        />
-        <Box mb={2} width='100%'>
-          <Select
-            value={epicId ? epicId : ""}
-            onChange={(e) => {
-              handleUpdateTicketEpicLink(e.target.value as string);
-            }}
-          >
-            {epics?.map((epic) => (
-              <MenuItem key={epic._id} value={epic._id}>
-                <Typography noWrap>{epic.title}</Typography>
-              </MenuItem>
-            ))}
-          </Select>
-          {epicId && (
-            <Button
-              fullWidth
-              color='warning'
-              variant='outlined'
-              size='small'
-              sx={{ mt: 2 }}
-              onClick={() => handleDeleteTicketEpicLink()}
+      <>
+        <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+          <RightDrawerTitle
+            title='Epic'
+            actionButton={
+              <UpdateButton
+                onAccept={handleUpdateTicketEpicLink}
+                onCancel={handleToggleEditMode}
+                showSaveButton={false}
+              />
+            }
+          />
+          <Box mb={2} width='100%'>
+            <Select
+              value={epicId ? epicId : ""}
+              onChange={(e) => {
+                handleUpdateTicketEpicLink(e.target.value as string);
+              }}
             >
-              Remove Link
-            </Button>
-          )}
-        </Box>
-        <Divider flexItem />
-      </ListItem>
+              {epics?.map((epic) => (
+                <MenuItem key={epic._id} value={epic._id}>
+                  <Typography noWrap>{epic.title}</Typography>
+                </MenuItem>
+              ))}
+            </Select>
+            {epicId && (
+              <Button
+                fullWidth
+                color='warning'
+                variant='outlined'
+                size='small'
+                sx={{ mt: 2 }}
+                onClick={() => handleDeleteTicketEpicLink()}
+              >
+                Remove Link
+              </Button>
+            )}
+          </Box>
+          <Divider flexItem />
+        </ListItem>
+        <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
+      </>
     );
   }
 

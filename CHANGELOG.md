@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2024-03-09
+
+### REMOVED
+
+- mobile navbar view for product and sprint backlogs
+
+### ADDED
+
+- error handling for ticket creation
+- error handling for ticket updates
+- error handling for epic management
+- error handling for member management
+- error handling for project update and deletion
+- promote member dialog in members tab to prevent accidental promotions
+- max width to project title to prevent overflowing on the navigation bar
+
+### CHANGED
+
+- standardized overall look and feel of action dialogs in the app
+
 ## [1.2.0] - 2024-03-03
 
 ### CHANGED

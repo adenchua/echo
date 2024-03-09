@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 
 import fetchSubtasksByIds from "../../api/tickets/fetchSubtasksByIds";
 import updateSubtask from "../../api/tickets/updateSubtask";
+import useLoad from "../../hooks/useLoad";
 import useProductBacklog from "../../hooks/useProductBacklog";
 import Subtask from "../../types/Subtask";
 import TicketSubtask from "../TicketSubtask";
 import TicketSubtaskDeletable from "../TicketSubtaskDeletable";
+import SnackbarError from "../common/SnackbarError";
 import EditButton from "./EditButton";
 import RightDrawerTitle from "./RightDrawerTitle";
 import UpdateButton from "./UpdateButton";
@@ -20,24 +22,30 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
   const { subtaskIds, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const [subtasks, setSubtasks] = useState<Subtask[]>([]);
+  const { currentLoadState, handleSetLoadingState } = useLoad();
   const [titleInput, setTitleInput] = useState<string>("");
   const { onAddSubtaskToTicket, onDeleteSubtaskFromTicket } = useProductBacklog();
 
   useEffect(() => {
-    setTitleInput(""); // reset title input upon form activation
-  }, [isEditModeOn]);
+    if (isEditModeOn) {
+      handleSetLoadingState("DEFAULT");
+      setTitleInput(""); // reset title input upon form activation
+    }
+  }, [isEditModeOn, handleSetLoadingState]);
 
   useEffect(() => {
     let isMounted = true;
 
     const getSubtasks = async () => {
       try {
+        handleSetLoadingState("LOADING");
         const response = await fetchSubtasksByIds(subtaskIds);
         if (isMounted) {
           setSubtasks(response);
+          handleSetLoadingState("DEFAULT");
         }
       } catch {
-        // do nothing
+        handleSetLoadingState("ERROR");
       }
     };
 
@@ -46,19 +54,25 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
     return () => {
       isMounted = false;
     };
-  }, [subtaskIds]);
+  }, [subtaskIds, handleSetLoadingState]);
 
   const handleToggleEditMode = (): void => {
     setIsEditModeOn(!isEditModeOn);
   };
 
-  const handleAddSubtask = (e: React.FormEvent): void => {
+  const handleAddSubtask = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     if (!titleInput) {
       return; // cannot accept empty titles
     }
-    onAddSubtaskToTicket(ticketId, titleInput);
-    setTitleInput(""); // reset title input upon creation
+    try {
+      handleSetLoadingState("LOADING");
+      await onAddSubtaskToTicket(ticketId, titleInput);
+      handleSetLoadingState("DEFAULT");
+      setTitleInput(""); // reset title input upon creation
+    } catch (error) {
+      handleSetLoadingState("ERROR");
+    }
   };
 
   const handleToggleSubtaskCompletion = async (subtaskId: string): Promise<void> => {
@@ -68,6 +82,7 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
     }
 
     try {
+      handleSetLoadingState("LOADING");
       await updateSubtask(subtaskId, { isCompleted: !targetSubtask.isCompleted });
       setSubtasks((prevState) =>
         prevState.map((subtask) => {
@@ -77,8 +92,9 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
           return subtask;
         })
       );
-    } catch {
-      // do nothing
+      handleSetLoadingState("DEFAULT");
+    } catch (error) {
+      handleSetLoadingState("ERROR");
     }
   };
 
@@ -89,62 +105,70 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
     }
 
     try {
-      onDeleteSubtaskFromTicket(ticketId, subtaskId);
+      handleSetLoadingState("LOADING");
+      await onDeleteSubtaskFromTicket(ticketId, subtaskId);
+      handleSetLoadingState("DEFAULT");
     } catch {
-      // do nothing
+      handleSetLoadingState("ERROR");
     }
   };
 
   if (isEditModeOn) {
     return (
-      <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <RightDrawerTitle
-          title='Subtasks'
-          actionButton={
-            <UpdateButton onAccept={handleToggleEditMode} onCancel={handleToggleEditMode} showSaveButton={false} />
-          }
-        />
-        <form onSubmit={(e) => handleAddSubtask(e)} style={{ width: "100%" }}>
-          <TextField
-            variant='filled'
-            autoFocus
-            fullWidth
-            inputProps={{ style: { padding: 7 } }}
-            placeholder='Type and press enter to add subtask'
-            value={titleInput}
-            onChange={(e) => setTitleInput(e.target.value)}
+      <>
+        <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+          <RightDrawerTitle
+            title='Subtasks'
+            actionButton={
+              <UpdateButton onAccept={handleToggleEditMode} onCancel={handleToggleEditMode} showSaveButton={false} />
+            }
           />
-          <input type='submit' hidden />
-        </form>
-        {subtasks.length > 0 && (
-          <Box maxWidth='100%' mt={2}>
-            {subtasks.map((subtask) => (
-              <Box mb={1} key={subtask._id}>
-                <TicketSubtaskDeletable subtask={subtask} onDeleteSubtask={handleDeleteSubtask} />
-              </Box>
-            ))}
-          </Box>
-        )}
-        <Divider flexItem sx={{ mt: 2 }} />
-      </ListItem>
+          <form onSubmit={(e) => handleAddSubtask(e)} style={{ width: "100%" }}>
+            <TextField
+              variant='filled'
+              autoFocus
+              fullWidth
+              inputProps={{ style: { padding: 7 } }}
+              placeholder='Type and press enter to add subtask'
+              value={titleInput}
+              onChange={(e) => setTitleInput(e.target.value)}
+            />
+            <input type='submit' hidden />
+          </form>
+          {subtasks.length > 0 && (
+            <Box maxWidth='100%' mt={2}>
+              {subtasks.map((subtask) => (
+                <Box mb={1} key={subtask._id}>
+                  <TicketSubtaskDeletable subtask={subtask} onDeleteSubtask={handleDeleteSubtask} />
+                </Box>
+              ))}
+            </Box>
+          )}
+          <Divider flexItem sx={{ mt: 2 }} />
+        </ListItem>
+        <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
+      </>
     );
   }
 
   return (
-    <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <RightDrawerTitle title='Subtasks' actionButton={<EditButton onStartEdit={handleToggleEditMode} />} />
-      {subtaskIds.length === 0 && <ListItemText secondary='None' sx={{ mt: 0.5 }} />}
-      {subtasks.length > 0 && (
-        <Box maxWidth='100%' sx={{ mt: 1 }}>
-          {subtasks.map((subtask) => (
-            <Box mb={1} key={subtask._id}>
-              <TicketSubtask subtask={subtask} onToggleCompletion={handleToggleSubtaskCompletion} />
-            </Box>
-          ))}
-        </Box>
-      )}
-      <Divider flexItem sx={{ mt: 1.5 }} />
-    </ListItem>
+    <>
+      <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+        <RightDrawerTitle title='Subtasks' actionButton={<EditButton onStartEdit={handleToggleEditMode} />} />
+        {subtaskIds.length === 0 && <ListItemText secondary='None' sx={{ mt: 0.5 }} />}
+        {subtasks.length > 0 && (
+          <Box maxWidth='100%' sx={{ mt: 1 }}>
+            {subtasks.map((subtask) => (
+              <Box mb={1} key={subtask._id}>
+                <TicketSubtask subtask={subtask} onToggleCompletion={handleToggleSubtaskCompletion} />
+              </Box>
+            ))}
+          </Box>
+        )}
+        <Divider flexItem sx={{ mt: 1.5 }} />
+      </ListItem>
+      <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
+    </>
   );
 };
 

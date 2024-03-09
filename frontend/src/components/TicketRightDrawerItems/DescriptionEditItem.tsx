@@ -4,7 +4,9 @@ import ListItemText from "@mui/material/ListItemText";
 import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
 
+import useLoad from "../../hooks/useLoad";
 import useProductBacklog from "../../hooks/useProductBacklog";
+import SnackbarError from "../common/SnackbarError";
 import EditButton from "./EditButton";
 import RightDrawerTitle from "./RightDrawerTitle";
 import UpdateButton from "./UpdateButton";
@@ -17,6 +19,7 @@ interface DescriptionEditItemProps {
 const DescriptionEditItem = (props: DescriptionEditItemProps): JSX.Element => {
   const { description, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
+  const { currentLoadState, handleSetLoadingState } = useLoad();
   const [descriptionInput, setDescriptionInput] = useState<string>(description ?? "");
   const { onUpdateTicket } = useProductBacklog();
 
@@ -28,11 +31,17 @@ const DescriptionEditItem = (props: DescriptionEditItemProps): JSX.Element => {
     setIsEditModeOn(!isEditModeOn);
   };
 
-  const handleUpdateTicket = (): void => {
-    onUpdateTicket(ticketId, {
-      description: descriptionInput,
-    });
-    handleToggleEditMode();
+  const handleUpdateTicket = async (): Promise<void> => {
+    try {
+      handleSetLoadingState("LOADING");
+      await onUpdateTicket(ticketId, {
+        description: descriptionInput,
+      });
+      handleSetLoadingState("SUCCESS");
+      handleToggleEditMode();
+    } catch (error) {
+      handleSetLoadingState("ERROR");
+    }
   };
 
   if (!isEditModeOn) {
@@ -49,26 +58,28 @@ const DescriptionEditItem = (props: DescriptionEditItemProps): JSX.Element => {
   }
 
   return (
-    <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <RightDrawerTitle
-        title='Notes'
-        actionButton={<UpdateButton onAccept={handleUpdateTicket} onCancel={handleToggleEditMode} showSaveButton />}
-      />
-      <TextField
-        value={descriptionInput}
-        variant='filled'
-        fullWidth
-        onChange={(e) => setDescriptionInput(e.target.value)}
-        margin='dense'
-        size='small'
-        rows={5}
-        multiline
-        maxRows={10}
-        sx={{ mb: 2 }}
-        autoFocus
-      />
-      <Divider flexItem />
-    </ListItem>
+    <>
+      <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+        <RightDrawerTitle
+          title='Notes'
+          actionButton={<UpdateButton onAccept={handleUpdateTicket} onCancel={handleToggleEditMode} showSaveButton />}
+        />
+        <TextField
+          value={descriptionInput}
+          variant='filled'
+          fullWidth
+          onChange={(e) => setDescriptionInput(e.target.value)}
+          margin='dense'
+          size='small'
+          rows={5}
+          multiline
+          sx={{ mb: 2 }}
+          autoFocus
+        />
+        <Divider flexItem />
+      </ListItem>
+      <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
+    </>
   );
 };
 
