@@ -1,15 +1,13 @@
 import ProjectsIcon from "@mui/icons-material/GitHub";
 import HomeIcon from "@mui/icons-material/HomeOutlined";
-import LogoutIcon from "@mui/icons-material/LogoutOutlined";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListSubheader from "@mui/material/ListSubheader";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useContext, useEffect } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 import fetchAllProjectsByUser from "../../api/projects/fetchAllProjectsByUser";
 import { UserProjectsContext } from "../../contexts/UserProjectsContextProvider";
@@ -18,6 +16,7 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { APP_VERSION, LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
 import NavbarListItem from "./NavbarListItem";
 import SnackbarError from "./SnackbarError";
+import LogoutButton from "../LogoutButton";
 
 const navigationItems = [
   {
@@ -37,8 +36,7 @@ const Navbar = (): JSX.Element => {
   const { id: selectedProjectId } = useParams<{ id: string }>();
   const { currentLoadState, handleSetLoadingState } = useLoad();
   const { projects, handleSetProject } = useContext(UserProjectsContext);
-  const { storedValue: loggedInUserId, removeKeyValue } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
-  const navigate = useNavigate();
+  const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
 
   useEffect(() => {
     const getUserProjects = async () => {
@@ -58,11 +56,6 @@ const Navbar = (): JSX.Element => {
 
     getUserProjects();
   }, [handleSetProject, loggedInUserId, handleSetLoadingState]);
-
-  const handleLogout = (): void => {
-    removeKeyValue();
-    navigate("/"); //returns to login screen
-  };
 
   return (
     <>
@@ -113,19 +106,7 @@ const Navbar = (): JSX.Element => {
         )}
         <Box flexGrow={1} />
         <Box px={2}>
-          <Button
-            variant='outlined'
-            onClick={handleLogout}
-            fullWidth
-            sx={{
-              color: "#FFF",
-              borderColor: "#FFF",
-              "&:hover": { borderColor: "#FFF", bgcolor: "#FFF", color: "#111" },
-            }}
-            startIcon={<LogoutIcon />}
-          >
-            Logout
-          </Button>
+          <LogoutButton />
         </Box>
       </Box>
       <SnackbarError

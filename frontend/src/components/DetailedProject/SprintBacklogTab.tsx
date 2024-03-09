@@ -25,6 +25,7 @@ import TicketNavbarWrapper from "../TicketNavbarWrapper";
 import TicketSection from "../TicketSection";
 import TicketSortSelectDropdown, { TicketSortType } from "../TicketSortSelectDropdown";
 import TypographySprintInformation from "../common/TypographySprintInformation";
+import { pluralize } from "../../utils/stringUtils";
 
 interface SprintBacklogTabProps {
   project: Project;
@@ -83,14 +84,15 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
     if (!activeSprint) {
       return (
         <TypographySprintInformation>
-          No Active Sprint <span>&#8729;</span> {sprintTickets.length} ticket(s)
+          No Active Sprint <span>&#8729;</span> {sprintTickets.length}{" "}
+          {pluralize("ticket", "tickets", sprintTickets.length)}
         </TypographySprintInformation>
       );
     }
 
     const { number, startDate, endDate } = activeSprint;
-    const formattedStartDate = startDate ? format(new Date(startDate), "LLL dd") : "Invalid Date";
-    const formattedEndDate = endDate ? format(new Date(endDate), "LLL dd") : "Invalid Date";
+    const formattedStartDate = startDate ? format(new Date(startDate), "dd LLL") : "Invalid Date";
+    const formattedEndDate = endDate ? format(new Date(endDate), "dd LLL") : "Invalid Date";
     const dayDifference = differenceInBusinessDays(new Date(endDate), new Date());
 
     return (
@@ -100,8 +102,8 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
         </TypographySprintInformation>
         {dayDifference >= 0 && (
           <TypographySprintInformation>
-            {formattedStartDate} - {formattedEndDate}
-            <span>&#8729;</span> {dayDifference} business day(s) remaining
+            {formattedStartDate} to {formattedEndDate}
+            <span>&#8729;</span> {dayDifference} business {pluralize("day", "days", dayDifference)} remaining
           </TypographySprintInformation>
         )}
       </Box>

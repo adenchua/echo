@@ -7,7 +7,7 @@ import { useState } from "react";
 import useLoad from "../../hooks/useLoad";
 import useProductBacklog from "../../hooks/useProductBacklog";
 import { TicketType } from "../../types/Ticket";
-import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter";
+import { capitalizeFirstLetter } from "../../utils/stringUtils";
 import FormTicketTypeToggleButtons from "../FormTicketTypeToggleButtons";
 import TicketTypeIcon from "../TicketTypeIcon";
 import SnackbarError from "../common/SnackbarError";

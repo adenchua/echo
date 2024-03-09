@@ -1,28 +1,28 @@
-import { useContext, useState, useCallback } from "react";
+import NotInSprintIcon from "@mui/icons-material/PauseCircleOutline";
+import PersonIcon from "@mui/icons-material/PersonOutline";
+import CloseIcon from "@mui/icons-material/RestartAltOutlined";
+import RuleIcon from "@mui/icons-material/RuleOutlined";
+import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Popover from "@mui/material/Popover";
+import Divider from "@mui/material/Divider";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
+import Popover from "@mui/material/Popover";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import PersonIcon from "@mui/icons-material/PersonOutline";
-import RuleIcon from "@mui/icons-material/RuleOutlined";
-import NotInSprintIcon from "@mui/icons-material/PauseCircleOutline";
-import CloseIcon from "@mui/icons-material/RestartAltOutlined";
-import Divider from "@mui/material/Divider";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
+import { useCallback, useContext, useState } from "react";
 
-import { TicketStatus } from "../types/Ticket";
-import StatusChipButton from "./StatusChipButton";
 import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
-import getUserAvatarSVG from "../utils/getUserAvatarSVG";
-import { sliceLongString } from "../utils/sliceLongString";
-import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { TicketStatus } from "../types/Ticket";
+import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
+import getUserAvatarSVG from "../utils/getUserAvatarSVG";
+import { sliceLongString } from "../utils/stringUtils";
+import StatusChipButton from "./StatusChipButton";
 
 export type TicketFilterType =
   | null

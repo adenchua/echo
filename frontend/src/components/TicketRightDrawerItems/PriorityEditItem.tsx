@@ -7,7 +7,7 @@ import { useState } from "react";
 import useLoad from "../../hooks/useLoad";
 import useProductBacklog from "../../hooks/useProductBacklog";
 import { TicketPriority } from "../../types/Ticket";
-import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter";
+import { capitalizeFirstLetter } from "../../utils/stringUtils";
 import FormPriorityToggleButtons from "../FormPriorityToggleButtons";
 import PriorityIcon from "../PriorityIcon";
 import SnackbarError from "../common/SnackbarError";

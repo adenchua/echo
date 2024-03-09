@@ -21,12 +21,12 @@ import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider
 import useLoad from "../hooks/useLoad";
 import User from "../types/User";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
-import { matchString } from "../utils/matchString";
 import ActionDialog from "./common/ActionDialog";
 import CTAButton from "./common/CTAButton";
 import SnackbarSuccess from "./common/SnackbarSuccess";
 import UserAvatar from "./common/UserAvatar";
 import DialogErrorText from "./common/DialogErrorText";
+import { matchString } from "../utils/stringUtils";
 
 interface AddMemberToProjectButtonWithDialogProps {
   projectId: string;

@@ -17,7 +17,7 @@ import useProductBacklog from "../../hooks/useProductBacklog";
 import User from "../../types/User";
 import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
 import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
-import { sliceLongString } from "../../utils/sliceLongString";
+import { sliceLongString } from "../../utils/stringUtils";
 import Select from "../common/Select";
 import SnackbarError from "../common/SnackbarError";
 import UserAvatar from "../common/UserAvatar";

@@ -10,6 +10,7 @@ import ActionDialog from "./common/ActionDialog";
 import ConfirmationDialog from "./common/ConfirmationDialog";
 import SprintIcon from "./icons/SprintActiveIcon";
 import DialogErrorText from "./common/DialogErrorText";
+import { pluralize } from "../utils/stringUtils";
 
 interface SprintStartDialogProps {
   showStartSprintDialog: boolean;
@@ -88,7 +89,7 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
           <Typography component='span' color='primary'>
             {sprintTicketsCount}
           </Typography>{" "}
-          ticket(s) will be included in this sprint.
+          {pluralize("ticket", "tickets", sprintTicketsCount)} will be included in this sprint.
         </DialogContentText>
       )}
       {sprintTicketsCount === 0 && (

@@ -6,9 +6,8 @@ import Typography from "@mui/material/Typography";
 import { compareAsc, format } from "date-fns";
 import { useEffect, useState } from "react";
 
-import SprintActiveIcon from "./icons/SprintActiveIcon";
-import SprintInactiveIcon from "./icons/SprintInactiveIcon";
 import fetchUsersByIds from "../api/users/fetchUsersByIds";
+import useLoad from "../hooks/useLoad";
 import useProductBacklog from "../hooks/useProductBacklog";
 import TicketInterface from "../types/Ticket";
 import User from "../types/User";
@@ -16,10 +15,11 @@ import PriorityIcon from "./PriorityIcon";
 import StatusChipButton from "./StatusChipButton";
 import StoryPointsChip from "./StoryPointsChip";
 import TicketTypeIcon from "./TicketTypeIcon";
+import SnackbarError from "./common/SnackbarError";
 import Tooltip from "./common/Tooltip";
 import UserAvatar from "./common/UserAvatar";
-import useLoad from "../hooks/useLoad";
-import SnackbarError from "./common/SnackbarError";
+import SprintActiveIcon from "./icons/SprintActiveIcon";
+import SprintInactiveIcon from "./icons/SprintInactiveIcon";
 
 interface TicketProps {
   ticket: TicketInterface;
@@ -39,6 +39,7 @@ const Ticket = (props: TicketProps): JSX.Element => {
   useEffect(() => {
     const getAssigneeDetails = async () => {
       if (!assigneeId) {
+        setAssignee(null); // prevent avatar from still showing on the ticket when assignee is removed
         return;
       }
       const [response] = await fetchUsersByIds([assigneeId]);
@@ -101,14 +102,16 @@ const Ticket = (props: TicketProps): JSX.Element => {
         </Typography>
         <Box flexGrow={1} />
         {status !== "completed" && (
-          <Chip
-            label={formattedDueDate}
-            sx={{
-              display: dueDate ? "" : "none",
-              bgcolor: isDue ? "error.light" : "",
-              color: isDue ? "#FFF" : "",
-            }}
-          />
+          <Tooltip title='Due date'>
+            <Chip
+              label={formattedDueDate}
+              sx={{
+                display: dueDate ? "" : "none",
+                bgcolor: isDue ? "error.light" : "",
+                color: isDue ? "#FFF" : "",
+              }}
+            />
+          </Tooltip>
         )}
         {assignee && <UserAvatar username={assignee.username} displayName={assignee.displayName} />}
         <StatusChipButton status={status} size='medium' />

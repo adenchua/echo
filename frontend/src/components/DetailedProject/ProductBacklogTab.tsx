@@ -13,6 +13,7 @@ import { TICKET_DRAWER_WIDTH } from "../../utils/constants";
 import getFilteredTickets from "../../utils/getFilteredTickets";
 import getSortedTickets from "../../utils/getSortedTickets";
 import getTicketsByEpics from "../../utils/getTicketsByEpics";
+import { pluralize } from "../../utils/stringUtils";
 import CreateTicketForm from "../CreateTicketForm";
 import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
 import TicketFilter, { TicketFilterType } from "../TicketFilter";
@@ -95,7 +96,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
     <div>
       <TicketNavbarWrapper isTicketSelected={!!selectedTicketId}>
         <TypographySprintInformation>
-          Product Backlog <span>&#8729;</span> {`${tickets.length} ticket(s)`}
+          Product Backlog <span>&#8729;</span> {`${tickets.length} ${pluralize("ticket", "tickets", tickets.length)}`}
         </TypographySprintInformation>
         <Box flexGrow={1} />
         <Button

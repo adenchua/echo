@@ -11,13 +11,13 @@ import { Navigate, Link as RouterLink } from "react-router-dom";
 
 import CreateProjectButtonWithDialog from "../components/CreateProjectButtonWithDialog";
 import ProjectListingItem from "../components/ProjectListingItem";
+import Grow from "../components/common/Grow";
 import PageLayoutWrapper from "../components/common/PageLayoutWrapper";
 import { UserProjectsContext } from "../contexts/UserProjectsContextProvider";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import Project from "../types/Project";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
-import { matchString } from "../utils/matchString";
-import Grow from "../components/common/Grow";
+import { matchString } from "../utils/stringUtils";
 
 const ProjectListingPage = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>("");

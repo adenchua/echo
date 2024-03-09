@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.3.0] - 2024-03-09
 
+### FIXED
+
+- visual bug where removing assignee from the ticket does not remove the display on ticket
+
 ### REMOVED
 
 - mobile navbar view for product and sprint backlogs
@@ -24,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### CHANGED
 
 - standardized overall look and feel of action dialogs in the app
+- added pluralization of words
 
 ## [1.2.0] - 2024-03-03
 

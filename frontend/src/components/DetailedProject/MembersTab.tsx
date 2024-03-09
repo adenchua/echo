@@ -21,7 +21,7 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import Project from "../../types/Project";
 import User from "../../types/User";
 import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
-import { matchString } from "../../utils/matchString";
+import { matchString } from "../../utils/stringUtils";
 import AddMemberToProjectButtonWithDialog from "../AddMemberToProjectButtonWithDialog";
 import SnackbarError from "../common/SnackbarError";
 import UserAvatar from "../common/UserAvatar";
@@ -149,7 +149,7 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
                       <TableCell align='center'>
                         {!isAdmin && <PromoteMemberIconButton member={user} onConfirm={handlePromoteMember} />}
                         <RemoveMemberIconButton
-                          isDisabled={loggedInUserId === userId}
+                          isDisabled={loggedInUserId === userId || isAdmin}
                           member={user}
                           onRemoveMember={handleRemoveMember}
                         />
