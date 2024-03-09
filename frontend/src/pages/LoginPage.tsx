@@ -1,22 +1,23 @@
-import { useState } from "react";
-import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import ArrowRightIcon from "@mui/icons-material/ArrowRightAlt";
 import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import login from "../api/authentication/login";
-import { loginErrorCodeToMessageHelper } from "../utils/loginErrorCodeToMessageHelper";
+import useLoad from "../hooks/useLoad";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
+import { loginErrorCodeToMessageHelper } from "../utils/loginErrorCodeToMessageHelper";
 
 const LoginPage = (): JSX.Element => {
   const [usernameInput, setUsernameInput] = useState<string>("");
   const [passwordInput, setPasswordInput] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { currentLoadState, handleSetLoadingState } = useLoad();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const { setValueInStorage } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const LoginPage = (): JSX.Element => {
     setErrorMessage("");
 
     try {
-      setIsLoading(true);
+      handleSetLoadingState("LOADING");
       const user = await login(usernameInput, passwordInput);
       const { _id: userId } = user;
       setValueInStorage(userId);
@@ -34,7 +35,7 @@ const LoginPage = (): JSX.Element => {
     } catch (error) {
       const errorCode = (error as Error).message;
       setErrorMessage(loginErrorCodeToMessageHelper(errorCode));
-      setIsLoading(false);
+      handleSetLoadingState("ERROR");
     }
   };
 
@@ -84,9 +85,9 @@ const LoginPage = (): JSX.Element => {
             variant='contained'
             endIcon={<ArrowRightIcon />}
             type='submit'
-            disabled={isLoading || !usernameInput || !passwordInput}
+            disabled={currentLoadState === "LOADING" || !usernameInput || !passwordInput}
           >
-            {isLoading ? "Logging in..." : "Login"}
+            {currentLoadState === "LOADING" ? "Logging in..." : "Login"}
           </Button>
         </form>
       </Paper>

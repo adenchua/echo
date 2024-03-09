@@ -53,7 +53,9 @@ const EpicSummaryAccordionTicket = (props: EpicSummaryAccordionTicketProps): JSX
       }}
     >
       <Tooltip title='Done'>
-        <StatusChipButton status={status} size='small' />
+        <>
+          <StatusChipButton status={status} size='small' />
+        </>
       </Tooltip>
       {isInSprint && (
         <Tooltip title='In sprint'>

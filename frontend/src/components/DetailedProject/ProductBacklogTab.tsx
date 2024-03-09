@@ -1,26 +1,25 @@
-import { useState, useContext, useMemo } from "react";
-import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
-import Box from "@mui/material/Box";
-import SearchIcon from "@mui/icons-material/Search";
-import { SelectChangeEvent } from "@mui/material/Select";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import TextField from "@mui/material/TextField";
 import AddIcon from "@mui/icons-material/Add";
+import SearchIcon from "@mui/icons-material/Search";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import InputBase from "@mui/material/InputBase";
+import { SelectChangeEvent } from "@mui/material/Select";
+import Typography from "@mui/material/Typography";
+import { useContext, useMemo, useState } from "react";
 
-import Project from "../../types/Project";
-import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
 import { TicketsContext } from "../../contexts/TicketsContextProvider";
-import TicketSortSelectDropdown, { TicketSortType } from "../TicketSortSelectDropdown";
-import TicketNavbarWrapper from "../TicketNavbarWrapper";
-import CreateTicketForm from "../CreateTicketForm";
-import TicketFilter, { TicketFilterType } from "../TicketFilter";
+import Project from "../../types/Project";
 import { TICKET_DRAWER_WIDTH } from "../../utils/constants";
 import getFilteredTickets from "../../utils/getFilteredTickets";
 import getSortedTickets from "../../utils/getSortedTickets";
 import getTicketsByEpics from "../../utils/getTicketsByEpics";
+import CreateTicketForm from "../CreateTicketForm";
+import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
+import TicketFilter, { TicketFilterType } from "../TicketFilter";
+import TicketNavbarWrapper from "../TicketNavbarWrapper";
 import TicketSection from "../TicketSection";
+import TicketSortSelectDropdown, { TicketSortType } from "../TicketSortSelectDropdown";
+import TypographySprintInformation from "../common/TypographySprintInformation";
 
 interface ProductBacklogTabProps {
   project: Project;
@@ -92,39 +91,12 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
     );
   };
 
-  const renderMobileTicketNavbar = (): JSX.Element => (
-    <Box sx={{ display: { xs: "block", lg: "none" } }}>
+  const renderTicketNavbar = (): JSX.Element => (
+    <div>
       <TicketNavbarWrapper isTicketSelected={!!selectedTicketId}>
-        <IconButton
-          onClick={() => setShowTicketCreationForm(true)}
-          color='primary'
-          size='small'
-          sx={{ border: "1px solid", borderColor: "primary.main" }}
-        >
-          <AddIcon fontSize='small' />
-        </IconButton>
-        <TicketFilter onSelectHandler={handleFilterSelection} />
-        <TicketSortSelectDropdown sortSelection={sortSelection} onChangeHandler={handleSortSelectionOnChange} />
-        <TextField
-          size='small'
-          margin='none'
-          variant='filled'
-          inputProps={{ style: { padding: 7, fontSize: 14 } }}
-          placeholder='search'
-          type='search'
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-        />
-      </TicketNavbarWrapper>
-    </Box>
-  );
-
-  const renderDesktopTicketNavbar = (): JSX.Element => (
-    <Box sx={{ display: { xs: "none", lg: "block" } }}>
-      <TicketNavbarWrapper isTicketSelected={!!selectedTicketId}>
-        <Typography color='grey.500' variant='caption' fontStyle='italic'>
+        <TypographySprintInformation>
           Product Backlog <span>&#8729;</span> {`${tickets.length} ticket(s)`}
-        </Typography>
+        </TypographySprintInformation>
         <Box flexGrow={1} />
         <Button
           startIcon={<AddIcon fontSize='small' />}
@@ -154,14 +126,13 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
           onChange={(e) => setSearchInput(e.target.value)}
         />
       </TicketNavbarWrapper>
-    </Box>
+    </div>
   );
 
   return (
     <>
       <Box sx={{ mr: selectedTicketId ? `${TICKET_DRAWER_WIDTH}px` : "" }}>
-        {renderMobileTicketNavbar()}
-        {renderDesktopTicketNavbar()}
+        {renderTicketNavbar()}
         <Box p={3} mt={5}>
           {showTicketCreationForm && (
             <Box mb={4}>

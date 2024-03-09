@@ -82,12 +82,10 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
 
       <Grid container mb={4} spacing={3}>
         <Grid item xs={12} md={4}>
-          <Typography fontSize={18} gutterBottom>
+          <Typography variant='h6' gutterBottom>
             Details
           </Typography>
-          <Typography fontSize={12} color='textSecondary'>
-            Customize project title, description and logo.
-          </Typography>
+          <Typography color='textSecondary'>Customize project title, description and logo.</Typography>
         </Grid>
         <Grid item xs={12} md={8}>
           <Typography gutterBottom variant='body2'>
@@ -128,10 +126,10 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
       {isLoggedInUserAdmin && (
         <Grid container mb={4} alignItems='flex-start' spacing={3}>
           <Grid item xs={12} md={4}>
-            <Typography fontSize={18} color='error' gutterBottom>
+            <Typography variant='h6' gutterBottom color='error'>
               Delete Project
             </Typography>
-            <Typography fontSize={12} color='textSecondary'>
+            <Typography color='textSecondary'>
               Once you close this project, all tickets and sprint information will be lost forever.
             </Typography>
           </Grid>

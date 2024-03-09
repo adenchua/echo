@@ -1,9 +1,6 @@
-import PromoteAdminIcon from "@mui/icons-material/AddModeratorOutlined";
-import DeleteIcon from "@mui/icons-material/PersonRemoveAlt1Outlined";
 import SearchIcon from "@mui/icons-material/Search";
 import Box from "@mui/material/Box";
 import CardHeader from "@mui/material/CardHeader";
-import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -25,8 +22,9 @@ import User from "../../types/User";
 import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
 import { matchString } from "../../utils/matchString";
 import AddMemberToProjectButtonWithDialog from "../AddMemberToProjectButtonWithDialog";
-import Tooltip from "../common/Tooltip";
 import UserAvatar from "../common/UserAvatar";
+import PromoteMemberIconButton from "./PromoteMemberIconButton";
+import RemoveMemberIconButton from "./RemoveMemberIconButton";
 
 interface RowUserInterface {
   user: User;
@@ -142,30 +140,12 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
                     </TableCell>
                     {isLoggedInUserAnAdmin && (
                       <TableCell align='center'>
-                        {!isAdmin && (
-                          <Tooltip title='Promote to Admin'>
-                            <IconButton color='primary' onClick={() => handlePromoteMember(user)}>
-                              <PromoteAdminIcon fontSize='small' />
-                            </IconButton>
-                          </Tooltip>
-                        )}
-                        <Tooltip title='Remove from project'>
-                          <span>
-                            <IconButton
-                              size='small'
-                              color='error'
-                              onClick={() => {
-                                if (window.confirm("Remove user from project?")) {
-                                  handleRemoveMember(user);
-                                }
-                              }}
-                              disabled={loggedInUserId === userId}
-                              sx={{ ml: 1 }}
-                            >
-                              <DeleteIcon fontSize='small' />
-                            </IconButton>
-                          </span>
-                        </Tooltip>
+                        {!isAdmin && <PromoteMemberIconButton member={user} onConfirm={handlePromoteMember} />}
+                        <RemoveMemberIconButton
+                          isDisabled={loggedInUserId === userId}
+                          member={user}
+                          onRemoveMember={handleRemoveMember}
+                        />
                       </TableCell>
                     )}
                   </TableRow>

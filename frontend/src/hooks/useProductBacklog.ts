@@ -52,7 +52,7 @@ const useProductBacklog = () => {
         deleteTicketIdFromEpic(epicId, ticketId); // delete ticket from epic
       }
     } catch (error) {
-      throw new Error("Failed to update ticket");
+      throw new Error("Failed to delete ticket");
     }
   };
 

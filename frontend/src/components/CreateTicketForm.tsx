@@ -1,14 +1,16 @@
-import { useState } from "react";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
+import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
+import { useState } from "react";
 
-import FormTicketTypeToggleButtons from "./FormTicketTypeToggleButtons";
+import useLoad from "../hooks/useLoad";
+import useProductBacklog from "../hooks/useProductBacklog";
 import { TicketPriority, TicketType } from "../types/Ticket";
 import FormPriorityToggleButtons from "./FormPriorityToggleButtons";
-import useProductBacklog from "../hooks/useProductBacklog";
+import FormTicketTypeToggleButtons from "./FormTicketTypeToggleButtons";
+import SnackbarError from "./common/SnackbarError";
 
 interface CreateTicketFormProps {
   projectId: string;
@@ -20,18 +22,18 @@ const CreateTicketForm = (props: CreateTicketFormProps): JSX.Element => {
   const [titleInput, setTitleInput] = useState<string>("");
   const [ticketType, setTicketType] = useState<TicketType>("task");
   const [priority, setPriority] = useState<TicketPriority>("medium");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { currentLoadState, handleSetLoadingState } = useLoad();
   const { onAddTicket } = useProductBacklog();
 
   const handleAddTicket = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     try {
-      setIsLoading(true);
+      handleSetLoadingState("LOADING");
       await onAddTicket(titleInput, projectId, priority, ticketType);
-      setIsLoading(false);
+      handleSetLoadingState("SUCCESS");
       onClose();
     } catch (error) {
-      // do nothing
+      handleSetLoadingState("ERROR");
     }
   };
 
@@ -50,49 +52,48 @@ const CreateTicketForm = (props: CreateTicketFormProps): JSX.Element => {
   };
 
   return (
-    <form onSubmit={(e) => handleAddTicket(e)}>
-      <Paper
-        sx={{
-          py: 1.5,
-          pl: 5,
-          pr: 1,
-          border: "1px dashed",
-          borderColor: "grey.300",
-        }}
-        elevation={0}
-        square
-      >
-        <Box display='flex' alignItems='center' gap={2}>
-          <TextField
-            variant='filled'
-            size='small'
-            margin='none'
-            inputProps={{ style: { padding: 7, fontSize: 14 } }}
-            fullWidth
-            autoFocus
-            placeholder='Untitled'
-            value={titleInput}
-            onChange={(e) => setTitleInput(e.target.value)}
-          />
-          <Button size='small' variant='contained' color='inherit' onClick={onClose}>
-            Cancel
-          </Button>
-          <Button
-            size='small'
-            variant='contained'
-            type='submit'
-            startIcon={isLoading && <CircularProgress sx={{ color: "inherit" }} size={14} />}
-            disabled={titleInput.length === 0 || isLoading}
-          >
-            {isLoading ? "Saving..." : "Save"}
-          </Button>
-        </Box>
-        <Box mt={2} display='flex' gap={2}>
-          <FormPriorityToggleButtons value={priority} onChangeHandler={handleChangePriority} />
-          <FormTicketTypeToggleButtons value={ticketType} onChangeHandler={handleChangeTicketType} />
-        </Box>
-      </Paper>
-    </form>
+    <>
+      <form onSubmit={(e) => handleAddTicket(e)}>
+        <Paper
+          sx={{
+            py: 1.5,
+            pl: 5,
+            pr: 1,
+            border: "1px dashed",
+            borderColor: "grey.300",
+          }}
+          elevation={0}
+        >
+          <Box display='flex' alignItems='center' gap={2}>
+            <TextField
+              variant='filled'
+              sx={{ width: 600 }}
+              inputProps={{ style: { padding: 7 } }}
+              autoFocus
+              placeholder='Untitled'
+              value={titleInput}
+              onChange={(e) => setTitleInput(e.target.value)}
+            />
+            <Button variant='contained' color='inherit' onClick={onClose}>
+              Cancel
+            </Button>
+            <Button
+              variant='contained'
+              type='submit'
+              startIcon={currentLoadState === "LOADING" && <CircularProgress sx={{ color: "inherit" }} size={14} />}
+              disabled={titleInput.length === 0 || currentLoadState === "LOADING"}
+            >
+              {currentLoadState === "LOADING" ? "Creating..." : "Create ticket"}
+            </Button>
+          </Box>
+          <Box mt={2} display='flex' gap={2}>
+            <FormPriorityToggleButtons value={priority} onChangeHandler={handleChangePriority} />
+            <FormTicketTypeToggleButtons value={ticketType} onChangeHandler={handleChangeTicketType} />
+          </Box>
+        </Paper>
+      </form>
+      <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
+    </>
   );
 };
 
