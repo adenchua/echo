@@ -13,7 +13,6 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import Popover from "@mui/material/Popover";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useCallback, useContext, useState } from "react";
 
 import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
@@ -23,6 +22,7 @@ import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
 import { sliceLongString } from "../utils/stringUtils";
 import StatusChipButton from "./StatusChipButton";
+import Select from "./common/Select";
 
 export type TicketFilterType =
   | null
@@ -133,8 +133,10 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
           vertical: "bottom",
           horizontal: "left",
         }}
-        PaperProps={{
-          elevation: 2,
+        slotProps={{
+          paper: {
+            elevation: 2,
+          },
         }}
       >
         <MenuList dense>
@@ -162,18 +164,12 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
             <Select
               label='Status'
               defaultValue=''
-              onChange={(e: SelectChangeEvent) =>
+              onChange={(e) =>
                 handleSelectNewFilter(
                   `status-${e.target.value as TicketStatus}`,
                   statusToTextMapping[e.target.value as TicketStatus]
                 )
               }
-              SelectDisplayProps={{
-                style: {
-                  padding: "6px 8px",
-                  background: "#00000014",
-                },
-              }}
             >
               {["todo", "progress", "review", "completed", "stuck", "hold"].map((ticketStatus) => (
                 <MenuItem key={ticketStatus} value={ticketStatus} sx={{ display: "flex", justifyContent: "center" }}>
@@ -187,20 +183,9 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
             <Select
               defaultValue=''
               label='Assignee'
-              onChange={(e: SelectChangeEvent) =>
-                handleSelectNewFilter(`assignee-${e.target.value}`, getUserDisplayName(e.target.value))
+              onChange={(e) =>
+                handleSelectNewFilter(`assignee-${e.target.value}`, getUserDisplayName(e.target.value as string))
               }
-              SelectDisplayProps={{
-                style: {
-                  padding: "6px 8px",
-                  background: "#00000014",
-                },
-              }}
-              MenuProps={{
-                style: {
-                  maxHeight: 300,
-                },
-              }}
             >
               {[...admins, ...members].map((user) => {
                 const { displayName, _id: userId, username } = user;

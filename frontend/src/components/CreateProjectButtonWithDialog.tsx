@@ -1,10 +1,9 @@
 import AddIcon from "@mui/icons-material/Add";
 import ProjectIcon from "@mui/icons-material/GitHub";
+import { DialogContentText } from "@mui/material";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import { useContext, useEffect, useState } from "react";
 
@@ -16,6 +15,7 @@ import { LOCAL_STORAGE_UID_KEY, PROJECT_TYPES } from "../utils/constants";
 import ActionDialog from "./common/ActionDialog";
 import CTAButton from "./common/CTAButton";
 import DialogErrorText from "./common/DialogErrorText";
+import Select from "./common/Select";
 import SnackbarSuccess from "./common/SnackbarSuccess";
 
 type ProjectType = (typeof PROJECT_TYPES)[number];
@@ -43,8 +43,8 @@ const CreateProjectButtonWithDialog = (): JSX.Element => {
     setIsDialogOpen(false);
   };
 
-  const handleProjectTypeChange = (event: SelectChangeEvent) => {
-    setProjectType(event.target.value as ProjectType);
+  const handleProjectTypeChange = (newProjectType: ProjectType) => {
+    setProjectType(newProjectType);
   };
 
   const handleAddProject = async (): Promise<void> => {
@@ -69,11 +69,11 @@ const CreateProjectButtonWithDialog = (): JSX.Element => {
       <ActionDialog
         dialogContent={
           <>
+            <DialogContentText>Project Title</DialogContentText>
             <TextField
+              placeholder='My awesome project'
               autoFocus
               margin='dense'
-              label='Project Title'
-              type='text'
               fullWidth
               variant='filled'
               sx={{ mb: 4 }}
@@ -81,9 +81,9 @@ const CreateProjectButtonWithDialog = (): JSX.Element => {
               onChange={(e) => setProjectTitle(e.target.value)}
             />
             <Box mb={4}>
+              <DialogContentText mb={1}>Project Type</DialogContentText>
               <FormControl fullWidth variant='filled'>
-                <InputLabel>Project Type</InputLabel>
-                <Select value={projectType} label='Project Type' onChange={handleProjectTypeChange}>
+                <Select value={projectType} onChange={(e) => handleProjectTypeChange(e.target.value as ProjectType)}>
                   {PROJECT_TYPES.map((projectType) => (
                     <MenuItem value={projectType} key={projectType} dense>
                       {projectType}

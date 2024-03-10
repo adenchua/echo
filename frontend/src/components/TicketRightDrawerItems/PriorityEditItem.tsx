@@ -8,9 +8,9 @@ import useLoad from "../../hooks/useLoad";
 import useProductBacklog from "../../hooks/useProductBacklog";
 import { TicketPriority } from "../../types/Ticket";
 import { capitalizeFirstLetter } from "../../utils/stringUtils";
-import FormPriorityToggleButtons from "../FormPriorityToggleButtons";
 import PriorityIcon from "../PriorityIcon";
 import SnackbarError from "../common/SnackbarError";
+import TicketPriorityDropdown from "../common/TicketPriorityDropdown";
 import EditButton from "./EditButton";
 import RightDrawerTitle from "./RightDrawerTitle";
 import UpdateButton from "./UpdateButton";
@@ -30,10 +30,7 @@ const PriorityEditItem = (props: PriorityEditItemProps): JSX.Element => {
     setIsEditModeOn(!isEditModeOn);
   };
 
-  const handleChangePriority = async (
-    event: React.MouseEvent<HTMLElement>,
-    newPriority: TicketPriority
-  ): Promise<void> => {
+  const handleChangePriority = async (newPriority: TicketPriority): Promise<void> => {
     if (!newPriority) {
       return; // prevent deselecting a button
     }
@@ -57,10 +54,11 @@ const PriorityEditItem = (props: PriorityEditItemProps): JSX.Element => {
               <UpdateButton onAccept={handleChangePriority} onCancel={handleToggleEditMode} showSaveButton={false} />
             }
           />
-          <Box mb={2}>
-            <FormPriorityToggleButtons value={priority} onChangeHandler={handleChangePriority} />
-          </Box>
-          <Divider flexItem />
+          <TicketPriorityDropdown
+            selectedValue={priority}
+            onChange={(event, child) => handleChangePriority(event.target.value as TicketPriority)}
+          />
+          <Divider flexItem sx={{ mt: 2 }} />
         </ListItem>
         <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
       </>

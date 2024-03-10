@@ -1,4 +1,4 @@
-import KBAIcon from "@mui/icons-material/KeyboardArrowUp";
+import ChevronUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Box from "@mui/material/Box";
 
 import Tooltip from "./common/Tooltip";
@@ -13,8 +13,8 @@ const HighestPriorityIcon = (props: HighestPriorityIconProps): JSX.Element => {
   return (
     <Tooltip title='Urgent'>
       <Box display='flex' flexDirection='column' maxHeight='20px' justifyContent='center'>
-        <KBAIcon fontSize={fontSize} color={color} />
-        <KBAIcon fontSize={fontSize} sx={{ marginTop: -1.9 }} color={color} />
+        <ChevronUpIcon fontSize={fontSize} color={color} />
+        <ChevronUpIcon fontSize={fontSize} sx={{ marginTop: -1.9 }} color={color} />
       </Box>
     </Tooltip>
   );

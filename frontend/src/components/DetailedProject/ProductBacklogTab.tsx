@@ -1,7 +1,5 @@
-import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import InputBase from "@mui/material/InputBase";
 import { SelectChangeEvent } from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
@@ -14,7 +12,7 @@ import getFilteredTickets from "../../utils/getFilteredTickets";
 import getSortedTickets from "../../utils/getSortedTickets";
 import getTicketsByEpics from "../../utils/getTicketsByEpics";
 import { pluralize } from "../../utils/stringUtils";
-import CreateTicketForm from "../CreateTicketForm";
+import AddTicketButtonWithDialog from "../AddTicketButtonWithDialog";
 import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
 import TicketFilter, { TicketFilterType } from "../TicketFilter";
 import TicketNavbarWrapper from "../TicketNavbarWrapper";
@@ -34,7 +32,6 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
   const [sortSelection, setSortSelection] = useState<TicketSortType>("priority-dsc");
   const [filterSelection, setFilterSelection] = useState<TicketFilterType>(null);
-  const [showTicketCreationForm, setShowTicketCreationForm] = useState<boolean>(false);
 
   const filteredTickets = useMemo(() => {
     return getFilteredTickets(filterSelection, tickets);
@@ -99,14 +96,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
           Product Backlog <span>&#8729;</span> {`${tickets.length} ${pluralize("ticket", "tickets", tickets.length)}`}
         </TypographySprintInformation>
         <Box flexGrow={1} />
-        <Button
-          startIcon={<AddIcon fontSize='small' />}
-          sx={{ display: { xs: "none", sm: "flex" } }}
-          onClick={() => setShowTicketCreationForm(true)}
-          size='small'
-        >
-          Add Ticket
-        </Button>
+        <AddTicketButtonWithDialog projectId={projectId} />
         <TicketFilter onSelectHandler={handleFilterSelection} />
         <TicketSortSelectDropdown sortSelection={sortSelection} onChangeHandler={handleSortSelectionOnChange} />
         <InputBase
@@ -135,11 +125,6 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
       <Box sx={{ mr: selectedTicketId ? `${TICKET_DRAWER_WIDTH}px` : "" }}>
         {renderTicketNavbar()}
         <Box p={3} mt={5}>
-          {showTicketCreationForm && (
-            <Box mb={4}>
-              <CreateTicketForm projectId={projectId} onClose={() => setShowTicketCreationForm(false)} />
-            </Box>
-          )}
           {displayedTicketsByEpics &&
             displayedTicketsByEpics.map((displayedTicketsByEpic) => {
               const { epicId, tickets: displayedTickets } = displayedTicketsByEpic;

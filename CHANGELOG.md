@@ -29,6 +29,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - standardized overall look and feel of action dialogs in the app
 - added pluralization of words
+- add ticket form to display a dialog instead of a form on the top of product backlog
+- standardized overall look and feel of dropdown
+- overall look and feel for ticket priority and type updates
 
 ## [1.2.0] - 2024-03-03
 
