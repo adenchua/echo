@@ -2,7 +2,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { SelectChangeEvent } from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 
-import TicketTypeIcon from "../TicketTypeIcon";
+import TicketTypeIcon from "../icons/TicketTypeIcon";
 import Select from "./Select";
 
 interface TicketTypeDropdownProps {

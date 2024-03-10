@@ -1,7 +1,5 @@
-import SearchIcon from "@mui/icons-material/Search";
 import Box from "@mui/material/Box";
 import CardHeader from "@mui/material/CardHeader";
-import InputAdornment from "@mui/material/InputAdornment";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,7 +7,6 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useContext, useMemo, useState } from "react";
 
@@ -23,6 +20,7 @@ import User from "../../types/User";
 import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
 import { matchString } from "../../utils/stringUtils";
 import AddMemberToProjectButtonWithDialog from "../AddMemberToProjectButtonWithDialog";
+import SearchBar from "../common/SearchBar";
 import SnackbarError from "../common/SnackbarError";
 import UserAvatar from "../common/UserAvatar";
 import PromoteMemberIconButton from "./PromoteMemberIconButton";
@@ -88,19 +86,7 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
         Team Members
       </Typography>
       <Box display='flex' alignItems='center' gap={2} mb={2}>
-        <TextField
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position='start'>
-                <SearchIcon fontSize='small' />
-              </InputAdornment>
-            ),
-          }}
-          size='small'
-          placeholder='Search...'
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-        />
+        <SearchBar value={searchInput} onChange={(event) => setSearchInput(event.target.value)} />
         <AddMemberToProjectButtonWithDialog projectId={projectId} />
       </Box>
       <TableContainer component={Paper} elevation={0} sx={{ maxHeight: 640 }}>

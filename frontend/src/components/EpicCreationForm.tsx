@@ -1,14 +1,14 @@
-import { useContext, useState, useEffect } from "react";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import CircularProgress from "@mui/material/CircularProgress";
+import { useContext, useEffect, useState } from "react";
 
 import createEpic from "../api/epics/createEpic";
-import { sleep } from "../utils/sleep";
 import { EpicsContext } from "../contexts/EpicsContextProvider";
+import useLoad from "../hooks/useLoad";
 
 interface EpicCreationFormProps {
   onClose: () => void;
@@ -18,31 +18,27 @@ interface EpicCreationFormProps {
 const EpicCreationForm = (props: EpicCreationFormProps): JSX.Element => {
   const { onClose, projectId } = props;
   const [titleInput, setTitleInput] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [showError, setShowError] = useState<boolean>(false);
+  const { currentLoadState, handleSetLoadingState } = useLoad();
 
   const { addEpic } = useContext(EpicsContext);
 
   useEffect(() => {
     // reset input upon form-reopen
     setTitleInput("");
-    setIsLoading(false);
-    setShowError(false);
-  }, [onClose]);
+    handleSetLoadingState("DEFAULT");
+  }, [onClose, handleSetLoadingState]);
 
   const handleFormSubmit = async (e: React.SyntheticEvent): Promise<void> => {
     e.preventDefault();
 
     try {
-      setShowError(false);
-      setIsLoading(true);
-      await sleep(1000);
+      handleSetLoadingState("LOADING");
       const newEpic = await createEpic(titleInput, projectId);
       addEpic(newEpic);
+      handleSetLoadingState("DEFAULT");
       onClose();
     } catch (error) {
-      setShowError(true);
-      setIsLoading(false);
+      handleSetLoadingState("ERROR");
     }
   };
 
@@ -50,7 +46,7 @@ const EpicCreationForm = (props: EpicCreationFormProps): JSX.Element => {
     <Paper sx={{ mb: 3, border: "1px dashed", borderColor: "grey.400", p: 2, maxWidth: 500 }} elevation={0}>
       <form onSubmit={handleFormSubmit}>
         <Box mb={3}>
-          {showError && (
+          {currentLoadState === "ERROR" && (
             <Typography variant='body2' paragraph color='error'>
               Something went wrong. Please try again later.
             </Typography>
@@ -75,10 +71,10 @@ const EpicCreationForm = (props: EpicCreationFormProps): JSX.Element => {
           </Button>
           <Button
             type='submit'
-            disabled={!titleInput || isLoading}
-            startIcon={isLoading && <CircularProgress sx={{ color: "inherit" }} size={14} />}
+            disabled={!titleInput || currentLoadState === "LOADING"}
+            startIcon={currentLoadState === "LOADING" && <CircularProgress sx={{ color: "inherit" }} size={14} />}
           >
-            {isLoading ? "Adding..." : "Add Epic"}
+            {currentLoadState === "LOADING" ? "Adding..." : "Add Epic"}
           </Button>
         </Box>
       </form>

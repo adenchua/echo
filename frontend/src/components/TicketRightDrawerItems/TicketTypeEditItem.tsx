@@ -8,7 +8,7 @@ import useLoad from "../../hooks/useLoad";
 import useProductBacklog from "../../hooks/useProductBacklog";
 import { TicketType } from "../../types/Ticket";
 import { capitalizeFirstLetter } from "../../utils/stringUtils";
-import TicketTypeIcon from "../TicketTypeIcon";
+import TicketTypeIcon from "../icons/TicketTypeIcon";
 import SnackbarError from "../common/SnackbarError";
 import TicketTypeDropdown from "../common/TicketTypeDropdown";
 import EditButton from "./EditButton";

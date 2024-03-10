@@ -3,7 +3,7 @@ import { SelectChangeEvent } from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 
 import Select from "./Select";
-import PriorityIcon from "../PriorityIcon";
+import PriorityIcon from "../icons/PriorityIcon";
 
 interface TicketPriorityDropdownProps {
   selectedValue: string;

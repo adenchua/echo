@@ -8,7 +8,7 @@ import useLoad from "../../hooks/useLoad";
 import useProductBacklog from "../../hooks/useProductBacklog";
 import { TicketPriority } from "../../types/Ticket";
 import { capitalizeFirstLetter } from "../../utils/stringUtils";
-import PriorityIcon from "../PriorityIcon";
+import PriorityIcon from "../icons/PriorityIcon";
 import SnackbarError from "../common/SnackbarError";
 import TicketPriorityDropdown from "../common/TicketPriorityDropdown";
 import EditButton from "./EditButton";

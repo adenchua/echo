@@ -8,7 +8,7 @@ import fetchUsersByIds from "../api/users/fetchUsersByIds";
 import Ticket from "../types/Ticket";
 import User from "../types/User";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
-import TicketTypeIcon from "./TicketTypeIcon";
+import TicketTypeIcon from "./icons/TicketTypeIcon";
 import Tooltip from "./common/Tooltip";
 import SprintActiveIcon from "./icons/SprintActiveIcon";
 import SprintInactiveIcon from "./icons/SprintInactiveIcon";

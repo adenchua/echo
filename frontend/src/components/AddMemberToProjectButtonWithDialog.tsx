@@ -1,16 +1,13 @@
 import AddIcon from "@mui/icons-material/Add";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import SearchIcon from "@mui/icons-material/Search";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import Chip from "@mui/material/Chip";
-import InputAdornment from "@mui/material/InputAdornment";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useContext, useEffect, useState } from "react";
 
@@ -21,12 +18,13 @@ import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider
 import useLoad from "../hooks/useLoad";
 import User from "../types/User";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
+import { matchString } from "../utils/stringUtils";
 import ActionDialog from "./common/ActionDialog";
 import CTAButton from "./common/CTAButton";
+import DialogErrorText from "./common/DialogErrorText";
+import SearchBar from "./common/SearchBar";
 import SnackbarSuccess from "./common/SnackbarSuccess";
 import UserAvatar from "./common/UserAvatar";
-import DialogErrorText from "./common/DialogErrorText";
-import { matchString } from "../utils/stringUtils";
 
 interface AddMemberToProjectButtonWithDialogProps {
   projectId: string;
@@ -112,7 +110,7 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
             )}
             {currentLoadState !== "ERROR" && (
               <>
-                <Box display='flex' gap={1} flexWrap='wrap'>
+                <Box display='flex' gap={1} flexWrap='wrap' mb={2}>
                   {selectedMembers.map((member) => (
                     <Chip
                       key={member._id}
@@ -122,20 +120,11 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
                     />
                   ))}
                 </Box>
-                <TextField
-                  fullWidth
-                  size='small'
-                  margin='normal'
-                  placeholder='Search members...'
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position='start'>
-                        <SearchIcon />
-                      </InputAdornment>
-                    ),
-                  }}
+                <SearchBar
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
+                  fullWidth
+                  placeholder='Search members'
                 />
                 <List dense disablePadding>
                   {availableMembers && availableMembers.length === 0 && (

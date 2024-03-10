@@ -104,7 +104,6 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
   return (
     <Paper
       sx={{ padding: 1, mb: 1, display: "flex", alignItems: "center", gap: 7, overflowX: "hidden" }}
-      square
       elevation={0}
       key={projectId}
     >

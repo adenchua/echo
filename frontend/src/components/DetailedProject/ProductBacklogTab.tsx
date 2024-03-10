@@ -1,6 +1,4 @@
-import SearchIcon from "@mui/icons-material/Search";
 import Box from "@mui/material/Box";
-import InputBase from "@mui/material/InputBase";
 import { SelectChangeEvent } from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 import { useContext, useMemo, useState } from "react";
@@ -18,6 +16,7 @@ import TicketFilter, { TicketFilterType } from "../TicketFilter";
 import TicketNavbarWrapper from "../TicketNavbarWrapper";
 import TicketSection from "../TicketSection";
 import TicketSortSelectDropdown, { TicketSortType } from "../TicketSortSelectDropdown";
+import SearchBar from "../common/SearchBar";
 import TypographySprintInformation from "../common/TypographySprintInformation";
 
 interface ProductBacklogTabProps {
@@ -99,23 +98,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
         <AddTicketButtonWithDialog projectId={projectId} />
         <TicketFilter onSelectHandler={handleFilterSelection} />
         <TicketSortSelectDropdown sortSelection={sortSelection} onChangeHandler={handleSortSelectionOnChange} />
-        <InputBase
-          sx={{
-            borderLeft: "1px solid",
-            borderColor: "grey.300",
-            px: 1,
-            "& .MuiInputBase-input": {
-              ml: 0.5,
-              fontSize: 14,
-            },
-          }}
-          startAdornment={<SearchIcon fontSize='small' color='disabled' />}
-          size='small'
-          placeholder='Search...'
-          type='search'
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-        />
+        <SearchBar value={searchInput} onChange={(e) => setSearchInput(e.target.value)} placeholder='Search tickets' />
       </TicketNavbarWrapper>
     </div>
   );

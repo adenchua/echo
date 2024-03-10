@@ -29,7 +29,7 @@ const DangerActionDialog = (props: DangerActionDialogProps): JSX.Element => {
     acceptButtonText = "Confirm",
   } = props;
   return (
-    <Dialog open={isOpen} onClose={onClose} maxWidth='sm' fullWidth>
+    <Dialog open={isOpen} maxWidth='sm' fullWidth>
       <DialogTitle
         sx={{
           borderTop: "6px solid",

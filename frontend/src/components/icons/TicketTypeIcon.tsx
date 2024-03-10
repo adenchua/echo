@@ -2,8 +2,8 @@ import BugIcon from "@mui/icons-material/BugReportOutlined";
 import UserStoryIcon from "@mui/icons-material/HistoryEduOutlined";
 import TaskIcon from "@mui/icons-material/TaskOutlined";
 
-import { TicketType } from "../types/Ticket";
-import Tooltip from "./common/Tooltip";
+import { TicketType } from "../../types/Ticket";
+import Tooltip from "../common/Tooltip";
 
 interface TicketTypeIconProps {
   type: TicketType;

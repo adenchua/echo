@@ -1,7 +1,7 @@
 import ChevronUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Box from "@mui/material/Box";
 
-import Tooltip from "./common/Tooltip";
+import Tooltip from "../common/Tooltip";
 
 interface HighestPriorityIconProps {
   fontSize?: "small" | "inherit" | "large" | "medium";
