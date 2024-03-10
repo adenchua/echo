@@ -1,15 +1,15 @@
 import { useContext } from "react";
 
-import createTicket from "../api/tickets/createTicket";
-import updateTicket from "../api/tickets/updateTicket";
-import { TicketPriority, TicketType, TicketUpdateFields } from "../types/Ticket";
-import { TicketsContext } from "../contexts/TicketsContextProvider";
-import deleteTicket from "../api/tickets/deleteTicket";
 import addTicketToEpic from "../api/epics/addTicketToEpic";
-import { EpicsContext } from "../contexts/EpicsContextProvider";
 import removeTicketFromEpic from "../api/epics/removeTicketFromEpic";
 import addTicketSubtask from "../api/tickets/addTicketSubtask";
+import createTicket from "../api/tickets/createTicket";
+import deleteTicket from "../api/tickets/deleteTicket";
 import deleteTicketSubtask from "../api/tickets/deleteTicketSubtask";
+import updateTicket from "../api/tickets/updateTicket";
+import { EpicsContext } from "../contexts/EpicsContextProvider";
+import { TicketsContext } from "../contexts/TicketsContextProvider";
+import { TicketPriority, TicketType, TicketUpdateFields } from "../types/Ticket";
 
 const useProductBacklog = () => {
   const {
@@ -52,7 +52,7 @@ const useProductBacklog = () => {
         deleteTicketIdFromEpic(epicId, ticketId); // delete ticket from epic
       }
     } catch (error) {
-      throw new Error("Failed to update ticket");
+      throw new Error("Failed to delete ticket");
     }
   };
 

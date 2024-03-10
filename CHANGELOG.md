@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2024-03-09
+
+### FIXED
+
+- visual bug where removing assignee from the ticket does not remove the display on ticket
+
+### REMOVED
+
+- mobile navbar view for product and sprint backlogs
+
+### ADDED
+
+- error handling for ticket creation
+- error handling for ticket updates
+- error handling for epic management
+- error handling for member management
+- error handling for project update and deletion
+- promote member dialog in members tab to prevent accidental promotions
+- max width to project title to prevent overflowing on the navigation bar
+
+### CHANGED
+
+- standardized overall look and feel of action dialogs in the app
+- standardized overall look and feel of dropdown
+- standardized overall look and feel of search bars
+- added pluralization of words
+- add ticket form to display a dialog instead of a form on the top of product backlog
+- overall look and feel for ticket priority and type updates
+- dialog interaction to prevent closing when clicking outside of the dialog
+
 ## [1.2.0] - 2024-03-03
 
 ### CHANGED

@@ -7,7 +7,7 @@ import { useCallback, useContext, useState } from "react";
 
 import { EpicsContext } from "../contexts/EpicsContextProvider";
 import TicketInterface from "../types/Ticket";
-import { matchString } from "../utils/matchString";
+import { matchString } from "../utils/stringUtils";
 import Ticket from "./Ticket";
 import Slide from "./common/Slide";
 

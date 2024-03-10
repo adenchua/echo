@@ -25,9 +25,9 @@ const TeamObjectivesTab = (props: TeamObjectivesTabProps): JSX.Element => {
       <Typography variant='h5' paragraph>
         Epics
       </Typography>
-      <Typography mb={4} sx={{ maxWidth: 640 }}>
+      <Typography mb={4} sx={{ maxWidth: 640 }} color='textSecondary'>
         Epics represent a collection of user stories that share a broader strategic objective. They can be used to
-        organize tasks in the project's backlog.
+        organize tasks in the project's backlog
       </Typography>
       <CTAButton icon={<AddIcon />} onClick={() => setShowCreationForm(true)} text='Add Epic' />
       <Box mb={3} />

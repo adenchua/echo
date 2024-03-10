@@ -4,11 +4,13 @@ import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import { useState } from "react";
 
+import useLoad from "../../hooks/useLoad";
 import useProductBacklog from "../../hooks/useProductBacklog";
 import { TicketType } from "../../types/Ticket";
-import { capitalizeFirstLetter } from "../../utils/capitalizeFirstLetter";
-import FormTicketTypeToggleButtons from "../FormTicketTypeToggleButtons";
-import TicketTypeIcon from "../TicketTypeIcon";
+import { capitalizeFirstLetter } from "../../utils/stringUtils";
+import TicketTypeIcon from "../icons/TicketTypeIcon";
+import SnackbarError from "../common/SnackbarError";
+import TicketTypeDropdown from "../common/TicketTypeDropdown";
 import EditButton from "./EditButton";
 import RightDrawerTitle from "./RightDrawerTitle";
 import UpdateButton from "./UpdateButton";
@@ -22,33 +24,44 @@ const TicketTypeEditItem = (props: TicketTypeEditItemProps): JSX.Element => {
   const { type, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const { onUpdateTicket } = useProductBacklog();
+  const { currentLoadState, handleSetLoadingState } = useLoad();
 
   const handleToggleEditMode = (): void => {
     setIsEditModeOn(!isEditModeOn);
   };
 
-  const handleChangeTicketType = (event: React.MouseEvent<HTMLElement>, newType: TicketType): void => {
+  const handleChangeTicketType = async (newType: TicketType): Promise<void> => {
     if (!newType) {
       return; // prevent deselecting a button
     }
-    onUpdateTicket(ticketId, { type: newType });
-    handleToggleEditMode();
+    try {
+      handleSetLoadingState("LOADING");
+      await onUpdateTicket(ticketId, { type: newType });
+      handleSetLoadingState("SUCCESS");
+      handleToggleEditMode();
+    } catch (error) {
+      handleSetLoadingState("ERROR");
+    }
   };
 
   if (isEditModeOn) {
     return (
-      <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <RightDrawerTitle
-          title='Type'
-          actionButton={
-            <UpdateButton onAccept={handleChangeTicketType} onCancel={handleToggleEditMode} showSaveButton={false} />
-          }
-        />
-        <Box mb={2}>
-          <FormTicketTypeToggleButtons value={type} onChangeHandler={handleChangeTicketType} />
-        </Box>
-        <Divider flexItem />
-      </ListItem>
+      <>
+        <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+          <RightDrawerTitle
+            title='Type'
+            actionButton={
+              <UpdateButton onAccept={handleChangeTicketType} onCancel={handleToggleEditMode} showSaveButton={false} />
+            }
+          />
+          <TicketTypeDropdown
+            selectedValue={type}
+            onChange={(event, child) => handleChangeTicketType(event.target.value as TicketType)}
+          />
+          <Divider flexItem sx={{ mt: 2 }} />
+        </ListItem>
+        <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
+      </>
     );
   }
 

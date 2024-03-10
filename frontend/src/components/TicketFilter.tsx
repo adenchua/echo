@@ -1,28 +1,28 @@
-import { useContext, useState, useCallback } from "react";
+import NotInSprintIcon from "@mui/icons-material/PauseCircleOutline";
+import PersonIcon from "@mui/icons-material/PersonOutline";
+import CloseIcon from "@mui/icons-material/RestartAltOutlined";
+import RuleIcon from "@mui/icons-material/RuleOutlined";
+import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Popover from "@mui/material/Popover";
+import Divider from "@mui/material/Divider";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import PersonIcon from "@mui/icons-material/PersonOutline";
-import RuleIcon from "@mui/icons-material/RuleOutlined";
-import NotInSprintIcon from "@mui/icons-material/PauseCircleOutline";
-import CloseIcon from "@mui/icons-material/RestartAltOutlined";
-import Divider from "@mui/material/Divider";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
+import Popover from "@mui/material/Popover";
+import { useCallback, useContext, useState } from "react";
 
-import { TicketStatus } from "../types/Ticket";
-import StatusChipButton from "./StatusChipButton";
 import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
-import getUserAvatarSVG from "../utils/getUserAvatarSVG";
-import { sliceLongString } from "../utils/sliceLongString";
-import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { TicketStatus } from "../types/Ticket";
+import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
+import getUserAvatarSVG from "../utils/getUserAvatarSVG";
+import { sliceLongString } from "../utils/stringUtils";
+import StatusChipButton from "./StatusChipButton";
+import Select from "./common/Select";
 
 export type TicketFilterType =
   | null
@@ -133,8 +133,10 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
           vertical: "bottom",
           horizontal: "left",
         }}
-        PaperProps={{
-          elevation: 2,
+        slotProps={{
+          paper: {
+            elevation: 2,
+          },
         }}
       >
         <MenuList dense>
@@ -162,18 +164,12 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
             <Select
               label='Status'
               defaultValue=''
-              onChange={(e: SelectChangeEvent) =>
+              onChange={(e) =>
                 handleSelectNewFilter(
                   `status-${e.target.value as TicketStatus}`,
                   statusToTextMapping[e.target.value as TicketStatus]
                 )
               }
-              SelectDisplayProps={{
-                style: {
-                  padding: "6px 8px",
-                  background: "#00000014",
-                },
-              }}
             >
               {["todo", "progress", "review", "completed", "stuck", "hold"].map((ticketStatus) => (
                 <MenuItem key={ticketStatus} value={ticketStatus} sx={{ display: "flex", justifyContent: "center" }}>
@@ -187,20 +183,9 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
             <Select
               defaultValue=''
               label='Assignee'
-              onChange={(e: SelectChangeEvent) =>
-                handleSelectNewFilter(`assignee-${e.target.value}`, getUserDisplayName(e.target.value))
+              onChange={(e) =>
+                handleSelectNewFilter(`assignee-${e.target.value}`, getUserDisplayName(e.target.value as string))
               }
-              SelectDisplayProps={{
-                style: {
-                  padding: "6px 8px",
-                  background: "#00000014",
-                },
-              }}
-              MenuProps={{
-                style: {
-                  maxHeight: 300,
-                },
-              }}
             >
               {[...admins, ...members].map((user) => {
                 const { displayName, _id: userId, username } = user;

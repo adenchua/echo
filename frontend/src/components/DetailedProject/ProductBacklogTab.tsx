@@ -1,26 +1,23 @@
-import { useState, useContext, useMemo } from "react";
-import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
 import Box from "@mui/material/Box";
-import SearchIcon from "@mui/icons-material/Search";
 import { SelectChangeEvent } from "@mui/material/Select";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import TextField from "@mui/material/TextField";
-import AddIcon from "@mui/icons-material/Add";
+import { useContext, useMemo, useState } from "react";
 
-import Project from "../../types/Project";
-import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
 import { TicketsContext } from "../../contexts/TicketsContextProvider";
-import TicketSortSelectDropdown, { TicketSortType } from "../TicketSortSelectDropdown";
-import TicketNavbarWrapper from "../TicketNavbarWrapper";
-import CreateTicketForm from "../CreateTicketForm";
-import TicketFilter, { TicketFilterType } from "../TicketFilter";
+import Project from "../../types/Project";
 import { TICKET_DRAWER_WIDTH } from "../../utils/constants";
 import getFilteredTickets from "../../utils/getFilteredTickets";
 import getSortedTickets from "../../utils/getSortedTickets";
 import getTicketsByEpics from "../../utils/getTicketsByEpics";
+import { pluralize } from "../../utils/stringUtils";
+import AddTicketButtonWithDialog from "../AddTicketButtonWithDialog";
+import TicketDetailsRightDrawer from "../TicketDetailsRightDrawer";
+import TicketFilter, { TicketFilterType } from "../TicketFilter";
+import TicketNavbarWrapper from "../TicketNavbarWrapper";
 import TicketSection from "../TicketSection";
+import TicketSortSelectDropdown, { TicketSortType } from "../TicketSortSelectDropdown";
+import SearchBar from "../common/SearchBar";
+import SecondaryText from "../common/SecondaryText";
+import TypographySprintInformation from "../common/TypographySprintInformation";
 
 interface ProductBacklogTabProps {
   project: Project;
@@ -34,7 +31,6 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
   const [sortSelection, setSortSelection] = useState<TicketSortType>("priority-dsc");
   const [filterSelection, setFilterSelection] = useState<TicketFilterType>(null);
-  const [showTicketCreationForm, setShowTicketCreationForm] = useState<boolean>(false);
 
   const filteredTickets = useMemo(() => {
     return getFilteredTickets(filterSelection, tickets);
@@ -92,82 +88,26 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
     );
   };
 
-  const renderMobileTicketNavbar = (): JSX.Element => (
-    <Box sx={{ display: { xs: "block", lg: "none" } }}>
+  const renderTicketNavbar = (): JSX.Element => (
+    <div>
       <TicketNavbarWrapper isTicketSelected={!!selectedTicketId}>
-        <IconButton
-          onClick={() => setShowTicketCreationForm(true)}
-          color='primary'
-          size='small'
-          sx={{ border: "1px solid", borderColor: "primary.main" }}
-        >
-          <AddIcon fontSize='small' />
-        </IconButton>
-        <TicketFilter onSelectHandler={handleFilterSelection} />
-        <TicketSortSelectDropdown sortSelection={sortSelection} onChangeHandler={handleSortSelectionOnChange} />
-        <TextField
-          size='small'
-          margin='none'
-          variant='filled'
-          inputProps={{ style: { padding: 7, fontSize: 14 } }}
-          placeholder='search'
-          type='search'
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-        />
-      </TicketNavbarWrapper>
-    </Box>
-  );
-
-  const renderDesktopTicketNavbar = (): JSX.Element => (
-    <Box sx={{ display: { xs: "none", lg: "block" } }}>
-      <TicketNavbarWrapper isTicketSelected={!!selectedTicketId}>
-        <Typography color='grey.500' variant='caption' fontStyle='italic'>
-          Product Backlog <span>&#8729;</span> {`${tickets.length} ticket(s)`}
-        </Typography>
+        <TypographySprintInformation>
+          Product Backlog <span>&#8729;</span> {`${tickets.length} ${pluralize("ticket", "tickets", tickets.length)}`}
+        </TypographySprintInformation>
         <Box flexGrow={1} />
-        <Button
-          startIcon={<AddIcon fontSize='small' />}
-          sx={{ display: { xs: "none", sm: "flex" } }}
-          onClick={() => setShowTicketCreationForm(true)}
-          size='small'
-        >
-          Add Ticket
-        </Button>
+        <AddTicketButtonWithDialog projectId={projectId} />
         <TicketFilter onSelectHandler={handleFilterSelection} />
         <TicketSortSelectDropdown sortSelection={sortSelection} onChangeHandler={handleSortSelectionOnChange} />
-        <InputBase
-          sx={{
-            borderLeft: "1px solid",
-            borderColor: "grey.300",
-            px: 1,
-            "& .MuiInputBase-input": {
-              ml: 0.5,
-              fontSize: 14,
-            },
-          }}
-          startAdornment={<SearchIcon fontSize='small' color='disabled' />}
-          size='small'
-          placeholder='Search...'
-          type='search'
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-        />
+        <SearchBar value={searchInput} onChange={(e) => setSearchInput(e.target.value)} placeholder='Search tickets' />
       </TicketNavbarWrapper>
-    </Box>
+    </div>
   );
 
   return (
     <>
       <Box sx={{ mr: selectedTicketId ? `${TICKET_DRAWER_WIDTH}px` : "" }}>
-        {renderMobileTicketNavbar()}
-        {renderDesktopTicketNavbar()}
+        {renderTicketNavbar()}
         <Box p={3} mt={5}>
-          {showTicketCreationForm && (
-            <Box mb={4}>
-              <CreateTicketForm projectId={projectId} onClose={() => setShowTicketCreationForm(false)} />
-            </Box>
-          )}
           {displayedTicketsByEpics &&
             displayedTicketsByEpics.map((displayedTicketsByEpic) => {
               const { epicId, tickets: displayedTickets } = displayedTicketsByEpic;
@@ -188,11 +128,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
                 </Box>
               );
             })}
-          {tickets && tickets.length === 0 && (
-            <Typography variant='body2' color='GrayText'>
-              There are no tickets in the backlog.
-            </Typography>
-          )}
+          {tickets && tickets.length === 0 && <SecondaryText>There are no tickets in the backlog.</SecondaryText>}
         </Box>
       </Box>
       {renderDrawer()}

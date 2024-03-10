@@ -3,23 +3,25 @@ import { SelectProps, Select as MuiSelect } from "@mui/material";
 const Select = (props: SelectProps): JSX.Element => {
   return (
     <MuiSelect
-      {...props}
       fullWidth
+      variant='filled'
       SelectDisplayProps={{
         style: {
+          padding: 7,
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
-          padding: "8px",
-          background: "#00000014",
         },
       }}
       MenuProps={{
-        style: {
-          maxHeight: 300,
-          maxWidth: 300,
+        slotProps: {
+          paper: {
+            sx: {
+              maxHeight: 240,
+            },
+          },
         },
       }}
+      {...props}
     />
   );
 };

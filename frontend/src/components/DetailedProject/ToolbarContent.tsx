@@ -43,7 +43,7 @@ const ToolbarContent = (props: ToolbarContentProps): JSX.Element => {
         <ProjectIcon />
       </Avatar>
       <div>
-        <Typography noWrap variant='h6'>
+        <Typography sx={{ maxWidth: 800 }} noWrap variant='h6'>
           {title}
         </Typography>
         <Box display='flex' gap={3} whiteSpace='nowrap'>

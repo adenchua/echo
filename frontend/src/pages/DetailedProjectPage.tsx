@@ -1,28 +1,29 @@
-import { useEffect, useState, useContext } from "react";
-import { Navigate, useParams } from "react-router-dom";
 import _ from "lodash";
+import { useContext, useEffect, useState } from "react";
+import { Navigate, useParams } from "react-router-dom";
 
-import PageLayoutWrapper from "../components/common/PageLayoutWrapper";
-import Project, { ProjectUpdateFieldsType } from "../types/Project";
+import fetchEpics from "../api/epics/fetchEpics";
 import fetchProject from "../api/projects/fetchProject";
-import ErrorBanner from "../components/common/ErrorBanner";
-import ToolbarContent from "../components/DetailedProject/ToolbarContent";
-import useQuery from "../hooks/useQuery";
-import OverviewTab from "../components/DetailedProject/OverviewTab";
-import ProductBacklogTab from "../components/DetailedProject/ProductBacklogTab";
-import SprintBacklogTab from "../components/DetailedProject/SprintBacklogTab";
-import Loading from "../components/common/Loading";
-import { TicketsContext } from "../contexts/TicketsContextProvider";
+import fetchSprintsByIds from "../api/sprints/fetchSprintsByIds";
 import fetchTicketsByIds from "../api/tickets/fetchTicketsByIds";
-import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
 import fetchUsersByIds from "../api/users/fetchUsersByIds";
 import MembersTab from "../components/DetailedProject/MembersTab";
+import OverviewTab from "../components/DetailedProject/OverviewTab";
+import ProductBacklogTab from "../components/DetailedProject/ProductBacklogTab";
 import SettingsTab from "../components/DetailedProject/SettingsTab";
+import SprintBacklogTab from "../components/DetailedProject/SprintBacklogTab";
 import TeamObjectivesTab from "../components/DetailedProject/TeamObjectivesTab";
-import { EpicsContext } from "../contexts/EpicsContextProvider";
-import fetchEpics from "../api/epics/fetchEpics";
+import ToolbarContent from "../components/DetailedProject/ToolbarContent";
+import ErrorBanner from "../components/common/ErrorBanner";
+import Loading from "../components/common/Loading";
+import PageLayoutWrapper from "../components/common/PageLayoutWrapper";
 import { ActiveSprintContext } from "../contexts/ActiveSprintContextProvider";
-import fetchSprintsByIds from "../api/sprints/fetchSprintsByIds";
+import { EpicsContext } from "../contexts/EpicsContextProvider";
+import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
+import { TicketsContext } from "../contexts/TicketsContextProvider";
+import useLoad from "../hooks/useLoad";
+import useQuery from "../hooks/useQuery";
+import Project, { ProjectUpdateFieldsType } from "../types/Project";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 
 const DetailedProjectPage = (): JSX.Element => {
@@ -30,7 +31,7 @@ const DetailedProjectPage = (): JSX.Element => {
   const loggedInUserId = window.localStorage.getItem(LOCAL_STORAGE_UID_KEY);
   const { id } = useParams<{ id: string }>();
   const query = useQuery();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { currentLoadState, handleSetLoadingState } = useLoad("LOADING");
   const [project, setProject] = useState<Project | null>(null);
   const { handleSetTickets } = useContext(TicketsContext);
   const { handleSetMembers, handleSetAdmins } = useContext(ProjectMembersContext);
@@ -38,78 +39,48 @@ const DetailedProjectPage = (): JSX.Element => {
   const { handleSetActiveSprint, handleRemoveActiveSprint } = useContext(ActiveSprintContext);
 
   useEffect(() => {
-    const getTickets = async (ticketIds: string[]): Promise<void> => {
-      try {
-        const response = await fetchTicketsByIds(ticketIds);
-        handleSetTickets(response);
-      } catch (error) {
-        alert("Something went wrong. Please try again later.");
-      }
-    };
-
-    const getEpics = async (epicIds: string[]): Promise<void> => {
-      try {
-        const response = await fetchEpics(epicIds);
-        handleSetEpics(response);
-      } catch (error) {
-        alert("Something went wrong. Please try again later.");
-      }
-    };
-
-    const getActiveSprint = async (sprintIds: string[]): Promise<void> => {
-      try {
-        const response = await fetchSprintsByIds(sprintIds);
-        const activeSprint = response.find((sprint) => sprint.hasEnded === false);
-        if (activeSprint) {
-          handleSetActiveSprint(activeSprint);
-          return;
-        }
-        handleRemoveActiveSprint(); // cleanup in case next selected project has no active sprint
-      } catch (error) {
-        alert("Something went wrong. Please try again later.");
-      }
-    };
-
     const getProject = async (): Promise<void> => {
+      handleSetLoadingState("LOADING");
+
       try {
         if (!id) {
+          handleSetLoadingState("ERROR");
           return;
         }
-        setIsLoading(true);
+
         const response = await fetchProject(id);
         const { backlogIds, adminIds, memberIds, epicIds, sprintIds } = response;
-        getTickets(backlogIds);
-        getEpics(epicIds);
-        getActiveSprint(sprintIds);
-        getProjectMembersAndAdmins(adminIds, memberIds);
-        setProject(response);
-        setIsLoading(false);
-      } catch (error) {
-        //do nothing
-      }
-    };
 
-    const getProjectMembersAndAdmins = async (adminIds: string[], memberIds: string[]) => {
-      try {
+        const tickets = await fetchTicketsByIds(backlogIds);
+        handleSetTickets(tickets);
+
+        const epics = await fetchEpics(epicIds);
+        handleSetEpics(epics);
+
+        const sprints = await fetchSprintsByIds(sprintIds);
+        const activeSprint = sprints.find((sprint) => sprint.hasEnded === false);
+        if (activeSprint) {
+          handleSetActiveSprint(activeSprint);
+        } else {
+          handleRemoveActiveSprint(); // cleanup in case next selected project has no active sprint
+        }
+
         const adminResponse = await fetchUsersByIds(adminIds);
         const memberResponse = await fetchUsersByIds(memberIds);
         handleSetMembers(memberResponse);
         handleSetAdmins(adminResponse);
+
+        setProject(response);
+
+        handleSetLoadingState("DEFAULT");
       } catch (error) {
-        // do nothing
+        handleSetLoadingState("ERROR");
       }
     };
 
     getProject();
-  }, [
-    id,
-    handleSetTickets,
-    handleSetAdmins,
-    handleSetMembers,
-    handleSetEpics,
-    handleSetActiveSprint,
-    handleRemoveActiveSprint,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   const handleUpdateProjectFields = (updatedFields: ProjectUpdateFieldsType): void => {
     const updatedProject = _.merge({}, project, updatedFields);
@@ -120,11 +91,11 @@ const DetailedProjectPage = (): JSX.Element => {
     return <Navigate to='/' />;
   }
 
-  if (isLoading) {
+  if (currentLoadState === "LOADING") {
     return <Loading />;
   }
 
-  if (!project) {
+  if (currentLoadState === "ERROR" || project == null) {
     return (
       <PageLayoutWrapper>
         <ErrorBanner />
@@ -145,10 +116,10 @@ const DetailedProjectPage = (): JSX.Element => {
         component: <SettingsTab project={project} handleUpdateProjectFields={handleUpdateProjectFields} />,
       },
     ];
-    const selectedTab = availableTabs.find((element) => element.tabKey === currentTabKey);
+    let selectedTab = availableTabs.find((element) => element.tabKey === currentTabKey);
 
     if (!selectedTab) {
-      return <ErrorBanner />;
+      selectedTab = availableTabs[0]; // default to overview tab if nothing is clicked
     }
 
     return selectedTab.component;

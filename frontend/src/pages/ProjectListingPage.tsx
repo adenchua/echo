@@ -1,23 +1,21 @@
-import SearchIcon from "@mui/icons-material/Search";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Hidden from "@mui/material/Hidden";
-import InputAdornment from "@mui/material/InputAdornment";
 import Link from "@mui/material/Link";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useContext, useState } from "react";
 import { Navigate, Link as RouterLink } from "react-router-dom";
 
 import CreateProjectButtonWithDialog from "../components/CreateProjectButtonWithDialog";
 import ProjectListingItem from "../components/ProjectListingItem";
+import Grow from "../components/common/Grow";
 import PageLayoutWrapper from "../components/common/PageLayoutWrapper";
+import SearchBar from "../components/common/SearchBar";
 import { UserProjectsContext } from "../contexts/UserProjectsContextProvider";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import Project from "../types/Project";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
-import { matchString } from "../utils/matchString";
-import Grow from "../components/common/Grow";
+import { matchString } from "../utils/stringUtils";
 
 const ProjectListingPage = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>("");
@@ -60,20 +58,7 @@ const ProjectListingPage = (): JSX.Element => {
       </Typography>
       <Box display='flex' gap={2}>
         <CreateProjectButtonWithDialog />
-        <TextField
-          size='small'
-          margin='none'
-          placeholder='Search'
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position='start'>
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
+        <SearchBar value={searchInput} onChange={(e) => setSearchInput(e.target.value)} placeholder='Search projects' />
       </Box>
       <Divider sx={{ mt: 3, mb: 3 }} />
       {projects.length > 0 && renderTitleHeaders()}

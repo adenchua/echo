@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import { useEffect, useMemo, useState } from "react";
 
 import fetchTicketsByIds from "../api/tickets/fetchTicketsByIds";
+import useLoad from "../hooks/useLoad";
 import Epic from "../types/Epic";
 import Ticket from "../types/Ticket";
 import DeleteEpicDialog from "./DeleteEpicDialog";
@@ -23,6 +24,7 @@ interface EpicSummaryAccordionProps {
 const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => {
   const { epic } = props;
   const { title, ticketIds } = epic;
+  const { currentLoadState, handleSetLoadingState } = useLoad();
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [isDeleteEpicDialogOpened, setIsDeleteEpicDialogOpened] = useState<boolean>(false);
 
@@ -45,15 +47,17 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
   useEffect(() => {
     const getTickets = async (): Promise<void> => {
       try {
+        handleSetLoadingState("LOADING");
         const response = await fetchTicketsByIds(ticketIds);
         setTickets(response);
+        handleSetLoadingState("DEFAULT");
       } catch (error) {
-        // do nothing
+        handleSetLoadingState("ERROR");
       }
     };
 
     getTickets();
-  }, [ticketIds]);
+  }, [ticketIds, handleSetLoadingState]);
 
   return (
     <Accordion
@@ -111,7 +115,7 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
           borderColor: "grey.300",
         }}
       >
-        {tickets && tickets.length === 0 && (
+        {currentLoadState !== "ERROR" && tickets && tickets.length === 0 && (
           <Box py={1} px={4}>
             <Typography variant='body2' color='textSecondary'>
               There are no tickets tagged to this epic.
@@ -119,6 +123,11 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
           </Box>
         )}
         {tickets && tickets.map((ticket) => <EpicSummaryAccordionTicket key={ticket._id} ticket={ticket} />)}
+        {currentLoadState === "ERROR" && (
+          <Box py={1} px={4}>
+            <Typography color='error'>Unable to retrieve tickets. Please try again later</Typography>
+          </Box>
+        )}
       </AccordionDetails>
     </Accordion>
   );

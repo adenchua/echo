@@ -10,17 +10,11 @@ import { useNavigate } from "react-router-dom";
 import deleteProject from "../../api/projects/deleteProject";
 import updateProject from "../../api/projects/updateProject";
 import { UserProjectsContext } from "../../contexts/UserProjectsContextProvider";
+import useLoad from "../../hooks/useLoad";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import Project, { ProjectUpdateFieldsType } from "../../types/Project";
 import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
-import { sleep } from "../../utils/sleep";
-
-const saveButtonStates = {
-  default: "Update project details",
-  loading: "Saving...",
-  success: "Saved!",
-} as const;
-type SaveButtonStateKey = keyof typeof saveButtonStates;
+import SnackbarError from "../common/SnackbarError";
 
 interface SettingsTabProps {
   project: Project;
@@ -32,9 +26,8 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
   const { title, description, _id: projectId, adminIds } = project;
   const [titleInput, setTitleInput] = useState<string>(title);
   const [descriptionInput, setDescriptionInput] = useState<string>(description);
-  const [saveButtonState, setSaveButtonState] = useState<SaveButtonStateKey>("default");
-  const [showButtonDeleting, setShowButtonDeleting] = useState<boolean>(false);
   const [deletionInput, setDeletionInput] = useState<string>("");
+  const { currentLoadState, handleSetLoadingState } = useLoad();
   const { updateProject: updateProjectInContext } = useContext(UserProjectsContext);
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
   const navigate = useNavigate();
@@ -48,28 +41,23 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
     const updatableFields = { title: titleInput, description: descriptionInput };
 
     try {
-      setSaveButtonState("loading");
-      await sleep(1000);
+      handleSetLoadingState("LOADING");
       await updateProject(projectId, titleInput, descriptionInput);
       updateProjectInContext(projectId, updatableFields);
       handleUpdateProjectFields(updatableFields); // updates in overview page
-      setSaveButtonState("success");
+      handleSetLoadingState("SUCCESS");
     } catch (error) {
-      // do nothing
-    } finally {
-      await sleep(1000);
-      setSaveButtonState("default");
+      handleSetLoadingState("ERROR");
     }
   };
 
   const handleDeleteProject = async (): Promise<void> => {
     try {
-      setShowButtonDeleting(true);
-      await sleep(1000);
+      handleSetLoadingState("LOADING");
       await deleteProject(projectId);
       navigate("/projects");
     } catch (error) {
-      // do nothing
+      handleSetLoadingState("ERROR");
     }
   };
 
@@ -82,12 +70,10 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
 
       <Grid container mb={4} spacing={3}>
         <Grid item xs={12} md={4}>
-          <Typography fontSize={18} gutterBottom>
+          <Typography variant='h6' gutterBottom>
             Details
           </Typography>
-          <Typography fontSize={12} color='textSecondary'>
-            Customize project title, description and logo.
-          </Typography>
+          <Typography color='textSecondary'>Customize project title, description and logo.</Typography>
         </Grid>
         <Grid item xs={12} md={8}>
           <Typography gutterBottom variant='body2'>
@@ -114,12 +100,12 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
             placeholder='Give your project a detailed description'
           />
           <Button
-            sx={{ display: "block", width: "200px" }}
+            sx={{ display: "block" }}
             variant='contained'
             onClick={handleUpdateProject}
-            disabled={saveButtonState !== "default" || titleInput.length === 0}
+            disabled={currentLoadState === "LOADING" || titleInput.length === 0}
           >
-            {saveButtonStates[saveButtonState]}
+            Update details
           </Button>
         </Grid>
       </Grid>
@@ -128,11 +114,11 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
       {isLoggedInUserAdmin && (
         <Grid container mb={4} alignItems='flex-start' spacing={3}>
           <Grid item xs={12} md={4}>
-            <Typography fontSize={18} color='error' gutterBottom>
+            <Typography variant='h6' gutterBottom color='error'>
               Delete Project
             </Typography>
-            <Typography fontSize={12} color='textSecondary'>
-              Once you close this project, all tickets and sprint information will be lost forever.
+            <Typography color='textSecondary'>
+              Once you delete this project, all tickets and sprint information will be lost forever.
             </Typography>
           </Grid>
           <Grid item xs={12} md={8}>
@@ -146,7 +132,7 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
               onChange={(e) => setDeletionInput(e.target.value)}
             />
             {deletionInput === title && (
-              <Typography color='error' variant='body2' paragraph>
+              <Typography color='error' paragraph>
                 Warning! There is no turning back now...
               </Typography>
             )}
@@ -154,14 +140,15 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
               color='error'
               variant='contained'
               sx={{ display: "block" }}
-              disabled={showButtonDeleting || deletionInput !== title}
+              disabled={currentLoadState === "LOADING" || deletionInput !== title}
               onClick={handleDeleteProject}
             >
-              {showButtonDeleting ? "Deleting Project..." : "Delete this project"}
+              Delete this project
             </Button>
           </Grid>
         </Grid>
       )}
+      <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
     </Box>
   );
 };
