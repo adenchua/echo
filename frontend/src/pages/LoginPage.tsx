@@ -54,28 +54,25 @@ const LoginPage = (): JSX.Element => {
           Login to echo.yl
         </Typography>
         {errorMessage && (
-          <Alert severity='error' sx={{ width: "100%" }}>
+          <Alert severity='error' sx={{ width: "100%", mb: 2 }}>
             Error: {errorMessage}
           </Alert>
         )}
         <form onSubmit={handleLogin}>
           <TextField
-            variant='filled'
-            fullWidth
-            size='small'
-            label='Username'
             autoFocus
-            margin='normal'
+            fullWidth
+            variant='filled'
+            placeholder='Username'
             value={usernameInput}
             onChange={(e) => setUsernameInput(e.target.value)}
+            sx={{ mb: 3 }}
           />
           <TextField
             variant='filled'
             fullWidth
-            size='small'
-            label='Password'
+            placeholder='Password'
             type='password'
-            margin='normal'
             value={passwordInput}
             onChange={(e) => setPasswordInput(e.target.value)}
             sx={{ mb: 4 }}

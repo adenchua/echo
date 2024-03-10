@@ -1,6 +1,5 @@
 import Box from "@mui/material/Box";
 import { SelectChangeEvent } from "@mui/material/Select";
-import Typography from "@mui/material/Typography";
 import { useContext, useMemo, useState } from "react";
 
 import { TicketsContext } from "../../contexts/TicketsContextProvider";
@@ -17,6 +16,7 @@ import TicketNavbarWrapper from "../TicketNavbarWrapper";
 import TicketSection from "../TicketSection";
 import TicketSortSelectDropdown, { TicketSortType } from "../TicketSortSelectDropdown";
 import SearchBar from "../common/SearchBar";
+import SecondaryText from "../common/SecondaryText";
 import TypographySprintInformation from "../common/TypographySprintInformation";
 
 interface ProductBacklogTabProps {
@@ -128,11 +128,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
                 </Box>
               );
             })}
-          {tickets && tickets.length === 0 && (
-            <Typography variant='body2' color='GrayText'>
-              There are no tickets in the backlog.
-            </Typography>
-          )}
+          {tickets && tickets.length === 0 && <SecondaryText>There are no tickets in the backlog.</SecondaryText>}
         </Box>
       </Box>
       {renderDrawer()}
