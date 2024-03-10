@@ -12,6 +12,15 @@ const Select = (props: SelectProps): JSX.Element => {
           alignItems: "center",
         },
       }}
+      MenuProps={{
+        slotProps: {
+          paper: {
+            sx: {
+              maxHeight: 240,
+            },
+          },
+        },
+      }}
       {...props}
     />
   );
