@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+import { Schema, model } from "mongoose";
 
 const ticketSchema = new Schema(
   {
@@ -61,6 +60,6 @@ const ticketSchema = new Schema(
   { versionKey: false }
 );
 
-const Ticket = mongoose.model("Ticket", ticketSchema);
+const Ticket = model("Ticket", ticketSchema);
 
-module.exports = Ticket;
+export default Ticket;

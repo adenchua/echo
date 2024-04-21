@@ -1,6 +1,6 @@
-const { Router } = require("express");
+import { Router } from "express";
 
-const {
+import {
   createProject,
   getProject,
   addMemberToProject,
@@ -12,7 +12,7 @@ const {
   demoteAdmintoMember,
   deleteProject,
   addMembersToProject,
-} = require("../controllers/project");
+} from "../controllers/project.js";
 
 const router = Router();
 
@@ -28,4 +28,4 @@ router.route("/user/:userId").get(getProjectsOfUser);
 router.route("/admins/promote/:projectId").post(promoteMemberToAdministrator);
 router.route("/admins/demote/:projectId").post(demoteAdmintoMember);
 
-module.exports = router;
+export default router;

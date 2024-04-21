@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+import { Schema, model } from "mongoose";
 
 const sprintSchema = new Schema(
   {
@@ -30,6 +29,6 @@ const sprintSchema = new Schema(
   { versionKey: false }
 );
 
-const Sprint = mongoose.model("Sprint", sprintSchema);
+const Sprint = model("Sprint", sprintSchema);
 
-module.exports = Sprint;
+export default Sprint;

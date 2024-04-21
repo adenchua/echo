@@ -1,7 +1,7 @@
-const Project = require("../models/project");
-const { removeUndefinedKeysFromObject } = require("../utils/removeUndefinedKeysFromObject");
+import Project from "../models/project.js";
+import objectUtils from "../utils/objectUtils.js";
 
-module.exports.createProject = async (req, res) => {
+export const createProject = async (req, res) => {
   const { title, adminId, type } = req.body;
 
   if (!title || !adminId || !type) {
@@ -19,7 +19,7 @@ module.exports.createProject = async (req, res) => {
   }
 };
 
-module.exports.getProject = async (req, res) => {
+export const getProject = async (req, res) => {
   const { projectId } = req.params;
 
   if (!projectId) {
@@ -41,7 +41,7 @@ module.exports.getProject = async (req, res) => {
   }
 };
 
-module.exports.addMemberToProject = async (req, res) => {
+export const addMemberToProject = async (req, res) => {
   const { projectId } = req.params;
   const { userId } = req.body;
 
@@ -74,7 +74,7 @@ module.exports.addMemberToProject = async (req, res) => {
   }
 };
 
-module.exports.addMembersToProject = async (req, res) => {
+export const addMembersToProject = async (req, res) => {
   const { projectId } = req.params;
   const { userIds } = req.body;
 
@@ -108,7 +108,7 @@ module.exports.addMembersToProject = async (req, res) => {
   }
 };
 
-module.exports.removeMemberFromProject = async (req, res) => {
+export const removeMemberFromProject = async (req, res) => {
   const { projectId } = req.params;
   const { userId } = req.body;
 
@@ -136,7 +136,7 @@ module.exports.removeMemberFromProject = async (req, res) => {
   }
 };
 
-module.exports.updateProject = async (req, res) => {
+export const updateProject = async (req, res) => {
   const { projectId } = req.params;
   const { title, description, announcement, picture, type } = req.body;
   if (!projectId) {
@@ -151,7 +151,7 @@ module.exports.updateProject = async (req, res) => {
       return;
     }
 
-    const keysToUpdate = removeUndefinedKeysFromObject({ title, description, announcement, picture, type });
+    const keysToUpdate = objectUtils.removeUndefinedKeysFromObject({ title, description, announcement, picture, type });
     await Project.findByIdAndUpdate(projectId, { ...keysToUpdate });
     res.status(204).send();
   } catch (error) {
@@ -160,7 +160,7 @@ module.exports.updateProject = async (req, res) => {
   }
 };
 
-module.exports.getProjectsOfUser = async (req, res) => {
+export const getProjectsOfUser = async (req, res) => {
   const { userId } = req.params;
   if (!userId) {
     res.status(400).send();
@@ -178,7 +178,7 @@ module.exports.getProjectsOfUser = async (req, res) => {
   }
 };
 
-module.exports.getAllProjects = async (req, res) => {
+export const getAllProjects = async (req, res) => {
   try {
     const projects = await Project.find({ isDeleted: false });
     res.status(200).send(projects);
@@ -188,7 +188,7 @@ module.exports.getAllProjects = async (req, res) => {
   }
 };
 
-module.exports.promoteMemberToAdministrator = async (req, res) => {
+export const promoteMemberToAdministrator = async (req, res) => {
   const { projectId } = req.params;
   const { userId } = req.body;
 
@@ -221,7 +221,7 @@ module.exports.promoteMemberToAdministrator = async (req, res) => {
   }
 };
 
-module.exports.demoteAdmintoMember = async (req, res) => {
+export const demoteAdmintoMember = async (req, res) => {
   const { projectId } = req.params;
   const { userId } = req.body;
 
@@ -259,7 +259,7 @@ module.exports.demoteAdmintoMember = async (req, res) => {
   }
 };
 
-module.exports.deleteProject = async (req, res) => {
+export const deleteProject = async (req, res) => {
   const { projectId } = req.params;
 
   try {

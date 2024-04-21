@@ -1,9 +1,9 @@
-const Epic = require("../models/epic");
-const Project = require("../models/project");
-const Ticket = require("../models/ticket");
-const { removeUndefinedKeysFromObject } = require("../utils/removeUndefinedKeysFromObject");
+import Epic from "../models/epic.js";
+import Project from "../models/project.js";
+import Ticket from "../models/ticket.js";
+import objectUtils from "../utils/objectUtils.js";
 
-module.exports.createEpic = async (req, res) => {
+export const createEpic = async (req, res) => {
   const { title, projectId } = req.body;
 
   if (!title || !projectId) {
@@ -24,7 +24,7 @@ module.exports.createEpic = async (req, res) => {
   }
 };
 
-module.exports.updateEpic = async (req, res) => {
+export const updateEpic = async (req, res) => {
   const { epicId } = req.params;
   const { title, description } = req.body;
 
@@ -33,7 +33,7 @@ module.exports.updateEpic = async (req, res) => {
     return;
   }
 
-  const keysToUpdate = removeUndefinedKeysFromObject({ title, description });
+  const keysToUpdate = objectUtils.removeUndefinedKeysFromObject({ title, description });
 
   try {
     await Epic.findByIdAndUpdate(epicId, { ...keysToUpdate });
@@ -44,7 +44,7 @@ module.exports.updateEpic = async (req, res) => {
   }
 };
 
-module.exports.getEpics = async (req, res) => {
+export const getEpics = async (req, res) => {
   const { epicIds } = req.body;
   const epics = [];
 
@@ -67,7 +67,7 @@ module.exports.getEpics = async (req, res) => {
   }
 };
 
-module.exports.addTicketToEpic = async (req, res) => {
+export const addTicketToEpic = async (req, res) => {
   const { epicId } = req.params;
   const { ticketId } = req.body;
 
@@ -91,7 +91,7 @@ module.exports.addTicketToEpic = async (req, res) => {
   }
 };
 
-module.exports.removeTicketFromEpic = async (req, res) => {
+export const removeTicketFromEpic = async (req, res) => {
   const { epicId } = req.params;
   const { ticketId } = req.body;
 
@@ -114,7 +114,7 @@ module.exports.removeTicketFromEpic = async (req, res) => {
   }
 };
 
-module.exports.deleteEpic = async (req, res) => {
+export const deleteEpic = async (req, res) => {
   const { epicId } = req.params;
 
   if (!epicId) {

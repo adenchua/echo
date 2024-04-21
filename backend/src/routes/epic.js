@@ -1,13 +1,13 @@
-const { Router } = require("express");
+import { Router } from "express";
 
-const {
+import {
   addTicketToEpic,
   createEpic,
   getEpics,
   removeTicketFromEpic,
   updateEpic,
   deleteEpic,
-} = require("../controllers/epic");
+} from "../controllers/epic.js";
 
 const router = Router();
 
@@ -18,4 +18,4 @@ router.route("/bulk-retrieve").post(getEpics);
 router.route("/add-ticket/:epicId").post(addTicketToEpic);
 router.route("/remove-ticket/:epicId").post(removeTicketFromEpic);
 
-module.exports = router;
+export default router;

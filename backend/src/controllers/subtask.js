@@ -1,8 +1,8 @@
-const Subtask = require("../models/subtask");
-const Ticket = require("../models/ticket");
-const { removeUndefinedKeysFromObject } = require("../utils/removeUndefinedKeysFromObject");
+import Subtask from "../models/subtask.js";
+import Ticket from "../models/ticket.js";
+import objectUtils from "../utils/objectUtils.js";
 
-module.exports.createSubtask = async (req, res) => {
+export const createSubtask = async (req, res) => {
   const { ticketId, title } = req.body;
 
   if (!ticketId || !title) {
@@ -23,7 +23,7 @@ module.exports.createSubtask = async (req, res) => {
   }
 };
 
-module.exports.updateSubtask = async (req, res) => {
+export const updateSubtask = async (req, res) => {
   const { subtaskId } = req.params;
   const { title, isCompleted } = req.body;
 
@@ -32,7 +32,7 @@ module.exports.updateSubtask = async (req, res) => {
     return;
   }
 
-  const keysToUpdate = removeUndefinedKeysFromObject({ title, isCompleted });
+  const keysToUpdate = objectUtils.removeUndefinedKeysFromObject({ title, isCompleted });
   try {
     await Subtask.findByIdAndUpdate(subtaskId, { ...keysToUpdate });
     res.status(204).send();
@@ -42,7 +42,7 @@ module.exports.updateSubtask = async (req, res) => {
   }
 };
 
-module.exports.deleteSubtask = async (req, res) => {
+export const deleteSubtask = async (req, res) => {
   const { subtaskId } = req.params;
 
   if (!subtaskId) {
@@ -60,7 +60,7 @@ module.exports.deleteSubtask = async (req, res) => {
   }
 };
 
-module.exports.getSubtasks = async (req, res) => {
+export const getSubtasks = async (req, res) => {
   const { subtaskIds } = req.body;
   const subtasks = [];
 

@@ -1,6 +1,6 @@
-const { Router } = require("express");
+import { Router } from "express";
 
-const { endSprint, getSprint, getSprints, startSprint } = require("../controllers/sprint");
+import { endSprint, getSprint, getSprints, startSprint } from "../controllers/sprint.js";
 
 const router = Router();
 
@@ -9,4 +9,4 @@ router.route("/end").post(endSprint);
 router.route("/id/:sprintId").get(getSprint);
 router.route("/bulk-retrieve").post(getSprints);
 
-module.exports = router;
+export default router;

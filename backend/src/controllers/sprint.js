@@ -1,8 +1,8 @@
-const Project = require("../models/project");
-const Sprint = require("../models/sprint");
-const Ticket = require("../models/ticket");
+import Sprint from "../models/sprint.js";
+import Project from "../models/project.js";
+import Ticket from "../models/ticket.js";
 
-module.exports.startSprint = async (req, res) => {
+export const startSprint = async (req, res) => {
   const { projectId, endDateISOString } = req.body;
 
   if (!projectId || !endDateISOString) {
@@ -39,7 +39,7 @@ module.exports.startSprint = async (req, res) => {
   }
 };
 
-module.exports.endSprint = async (req, res) => {
+export const endSprint = async (req, res) => {
   const { sprintId, projectId } = req.body;
   const completedTicketIds = [];
   const incompleteTicketIds = [];
@@ -94,7 +94,7 @@ module.exports.endSprint = async (req, res) => {
   }
 };
 
-module.exports.getSprints = async (req, res) => {
+export const getSprints = async (req, res) => {
   const { sprintIds } = req.body;
   const sprints = [];
 
@@ -118,7 +118,7 @@ module.exports.getSprints = async (req, res) => {
   }
 };
 
-module.exports.getSprint = async (req, res) => {
+export const getSprint = async (req, res) => {
   const { sprintId } = req.params;
 
   if (!sprintId) {

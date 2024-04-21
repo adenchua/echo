@@ -1,9 +1,9 @@
-const Ticket = require("../models/ticket");
-const Project = require("../models/project");
-const Epic = require("../models/epic");
-const { removeUndefinedKeysFromObject } = require("../utils/removeUndefinedKeysFromObject");
+import Epic from "../models/epic.js";
+import Project from "../models/project.js";
+import Ticket from "../models/ticket.js";
+import objectUtils from "../utils/objectUtils.js";
 
-module.exports.createTicket = async (req, res) => {
+export const createTicket = async (req, res) => {
   const { title, projectId, priority, type } = req.body;
 
   if (!title || !projectId) {
@@ -11,7 +11,7 @@ module.exports.createTicket = async (req, res) => {
     return;
   }
 
-  const keysToUpdate = removeUndefinedKeysFromObject({
+  const keysToUpdate = objectUtils.removeUndefinedKeysFromObject({
     priority,
     type,
   });
@@ -36,7 +36,7 @@ module.exports.createTicket = async (req, res) => {
   }
 };
 
-module.exports.updateTicket = async (req, res) => {
+export const updateTicket = async (req, res) => {
   const { ticketId } = req.params;
   const { title, description, status, priority, type, dueDate, isInSprint, assigneeId, storyPoints } = req.body;
 
@@ -46,7 +46,7 @@ module.exports.updateTicket = async (req, res) => {
   }
 
   try {
-    const keysToUpdate = removeUndefinedKeysFromObject({
+    const keysToUpdate = objectUtils.removeUndefinedKeysFromObject({
       title,
       description,
       status,
@@ -66,7 +66,7 @@ module.exports.updateTicket = async (req, res) => {
   }
 };
 
-module.exports.deleteTicket = async (req, res) => {
+export const deleteTicket = async (req, res) => {
   const { ticketId } = req.params;
   const { projectId } = req.body;
 
@@ -88,7 +88,7 @@ module.exports.deleteTicket = async (req, res) => {
   }
 };
 
-module.exports.getTickets = async (req, res) => {
+export const getTickets = async (req, res) => {
   const { ticketIds } = req.body;
   const tickets = [];
 
@@ -112,7 +112,7 @@ module.exports.getTickets = async (req, res) => {
   }
 };
 
-module.exports.getTicket = async (req, res) => {
+export const getTicket = async (req, res) => {
   const { ticketId } = req.params;
 
   if (!ticketId) {

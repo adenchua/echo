@@ -1,6 +1,6 @@
-const { Router } = require("express");
+import { Router } from "express";
 
-const { createTicket, deleteTicket, getTickets, getTicket, updateTicket } = require("../controllers/ticket");
+import { createTicket, deleteTicket, getTickets, getTicket, updateTicket } from "../controllers/ticket.js";
 
 const router = Router();
 
@@ -10,4 +10,4 @@ router.route("/id/:ticketId").post(deleteTicket);
 router.route("/id/:ticketId").get(getTicket);
 router.route("/bulk-retrieve").post(getTickets);
 
-module.exports = router;
+export default router;

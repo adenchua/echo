@@ -1,6 +1,6 @@
-const { Router } = require("express");
+import { Router } from "express";
 
-const { createSubtask, deleteSubtask, getSubtasks, updateSubtask } = require("../controllers/subtask");
+import { createSubtask, deleteSubtask, getSubtasks, updateSubtask } from "../controllers/subtask.js";
 
 const router = Router();
 
@@ -9,4 +9,4 @@ router.route("/id/:subtaskId").delete(deleteSubtask);
 router.route("/id/:subtaskId").patch(updateSubtask);
 router.route("/bulk-retrieve").post(getSubtasks);
 
-module.exports = router;
+export default router;
