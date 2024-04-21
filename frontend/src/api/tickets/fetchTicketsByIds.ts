@@ -5,7 +5,7 @@ import { API_ENDPOINT } from "../../utils/constants";
 
 const fetchTicketsByIds = async (ticketIds: string[]): Promise<Ticket[]> => {
   try {
-    const response = await axios.post<Ticket[]>(`${API_ENDPOINT}/tickets/bulk-retrieve`, { ticketIds });
+    const response = await axios.post<Ticket[]>(`${API_ENDPOINT}/v1/tickets/bulk-retrieve`, { ticketIds });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

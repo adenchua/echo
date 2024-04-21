@@ -5,7 +5,7 @@ import { API_ENDPOINT } from "../../utils/constants";
 
 const fetchAllProjectsByUser = async (userId: string): Promise<Project[]> => {
   try {
-    const response = await axios.get<Project[]>(`${API_ENDPOINT}/projects/user/${userId}`);
+    const response = await axios.get<Project[]>(`${API_ENDPOINT}/v1/projects/user/${userId}`);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

@@ -96,12 +96,12 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
 
     return (
       <Box display='flex' alignItems='baseline' gap={1}>
+        <TypographySprintInformation>Sprint {number}</TypographySprintInformation>
         <TypographySprintInformation>
-          Sprint {number} <span>&#8729;</span>
+          <span>&#8729;</span> {formattedStartDate} to {formattedEndDate}
         </TypographySprintInformation>
         {dayDifference >= 0 && (
           <TypographySprintInformation>
-            {formattedStartDate} to {formattedEndDate}
             <span>&#8729;</span> {dayDifference} business {pluralize("day", "days", dayDifference)} remaining
           </TypographySprintInformation>
         )}

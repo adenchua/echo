@@ -5,7 +5,7 @@ import { API_ENDPOINT } from "../../utils/constants";
 
 const createEpic = async (title: string, projectId: string): Promise<Epic> => {
   try {
-    const response = await axios.post<Epic>(`${API_ENDPOINT}/epics`, {
+    const response = await axios.post<Epic>(`${API_ENDPOINT}/v1/epics`, {
       title,
       projectId,
     });

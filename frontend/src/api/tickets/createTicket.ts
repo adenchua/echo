@@ -10,7 +10,7 @@ const createTicket = async (
   type: TicketType
 ): Promise<Ticket> => {
   try {
-    const response = await axios.post<Ticket>(`${API_ENDPOINT}/tickets`, { title, projectId, priority, type });
+    const response = await axios.post<Ticket>(`${API_ENDPOINT}/v1/tickets`, { title, projectId, priority, type });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

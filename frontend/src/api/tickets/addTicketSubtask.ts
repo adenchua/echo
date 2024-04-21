@@ -5,7 +5,7 @@ import { API_ENDPOINT } from "../../utils/constants";
 
 const addTicketSubtask = async (ticketId: string, title: string): Promise<Subtask> => {
   try {
-    const response = await axios.post<Subtask>(`${API_ENDPOINT}/subtasks`, { ticketId, title });
+    const response = await axios.post<Subtask>(`${API_ENDPOINT}/v1/subtasks`, { ticketId, title });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

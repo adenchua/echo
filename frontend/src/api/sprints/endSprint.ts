@@ -5,7 +5,7 @@ import { API_ENDPOINT } from "../../utils/constants";
 
 const endSprint = async (projectId: string, sprintId: string): Promise<Sprint> => {
   try {
-    const response = await axios.post<Sprint>(`${API_ENDPOINT}/sprints/end`, {
+    const response = await axios.post<Sprint>(`${API_ENDPOINT}/v1/sprints/end`, {
       projectId,
       sprintId,
     });
