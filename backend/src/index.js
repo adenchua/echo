@@ -18,13 +18,13 @@ const API_PREPEND = "/api";
 app.use(express.json());
 app.use(cors());
 app.use(morgan("combined")); // logging middleware
-app.use(helmet());
+app.use(helmet()); // secure server by setting recommended HTTP response headers
 
-app.use(`${API_PREPEND}/projects`, projectRouter);
-app.use(`${API_PREPEND}/epics`, epicRouter);
-app.use(`${API_PREPEND}/subtasks`, subtaskRouter);
-app.use(`${API_PREPEND}/sprints`, sprintRouter);
-app.use(`${API_PREPEND}/tickets`, ticketRouter);
+app.use(`${API_PREPEND}/v1/projects`, projectRouter);
+app.use(`${API_PREPEND}/v1/epics`, epicRouter);
+app.use(`${API_PREPEND}/v1/subtasks`, subtaskRouter);
+app.use(`${API_PREPEND}/v1/sprints`, sprintRouter);
+app.use(`${API_PREPEND}/v1/tickets`, ticketRouter);
 
 app.all(`/healthcheck`, (req, res) => {
   res.send();
