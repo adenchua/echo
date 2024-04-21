@@ -1,93 +1,73 @@
 import Project from "../models/project.js";
 import objectUtils from "../utils/objectUtils.js";
+import { errorMessages } from "../utils/errorMessages.js";
 
-export const createProject = async (req, res) => {
+export const createProject = async (req, res, next) => {
   const { title, adminId, type } = req.body;
-
-  if (!title || !adminId || !type) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     const newProject = new Project({ title, adminIds: [adminId], type });
     await newProject.save();
     res.status(201).send(newProject);
   } catch (error) {
-    console.error("createProject error", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const getProject = async (req, res) => {
+export const getProject = async (req, res, next) => {
   const { projectId } = req.params;
-
-  if (!projectId) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     const project = await Project.findById(projectId);
     if (!project || project.isDeleted) {
-      res.status(400).send();
+      res.sendStatus(404);
       return;
     }
 
-    res.status(200).send(project);
+    res.send(project);
   } catch (error) {
-    console.error("getProject error", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const addMemberToProject = async (req, res) => {
+export const addMemberToProject = async (req, res, next) => {
   const { projectId } = req.params;
   const { userId } = req.body;
-
-  if (!userId || !projectId) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     const project = await Project.findById(projectId);
 
     if (!project || project.isDeleted) {
-      res.status(400).send();
+      res.status(400).send({ error: errorMessages.projectNotExists });
       return;
     }
 
     if (project.adminIds.includes(userId)) {
-      res.status(400).send({ message: "member is already an administrator" });
+      res.status(400).send({ error: "member is already an administrator" });
       return;
     }
 
+    // if member is already inside the array, no need to do anything
     if (!project.memberIds.includes(userId)) {
       project.memberIds.push(userId);
+      await project.save();
     }
-    await project.save();
-    res.status(204).send();
+
+    res.sendStatus(204);
   } catch (error) {
-    console.error("addMemberToProject", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const addMembersToProject = async (req, res) => {
+export const addMembersToProject = async (req, res, next) => {
   const { projectId } = req.params;
   const { userIds } = req.body;
-
-  if (!userIds || !projectId || !Array.isArray(userIds)) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     const project = await Project.findById(projectId);
 
     if (!project || project.isDeleted) {
-      res.status(400).send();
+      res.status(400).send({ error: errorMessages.projectNotExists });
       return;
     }
 
@@ -101,94 +81,77 @@ export const addMembersToProject = async (req, res) => {
     }
 
     await project.save();
-    res.status(204).send();
+    res.sendStatus(204);
   } catch (error) {
-    console.error("addMembersToProject", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const removeMemberFromProject = async (req, res) => {
+export const removeMemberFromProject = async (req, res, next) => {
   const { projectId } = req.params;
   const { userId } = req.body;
-
-  if (!userId || !projectId) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     const project = await Project.findById(projectId);
 
     if (!project || project.isDeleted) {
-      res.status(400).send();
+      res.status(400).send({ error: errorMessages.projectNotExists });
       return;
     }
 
     if (project.memberIds.includes(userId)) {
       project.memberIds.pull(userId);
+      await project.save();
     }
-    await project.save();
-    res.status(204).send();
+
+    res.sendStatus(204);
   } catch (error) {
-    console.error("removeMemberFromProject", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const updateProject = async (req, res) => {
+export const updateProject = async (req, res, next) => {
   const { projectId } = req.params;
   const { title, description, announcement, picture, type } = req.body;
-  if (!projectId) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     const project = await Project.findById(projectId);
     if (!project || project.isDeleted) {
-      res.status(400).send();
+      res.status(400).send({ error: errorMessages.projectNotExists });
       return;
     }
 
     const keysToUpdate = objectUtils.removeUndefinedKeysFromObject({ title, description, announcement, picture, type });
     await Project.findByIdAndUpdate(projectId, { ...keysToUpdate });
-    res.status(204).send();
+    res.sendStatus(204);
   } catch (error) {
-    console.error("updateProject", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const getProjectsOfUser = async (req, res) => {
+export const getProjectsOfUser = async (req, res, next) => {
   const { userId } = req.params;
-  if (!userId) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     const projectsWithUsersAsAdmins = await Project.find({ adminIds: userId, isDeleted: false });
     const projectsWithUsersAsMembers = await Project.find({ memberIds: userId, isDeleted: false });
     const projects = [...projectsWithUsersAsAdmins, ...projectsWithUsersAsMembers];
-    res.status(200).send(projects);
+    res.send(projects);
   } catch (error) {
-    console.error("getProjectsOfUser", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const getAllProjects = async (req, res) => {
+export const getAllProjects = async (req, res, next) => {
   try {
     const projects = await Project.find({ isDeleted: false });
-    res.status(200).send(projects);
+    res.send(projects);
   } catch (error) {
-    console.error("getAllProjects", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const promoteMemberToAdministrator = async (req, res) => {
+export const promoteMemberToAdministrator = async (req, res, next) => {
   const { projectId } = req.params;
   const { userId } = req.body;
 
@@ -214,14 +177,13 @@ export const promoteMemberToAdministrator = async (req, res) => {
     }
 
     await project.save();
-    res.status(204).send();
+    res.sendStatus(204);
   } catch (error) {
-    console.error("promoteMemberToAdministrator", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const demoteAdmintoMember = async (req, res) => {
+export const demoteAdmintoMember = async (req, res, next) => {
   const { projectId } = req.params;
   const { userId } = req.body;
 
@@ -252,21 +214,19 @@ export const demoteAdmintoMember = async (req, res) => {
     }
 
     await project.save();
-    res.status(204).send();
+    res.sendStatus(204);
   } catch (error) {
-    console.error("demoteAdmintoMember", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const deleteProject = async (req, res) => {
+export const deleteProject = async (req, res, next) => {
   const { projectId } = req.params;
 
   try {
     await Project.findByIdAndUpdate(projectId, { isDeleted: true }); // safe delete.
-    res.status(204).send();
+    res.sendStatus(204);
   } catch (error) {
-    console.error("deleteProject", error);
-    res.status(500).send();
+    next(error);
   }
 };
