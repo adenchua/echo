@@ -3,13 +3,8 @@ import Project from "../models/project.js";
 import Ticket from "../models/ticket.js";
 import objectUtils from "../utils/objectUtils.js";
 
-export const createTicket = async (req, res) => {
+export const createTicket = async (req, res, next) => {
   const { title, projectId, priority, type } = req.body;
-
-  if (!title || !projectId) {
-    res.status(400).send();
-    return;
-  }
 
   const keysToUpdate = objectUtils.removeUndefinedKeysFromObject({
     priority,
@@ -31,19 +26,13 @@ export const createTicket = async (req, res) => {
     await project.save();
     res.status(201).send(newTicket);
   } catch (error) {
-    console.error("createTicket error", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const updateTicket = async (req, res) => {
+export const updateTicket = async (req, res, next) => {
   const { ticketId } = req.params;
   const { title, description, status, priority, type, dueDate, isInSprint, assigneeId, storyPoints } = req.body;
-
-  if (!ticketId) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     const keysToUpdate = objectUtils.removeUndefinedKeysFromObject({
@@ -59,21 +48,15 @@ export const updateTicket = async (req, res) => {
     });
 
     await Ticket.findByIdAndUpdate(ticketId, { ...keysToUpdate });
-    res.status(204).send();
+    res.sendStatus(204);
   } catch (error) {
-    console.error("updateTicket", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const deleteTicket = async (req, res) => {
+export const deleteTicket = async (req, res, next) => {
   const { ticketId } = req.params;
   const { projectId } = req.body;
-
-  if (!ticketId || !projectId) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     await Ticket.findByIdAndDelete(ticketId);
@@ -81,21 +64,15 @@ export const deleteTicket = async (req, res) => {
     const project = await Project.findById(projectId);
     project.backlogIds.pull(ticketId);
     await project.save();
-    res.status(204).send();
+    res.sendStatus(204);
   } catch (error) {
-    console.error("deleteTicket", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const getTickets = async (req, res) => {
+export const getTickets = async (req, res, next) => {
   const { ticketIds } = req.body;
   const tickets = [];
-
-  if (!ticketIds || !Array.isArray(ticketIds)) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     for (const ticketId of ticketIds) {
@@ -105,26 +82,19 @@ export const getTickets = async (req, res) => {
       }
     }
 
-    res.status(200).send(tickets);
+    res.send(tickets);
   } catch (error) {
-    console.error("getTickets", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const getTicket = async (req, res) => {
+export const getTicket = async (req, res, next) => {
   const { ticketId } = req.params;
-
-  if (!ticketId) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     const ticket = await Ticket.findById(ticketId);
-    res.status(200).send(ticket);
+    res.send(ticket);
   } catch (error) {
-    console.error("getTicket", error);
-    res.status(500).send();
+    next(error);
   }
 };

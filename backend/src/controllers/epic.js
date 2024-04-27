@@ -1,57 +1,47 @@
 import Epic from "../models/epic.js";
 import Project from "../models/project.js";
 import Ticket from "../models/ticket.js";
+import { errorMessages } from "../utils/errorMessages.js";
 import objectUtils from "../utils/objectUtils.js";
 
-export const createEpic = async (req, res) => {
+export const createEpic = async (req, res, next) => {
   const { title, projectId } = req.body;
-
-  if (!title || !projectId) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     const project = await Project.findById(projectId);
+
+    if (!project) {
+      res.status(400).send({ error: errorMessages.projectNotExists });
+      return;
+    }
+
     const epic = new Epic({ title });
     await epic.save();
     project.epicIds.push(epic._id);
     await project.save();
     res.status(201).send(epic);
   } catch (error) {
-    console.error("createEpic", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const updateEpic = async (req, res) => {
+export const updateEpic = async (req, res, next) => {
   const { epicId } = req.params;
   const { title, description } = req.body;
-
-  if (!epicId) {
-    res.status(400).send();
-    return;
-  }
 
   const keysToUpdate = objectUtils.removeUndefinedKeysFromObject({ title, description });
 
   try {
     await Epic.findByIdAndUpdate(epicId, { ...keysToUpdate });
-    res.status(204).send();
+    res.sendStatus(204);
   } catch (error) {
-    console.error("updateEpic", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const getEpics = async (req, res) => {
+export const getEpics = async (req, res, next) => {
   const { epicIds } = req.body;
   const epics = [];
-
-  if (!epicIds || !Array.isArray(epicIds)) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     for (const epicId of epicIds) {
@@ -60,21 +50,15 @@ export const getEpics = async (req, res) => {
         epics.push(epic);
       }
     }
-    res.status(200).send(epics);
+    res.send(epics);
   } catch (error) {
-    console.error("getEpics", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const addTicketToEpic = async (req, res) => {
+export const addTicketToEpic = async (req, res, next) => {
   const { epicId } = req.params;
   const { ticketId } = req.body;
-
-  if (!epicId || !ticketId) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     const epic = await Epic.findById(epicId);
@@ -84,21 +68,15 @@ export const addTicketToEpic = async (req, res) => {
       epic.ticketIds.push(ticketId);
     }
     await epic.save();
-    res.status(204).send();
+    res.sendStatus(204);
   } catch (error) {
-    console.error("addTicketToEpic", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const removeTicketFromEpic = async (req, res) => {
+export const removeTicketFromEpic = async (req, res, next) => {
   const { epicId } = req.params;
   const { ticketId } = req.body;
-
-  if (!epicId || !ticketId) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     const epic = await Epic.findById(epicId);
@@ -107,28 +85,21 @@ export const removeTicketFromEpic = async (req, res) => {
       epic.ticketIds.pull(ticketId);
     }
     await epic.save();
-    res.status(204).send();
+    res.sendStatus(204);
   } catch (error) {
-    console.error("addTicketToEpic", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const deleteEpic = async (req, res) => {
+export const deleteEpic = async (req, res, next) => {
   const { epicId } = req.params;
-
-  if (!epicId) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     await Ticket.updateMany({ epicId: epicId }, { $unset: { epicId: "" } }); // remove tickets with this epic id
     await Project.updateMany({ epicIds: epicId }, { $pullAll: { epicIds: [epicId] } }); // remove projects with this epic id
     await Epic.findByIdAndDelete(epicId);
-    res.status(204).send();
+    res.sendStatus(204);
   } catch (error) {
-    console.error("deleteEpic", error);
-    res.status(500).send();
+    next(error);
   }
 };

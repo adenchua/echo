@@ -1,24 +1,27 @@
 import { Router } from "express";
 
 import {
-  createProject,
-  getProject,
   addMemberToProject,
+  addMembersToProject,
+  createProject,
+  deleteProject,
+  demoteAdmintoMember,
+  getAllProjects,
+  getProject,
+  getProjectsOfUser,
+  promoteMemberToAdministrator,
   removeMemberFromProject,
   updateProject,
-  getProjectsOfUser,
-  getAllProjects,
-  promoteMemberToAdministrator,
-  demoteAdmintoMember,
-  deleteProject,
-  addMembersToProject,
 } from "../controllers/project.js";
 
 import {
-  getProjectValidationChain,
-  createProjectValidationChain,
-  addMembersToProjectValidationChain,
   addMemberToProjectValidationChain,
+  addMembersToProjectValidationChain,
+  createProjectValidationChain,
+  deleteProjectValidationChain,
+  demoteAdmintoMemberValidationChain,
+  getProjectValidationChain,
+  promoteMemberToAdministratorValidationChain,
   removeMemberFromProjectValidationChain,
   updateProjectValidationChain,
 } from "../middlewares/projectValidationMiddleware.js";
@@ -30,7 +33,7 @@ router.route("/").get(getAllProjects);
 router.route("/").post(createProjectValidationChain, validationErrorHandling, createProject);
 router.route("/id/:projectId").get(getProjectValidationChain, validationErrorHandling, getProject);
 router.route("/id/:projectId").patch(updateProjectValidationChain, validationErrorHandling, updateProject);
-router.route("/id/:projectId").delete(deleteProject);
+router.route("/id/:projectId").delete(deleteProjectValidationChain, validationErrorHandling, deleteProject);
 router
   .route("/members/add/:projectId")
   .post(addMemberToProjectValidationChain, validationErrorHandling, addMemberToProject);
@@ -41,7 +44,11 @@ router
   .route("/members/remove/:projectId")
   .post(removeMemberFromProjectValidationChain, validationErrorHandling, removeMemberFromProject);
 router.route("/user/:userId").get(getProjectsOfUser);
-router.route("/admins/promote/:projectId").post(promoteMemberToAdministrator);
-router.route("/admins/demote/:projectId").post(demoteAdmintoMember);
+router
+  .route("/admins/promote/:projectId")
+  .post(promoteMemberToAdministratorValidationChain, validationErrorHandling, promoteMemberToAdministrator);
+router
+  .route("/admins/demote/:projectId")
+  .post(demoteAdmintoMemberValidationChain, validationErrorHandling, demoteAdmintoMember);
 
 export default router;

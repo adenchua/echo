@@ -1,20 +1,16 @@
-import Sprint from "../models/sprint.js";
 import Project from "../models/project.js";
+import Sprint from "../models/sprint.js";
 import Ticket from "../models/ticket.js";
+import { errorMessages } from "../utils/errorMessages.js";
 
-export const startSprint = async (req, res) => {
+export const startSprint = async (req, res, next) => {
   const { projectId, endDateISOString } = req.body;
-
-  if (!projectId || !endDateISOString) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     const project = await Project.findById(projectId);
 
     if (!project || project.isDeleted) {
-      res.status(400).send({ message: "Project may not exist anymore" });
+      res.status(400).send({ error: errorMessages.projectNotExists });
       return;
     }
 
@@ -22,7 +18,7 @@ export const startSprint = async (req, res) => {
       const sprint = await Sprint.findById(sprintId);
       if (!sprint.hasEnded) {
         // already has active sprint
-        res.status(400).send({ messsage: "Active sprint exists" });
+        res.status(400).send({ error: "Active sprint exists" });
         return;
       }
     }
@@ -34,33 +30,27 @@ export const startSprint = async (req, res) => {
     await project.save();
     res.status(201).send(newSprint);
   } catch (error) {
-    console.error("startSprint", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const endSprint = async (req, res) => {
+export const endSprint = async (req, res, next) => {
   const { sprintId, projectId } = req.body;
   const completedTicketIds = [];
   const incompleteTicketIds = [];
-
-  if (!sprintId || !projectId) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     const sprint = await Sprint.findById(sprintId);
 
     if (sprint.hasEnded) {
-      res.status(400).send({ message: "Sprint has already ended" });
+      res.status(400).send({ error: "Sprint has already ended" });
       return;
     }
 
     const project = await Project.findById(projectId);
 
     if (!project || project.isDeleted) {
-      res.status(400).send({ message: "Project may not exist anymore" });
+      res.status(400).send({ error: errorMessages.projectNotExists });
       return;
     }
 
@@ -87,21 +77,15 @@ export const endSprint = async (req, res) => {
     sprint.incompleteTicketIds = incompleteTicketIds;
     await sprint.save();
     await project.save();
-    res.status(200).send(sprint);
+    res.send(sprint);
   } catch (error) {
-    console.error("endSprint", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const getSprints = async (req, res) => {
+export const getSprints = async (req, res, next) => {
   const { sprintIds } = req.body;
   const sprints = [];
-
-  if (!sprintIds || !Array.isArray(sprintIds)) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     for (const sprintId of sprintIds) {
@@ -111,26 +95,19 @@ export const getSprints = async (req, res) => {
       }
     }
 
-    res.status(200).send(sprints);
+    res.send(sprints);
   } catch (error) {
-    console.error("getSprints", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const getSprint = async (req, res) => {
+export const getSprint = async (req, res, next) => {
   const { sprintId } = req.params;
-
-  if (!sprintId) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     const sprint = await Sprint.findById(sprintId);
-    res.status(200).send(sprint);
+    res.send(sprint);
   } catch (error) {
-    console.error("getSprint", error);
-    res.status(500).send();
+    next(error);
   }
 };

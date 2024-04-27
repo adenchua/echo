@@ -9,6 +9,7 @@ import epicRouter from "./routes/epic.js";
 import subtaskRouter from "./routes/subtask.js";
 import sprintRouter from "./routes/sprint.js";
 import ticketRouter from "./routes/ticket.js";
+import errorHandler from "./middlewares/errorHandler.js";
 
 const app = express();
 const PORT = process.env.SERVER_PORT_NUMBER || 5084;
@@ -27,8 +28,11 @@ app.use(`${API_PREPEND}/v1/sprints`, sprintRouter);
 app.use(`${API_PREPEND}/v1/tickets`, ticketRouter);
 
 app.all(`/healthcheck`, (req, res) => {
-  res.send();
+  res.send({ message: "OK" });
 });
+
+// handles all async errors
+app.use(errorHandler);
 
 mongoose.connect(DATABASE_URL);
 

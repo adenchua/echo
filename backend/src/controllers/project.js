@@ -42,11 +42,6 @@ export const addMemberToProject = async (req, res, next) => {
       return;
     }
 
-    if (project.adminIds.includes(userId)) {
-      res.status(400).send({ error: "member is already an administrator" });
-      return;
-    }
-
     // if member is already inside the array, no need to do anything
     if (!project.memberIds.includes(userId)) {
       project.memberIds.push(userId);
@@ -155,23 +150,20 @@ export const promoteMemberToAdministrator = async (req, res, next) => {
   const { projectId } = req.params;
   const { userId } = req.body;
 
-  if (!userId || !projectId) {
-    res.status(400).send();
-    return;
-  }
-
   try {
     const project = await Project.findById(projectId);
 
     if (!project || project.isDeleted) {
-      res.status(400).send();
+      res.status(400).send({ error: errorMessages.projectNotExists });
       return;
     }
 
+    // add user id to admin id list
     if (!project.adminIds.includes(userId)) {
       project.adminIds.push(userId);
     }
 
+    // remove from member id list since already administrator
     if (project.memberIds.includes(userId)) {
       project.memberIds.pull(userId);
     }
@@ -187,28 +179,25 @@ export const demoteAdmintoMember = async (req, res, next) => {
   const { projectId } = req.params;
   const { userId } = req.body;
 
-  if (!userId || !projectId) {
-    res.status(400).send();
-    return;
-  }
-
   try {
     const project = await Project.findById(projectId);
 
     if (!project || project.isDeleted) {
-      res.status(400).send();
+      res.status(400).send({ error: errorMessages.projectNotExists });
       return;
     }
 
     if (project.adminIds.length === 1) {
-      res.status(400).send({ message: "unable to remove the only administrator" });
+      res.status(400).send({ error: errorMessages.lastAdministrator });
       return;
     }
 
+    // remove user from admin id list
     if (project.adminIds.includes(userId)) {
       project.adminIds.pull(userId);
     }
 
+    // add user to members list
     if (!project.memberIds.includes(userId)) {
       project.memberIds.push(userId);
     }

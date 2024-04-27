@@ -2,13 +2,8 @@ import Subtask from "../models/subtask.js";
 import Ticket from "../models/ticket.js";
 import objectUtils from "../utils/objectUtils.js";
 
-export const createSubtask = async (req, res) => {
+export const createSubtask = async (req, res, next) => {
   const { ticketId, title } = req.body;
-
-  if (!ticketId || !title) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     const subtask = new Subtask({ title });
@@ -18,56 +13,38 @@ export const createSubtask = async (req, res) => {
     await ticket.save();
     res.status(201).send(subtask);
   } catch (error) {
-    console.error("createSubtask", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const updateSubtask = async (req, res) => {
+export const updateSubtask = async (req, res, next) => {
   const { subtaskId } = req.params;
   const { title, isCompleted } = req.body;
-
-  if (!subtaskId) {
-    res.status(400).send();
-    return;
-  }
 
   const keysToUpdate = objectUtils.removeUndefinedKeysFromObject({ title, isCompleted });
   try {
     await Subtask.findByIdAndUpdate(subtaskId, { ...keysToUpdate });
-    res.status(204).send();
+    res.sendStatus(204);
   } catch (error) {
-    console.error("updateSubtask", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const deleteSubtask = async (req, res) => {
+export const deleteSubtask = async (req, res, next) => {
   const { subtaskId } = req.params;
-
-  if (!subtaskId) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     await Ticket.updateMany({ subtaskIds: subtaskId }, { $pullAll: { subtaskIds: [subtaskId] } }); // remove ticket with this subtask id
     await Subtask.findByIdAndDelete(subtaskId);
-    res.status(204).send();
+    res.sendStatus(204);
   } catch (error) {
-    console.error("deletesubtask", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-export const getSubtasks = async (req, res) => {
+export const getSubtasks = async (req, res, next) => {
   const { subtaskIds } = req.body;
   const subtasks = [];
-
-  if (!subtaskIds || !Array.isArray(subtaskIds)) {
-    res.status(400).send();
-    return;
-  }
 
   try {
     for (const subtaskId of subtaskIds) {
@@ -75,9 +52,8 @@ export const getSubtasks = async (req, res) => {
       subtasks.push(subtask);
     }
 
-    res.status(200).send(subtasks);
+    res.send(subtasks);
   } catch (error) {
-    console.error("getSubtasks", error);
-    res.status(500).send();
+    next(error);
   }
 };
