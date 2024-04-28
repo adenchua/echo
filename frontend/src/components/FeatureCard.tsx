@@ -22,11 +22,11 @@ const FeatureCard = (props: FeatureCardProps): JSX.Element => {
         maxWidth: "400px",
       }}
     >
-      <DoneIcon fontSize='large' sx={{ mb: 2 }} color='primary' />
-      <Typography variant='h6' paragraph color='primary' align='center'>
+      <DoneIcon fontSize="large" sx={{ mb: 2 }} color="primary" />
+      <Typography variant="h6" paragraph color="primary" align="center">
         {title}
       </Typography>
-      <Typography align='justify'>{secondaryTitle}</Typography>
+      <Typography align="justify">{secondaryTitle}</Typography>
     </Paper>
   );
 };

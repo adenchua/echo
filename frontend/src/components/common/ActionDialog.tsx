@@ -29,7 +29,7 @@ const ActionDialog = (props: ActionDialogProps): JSX.Element => {
     acceptButtonText = "Confirm",
   } = props;
   return (
-    <Dialog open={isOpen} maxWidth='sm' fullWidth>
+    <Dialog open={isOpen} maxWidth="sm" fullWidth>
       <DialogTitle
         sx={{
           borderTop: "6px solid",
@@ -40,7 +40,7 @@ const ActionDialog = (props: ActionDialogProps): JSX.Element => {
           gap: 2,
         }}
       >
-        <Avatar variant='rounded' sx={{ bgcolor: "primary.main" }}>
+        <Avatar variant="rounded" sx={{ bgcolor: "primary.main" }}>
           {titleIcon}
         </Avatar>
         {title}

@@ -41,4 +41,6 @@ export const removeTicketFromEpicValidationChain = [
   COMMON_EPIC_VALIDATION_CHAINS.invalidBodyTicketId.notEmpty(),
 ];
 
-export const deleteEpicValidationChain = [COMMON_EPIC_VALIDATION_CHAINS.invalidParamEpicId.notEmpty()];
+export const deleteEpicValidationChain = [
+  COMMON_EPIC_VALIDATION_CHAINS.invalidParamEpicId.notEmpty(),
+];

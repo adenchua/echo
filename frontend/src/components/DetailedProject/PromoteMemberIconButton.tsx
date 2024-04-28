@@ -18,8 +18,8 @@ const PromoteMemberIconButton = (props: PromoteMemberIconButtonProps): JSX.Eleme
 
   return (
     <>
-      <Tooltip title='Promote to Admin'>
-        <IconButton color='primary' onClick={() => setIsDialogOpened(true)}>
+      <Tooltip title="Promote to Admin">
+        <IconButton color="primary" onClick={() => setIsDialogOpened(true)}>
           <PromoteAdminIcon />
         </IconButton>
       </Tooltip>
@@ -37,7 +37,7 @@ const PromoteMemberIconButton = (props: PromoteMemberIconButtonProps): JSX.Eleme
         }
         onAccept={() => onConfirm(member)}
         onClose={() => setIsDialogOpened(false)}
-        title='Promote member to administrator'
+        title="Promote member to administrator"
         titleIcon={<PromoteAdminIcon />}
         disableActionButton={false}
       />

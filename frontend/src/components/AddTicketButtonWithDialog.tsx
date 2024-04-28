@@ -52,24 +52,28 @@ const AddTicketButtonWithDialog = (props: AddTicketButtonWithDialogProps): JSX.E
 
   return (
     <>
-      <Button startIcon={<AddTicketIcon fontSize='small' />} onClick={() => setShowDialog(true)} size='small'>
+      <Button
+        startIcon={<AddTicketIcon fontSize="small" />}
+        onClick={() => setShowDialog(true)}
+        size="small"
+      >
         Add Ticket
       </Button>
       <ActionDialog
         isOpen={showDialog}
         onClose={() => setShowDialog(false)}
         onAccept={() => handleAddTicket()}
-        title='Add new ticket'
+        title="Add new ticket"
         titleIcon={<AddTicketIcon />}
         disableActionButton={currentLoadState === "LOADING" || titleInput.length === 0}
         dialogContent={
           <>
             <DialogContentText>Title</DialogContentText>
             <TextField
-              variant='filled'
+              variant="filled"
               fullWidth
               autoFocus
-              placeholder='As a user, I want to add an item to my cart'
+              placeholder="As a user, I want to add an item to my cart"
               value={titleInput}
               onChange={(e) => setTitleInput(e.target.value)}
             />
@@ -90,11 +94,11 @@ const AddTicketButtonWithDialog = (props: AddTicketButtonWithDialogProps): JSX.E
               </Grid>
             </Grid>
             {currentLoadState === "ERROR" && (
-              <DialogErrorText text='Failed to add new ticket. Please try again later.' mt={2} />
+              <DialogErrorText text="Failed to add new ticket. Please try again later." mt={2} />
             )}
           </>
         }
-        acceptButtonText='Add ticket'
+        acceptButtonText="Add ticket"
       />
     </>
   );

@@ -7,7 +7,7 @@ interface DialogErrorTextProps extends DialogContentTextProps {
 const DialogErrorText = (props: DialogErrorTextProps): JSX.Element => {
   const { text } = props;
   return (
-    <DialogContentText color='error' {...props}>
+    <DialogContentText color="error" {...props}>
       {text}
     </DialogContentText>
   );

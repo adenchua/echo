@@ -12,7 +12,7 @@ const subtaskSchema = new Schema(
       default: false,
     },
   },
-  { versionKey: false }
+  { versionKey: false },
 );
 
 const Subtask = model("Subtask", subtaskSchema);

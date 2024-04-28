@@ -47,7 +47,10 @@ const DescriptionEditItem = (props: DescriptionEditItemProps): JSX.Element => {
   if (!isEditModeOn) {
     return (
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <RightDrawerTitle title='Notes' actionButton={<EditButton onStartEdit={handleToggleEditMode} />} />
+        <RightDrawerTitle
+          title="Notes"
+          actionButton={<EditButton onStartEdit={handleToggleEditMode} />}
+        />
         <ListItemText
           secondary={!description || description === "" ? "None" : description}
           sx={{ mb: 2, whiteSpace: "pre-wrap" }}
@@ -61,16 +64,22 @@ const DescriptionEditItem = (props: DescriptionEditItemProps): JSX.Element => {
     <>
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
         <RightDrawerTitle
-          title='Notes'
-          actionButton={<UpdateButton onAccept={handleUpdateTicket} onCancel={handleToggleEditMode} showSaveButton />}
+          title="Notes"
+          actionButton={
+            <UpdateButton
+              onAccept={handleUpdateTicket}
+              onCancel={handleToggleEditMode}
+              showSaveButton
+            />
+          }
         />
         <TextField
           value={descriptionInput}
-          variant='filled'
+          variant="filled"
           fullWidth
           onChange={(e) => setDescriptionInput(e.target.value)}
-          margin='dense'
-          size='small'
+          margin="dense"
+          size="small"
           rows={5}
           multiline
           sx={{ mb: 2 }}
@@ -78,7 +87,10 @@ const DescriptionEditItem = (props: DescriptionEditItemProps): JSX.Element => {
         />
         <Divider flexItem />
       </ListItem>
-      <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
+      <SnackbarError
+        isOpen={currentLoadState === "ERROR"}
+        onClose={() => handleSetLoadingState("DEFAULT")}
+      />
     </>
   );
 };

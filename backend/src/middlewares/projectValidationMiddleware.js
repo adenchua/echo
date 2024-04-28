@@ -21,7 +21,9 @@ export const createProjectValidationChain = [
   COMMON_PROJECT_VALIDATION_CHAIN.invalidBodyProjectType.notEmpty(),
 ];
 
-export const getProjectValidationChain = [COMMON_PROJECT_VALIDATION_CHAIN.invalidParamProjectId.notEmpty()];
+export const getProjectValidationChain = [
+  COMMON_PROJECT_VALIDATION_CHAIN.invalidParamProjectId.notEmpty(),
+];
 
 export const addMemberToProjectValidationChain = [
   COMMON_PROJECT_VALIDATION_CHAIN.invalidParamProjectId.notEmpty(),
@@ -67,4 +69,6 @@ export const demoteAdmintoMemberValidationChain = [
   COMMON_PROJECT_VALIDATION_CHAIN.invalidBodyUserId.notEmpty(),
 ];
 
-export const deleteProjectValidationChain = [COMMON_PROJECT_VALIDATION_CHAIN.invalidParamProjectId.notEmpty()];
+export const deleteProjectValidationChain = [
+  COMMON_PROJECT_VALIDATION_CHAIN.invalidParamProjectId.notEmpty(),
+];

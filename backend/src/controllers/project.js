@@ -116,7 +116,13 @@ export const updateProject = async (req, res, next) => {
       return;
     }
 
-    const keysToUpdate = objectUtils.removeUndefinedKeysFromObject({ title, description, announcement, picture, type });
+    const keysToUpdate = objectUtils.removeUndefinedKeysFromObject({
+      title,
+      description,
+      announcement,
+      picture,
+      type,
+    });
     await Project.findByIdAndUpdate(projectId, { ...keysToUpdate });
     res.sendStatus(204);
   } catch (error) {

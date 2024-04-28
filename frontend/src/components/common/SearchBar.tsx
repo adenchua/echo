@@ -10,13 +10,13 @@ const SearchBar = (props: TextFieldProps): JSX.Element => {
     <TextField
       InputProps={{
         startAdornment: (
-          <InputAdornment position='start'>
-            <SearchIcon sx={{ marginBottom: "12px" }} fontSize='small' />
+          <InputAdornment position="start">
+            <SearchIcon sx={{ marginBottom: "12px" }} fontSize="small" />
           </InputAdornment>
         ),
       }}
-      variant='filled'
-      type='search'
+      variant="filled"
+      type="search"
       placeholder={placeholder}
       value={value}
       onChange={onChange}

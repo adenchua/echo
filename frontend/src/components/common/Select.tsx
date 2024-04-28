@@ -4,7 +4,7 @@ const Select = (props: SelectProps): JSX.Element => {
   return (
     <MuiSelect
       fullWidth
-      variant='filled'
+      variant="filled"
       SelectDisplayProps={{
         style: {
           padding: 7,

@@ -25,7 +25,7 @@ const useProductBacklog = () => {
     title: string,
     projectId: string,
     priority: TicketPriority,
-    type: TicketType
+    type: TicketType,
   ): Promise<void> => {
     try {
       const newTicket = await createTicket(title, projectId, priority, type);
@@ -35,7 +35,10 @@ const useProductBacklog = () => {
     }
   };
 
-  const onUpdateTicket = async (ticketId: string, updatedFields: TicketUpdateFields): Promise<void> => {
+  const onUpdateTicket = async (
+    ticketId: string,
+    updatedFields: TicketUpdateFields,
+  ): Promise<void> => {
     try {
       await updateTicket(ticketId, updatedFields);
       updateTicketContext(ticketId, updatedFields);
@@ -44,7 +47,11 @@ const useProductBacklog = () => {
     }
   };
 
-  const onDeleteTicket = async (ticketId: string, projectId: string, epicId: string): Promise<void> => {
+  const onDeleteTicket = async (
+    ticketId: string,
+    projectId: string,
+    epicId: string,
+  ): Promise<void> => {
     try {
       await deleteTicket(ticketId, projectId);
       deleteTicketContext(ticketId);

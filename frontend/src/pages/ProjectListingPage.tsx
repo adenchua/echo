@@ -23,42 +23,46 @@ const ProjectListingPage = (): JSX.Element => {
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
 
   if (!loggedInUserId) {
-    return <Navigate to='/' />;
+    return <Navigate to="/" />;
   }
 
   const renderTitleHeaders = (): JSX.Element => {
     return (
-      <Box mb={1} p={1} display='flex' alignItems='center' gap={8}>
-        <Typography variant='body2' sx={{ width: "242px" }}>
+      <Box mb={1} p={1} display="flex" alignItems="center" gap={8}>
+        <Typography variant="body2" sx={{ width: "242px" }}>
           Project
         </Typography>
-        <Typography variant='body2' sx={{ width: "64px" }} noWrap>
+        <Typography variant="body2" sx={{ width: "64px" }} noWrap>
           Sprint
         </Typography>
         <Hidden smDown>
-          <Typography variant='body2' sx={{ width: "160px" }}>
+          <Typography variant="body2" sx={{ width: "160px" }}>
             Current Tasks
           </Typography>
-          <Typography variant='body2'>Members</Typography>
+          <Typography variant="body2">Members</Typography>
         </Hidden>
       </Box>
     );
   };
 
   const renderNoProjectsMessage = (): JSX.Element => (
-    <Typography variant='body2' sx={{ color: "GrayText", fontStyle: "italic" }}>
+    <Typography variant="body2" sx={{ color: "GrayText", fontStyle: "italic" }}>
       There are no projects listed.
     </Typography>
   );
 
   return (
     <PageLayoutWrapper>
-      <Typography variant='h5' paragraph>
+      <Typography variant="h5" paragraph>
         Projects
       </Typography>
-      <Box display='flex' gap={2}>
+      <Box display="flex" gap={2}>
         <CreateProjectButtonWithDialog />
-        <SearchBar value={searchInput} onChange={(e) => setSearchInput(e.target.value)} placeholder='Search projects' />
+        <SearchBar
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          placeholder="Search projects"
+        />
       </Box>
       <Divider sx={{ mt: 3, mb: 3 }} />
       {projects.length > 0 && renderTitleHeaders()}
@@ -70,7 +74,7 @@ const ProjectListingPage = (): JSX.Element => {
               component={RouterLink}
               to={`/projects/id/${project._id}?tab=overview`}
               key={project._id}
-              underline='none'
+              underline="none"
             >
               <Grow timeout={400}>
                 <div>

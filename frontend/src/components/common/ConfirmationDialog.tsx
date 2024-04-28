@@ -17,7 +17,7 @@ interface ConfirmationDialogProps {
 const ConfirmationDialog = (props: ConfirmationDialogProps): JSX.Element => {
   const { isOpen, onClose, dialogContent, title, titleIcon } = props;
   return (
-    <Dialog open={isOpen} maxWidth='sm' fullWidth>
+    <Dialog open={isOpen} maxWidth="sm" fullWidth>
       <DialogTitle
         sx={{
           borderTop: "6px solid",
@@ -28,7 +28,7 @@ const ConfirmationDialog = (props: ConfirmationDialogProps): JSX.Element => {
           gap: 2,
         }}
       >
-        <Avatar variant='rounded' sx={{ bgcolor: "primary.main" }}>
+        <Avatar variant="rounded" sx={{ bgcolor: "primary.main" }}>
           {titleIcon}
         </Avatar>
         {title}

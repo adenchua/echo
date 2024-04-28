@@ -11,11 +11,11 @@ const UpdateButton = (props: UpdateButtonProps): JSX.Element => {
 
   return (
     <>
-      <Button variant='text' onClick={onCancel} size='small'>
+      <Button variant="text" onClick={onCancel} size="small">
         Cancel
       </Button>
       {showSaveButton && (
-        <Button variant='text' onClick={onAccept} size='small'>
+        <Button variant="text" onClick={onAccept} size="small">
           Save
         </Button>
       )}

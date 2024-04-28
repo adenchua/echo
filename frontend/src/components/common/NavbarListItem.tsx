@@ -30,11 +30,15 @@ const NavbarListItem = (props: NavbarListItemProps): JSX.Element => {
       }}
     >
       <ListItemAvatar>
-        <Avatar variant='rounded' sx={{ bgcolor: "transparent", height: 24, width: 24 }}>
+        <Avatar variant="rounded" sx={{ bgcolor: "transparent", height: 24, width: 24 }}>
           {icon}
         </Avatar>
       </ListItemAvatar>
-      <ListItemText primary={buttonText} sx={{ color: "#FFF" }} primaryTypographyProps={{ noWrap: true }} />
+      <ListItemText
+        primary={buttonText}
+        sx={{ color: "#FFF" }}
+        primaryTypographyProps={{ noWrap: true }}
+      />
     </ListItemButton>
   );
 };

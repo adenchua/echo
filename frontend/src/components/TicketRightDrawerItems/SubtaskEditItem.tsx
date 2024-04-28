@@ -90,7 +90,7 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
             return { ...subtask, isCompleted: !subtask.isCompleted };
           }
           return subtask;
-        })
+        }),
       );
       handleSetLoadingState("DEFAULT");
     } catch (error) {
@@ -118,25 +118,29 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
       <>
         <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
           <RightDrawerTitle
-            title='Subtasks'
+            title="Subtasks"
             actionButton={
-              <UpdateButton onAccept={handleToggleEditMode} onCancel={handleToggleEditMode} showSaveButton={false} />
+              <UpdateButton
+                onAccept={handleToggleEditMode}
+                onCancel={handleToggleEditMode}
+                showSaveButton={false}
+              />
             }
           />
           <form onSubmit={(e) => handleAddSubtask(e)} style={{ width: "100%" }}>
             <TextField
-              variant='filled'
+              variant="filled"
               autoFocus
               fullWidth
               inputProps={{ style: { padding: 7 } }}
-              placeholder='Type and press enter to add subtask'
+              placeholder="Type and press enter to add subtask"
               value={titleInput}
               onChange={(e) => setTitleInput(e.target.value)}
             />
-            <input type='submit' hidden />
+            <input type="submit" hidden />
           </form>
           {subtasks.length > 0 && (
-            <Box maxWidth='100%' mt={2}>
+            <Box maxWidth="100%" mt={2}>
               {subtasks.map((subtask) => (
                 <Box mb={1} key={subtask._id}>
                   <TicketSubtaskDeletable subtask={subtask} onDeleteSubtask={handleDeleteSubtask} />
@@ -146,7 +150,10 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
           )}
           <Divider flexItem sx={{ mt: 2 }} />
         </ListItem>
-        <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
+        <SnackbarError
+          isOpen={currentLoadState === "ERROR"}
+          onClose={() => handleSetLoadingState("DEFAULT")}
+        />
       </>
     );
   }
@@ -154,20 +161,29 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
   return (
     <>
       <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <RightDrawerTitle title='Subtasks' actionButton={<EditButton onStartEdit={handleToggleEditMode} />} />
-        {subtaskIds.length === 0 && <ListItemText secondary='None' sx={{ mt: 0.5 }} />}
+        <RightDrawerTitle
+          title="Subtasks"
+          actionButton={<EditButton onStartEdit={handleToggleEditMode} />}
+        />
+        {subtaskIds.length === 0 && <ListItemText secondary="None" sx={{ mt: 0.5 }} />}
         {subtasks.length > 0 && (
-          <Box maxWidth='100%' sx={{ mt: 1 }}>
+          <Box maxWidth="100%" sx={{ mt: 1 }}>
             {subtasks.map((subtask) => (
               <Box mb={1} key={subtask._id}>
-                <TicketSubtask subtask={subtask} onToggleCompletion={handleToggleSubtaskCompletion} />
+                <TicketSubtask
+                  subtask={subtask}
+                  onToggleCompletion={handleToggleSubtaskCompletion}
+                />
               </Box>
             ))}
           </Box>
         )}
         <Divider flexItem sx={{ mt: 1.5 }} />
       </ListItem>
-      <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
+      <SnackbarError
+        isOpen={currentLoadState === "ERROR"}
+        onClose={() => handleSetLoadingState("DEFAULT")}
+      />
     </>
   );
 };

@@ -49,9 +49,13 @@ const TicketTypeEditItem = (props: TicketTypeEditItemProps): JSX.Element => {
       <>
         <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
           <RightDrawerTitle
-            title='Type'
+            title="Type"
             actionButton={
-              <UpdateButton onAccept={handleChangeTicketType} onCancel={handleToggleEditMode} showSaveButton={false} />
+              <UpdateButton
+                onAccept={handleChangeTicketType}
+                onCancel={handleToggleEditMode}
+                showSaveButton={false}
+              />
             }
           />
           <TicketTypeDropdown
@@ -60,18 +64,24 @@ const TicketTypeEditItem = (props: TicketTypeEditItemProps): JSX.Element => {
           />
           <Divider flexItem sx={{ mt: 2 }} />
         </ListItem>
-        <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
+        <SnackbarError
+          isOpen={currentLoadState === "ERROR"}
+          onClose={() => handleSetLoadingState("DEFAULT")}
+        />
       </>
     );
   }
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <RightDrawerTitle title='Type' actionButton={<EditButton onStartEdit={handleToggleEditMode} />} />
+      <RightDrawerTitle
+        title="Type"
+        actionButton={<EditButton onStartEdit={handleToggleEditMode} />}
+      />
       <Chip
         label={`${capitalizeFirstLetter(type)}`}
         icon={
-          <Box display='flex' alignItems='center'>
+          <Box display="flex" alignItems="center">
             <TicketTypeIcon type={type} />
           </Box>
         }

@@ -32,7 +32,17 @@ export const createTicket = async (req, res, next) => {
 
 export const updateTicket = async (req, res, next) => {
   const { ticketId } = req.params;
-  const { title, description, status, priority, type, dueDate, isInSprint, assigneeId, storyPoints } = req.body;
+  const {
+    title,
+    description,
+    status,
+    priority,
+    type,
+    dueDate,
+    isInSprint,
+    assigneeId,
+    storyPoints,
+  } = req.body;
 
   try {
     const keysToUpdate = objectUtils.removeUndefinedKeysFromObject({

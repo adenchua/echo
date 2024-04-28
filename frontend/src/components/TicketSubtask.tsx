@@ -16,8 +16,8 @@ const TicketSubtask = (props: TicketSubtaskProps): JSX.Element => {
   return (
     <Tooltip title={isCompleted ? "Mark as undone" : "Mark as done"}>
       <Box
-        display='flex'
-        alignItems='center'
+        display="flex"
+        alignItems="center"
         gap={1}
         sx={{
           "&:hover": {
@@ -29,8 +29,8 @@ const TicketSubtask = (props: TicketSubtaskProps): JSX.Element => {
         }}
         onClick={() => onToggleCompletion(id)}
       >
-        {<CheckCircleOutlined fontSize='small' color='inherit' />}
-        <Typography variant='body2' noWrap color='inherit'>
+        {<CheckCircleOutlined fontSize="small" color="inherit" />}
+        <Typography variant="body2" noWrap color="inherit">
           {title}
         </Typography>
       </Box>

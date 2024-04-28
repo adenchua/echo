@@ -59,7 +59,9 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
             completedTicketCount += 1;
           }
         });
-        const result = Number(Math.floor((completedTicketCount / ticketsInSprint.length) * 100).toFixed());
+        const result = Number(
+          Math.floor((completedTicketCount / ticketsInSprint.length) * 100).toFixed(),
+        );
         setActiveSprintProgressPercentage(result);
       } catch (error) {}
     };
@@ -70,14 +72,14 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
 
   const renderSprintStatusSpan = (sprints: Sprint[]): JSX.Element => {
     let span = (
-      <Typography component='span' fontSize='inherit' sx={{ color: "error.main" }}>
+      <Typography component="span" fontSize="inherit" sx={{ color: "error.main" }}>
         Stopped
       </Typography>
     ); // if no active sprint
     sprints.forEach((sprint) => {
       if (sprint.hasEnded === false) {
         span = (
-          <Typography component='span' fontSize='inherit' sx={{ color: "primary.main" }}>
+          <Typography component="span" fontSize="inherit" sx={{ color: "primary.main" }}>
             Ongoing
           </Typography>
         );
@@ -107,17 +109,17 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
       elevation={0}
       key={projectId}
     >
-      <Box display='flex' alignItems='center' gap={1}>
-        <Avatar sx={{ height: 40, width: 40 }} variant='rounded'>
+      <Box display="flex" alignItems="center" gap={1}>
+        <Avatar sx={{ height: 40, width: 40 }} variant="rounded">
           <ProjectIcon />
         </Avatar>
         <Box sx={{ width: "200px" }}>
-          <Typography variant='body2' noWrap lineHeight='16px'>
+          <Typography variant="body2" noWrap lineHeight="16px">
             {title} <br /> <span style={{ fontSize: 12, color: "#969892" }}>{type}</span>
           </Typography>
         </Box>
       </Box>
-      <Typography variant='body2' sx={{ width: "64px" }} noWrap>
+      <Typography variant="body2" sx={{ width: "64px" }} noWrap>
         {renderSprintStatusSpan(sprints)}
       </Typography>
       <Hidden smDown>

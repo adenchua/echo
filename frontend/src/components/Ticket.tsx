@@ -32,7 +32,18 @@ const Ticket = (props: TicketProps): JSX.Element => {
   const [assignee, setAssignee] = useState<User | null>(null);
   const { currentLoadState, handleSetLoadingState } = useLoad();
   const { onUpdateTicket } = useProductBacklog();
-  const { priority, title, type, isInSprint, _id: id, dueDate, status, assigneeId, ticketNumber, storyPoints } = ticket;
+  const {
+    priority,
+    title,
+    type,
+    isInSprint,
+    _id: id,
+    dueDate,
+    status,
+    assigneeId,
+    ticketNumber,
+    storyPoints,
+  } = ticket;
   const formattedDueDate = dueDate ? format(new Date(dueDate), "LLL dd") : "";
   const isDue = dueDate && compareAsc(new Date(), new Date(dueDate)) === 1 ? true : false;
 
@@ -80,7 +91,7 @@ const Ticket = (props: TicketProps): JSX.Element => {
         {showSprintToggleCheckBox && (
           <Tooltip title={isInSprint ? "Remove from sprint backlog" : "Put in sprint backlog"}>
             <Checkbox
-              icon={<SprintInactiveIcon color='disabled' />}
+              icon={<SprintInactiveIcon color="disabled" />}
               checkedIcon={<SprintActiveIcon />}
               sx={{
                 padding: 0,
@@ -94,15 +105,15 @@ const Ticket = (props: TicketProps): JSX.Element => {
         <PriorityIcon priority={priority} />
         <TicketTypeIcon type={type} />
         <StoryPointsChip storyPoints={storyPoints} />
-        <Typography variant='caption' color='grey.500' noWrap sx={{ minWidth: 24 }}>
+        <Typography variant="caption" color="grey.500" noWrap sx={{ minWidth: 24 }}>
           {`#${ticketNumber}`}
         </Typography>
-        <Typography variant='body2' noWrap>
+        <Typography variant="body2" noWrap>
           {title}
         </Typography>
         <Box flexGrow={1} />
         {status !== "completed" && (
-          <Tooltip title='Due date'>
+          <Tooltip title="Due date">
             <Chip
               label={formattedDueDate}
               sx={{
@@ -114,9 +125,12 @@ const Ticket = (props: TicketProps): JSX.Element => {
           </Tooltip>
         )}
         {assignee && <UserAvatar username={assignee.username} displayName={assignee.displayName} />}
-        <StatusChipButton status={status} size='medium' />
+        <StatusChipButton status={status} size="medium" />
       </Paper>
-      <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
+      <SnackbarError
+        isOpen={currentLoadState === "ERROR"}
+        onClose={() => handleSetLoadingState("DEFAULT")}
+      />
     </>
   );
 };

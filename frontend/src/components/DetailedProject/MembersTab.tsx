@@ -78,25 +78,28 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
     }
   };
 
-  const tableRows = useMemo(() => [...getTableRows(admins, true), ...getTableRows(members, false)], [admins, members]);
+  const tableRows = useMemo(
+    () => [...getTableRows(admins, true), ...getTableRows(members, false)],
+    [admins, members],
+  );
 
   return (
     <Box p={3}>
-      <Typography variant='h5' paragraph>
+      <Typography variant="h5" paragraph>
         Team Members
       </Typography>
-      <Box display='flex' alignItems='center' gap={2} mb={2}>
+      <Box display="flex" alignItems="center" gap={2} mb={2}>
         <SearchBar value={searchInput} onChange={(event) => setSearchInput(event.target.value)} />
         <AddMemberToProjectButtonWithDialog projectId={projectId} />
       </Box>
       <TableContainer component={Paper} elevation={0} sx={{ maxHeight: 640 }}>
-        <Table stickyHeader size='small'>
+        <Table stickyHeader size="small">
           <TableHead>
             <TableRow>
               <TableCell>Member</TableCell>
-              <TableCell align='left'>Title</TableCell>
-              <TableCell align='left'>Type</TableCell>
-              {isLoggedInUserAnAdmin && <TableCell align='center'>Actions</TableCell>}
+              <TableCell align="left">Title</TableCell>
+              <TableCell align="left">Type</TableCell>
+              {isLoggedInUserAnAdmin && <TableCell align="center">Actions</TableCell>}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -106,34 +109,47 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
 
               if (matchString(searchInput, username) || matchString(searchInput, displayName)) {
                 return (
-                  <TableRow key={userId} sx={{ "&:last-child td, &:last-child th": { border: 0 } }} hover>
+                  <TableRow
+                    key={userId}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    hover
+                  >
                     <TableCell>
                       <CardHeader
                         sx={{ padding: 0 }}
                         avatar={<UserAvatar username={username} displayName={displayName} />}
                         title={
                           <>
-                            <Typography variant='body2' display='inline'>{`${displayName} `}</Typography>{" "}
-                            <Typography variant='body2' color='grey.500' display='inline'>{`@${username}`}</Typography>
+                            <Typography
+                              variant="body2"
+                              display="inline"
+                            >{`${displayName} `}</Typography>{" "}
+                            <Typography
+                              variant="body2"
+                              color="grey.500"
+                              display="inline"
+                            >{`@${username}`}</Typography>
                           </>
                         }
                         disableTypography
                       />
                     </TableCell>
-                    <TableCell align='left'>
-                      <Typography variant='body2'>{title}</Typography>
+                    <TableCell align="left">
+                      <Typography variant="body2">{title}</Typography>
                     </TableCell>
-                    <TableCell align='left'>
+                    <TableCell align="left">
                       {isAdmin && (
-                        <Typography color='error' variant='body2'>
+                        <Typography color="error" variant="body2">
                           Admin
                         </Typography>
                       )}
-                      {!isAdmin && <Typography variant='body2'>Member</Typography>}
+                      {!isAdmin && <Typography variant="body2">Member</Typography>}
                     </TableCell>
                     {isLoggedInUserAnAdmin && (
-                      <TableCell align='center'>
-                        {!isAdmin && <PromoteMemberIconButton member={user} onConfirm={handlePromoteMember} />}
+                      <TableCell align="center">
+                        {!isAdmin && (
+                          <PromoteMemberIconButton member={user} onConfirm={handlePromoteMember} />
+                        )}
                         <RemoveMemberIconButton
                           isDisabled={loggedInUserId === userId || isAdmin}
                           member={user}
@@ -150,7 +166,10 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
           </TableBody>
         </Table>
       </TableContainer>
-      <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
+      <SnackbarError
+        isOpen={currentLoadState === "ERROR"}
+        onClose={() => handleSetLoadingState("DEFAULT")}
+      />
     </Box>
   );
 };

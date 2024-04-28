@@ -62,7 +62,7 @@ const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
       numberOfCompletedTickets = completedSprint.completedTicketIds.length;
       numberOfIncompleteTickets = completedSprint.incompleteTicketIds.length;
       completionRate = Math.floor(
-        (numberOfCompletedTickets / (numberOfCompletedTickets + numberOfIncompleteTickets)) * 100
+        (numberOfCompletedTickets / (numberOfCompletedTickets + numberOfIncompleteTickets)) * 100,
       );
     }
 
@@ -70,20 +70,20 @@ const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
       <>
         <DialogContentText mb={3}>
           Congratulations on ending sprint{" "}
-          <Typography component='span' color='primary'>
+          <Typography component="span" color="primary">
             {completedSprint?.number}
           </Typography>
           ! Here's a quick breakdown on the sprint:
         </DialogContentText>
         <DialogContentText>
           Completed tickets:{" "}
-          <Typography component='span' color='primary'>
+          <Typography component="span" color="primary">
             {numberOfCompletedTickets} ({completionRate.toFixed(1)}%)
           </Typography>
         </DialogContentText>
         <DialogContentText>
           Incomplete tickets:{" "}
-          <Typography component='span' color='primary'>
+          <Typography component="span" color="primary">
             {numberOfIncompleteTickets}
           </Typography>
         </DialogContentText>
@@ -95,17 +95,17 @@ const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
     <>
       <DialogContentText mb={3}>
         <Typography
-          component='span'
-          color='primary'
+          component="span"
+          color="primary"
         >{`${completedTickets.length} of ${sprintTickets.length}`}</Typography>{" "}
         tickets completed in this sprint. Are you sure you want to end this sprint?
-        <Typography component='span' color='error'>
+        <Typography component="span" color="error">
           {" "}
           This action will also archive all completed tickets.{" "}
         </Typography>
       </DialogContentText>
       {currentLoadState === "ERROR" && (
-        <DialogErrorText text='Something went wrong while trying to end the sprint. Please try again later.' />
+        <DialogErrorText text="Something went wrong while trying to end the sprint. Please try again later." />
       )}
     </>
   );
@@ -115,7 +115,7 @@ const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
       <ActionDialog
         isOpen={showEndSprintDialog}
         onAccept={handleEndSprint}
-        title='End sprint'
+        title="End sprint"
         titleIcon={<SprintEndIcon />}
         dialogContent={renderDialogContent()}
         onClose={handleClose}
@@ -125,7 +125,7 @@ const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
         dialogContent={renderSuccessDialogContent()}
         isOpen={currentLoadState === "SUCCESS"}
         onClose={() => handleSetLoadingState("DEFAULT")}
-        title='Succcessfully ended sprint!'
+        title="Succcessfully ended sprint!"
         titleIcon={<SprintEndIcon />}
       />
     </>

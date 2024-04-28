@@ -34,18 +34,18 @@ const DeleteEpicDialog = (props: DeleteEpicDialogProps): JSX.Element => {
       onClose={onClose}
       dialogContent={
         <>
-          <DialogContentText mb={4} color='error'>
-            Are you sure you want to delete the following epic? This action also will move unfinished tickets to
-            "Others":
+          <DialogContentText mb={4} color="error">
+            Are you sure you want to delete the following epic? This action also will move
+            unfinished tickets to "Others":
           </DialogContentText>
           <DialogContentText>{title}</DialogContentText>
         </>
       }
       onAccept={handleDelete}
       disableActionButton={false}
-      title='Confirm delete epic'
+      title="Confirm delete epic"
       titleIcon={<DeleteIcon />}
-      acceptButtonText='Delete epic'
+      acceptButtonText="Delete epic"
     />
   );
 };

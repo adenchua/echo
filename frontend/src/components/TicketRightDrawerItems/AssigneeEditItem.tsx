@@ -78,7 +78,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
 
   const renderAssigneeChip = (): JSX.Element => {
     if (!assignee) {
-      return <ListItemText secondary='None' />;
+      return <ListItemText secondary="None" />;
     }
     const { _id: userId, username, displayName } = assignee;
     return (
@@ -95,7 +95,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
       <>
         <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
           <RightDrawerTitle
-            title='Assignee'
+            title="Assignee"
             actionButton={
               <UpdateButton
                 onAccept={handleUpdateTicketAssignee}
@@ -104,7 +104,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
               />
             }
           />
-          <Box mb={2} width='100%'>
+          <Box mb={2} width="100%">
             <Select
               onChange={(e) => handleUpdateTicketAssignee(e.target.value as string)}
               value={assigneeId ? assigneeId : ""}
@@ -123,8 +123,8 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
             </Select>
             <Button
               fullWidth
-              variant='outlined'
-              size='small'
+              variant="outlined"
+              size="small"
               sx={{ mt: 2 }}
               onClick={() => {
                 if (loggedInUserId) {
@@ -137,9 +137,9 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
             {assigneeId && (
               <Button
                 fullWidth
-                color='warning'
-                variant='outlined'
-                size='small'
+                color="warning"
+                variant="outlined"
+                size="small"
                 sx={{ mt: 2 }}
                 onClick={() => handleUpdateTicketAssignee("")}
               >
@@ -149,14 +149,20 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
           </Box>
           <Divider flexItem />
         </ListItem>
-        <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
+        <SnackbarError
+          isOpen={currentLoadState === "ERROR"}
+          onClose={() => handleSetLoadingState("DEFAULT")}
+        />
       </>
     );
   }
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <RightDrawerTitle title='Assignee' actionButton={<EditButton onStartEdit={handleToggleEditMode} />} />
+      <RightDrawerTitle
+        title="Assignee"
+        actionButton={<EditButton onStartEdit={handleToggleEditMode} />}
+      />
       <Box mb={2}>{renderAssigneeChip()}</Box>
       <Divider flexItem />
     </ListItem>

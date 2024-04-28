@@ -21,9 +21,13 @@ const userProjectsContextDefaultValues: UserProjectsContextStateType = {
   updateProject: () => {},
 };
 
-export const UserProjectsContext = createContext<UserProjectsContextStateType>(userProjectsContextDefaultValues);
+export const UserProjectsContext = createContext<UserProjectsContextStateType>(
+  userProjectsContextDefaultValues,
+);
 
-const UserProjectsContextProvider = ({ children }: UserProjectsContextProviderProps): JSX.Element => {
+const UserProjectsContextProvider = ({
+  children,
+}: UserProjectsContextProviderProps): JSX.Element => {
   const [projects, setProjects] = useState<Project[]>([]);
 
   const addProject = useCallback((newProject: Project): void => {
@@ -34,16 +38,19 @@ const UserProjectsContextProvider = ({ children }: UserProjectsContextProviderPr
     setProjects(newProjects);
   }, []);
 
-  const updateProject = useCallback((projectId: string, updatedFields: ProjectUpdateFieldsType): void => {
-    setProjects((prevState) =>
-      prevState.map((project) => {
-        if (project._id === projectId) {
-          project = _.merge({}, project, updatedFields);
-        }
-        return project;
-      })
-    );
-  }, []);
+  const updateProject = useCallback(
+    (projectId: string, updatedFields: ProjectUpdateFieldsType): void => {
+      setProjects((prevState) =>
+        prevState.map((project) => {
+          if (project._id === projectId) {
+            project = _.merge({}, project, updatedFields);
+          }
+          return project;
+        }),
+      );
+    },
+    [],
+  );
 
   return (
     <UserProjectsContext.Provider value={{ projects, addProject, handleSetProject, updateProject }}>

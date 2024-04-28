@@ -52,7 +52,9 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
 
   const renderSuccessMessageContent = (): JSX.Element => {
     if (!newSprint) {
-      return <DialogErrorText text='Something went wrong retrieving the new sprint. Please try again later' />;
+      return (
+        <DialogErrorText text="Something went wrong retrieving the new sprint. Please try again later" />
+      );
     }
 
     const { endDate, number, startDate } = newSprint;
@@ -61,20 +63,20 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
       <>
         <DialogContentText>
           Sprint:{" "}
-          <Typography component='span' color='primary'>
+          <Typography component="span" color="primary">
             {number}
           </Typography>
         </DialogContentText>
         <DialogContentText>
           Dates:{" "}
-          <Typography component='span' color='primary'>
+          <Typography component="span" color="primary">
             {format(new Date(startDate), "dd MMM")} - {format(new Date(endDate), "dd MMM")} (
             {differenceInCalendarDays(new Date(endDate), new Date(startDate))} Days)
           </Typography>
         </DialogContentText>
         <DialogContentText>
           Total Tickets:{" "}
-          <Typography component='span' color='primary'>
+          <Typography component="span" color="primary">
             {sprintTicketsCount}
           </Typography>
         </DialogContentText>
@@ -86,7 +88,7 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
     <>
       {sprintTicketsCount > 0 && (
         <DialogContentText sx={{ mb: 4 }}>
-          <Typography component='span' color='primary'>
+          <Typography component="span" color="primary">
             {sprintTicketsCount}
           </Typography>{" "}
           {pluralize("ticket", "tickets", sprintTicketsCount)} will be included in this sprint.
@@ -94,16 +96,18 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
       )}
       {sprintTicketsCount === 0 && (
         <DialogContentText>
-          No tickets were included in this sprint. Please move one or more tickets from the product backlog.
+          No tickets were included in this sprint. Please move one or more tickets from the product
+          backlog.
         </DialogContentText>
       )}
       {sprintTicketsCount > 0 && (
         <>
           <DialogContentText>
             Please select an end date:{" "}
-            <Typography component='span' color='primary.main'>
+            <Typography component="span" color="primary.main">
               {endDateInput && format(new Date(endDateInput), "dd MMM")}
-              {endDateInput && ` (${differenceInCalendarDays(new Date(endDateInput), new Date())} Days)`}
+              {endDateInput &&
+                ` (${differenceInCalendarDays(new Date(endDateInput), new Date())} Days)`}
             </Typography>
           </DialogContentText>
           <DateCalendar
@@ -118,7 +122,9 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
           />
         </>
       )}
-      {currentLoadState === "ERROR" && <DialogErrorText text='Failed to start a new sprint. Please try again later.' />}
+      {currentLoadState === "ERROR" && (
+        <DialogErrorText text="Failed to start a new sprint. Please try again later." />
+      )}
     </>
   );
 
@@ -127,15 +133,15 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
       <ActionDialog
         isOpen={showStartSprintDialog}
         onClose={handleClose}
-        acceptButtonText='Start sprint'
+        acceptButtonText="Start sprint"
         onAccept={handleStartSprint}
         disableActionButton={!endDateInput || !isValid(endDateInput) || sprintTicketsCount === 0}
         dialogContent={renderDialogContent()}
-        title='Start new sprint'
+        title="Start new sprint"
         titleIcon={<SprintIcon />}
       />
       <ConfirmationDialog
-        title='🎉 Congratulations on starting a new sprint!'
+        title="🎉 Congratulations on starting a new sprint!"
         isOpen={currentLoadState === "SUCCESS"}
         onClose={() => handleSetLoadingState("DEFAULT")}
         dialogContent={renderSuccessMessageContent()}

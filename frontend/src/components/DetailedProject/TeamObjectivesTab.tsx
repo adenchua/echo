@@ -22,18 +22,20 @@ const TeamObjectivesTab = (props: TeamObjectivesTabProps): JSX.Element => {
 
   return (
     <Box p={3}>
-      <Typography variant='h5' paragraph>
+      <Typography variant="h5" paragraph>
         Epics
       </Typography>
-      <Typography mb={4} sx={{ maxWidth: 640 }} color='textSecondary'>
-        Epics represent a collection of user stories that share a broader strategic objective. They can be used to
-        organize tasks in the project's backlog
+      <Typography mb={4} sx={{ maxWidth: 640 }} color="textSecondary">
+        Epics represent a collection of user stories that share a broader strategic objective. They
+        can be used to organize tasks in the project's backlog
       </Typography>
-      <CTAButton icon={<AddIcon />} onClick={() => setShowCreationForm(true)} text='Add Epic' />
+      <CTAButton icon={<AddIcon />} onClick={() => setShowCreationForm(true)} text="Add Epic" />
       <Box mb={3} />
-      {showCreationForm && <EpicCreationForm onClose={() => setShowCreationForm(false)} projectId={projectId} />}
+      {showCreationForm && (
+        <EpicCreationForm onClose={() => setShowCreationForm(false)} projectId={projectId} />
+      )}
       {epics.length === 0 && (
-        <Typography variant='body2' color='textSecondary' fontStyle='italic'>
+        <Typography variant="body2" color="textSecondary" fontStyle="italic">
           There are no epics created.
         </Typography>
       )}

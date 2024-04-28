@@ -57,7 +57,7 @@ const ticketSchema = new Schema(
       default: 1,
     },
   },
-  { versionKey: false }
+  { versionKey: false },
 );
 
 const Ticket = model("Ticket", ticketSchema);

@@ -54,7 +54,7 @@ const FilterSelectWrapper = (props: FilterSelectWrapperProps): JSX.Element => {
 
   return (
     <MenuItem sx={{ mb: 1 }}>
-      <FormControl sx={{ width: "100%" }} size='small'>
+      <FormControl sx={{ width: "100%" }} size="small">
         <InputLabel sx={{ fontSize: 12 }}>{label}</InputLabel>
         {children}
       </FormControl>
@@ -82,7 +82,7 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
 
       return "Invalid User";
     },
-    [members, admins]
+    [members, admins],
   );
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -104,9 +104,9 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
       {filterText && (
         <Button
           aria-describedby={id}
-          size='small'
-          color='primary'
-          variant='contained'
+          size="small"
+          color="primary"
+          variant="contained"
           onClick={handleClick}
           sx={{ whiteSpace: "nowrap" }}
         >
@@ -116,8 +116,8 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
       {!filterText && (
         <Button
           aria-describedby={id}
-          size='small'
-          color='inherit'
+          size="small"
+          color="inherit"
           onClick={handleClick}
           sx={{ color: "#9e9e9e", whiteSpace: "nowrap" }}
         >
@@ -140,51 +140,60 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
         }}
       >
         <MenuList dense>
-          <MenuItem onClick={() => handleSelectNewFilter(`assignee-${loggedInUserId ?? ""}`, "My tickets")}>
+          <MenuItem
+            onClick={() => handleSelectNewFilter(`assignee-${loggedInUserId ?? ""}`, "My tickets")}
+          >
             <ListItemIcon>
-              <PersonIcon fontSize='small' />
+              <PersonIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText>My assigned tickets</ListItemText>
           </MenuItem>
           <MenuItem onClick={() => handleSelectNewFilter("not_status-completed", "Not done")}>
             <ListItemIcon>
-              <RuleIcon fontSize='small' />
+              <RuleIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText>Not done</ListItemText>
           </MenuItem>
           <MenuItem onClick={() => handleSelectNewFilter(`not_in_sprint-true`, "Not in sprint")}>
             <ListItemIcon>
-              <NotInSprintIcon fontSize='small' />
+              <NotInSprintIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText>Not in sprint</ListItemText>
           </MenuItem>
           <Divider />
 
-          <FilterSelectWrapper label='Status'>
+          <FilterSelectWrapper label="Status">
             <Select
-              label='Status'
-              defaultValue=''
+              label="Status"
+              defaultValue=""
               onChange={(e) =>
                 handleSelectNewFilter(
                   `status-${e.target.value as TicketStatus}`,
-                  statusToTextMapping[e.target.value as TicketStatus]
+                  statusToTextMapping[e.target.value as TicketStatus],
                 )
               }
             >
               {["todo", "progress", "review", "completed", "stuck", "hold"].map((ticketStatus) => (
-                <MenuItem key={ticketStatus} value={ticketStatus} sx={{ display: "flex", justifyContent: "center" }}>
-                  <StatusChipButton status={ticketStatus as TicketStatus} size='small' />
+                <MenuItem
+                  key={ticketStatus}
+                  value={ticketStatus}
+                  sx={{ display: "flex", justifyContent: "center" }}
+                >
+                  <StatusChipButton status={ticketStatus as TicketStatus} size="small" />
                 </MenuItem>
               ))}
             </Select>
           </FilterSelectWrapper>
 
-          <FilterSelectWrapper label='Assignee'>
+          <FilterSelectWrapper label="Assignee">
             <Select
-              defaultValue=''
-              label='Assignee'
+              defaultValue=""
+              label="Assignee"
               onChange={(e) =>
-                handleSelectNewFilter(`assignee-${e.target.value}`, getUserDisplayName(e.target.value as string))
+                handleSelectNewFilter(
+                  `assignee-${e.target.value}`,
+                  getUserDisplayName(e.target.value as string),
+                )
               }
             >
               {[...admins, ...members].map((user) => {
@@ -204,7 +213,7 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
           <Divider />
           <MenuItem onClick={() => handleSelectNewFilter(null, "")}>
             <ListItemIcon>
-              <CloseIcon fontSize='small' />
+              <CloseIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText>Remove Filters</ListItemText>
           </MenuItem>

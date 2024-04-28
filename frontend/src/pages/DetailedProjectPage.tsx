@@ -88,7 +88,7 @@ const DetailedProjectPage = (): JSX.Element => {
   };
 
   if (!loggedInUserId) {
-    return <Navigate to='/' />;
+    return <Navigate to="/" />;
   }
 
   if (currentLoadState === "LOADING") {
@@ -113,7 +113,9 @@ const DetailedProjectPage = (): JSX.Element => {
       { tabKey: "members", component: <MembersTab project={project} /> },
       {
         tabKey: "settings",
-        component: <SettingsTab project={project} handleUpdateProjectFields={handleUpdateProjectFields} />,
+        component: (
+          <SettingsTab project={project} handleUpdateProjectFields={handleUpdateProjectFields} />
+        ),
       },
     ];
     let selectedTab = availableTabs.find((element) => element.tabKey === currentTabKey);

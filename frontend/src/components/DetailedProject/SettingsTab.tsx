@@ -63,45 +63,47 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
 
   return (
     <Box p={3}>
-      <Typography variant='h5' paragraph>
+      <Typography variant="h5" paragraph>
         Project Settings
       </Typography>
       <Divider sx={{ mb: 3 }} />
 
       <Grid container mb={4} spacing={3}>
         <Grid item xs={12} md={4}>
-          <Typography variant='h6' gutterBottom>
+          <Typography variant="h6" gutterBottom>
             Details
           </Typography>
-          <Typography color='textSecondary'>Customize project title, description and logo.</Typography>
+          <Typography color="textSecondary">
+            Customize project title, description and logo.
+          </Typography>
         </Grid>
         <Grid item xs={12} md={8}>
-          <Typography gutterBottom variant='body2'>
+          <Typography gutterBottom variant="body2">
             Project Title
           </Typography>
           <TextField
-            variant='filled'
+            variant="filled"
             fullWidth
             sx={{ maxWidth: 400, mb: 3 }}
             value={titleInput}
             onChange={(e) => setTitleInput(e.target.value)}
           />
-          <Typography gutterBottom variant='body2'>
+          <Typography gutterBottom variant="body2">
             Project Description
           </Typography>
           <TextField
-            variant='filled'
+            variant="filled"
             fullWidth
             sx={{ maxWidth: 400, mb: 3 }}
             multiline
             rows={3}
             onChange={(e) => setDescriptionInput(e.target.value)}
             value={descriptionInput}
-            placeholder='Give your project a detailed description'
+            placeholder="Give your project a detailed description"
           />
           <Button
             sx={{ display: "block" }}
-            variant='contained'
+            variant="contained"
             onClick={handleUpdateProject}
             disabled={currentLoadState === "LOADING" || titleInput.length === 0}
           >
@@ -112,33 +114,33 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
       <Divider sx={{ mb: 3 }} />
 
       {isLoggedInUserAdmin && (
-        <Grid container mb={4} alignItems='flex-start' spacing={3}>
+        <Grid container mb={4} alignItems="flex-start" spacing={3}>
           <Grid item xs={12} md={4}>
-            <Typography variant='h6' gutterBottom color='error'>
+            <Typography variant="h6" gutterBottom color="error">
               Delete Project
             </Typography>
-            <Typography color='textSecondary'>
+            <Typography color="textSecondary">
               Once you delete this project, all tickets and sprint information will be lost forever.
             </Typography>
           </Grid>
           <Grid item xs={12} md={8}>
             <TextField
-              variant='filled'
+              variant="filled"
               fullWidth
-              size='small'
+              size="small"
               helperText={`Type: '${title}' to enable deletion`}
               sx={{ maxWidth: 400, mb: 3 }}
               value={deletionInput}
               onChange={(e) => setDeletionInput(e.target.value)}
             />
             {deletionInput === title && (
-              <Typography color='error' paragraph>
+              <Typography color="error" paragraph>
                 Warning! There is no turning back now...
               </Typography>
             )}
             <Button
-              color='error'
-              variant='contained'
+              color="error"
+              variant="contained"
               sx={{ display: "block" }}
               disabled={currentLoadState === "LOADING" || deletionInput !== title}
               onClick={handleDeleteProject}
@@ -148,7 +150,10 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
           </Grid>
         </Grid>
       )}
-      <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
+      <SnackbarError
+        isOpen={currentLoadState === "ERROR"}
+        onClose={() => handleSetLoadingState("DEFAULT")}
+      />
     </Box>
   );
 };

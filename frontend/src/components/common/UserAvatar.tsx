@@ -13,7 +13,10 @@ const UserAvatar = (props: UserAvatarProps): JSX.Element => {
 
   return (
     <Tooltip title={displayName}>
-      <Avatar src={getUserAvatarSVG(username)} sx={{ height: 32, width: 32, backgroundColor: "grey.300" }}>
+      <Avatar
+        src={getUserAvatarSVG(username)}
+        sx={{ height: 32, width: 32, backgroundColor: "grey.300" }}
+      >
         {displayName}
       </Avatar>
     </Tooltip>

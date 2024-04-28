@@ -32,8 +32,12 @@ const router = Router();
 router.route("/").get(getAllProjects);
 router.route("/").post(createProjectValidationChain, validationErrorHandling, createProject);
 router.route("/id/:projectId").get(getProjectValidationChain, validationErrorHandling, getProject);
-router.route("/id/:projectId").patch(updateProjectValidationChain, validationErrorHandling, updateProject);
-router.route("/id/:projectId").delete(deleteProjectValidationChain, validationErrorHandling, deleteProject);
+router
+  .route("/id/:projectId")
+  .patch(updateProjectValidationChain, validationErrorHandling, updateProject);
+router
+  .route("/id/:projectId")
+  .delete(deleteProjectValidationChain, validationErrorHandling, deleteProject);
 router
   .route("/members/add/:projectId")
   .post(addMemberToProjectValidationChain, validationErrorHandling, addMemberToProject);
@@ -46,7 +50,11 @@ router
 router.route("/user/:userId").get(getProjectsOfUser);
 router
   .route("/admins/promote/:projectId")
-  .post(promoteMemberToAdministratorValidationChain, validationErrorHandling, promoteMemberToAdministrator);
+  .post(
+    promoteMemberToAdministratorValidationChain,
+    validationErrorHandling,
+    promoteMemberToAdministrator,
+  );
 router
   .route("/admins/demote/:projectId")
   .post(demoteAdmintoMemberValidationChain, validationErrorHandling, demoteAdmintoMember);

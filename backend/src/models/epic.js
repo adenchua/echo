@@ -26,7 +26,7 @@ const epicSchema = new Schema(
       default: Date.now,
     },
   },
-  { versionKey: false }
+  { versionKey: false },
 );
 
 const Epic = model("Epic", epicSchema);

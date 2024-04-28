@@ -34,19 +34,19 @@ const TicketSection = (props: TicketSectionProps): JSX.Element => {
 
       return "Others";
     },
-    [epics]
+    [epics],
   );
 
   return (
     <>
-      <Box display='flex' alignItems='center' mb={1} gap={1}>
+      <Box display="flex" alignItems="center" mb={1} gap={1}>
         {!showTickets && (
-          <IconButton size='small' edge='start' onClick={() => setShowTickets(true)}>
+          <IconButton size="small" edge="start" onClick={() => setShowTickets(true)}>
             <ExpandMoreIcon />
           </IconButton>
         )}
         {showTickets && (
-          <IconButton size='small' edge='start' onClick={() => setShowTickets(false)}>
+          <IconButton size="small" edge="start" onClick={() => setShowTickets(false)}>
             <ExpandLessIcon />
           </IconButton>
         )}
@@ -59,7 +59,11 @@ const TicketSection = (props: TicketSectionProps): JSX.Element => {
               return (
                 <Slide key={ticket._id} timeout={400}>
                   <Box onClick={() => onSelectTicket(ticket._id)} mb={0.5}>
-                    <Ticket ticket={ticket} showSprintToggleCheckBox bgGrey={ticket._id === selectedTicketId} />
+                    <Ticket
+                      ticket={ticket}
+                      showSprintToggleCheckBox
+                      bgGrey={ticket._id === selectedTicketId}
+                    />
                   </Box>
                 </Slide>
               );

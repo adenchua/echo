@@ -24,7 +24,9 @@ router.route("/").post(createEpicValidationChain, validationErrorHandling, creat
 router.route("/id/:epicId").patch(updateEpicValidationChain, validationErrorHandling, updateEpic);
 router.route("/id/:epicId").delete(deleteEpicValidationChain, validationErrorHandling, deleteEpic);
 router.route("/bulk-retrieve").post(getEpicsValidationChain, validationErrorHandling, getEpics);
-router.route("/add-ticket/:epicId").post(addTicketToEpicValidationChain, validationErrorHandling, addTicketToEpic);
+router
+  .route("/add-ticket/:epicId")
+  .post(addTicketToEpicValidationChain, validationErrorHandling, addTicketToEpic);
 router
   .route("/remove-ticket/:epicId")
   .post(removeTicketFromEpicValidationChain, validationErrorHandling, removeTicketFromEpic);

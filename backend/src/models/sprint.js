@@ -26,7 +26,7 @@ const sprintSchema = new Schema(
       default: false,
     },
   },
-  { versionKey: false }
+  { versionKey: false },
 );
 
 const Sprint = model("Sprint", sprintSchema);

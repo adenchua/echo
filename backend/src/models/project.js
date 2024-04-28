@@ -54,7 +54,7 @@ const projectSchema = new Schema(
       default: false,
     },
   },
-  { versionKey: false }
+  { versionKey: false },
 );
 
 const Project = model("Project", projectSchema);

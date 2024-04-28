@@ -3,7 +3,12 @@ import { isValidObjectId } from "mongoose";
 
 const COMMON_TICKET_VALIDATION_CHAINS = {
   invalidBodyTicketTitle: body("title", "INVALID_TICKET_TITLE").isString().trim(),
-  invalidBodyTiketPriority: body("priority", "INVALID_TICKET_PRIORITY").isIn(["low", "medium", "high", "highest"]),
+  invalidBodyTiketPriority: body("priority", "INVALID_TICKET_PRIORITY").isIn([
+    "low",
+    "medium",
+    "high",
+    "highest",
+  ]),
   invalidBodyTicketType: body("type", "INVALID_TICKET_TYPE").isIn(["story", "task", "bug"]),
   invalidParamTicketId: param("ticketId", "INVALID_TICKET_ID")
     .trim()
@@ -26,7 +31,9 @@ export const updateTicketValidationChain = [
   COMMON_TICKET_VALIDATION_CHAINS.invalidBodyTicketType.optional(),
   COMMON_TICKET_VALIDATION_CHAINS.invalidBodyTiketPriority.optional(),
   body("description", "INVALID_TICKET_DESCRIPTION").isString().trim().optional(),
-  body("status", "INVALID_TICKET_STATUS").isIn(["todo", "progress", "review", "completed", "stuck", "hold"]).optional(),
+  body("status", "INVALID_TICKET_STATUS")
+    .isIn(["todo", "progress", "review", "completed", "stuck", "hold"])
+    .optional(),
   body("dueDate", "INVALID_TICKET_DUE_DATE").isISO8601().optional(),
   body("isInSprint", "INVALID_TICKET_IS_IN_SPRINT").isBoolean().optional(),
   body("assigneeId", "INVALID_TICKET_ASSIGNEE_ID")
@@ -48,4 +55,6 @@ export const getTicketsValidationChain = [
     .custom((values) => values.every((value) => isValidObjectId(value))),
 ];
 
-export const getTicketValidationChain = [COMMON_TICKET_VALIDATION_CHAINS.invalidParamTicketId.notEmpty()];
+export const getTicketValidationChain = [
+  COMMON_TICKET_VALIDATION_CHAINS.invalidParamTicketId.notEmpty(),
+];

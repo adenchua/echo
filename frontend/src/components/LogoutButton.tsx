@@ -20,7 +20,7 @@ const LogoutButton = (): JSX.Element => {
   return (
     <>
       <Button
-        variant='outlined'
+        variant="outlined"
         onClick={() => setIsDialogOpened(true)}
         fullWidth
         sx={{
@@ -36,11 +36,11 @@ const LogoutButton = (): JSX.Element => {
         dialogContent={null}
         isOpen={isDialogOpened}
         onClose={() => setIsDialogOpened(false)}
-        title='Do you want to logout?'
+        title="Do you want to logout?"
         titleIcon={<LogoutIcon />}
         onAccept={handleLogout}
         disableActionButton={false}
-        acceptButtonText='Logout'
+        acceptButtonText="Logout"
       />
     </>
   );

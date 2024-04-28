@@ -45,7 +45,7 @@ const TicketsContextProvider = ({ children }: TicketsContextProviderProps): JSX.
           ticket = _.merge({}, ticket, updatedFields);
         }
         return ticket;
-      })
+      }),
     );
   }, []);
 
@@ -54,7 +54,7 @@ const TicketsContextProvider = ({ children }: TicketsContextProviderProps): JSX.
       const filteredTickets = tickets.filter((ticket) => ticket._id !== ticketId);
       setTickets(filteredTickets);
     },
-    [tickets]
+    [tickets],
   );
 
   const removeCompletedTickets = useCallback((): void => {
@@ -73,7 +73,7 @@ const TicketsContextProvider = ({ children }: TicketsContextProviderProps): JSX.
           ticket.subtaskIds = [...ticket.subtaskIds, subtaskId];
         }
         return ticket;
-      })
+      }),
     );
   };
 
@@ -84,7 +84,7 @@ const TicketsContextProvider = ({ children }: TicketsContextProviderProps): JSX.
           ticket.subtaskIds = ticket.subtaskIds.filter((id) => id !== subtaskId);
         }
         return ticket;
-      })
+      }),
     );
   };
 

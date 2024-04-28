@@ -23,7 +23,9 @@ export const updateSubtaskValidationChain = [
   body("isCompleted", "INVALID_SUBTASK_IS_COMPLETED").isBoolean().optional(),
 ];
 
-export const deleteSubtaskValidationChain = [COMMON_SUBTASK_VALIDATION_CHAINS.invalidParamSubtaskId];
+export const deleteSubtaskValidationChain = [
+  COMMON_SUBTASK_VALIDATION_CHAINS.invalidParamSubtaskId,
+];
 
 export const getSubtasksValidationChain = [
   body("subtaskIds", "INVALID_SUBTASK_IDS")
