@@ -6,7 +6,6 @@ import {
   createProject,
   deleteProject,
   demoteAdmintoMember,
-  getAllProjects,
   getProject,
   getProjectsOfUser,
   promoteMemberToAdministrator,
@@ -29,7 +28,6 @@ import { validationErrorHandling } from "../middlewares/validationErrorHandlingM
 
 const router = Router();
 
-router.route("/").get(getAllProjects);
 router.route("/").post(createProjectValidationChain, validationErrorHandling, createProject);
 router.route("/id/:projectId").get(getProjectValidationChain, validationErrorHandling, getProject);
 router

@@ -1,13 +1,18 @@
-import Project from "../models/project.js";
-import objectUtils from "../utils/objectUtils.js";
-import { errorMessages } from "../utils/errorMessages.js";
+import errorCodeToMessageMap from "../constants/errorMessages.js";
+import projectService from "../services/projectService.js";
+import ErrorResponse from "../utils/ErrorResponse.js";
+
+export const NO_PROJECT_ERROR = new ErrorResponse(
+  errorCodeToMessageMap["PROJECT_NOT_FOUND"],
+  "PROJECT_NOT_FOUND",
+  404,
+);
 
 export const createProject = async (req, res, next) => {
   const { title, adminId, type } = req.body;
 
   try {
-    const newProject = new Project({ title, adminIds: [adminId], type });
-    await newProject.save();
+    const newProject = await projectService.createProject({ title, adminId: [adminId], type });
     res.status(201).send(newProject);
   } catch (error) {
     next(error);
@@ -18,10 +23,9 @@ export const getProject = async (req, res, next) => {
   const { projectId } = req.params;
 
   try {
-    const project = await Project.findById(projectId);
-    if (!project || project.isDeleted) {
-      res.sendStatus(404);
-      return;
+    const project = await projectService.getProject(projectId);
+    if (project == null || project.isDeleted) {
+      throw NO_PROJECT_ERROR;
     }
 
     res.send(project);
@@ -35,19 +39,15 @@ export const addMemberToProject = async (req, res, next) => {
   const { userId } = req.body;
 
   try {
-    const project = await Project.findById(projectId);
+    const project = await projectService.getProject(projectId);
 
-    if (!project || project.isDeleted) {
-      res.status(400).send({ error: errorMessages.projectNotExists });
-      return;
+    if (project == null || project.isDeleted) {
+      throw NO_PROJECT_ERROR;
     }
 
-    // if member is already inside the array, no need to do anything
-    if (!project.memberIds.includes(userId)) {
-      project.memberIds.push(userId);
-      await project.save();
-    }
+    // TODO: verify if userId is a valid user
 
+    await projectService.addMembersToProject([userId], projectId);
     res.sendStatus(204);
   } catch (error) {
     next(error);
@@ -59,23 +59,15 @@ export const addMembersToProject = async (req, res, next) => {
   const { userIds } = req.body;
 
   try {
-    const project = await Project.findById(projectId);
+    const project = await projectService.getProject(projectId);
 
-    if (!project || project.isDeleted) {
-      res.status(400).send({ error: errorMessages.projectNotExists });
-      return;
+    if (project == null || project.isDeleted) {
+      throw NO_PROJECT_ERROR;
     }
 
-    for (const userId of userIds) {
-      if (project.adminIds.includes(userId)) {
-        continue; // already admin, no need to add
-      }
-      if (!project.memberIds.includes(userId)) {
-        project.memberIds.push(userId);
-      }
-    }
+    // TODO: verify if userIds is a valid user
 
-    await project.save();
+    await projectService.addMembersToProject(userIds, projectId);
     res.sendStatus(204);
   } catch (error) {
     next(error);
@@ -87,18 +79,14 @@ export const removeMemberFromProject = async (req, res, next) => {
   const { userId } = req.body;
 
   try {
-    const project = await Project.findById(projectId);
+    const project = await projectService.getProject(projectId);
 
-    if (!project || project.isDeleted) {
-      res.status(400).send({ error: errorMessages.projectNotExists });
-      return;
+    if (project == null || project.isDeleted) {
+      throw NO_PROJECT_ERROR;
     }
 
-    if (project.memberIds.includes(userId)) {
-      project.memberIds.pull(userId);
-      await project.save();
-    }
-
+    // TODO: verify if userIds is a valid user
+    await projectService.removeMemberFromProject(userId, projectId);
     res.sendStatus(204);
   } catch (error) {
     next(error);
@@ -110,20 +98,18 @@ export const updateProject = async (req, res, next) => {
   const { title, description, announcement, picture, type } = req.body;
 
   try {
-    const project = await Project.findById(projectId);
-    if (!project || project.isDeleted) {
-      res.status(400).send({ error: errorMessages.projectNotExists });
-      return;
+    const project = await projectService.getProject(projectId);
+    if (project == null || project.isDeleted) {
+      throw NO_PROJECT_ERROR;
     }
 
-    const keysToUpdate = objectUtils.removeUndefinedKeysFromObject({
+    await projectService.updateProject(projectId, {
       title,
       description,
       announcement,
       picture,
       type,
     });
-    await Project.findByIdAndUpdate(projectId, { ...keysToUpdate });
     res.sendStatus(204);
   } catch (error) {
     next(error);
@@ -134,18 +120,7 @@ export const getProjectsOfUser = async (req, res, next) => {
   const { userId } = req.params;
 
   try {
-    const projectsWithUsersAsAdmins = await Project.find({ adminIds: userId, isDeleted: false });
-    const projectsWithUsersAsMembers = await Project.find({ memberIds: userId, isDeleted: false });
-    const projects = [...projectsWithUsersAsAdmins, ...projectsWithUsersAsMembers];
-    res.send(projects);
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const getAllProjects = async (req, res, next) => {
-  try {
-    const projects = await Project.find({ isDeleted: false });
+    const projects = await projectService.getProjectsOfUser(userId);
     res.send(projects);
   } catch (error) {
     next(error);
@@ -157,24 +132,13 @@ export const promoteMemberToAdministrator = async (req, res, next) => {
   const { userId } = req.body;
 
   try {
-    const project = await Project.findById(projectId);
+    const project = await projectService.getProject(projectId);
 
-    if (!project || project.isDeleted) {
-      res.status(400).send({ error: errorMessages.projectNotExists });
-      return;
+    if (project == null || project.isDeleted) {
+      throw NO_PROJECT_ERROR;
     }
 
-    // add user id to admin id list
-    if (!project.adminIds.includes(userId)) {
-      project.adminIds.push(userId);
-    }
-
-    // remove from member id list since already administrator
-    if (project.memberIds.includes(userId)) {
-      project.memberIds.pull(userId);
-    }
-
-    await project.save();
+    await projectService.promoteMemberToAdmin(userId, projectId);
     res.sendStatus(204);
   } catch (error) {
     next(error);
@@ -186,29 +150,21 @@ export const demoteAdmintoMember = async (req, res, next) => {
   const { userId } = req.body;
 
   try {
-    const project = await Project.findById(projectId);
+    const project = await projectService.getProject(projectId);
 
-    if (!project || project.isDeleted) {
-      res.status(400).send({ error: errorMessages.projectNotExists });
-      return;
+    if (project == null || project.isDeleted) {
+      throw NO_PROJECT_ERROR;
     }
 
-    if (project.adminIds.length === 1) {
-      res.status(400).send({ error: errorMessages.lastAdministrator });
-      return;
+    if (project.adminIds.length <= 1) {
+      throw new ErrorResponse(
+        errorCodeToMessageMap["LAST_PROJECT_ADMINISTRATOR"],
+        "LAST_PROJECT_ADMINISTRATOR",
+        400,
+      );
     }
 
-    // remove user from admin id list
-    if (project.adminIds.includes(userId)) {
-      project.adminIds.pull(userId);
-    }
-
-    // add user to members list
-    if (!project.memberIds.includes(userId)) {
-      project.memberIds.push(userId);
-    }
-
-    await project.save();
+    await projectService.demoteAdminToMember(userId, projectId);
     res.sendStatus(204);
   } catch (error) {
     next(error);
@@ -219,7 +175,7 @@ export const deleteProject = async (req, res, next) => {
   const { projectId } = req.params;
 
   try {
-    await Project.findByIdAndUpdate(projectId, { isDeleted: true }); // safe delete.
+    await projectService.deleteProject(projectId);
     res.sendStatus(204);
   } catch (error) {
     next(error);
