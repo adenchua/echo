@@ -47,7 +47,7 @@ const createProject = async (projectFields) => {
 const getProject = async (projectId) => {
   const project = await Project.findById(projectId);
 
-  if (project.isDeleted) {
+  if (project == null || project.isDeleted) {
     return null; // do not return deleted projects to client
   }
 
@@ -94,33 +94,7 @@ const removeMemberFromProject = async (memberId, projectId) => {
  * @param {Project} projectFields - project fields to update
  */
 const updateProject = async (projectId, projectFields) => {
-  const {
-    title,
-    type,
-    description,
-    announcement,
-    adminIds,
-    memberIds,
-    epicIds,
-    backlogIds,
-    sprintIds,
-    picture,
-  } = projectFields;
-
-  const definedKeys = objectUtils.removeUndefinedKeysFromObject({
-    title,
-    type,
-    description,
-    announcement,
-    adminIds,
-    memberIds,
-    epicIds,
-    backlogIds,
-    sprintIds,
-    picture,
-  });
-
-  await Project.findByIdAndUpdate(projectId, { ...definedKeys });
+  await Project.findByIdAndUpdate(projectId, { ...projectFields });
 };
 
 /**

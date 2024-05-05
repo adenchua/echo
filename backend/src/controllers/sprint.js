@@ -2,7 +2,7 @@ import errorCodeToMessageMap from "../constants/errorMessages.js";
 import projectService from "../services/projectService.js";
 import sprintService from "../services/sprintService.js";
 import ErrorResponse from "../utils/ErrorResponse.js";
-import { NO_PROJECT_ERROR } from "./project.js";
+import { PROJECT_NOT_FOUND_ERROR } from "./project.js";
 
 const EXISTING_ACTIVE_SPRINT_ERROR = new ErrorResponse(
   errorCodeToMessageMap["EXISTING_ACTIVE_SPRINT"],
@@ -19,7 +19,7 @@ const NO_ACTIVE_SPRINT_ERROR = new ErrorResponse(
 const SPRINT_NOT_EXIST_ERROR = new ErrorResponse(
   errorCodeToMessageMap["SPRINT_NOT_FOUND"],
   "SPRINT_NOT_FOUND",
-  400,
+  404,
 );
 
 export const startSprint = async (req, res, next) => {
@@ -28,8 +28,8 @@ export const startSprint = async (req, res, next) => {
   try {
     const project = await projectService.getProject(projectId);
 
-    if (project == null || project.isDeleted) {
-      throw NO_PROJECT_ERROR;
+    if (isProjectDeleted(project)) {
+      throw PROJECT_NOT_FOUND_ERROR;
     }
 
     const projectSprints = await sprintService.getSprints(project.sprintIds);
@@ -43,7 +43,7 @@ export const startSprint = async (req, res, next) => {
       number: sprintNumber,
       endDate: endDateISOString,
     });
-    res.status(201).send(newSprint);
+    res.status(201).send({ data: newSprint });
   } catch (error) {
     next(error);
   }
@@ -64,12 +64,12 @@ export const endSprint = async (req, res, next) => {
       throw NO_ACTIVE_SPRINT_ERROR;
     }
 
-    if (project == null || project.isDeleted) {
-      throw NO_PROJECT_ERROR;
+    if (isProjectDeleted(project)) {
+      throw PROJECT_NOT_FOUND_ERROR;
     }
 
     const endedSprint = await sprintService.endSprint(sprintId, projectId);
-    res.send(endedSprint);
+    res.send({ data: endedSprint });
   } catch (error) {
     next(error);
   }
@@ -80,7 +80,7 @@ export const getSprints = async (req, res, next) => {
 
   try {
     const sprints = await sprintService.getSprints(sprintIds);
-    res.send(sprints);
+    res.send({ data: sprints });
   } catch (error) {
     next(error);
   }
@@ -91,7 +91,12 @@ export const getSprint = async (req, res, next) => {
 
   try {
     const [sprint] = await sprintService.getSprints([sprintId]);
-    res.send(sprint);
+
+    if (sprint == null) {
+      throw SPRINT_NOT_EXIST_ERROR;
+    }
+
+    res.send({ data: sprint });
   } catch (error) {
     next(error);
   }

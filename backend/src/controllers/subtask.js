@@ -1,11 +1,27 @@
+import errorCodeToMessageMap from "../constants/errorMessages.js";
 import subtaskService from "../services/subtaskService.js";
+import ticketService from "../services/ticketService.js";
+import ErrorResponse from "../utils/ErrorResponse.js";
+import { TICKET_NOT_FOUND_ERROR } from "./ticket.js";
+
+const SUBTASK_NOT_FOUND_ERROR = new ErrorResponse(
+  errorCodeToMessageMap["SUBTASK_NOT_FOUND"],
+  "SUBTASK_NOT_FOUND",
+  404,
+);
 
 export const createSubtask = async (req, res, next) => {
   const { ticketId, title } = req.body;
 
   try {
+    const [ticket] = ticketService.getTickets([ticketId]);
+
+    if (ticket == null) {
+      throw TICKET_NOT_FOUND_ERROR;
+    }
+
     const newSubtask = await subtaskService.createSubtask(ticketId, { title });
-    res.status(201).send(newSubtask);
+    res.status(201).send({ data: newSubtask });
   } catch (error) {
     next(error);
   }
@@ -16,6 +32,12 @@ export const updateSubtask = async (req, res, next) => {
   const { title, isCompleted } = req.body;
 
   try {
+    const [subtask] = await subtaskService.getSubtasks([subtaskId]);
+
+    if (subtask == null) {
+      throw SUBTASK_NOT_FOUND_ERROR;
+    }
+
     await subtaskService.updateSubtask(subtaskId, { title, isCompleted });
     res.sendStatus(204);
   } catch (error) {
@@ -27,6 +49,12 @@ export const deleteSubtask = async (req, res, next) => {
   const { subtaskId } = req.params;
 
   try {
+    const [subtask] = await subtaskService.getSubtasks([subtaskId]);
+
+    if (subtask == null) {
+      throw SUBTASK_NOT_FOUND_ERROR;
+    }
+
     await subtaskService.deleteSubtask(subtaskId);
     res.sendStatus(204);
   } catch (error) {
@@ -39,7 +67,7 @@ export const getSubtasks = async (req, res, next) => {
 
   try {
     const subtasks = await subtaskService.getSubtasks(subtaskIds);
-    res.send(subtasks);
+    res.send({ data: subtasks });
   } catch (error) {
     next(error);
   }
