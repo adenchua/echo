@@ -9,7 +9,6 @@ const updateProject = async (
 ): Promise<void> => {
   try {
     await axios.patch(`${API_ENDPOINT}/v1/projects/id/${projectId}`, { title, description });
-    return;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error("Axios Error");
