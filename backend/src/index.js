@@ -18,7 +18,7 @@ const API_PREPEND = "/api";
 
 app.use(express.json());
 app.use(cors());
-app.use(morgan("combined")); // logging middleware
+app.use(morgan("dev")); // logging middleware
 app.use(helmet()); // secure server by setting recommended HTTP response headers
 
 app.use(`${API_PREPEND}/v1/projects`, projectRouter);

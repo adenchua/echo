@@ -21,7 +21,7 @@ export const createTicket = async (req, res, next) => {
       throw PROJECT_NOT_FOUND_ERROR;
     }
 
-    const newTicket = ticketService.createTicket(projectId, { title, priority, type });
+    const newTicket = await ticketService.createTicket(projectId, { title, priority, type });
     res.status(201).send({ data: newTicket });
   } catch (error) {
     next(error);

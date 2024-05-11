@@ -14,7 +14,7 @@ export const createSubtask = async (req, res, next) => {
   const { ticketId, title } = req.body;
 
   try {
-    const [ticket] = ticketService.getTickets([ticketId]);
+    const [ticket] = await ticketService.getTickets([ticketId]);
 
     if (ticket == null) {
       throw TICKET_NOT_FOUND_ERROR;

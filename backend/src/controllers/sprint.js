@@ -2,6 +2,7 @@ import errorCodeToMessageMap from "../constants/errorMessages.js";
 import projectService from "../services/projectService.js";
 import sprintService from "../services/sprintService.js";
 import ErrorResponse from "../utils/ErrorResponse.js";
+import { isProjectDeleted } from "../utils/projectUtils.js";
 import { PROJECT_NOT_FOUND_ERROR } from "./project.js";
 
 const EXISTING_ACTIVE_SPRINT_ERROR = new ErrorResponse(

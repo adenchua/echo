@@ -116,7 +116,7 @@ const getProjectsOfUser = async (userId) => {
  * @param {string} projectId - project ID of project
  */
 const promoteMemberToAdmin = async (memberId, projectId) => {
-  const project = await projectService.getProject(projectId);
+  const project = await getProject(projectId);
 
   if (!project.adminIds.includes(memberId)) {
     project.adminIds.push(memberId);
@@ -135,7 +135,7 @@ const promoteMemberToAdmin = async (memberId, projectId) => {
  * @param {string} projectId - project ID of the project
  */
 const demoteAdminToMember = async (adminId, projectId) => {
-  const project = await projectService.getProject(projectId);
+  const project = await getProject(projectId);
 
   // remove user from admin id list
   if (project.adminIds.includes(adminId)) {

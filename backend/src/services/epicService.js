@@ -1,4 +1,5 @@
 import Epic from "../models/epic.js";
+import Project from "../models/project.js";
 import Ticket from "../models/ticket.js";
 import objectUtils from "../utils/objectUtils.js";
 import projectService from "./projectService.js";
@@ -20,13 +21,13 @@ const createEpic = async (projectId, epicFields) => {
   });
 
   const project = await projectService.getProject(projectId);
-  let projectEpicIds = project.epicIds || [];
+  const projectEpicIds = project.epicIds || [];
 
   const epic = new Epic({ ...definedKeys });
   await epic.save();
 
   // add the new created epic into the project
-  projectEpicIds = projectEpicIds.push(epic._id);
+  projectEpicIds.push(epic._id);
   await projectService.updateProject(projectId, { epicIds: projectEpicIds });
 
   return epic;
