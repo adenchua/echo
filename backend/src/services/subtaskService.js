@@ -33,6 +33,10 @@ const updateSubtask = async (subtaskId, subtaskFields) => {
   await Subtask.findByIdAndUpdate(subtaskId, { ...definedKeys });
 };
 
+/**
+ * Deletes an existing subtask in the database. WARNING: HARD-DELETE
+ * @param {string} subtaskId
+ */
 const deleteSubtask = async (subtaskId) => {
   await Ticket.updateMany({ subtaskIds: subtaskId }, { $pullAll: { subtaskIds: [subtaskId] } }); // remove ticket with this subtask id
   await Subtask.findByIdAndDelete(subtaskId);

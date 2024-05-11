@@ -31,6 +31,7 @@ const startSprint = async (projectId, sprintFields) => {
   return newSprint;
 };
 
+// TODO: should not require project ID, add relation from sprint to project
 /**
  * Ends an active sprint in a project
  * @param {string} sprintId
