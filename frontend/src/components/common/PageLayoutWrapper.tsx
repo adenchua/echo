@@ -26,9 +26,9 @@ const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
   const renderHamburgerIcon = (): JSX.Element => {
     return (
       <IconButton
-        color='inherit'
-        aria-label='open drawer'
-        edge='start'
+        color="inherit"
+        aria-label="open drawer"
+        edge="start"
         onClick={handleDrawerToggle}
         sx={{ mr: 2, display: { lg: "none" } }}
       >
@@ -51,24 +51,24 @@ const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
   };
 
   return (
-    <Box display='flex'>
+    <Box display="flex">
       <AppBar
-        position='fixed'
+        position="fixed"
         sx={{
           width: { lg: `calc(100% - ${DRAWER_WIDTH}px)` },
           ml: { lg: `${DRAWER_WIDTH}px` },
           borderBottom: "1px solid",
           borderColor: "divider",
         }}
-        color='inherit'
+        color="inherit"
         elevation={0}
       >
         <Toolbar>{renderToolbarContent()}</Toolbar>
       </AppBar>
-      <Box component='nav' sx={{ width: { lg: DRAWER_WIDTH }, flexShrink: { lg: 0 } }}>
+      <Box component="nav" sx={{ width: { lg: DRAWER_WIDTH }, flexShrink: { lg: 0 } }}>
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
-          variant='temporary'
+          variant="temporary"
           open={drawerOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
@@ -82,7 +82,7 @@ const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
           <Navbar />
         </Drawer>
         <Drawer
-          variant='permanent'
+          variant="permanent"
           sx={{
             display: { xs: "none", lg: "block" },
             "& .MuiDrawer-paper": { boxSizing: "border-box", width: DRAWER_WIDTH },
@@ -93,8 +93,13 @@ const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
         </Drawer>
       </Box>
       <Box
-        component='main'
-        sx={{ flexGrow: 1, p: disablePadding ? 0 : 3, width: { md: `calc(100% - ${DRAWER_WIDTH}px)` }, mb: 10 }}
+        component="main"
+        sx={{
+          flexGrow: 1,
+          p: disablePadding ? 0 : 3,
+          width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
+          mb: 10,
+        }}
       >
         <Toolbar />
         {children}

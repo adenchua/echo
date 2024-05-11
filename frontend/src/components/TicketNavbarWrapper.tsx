@@ -12,10 +12,12 @@ const TicketNavbarWrapper = (props: TicketNavbarWrapperProps): JSX.Element => {
   const { children, isTicketSelected } = props;
   return (
     <AppBar
-      position='fixed'
+      position="fixed"
       sx={{
         mt: "65px",
-        width: { lg: `calc(100% - ${DRAWER_WIDTH}px - ${isTicketSelected ? TICKET_DRAWER_WIDTH : 0}px)` },
+        width: {
+          lg: `calc(100% - ${DRAWER_WIDTH}px - ${isTicketSelected ? TICKET_DRAWER_WIDTH : 0}px)`,
+        },
         ml: { lg: `${DRAWER_WIDTH}px` },
         mr: isTicketSelected ? `${TICKET_DRAWER_WIDTH}px` : "",
       }}

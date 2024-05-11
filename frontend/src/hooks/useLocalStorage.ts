@@ -28,7 +28,7 @@ export function useLocalStorage(key: string, initialValue: string): LocalStorage
         // do nothing
       }
     },
-    [key]
+    [key],
   );
 
   const removeKeyValue = useCallback(() => {

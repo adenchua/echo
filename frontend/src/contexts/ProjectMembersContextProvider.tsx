@@ -26,9 +26,13 @@ const projectMembersDefaultState: ProjectMembersStateType = {
   handlePromoteMember: () => {},
 };
 
-export const ProjectMembersContext = createContext<ProjectMembersStateType>(projectMembersDefaultState);
+export const ProjectMembersContext = createContext<ProjectMembersStateType>(
+  projectMembersDefaultState,
+);
 
-const ProjectMembersContextProvider = ({ children }: ProjectMembersContextProviderProps): JSX.Element => {
+const ProjectMembersContextProvider = ({
+  children,
+}: ProjectMembersContextProviderProps): JSX.Element => {
   const [members, setMembers] = useState<User[]>([]);
   const [admins, setAdmins] = useState<User[]>([]);
 
@@ -49,7 +53,7 @@ const ProjectMembersContextProvider = ({ children }: ProjectMembersContextProvid
       const remainingMembers = members.filter((member) => member._id !== memberToRemove._id);
       setMembers(remainingMembers);
     },
-    [members]
+    [members],
   );
 
   const handlePromoteMember = useCallback(
@@ -58,7 +62,7 @@ const ProjectMembersContextProvider = ({ children }: ProjectMembersContextProvid
       setMembers(remainingMembers);
       setAdmins((prevState) => [...prevState, memberToPromote]);
     },
-    [members]
+    [members],
   );
 
   return (

@@ -50,29 +50,41 @@ const TitleEditItem = (props: TitleEditItemProps): JSX.Element => {
       <>
         <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
           <RightDrawerTitle
-            title='Ticket'
-            actionButton={<UpdateButton onAccept={handleUpdateTicket} onCancel={handleToggleEditMode} showSaveButton />}
+            title="Ticket"
+            actionButton={
+              <UpdateButton
+                onAccept={handleUpdateTicket}
+                onCancel={handleToggleEditMode}
+                showSaveButton
+              />
+            }
           />
           <TextField
             value={titleInput}
-            variant='filled'
+            variant="filled"
             fullWidth
             onChange={(e) => setTitleInput(e.target.value)}
-            margin='dense'
+            margin="dense"
             inputProps={{ style: { padding: 7 } }}
             sx={{ mb: 2 }}
             autoFocus
           />
           <Divider flexItem />
         </ListItem>
-        <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
+        <SnackbarError
+          isOpen={currentLoadState === "ERROR"}
+          onClose={() => handleSetLoadingState("DEFAULT")}
+        />
       </>
     );
   }
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <RightDrawerTitle title='Ticket' actionButton={<EditButton onStartEdit={handleToggleEditMode} />} />
+      <RightDrawerTitle
+        title="Ticket"
+        actionButton={<EditButton onStartEdit={handleToggleEditMode} />}
+      />
       <ListItemText secondary={title} sx={{ mb: 2 }} />
       <Divider flexItem />
     </ListItem>

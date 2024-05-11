@@ -49,9 +49,13 @@ const PriorityEditItem = (props: PriorityEditItemProps): JSX.Element => {
       <>
         <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
           <RightDrawerTitle
-            title='Priority'
+            title="Priority"
             actionButton={
-              <UpdateButton onAccept={handleChangePriority} onCancel={handleToggleEditMode} showSaveButton={false} />
+              <UpdateButton
+                onAccept={handleChangePriority}
+                onCancel={handleToggleEditMode}
+                showSaveButton={false}
+              />
             }
           />
           <TicketPriorityDropdown
@@ -60,18 +64,24 @@ const PriorityEditItem = (props: PriorityEditItemProps): JSX.Element => {
           />
           <Divider flexItem sx={{ mt: 2 }} />
         </ListItem>
-        <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
+        <SnackbarError
+          isOpen={currentLoadState === "ERROR"}
+          onClose={() => handleSetLoadingState("DEFAULT")}
+        />
       </>
     );
   }
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <RightDrawerTitle title='Priority' actionButton={<EditButton onStartEdit={handleToggleEditMode} />} />
+      <RightDrawerTitle
+        title="Priority"
+        actionButton={<EditButton onStartEdit={handleToggleEditMode} />}
+      />
       <Chip
         label={`${capitalizeFirstLetter(priority)} Priority`}
         icon={
-          <Box display='flex' alignItems='center'>
+          <Box display="flex" alignItems="center">
             <PriorityIcon priority={priority} />
           </Box>
         }

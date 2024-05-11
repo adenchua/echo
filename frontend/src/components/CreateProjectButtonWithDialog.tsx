@@ -65,25 +65,28 @@ const CreateProjectButtonWithDialog = (): JSX.Element => {
 
   return (
     <>
-      <CTAButton icon={<AddIcon />} text='New Project' onClick={() => setIsDialogOpen(true)} />
+      <CTAButton icon={<AddIcon />} text="New Project" onClick={() => setIsDialogOpen(true)} />
       <ActionDialog
         dialogContent={
           <>
             <DialogContentText>Project Title</DialogContentText>
             <TextField
-              placeholder='My awesome project'
+              placeholder="My awesome project"
               autoFocus
-              margin='dense'
+              margin="dense"
               fullWidth
-              variant='filled'
+              variant="filled"
               sx={{ mb: 4 }}
               value={projectTitle}
               onChange={(e) => setProjectTitle(e.target.value)}
             />
             <Box mb={4}>
               <DialogContentText mb={1}>Project Type</DialogContentText>
-              <FormControl fullWidth variant='filled'>
-                <Select value={projectType} onChange={(e) => handleProjectTypeChange(e.target.value as ProjectType)}>
+              <FormControl fullWidth variant="filled">
+                <Select
+                  value={projectType}
+                  onChange={(e) => handleProjectTypeChange(e.target.value as ProjectType)}
+                >
                   {PROJECT_TYPES.map((projectType) => (
                     <MenuItem value={projectType} key={projectType} dense>
                       {projectType}
@@ -92,21 +95,23 @@ const CreateProjectButtonWithDialog = (): JSX.Element => {
                 </Select>
               </FormControl>
             </Box>
-            {currentLoadState === "ERROR" && <DialogErrorText text='Something went wrong. Please try again later.' />}
+            {currentLoadState === "ERROR" && (
+              <DialogErrorText text="Something went wrong. Please try again later." />
+            )}
           </>
         }
         disableActionButton={projectTitle.length === 0 || currentLoadState === "LOADING"}
         isOpen={isDialogOpen}
         onClose={handleCloseDialog}
         onAccept={handleAddProject}
-        title='Create new project'
+        title="Create new project"
         titleIcon={<ProjectIcon />}
-        acceptButtonText='Create project'
+        acceptButtonText="Create project"
       />
       <SnackbarSuccess
         isOpen={currentLoadState === "SUCCESS"}
         onClose={() => handleSetLoadingState("DEFAULT")}
-        message='Successfully added new project!'
+        message="Successfully added new project!"
       />
     </>
   );

@@ -17,24 +17,24 @@ const PriorityIcon = (props: PriorityIconProps): JSX.Element => {
   switch (priority) {
     case "low":
       return (
-        <Tooltip title='Low Priority'>
-          <LowPriorityIcon fontSize={fontSize} color='success' />
+        <Tooltip title="Low Priority">
+          <LowPriorityIcon fontSize={fontSize} color="success" />
         </Tooltip>
       );
     case "medium":
       return (
-        <Tooltip title='Medium Priority'>
-          <MediumPriorityIcon fontSize={fontSize} color='warning' />
+        <Tooltip title="Medium Priority">
+          <MediumPriorityIcon fontSize={fontSize} color="warning" />
         </Tooltip>
       );
     case "high":
       return (
-        <Tooltip title='High Priority'>
-          <HighPriorityIcon fontSize={fontSize} color='error' />
+        <Tooltip title="High Priority">
+          <HighPriorityIcon fontSize={fontSize} color="error" />
         </Tooltip>
       );
     case "highest":
-      return <HighestPriorityIcon fontSize={fontSize} color='error' />;
+      return <HighestPriorityIcon fontSize={fontSize} color="error" />;
     default:
       return <div />;
   }

@@ -1,83 +1,74 @@
-const Subtask = require("../models/subtask");
-const Ticket = require("../models/ticket");
-const { removeUndefinedKeysFromObject } = require("../utils/removeUndefinedKeysFromObject");
+import errorCodeToMessageMap from "../constants/errorMessages.js";
+import subtaskService from "../services/subtaskService.js";
+import ticketService from "../services/ticketService.js";
+import ErrorResponse from "../utils/ErrorResponse.js";
+import { TICKET_NOT_FOUND_ERROR } from "./ticket.js";
 
-module.exports.createSubtask = async (req, res) => {
+const SUBTASK_NOT_FOUND_ERROR = new ErrorResponse(
+  errorCodeToMessageMap["SUBTASK_NOT_FOUND"],
+  "SUBTASK_NOT_FOUND",
+  404,
+);
+
+export const createSubtask = async (req, res, next) => {
   const { ticketId, title } = req.body;
 
-  if (!ticketId || !title) {
-    res.status(400).send();
-    return;
-  }
-
   try {
-    const subtask = new Subtask({ title });
-    await subtask.save();
-    const ticket = await Ticket.findById(ticketId);
-    ticket.subtaskIds.push(subtask._id);
-    await ticket.save();
-    res.status(201).send(subtask);
+    const [ticket] = await ticketService.getTickets([ticketId]);
+
+    if (ticket == null) {
+      throw TICKET_NOT_FOUND_ERROR;
+    }
+
+    const newSubtask = await subtaskService.createSubtask(ticketId, { title });
+    res.status(201).send({ data: newSubtask });
   } catch (error) {
-    console.error("createSubtask", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-module.exports.updateSubtask = async (req, res) => {
+export const updateSubtask = async (req, res, next) => {
   const { subtaskId } = req.params;
   const { title, isCompleted } = req.body;
 
-  if (!subtaskId) {
-    res.status(400).send();
-    return;
-  }
-
-  const keysToUpdate = removeUndefinedKeysFromObject({ title, isCompleted });
   try {
-    await Subtask.findByIdAndUpdate(subtaskId, { ...keysToUpdate });
-    res.status(204).send();
-  } catch (error) {
-    console.error("updateSubtask", error);
-    res.status(500).send();
-  }
-};
+    const [subtask] = await subtaskService.getSubtasks([subtaskId]);
 
-module.exports.deleteSubtask = async (req, res) => {
-  const { subtaskId } = req.params;
-
-  if (!subtaskId) {
-    res.status(400).send();
-    return;
-  }
-
-  try {
-    await Ticket.updateMany({ subtaskIds: subtaskId }, { $pullAll: { subtaskIds: [subtaskId] } }); // remove ticket with this subtask id
-    await Subtask.findByIdAndDelete(subtaskId);
-    res.status(204).send();
-  } catch (error) {
-    console.error("deletesubtask", error);
-    res.status(500).send();
-  }
-};
-
-module.exports.getSubtasks = async (req, res) => {
-  const { subtaskIds } = req.body;
-  const subtasks = [];
-
-  if (!subtaskIds || !Array.isArray(subtaskIds)) {
-    res.status(400).send();
-    return;
-  }
-
-  try {
-    for (const subtaskId of subtaskIds) {
-      const subtask = await Subtask.findById(subtaskId);
-      subtasks.push(subtask);
+    if (subtask == null) {
+      throw SUBTASK_NOT_FOUND_ERROR;
     }
 
-    res.status(200).send(subtasks);
+    await subtaskService.updateSubtask(subtaskId, { title, isCompleted });
+    res.sendStatus(204);
   } catch (error) {
-    console.error("getSubtasks", error);
-    res.status(500).send();
+    next(error);
+  }
+};
+
+export const deleteSubtask = async (req, res, next) => {
+  const { subtaskId } = req.params;
+
+  try {
+    const [subtask] = await subtaskService.getSubtasks([subtaskId]);
+
+    if (subtask == null) {
+      throw SUBTASK_NOT_FOUND_ERROR;
+    }
+
+    await subtaskService.deleteSubtask(subtaskId);
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getSubtasks = async (req, res, next) => {
+  const { subtaskIds } = req.body;
+
+  try {
+    const subtasks = await subtaskService.getSubtasks(subtaskIds);
+    res.send({ data: subtasks });
+  } catch (error) {
+    next(error);
   }
 };

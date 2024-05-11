@@ -50,11 +50,11 @@ const LoginPage = (): JSX.Element => {
           alignItems: "center",
         }}
       >
-        <Typography variant='h6' sx={{ mb: 2 }}>
+        <Typography variant="h6" sx={{ mb: 2 }}>
           Login to echo.yl
         </Typography>
         {errorMessage && (
-          <Alert severity='error' sx={{ width: "100%", mb: 2 }}>
+          <Alert severity="error" sx={{ width: "100%", mb: 2 }}>
             Error: {errorMessage}
           </Alert>
         )}
@@ -62,26 +62,26 @@ const LoginPage = (): JSX.Element => {
           <TextField
             autoFocus
             fullWidth
-            variant='filled'
-            placeholder='Username'
+            variant="filled"
+            placeholder="Username"
             value={usernameInput}
             onChange={(e) => setUsernameInput(e.target.value)}
             sx={{ mb: 3 }}
           />
           <TextField
-            variant='filled'
+            variant="filled"
             fullWidth
-            placeholder='Password'
-            type='password'
+            placeholder="Password"
+            type="password"
             value={passwordInput}
             onChange={(e) => setPasswordInput(e.target.value)}
             sx={{ mb: 4 }}
           />
           <Button
             fullWidth
-            variant='contained'
+            variant="contained"
             endIcon={<ArrowRightIcon />}
-            type='submit'
+            type="submit"
             disabled={currentLoadState === "LOADING" || !usernameInput || !passwordInput}
           >
             {currentLoadState === "LOADING" ? "Logging in..." : "Login"}
@@ -92,7 +92,10 @@ const LoginPage = (): JSX.Element => {
   };
 
   return (
-    <Container maxWidth='xs' sx={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh" }}>
+    <Container
+      maxWidth="xs"
+      sx={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh" }}
+    >
       {renderLoginForm()}
     </Container>
   );

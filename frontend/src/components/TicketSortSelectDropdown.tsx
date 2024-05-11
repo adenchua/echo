@@ -29,8 +29,8 @@ const TicketSortSelectDropdown = (props: TicketSortSelectDropdownProps): JSX.Ele
 
   return (
     <Select
-      size='small'
-      margin='none'
+      size="small"
+      margin="none"
       value={sortSelection}
       onChange={onChangeHandler}
       SelectDisplayProps={{
@@ -61,15 +61,15 @@ const TicketSortSelectDropdown = (props: TicketSortSelectDropdownProps): JSX.Ele
       }}
       renderValue={(value) => `Sort: ${sortDisplayMapping[value]}`}
     >
-      <MenuItem value='priority-dsc'>
+      <MenuItem value="priority-dsc">
         <ListItemIcon>
-          <PriorityIcon fontSize='small' />
+          <PriorityIcon fontSize="small" />
         </ListItemIcon>
         <ListItemText>Priority</ListItemText>
       </MenuItem>
-      <MenuItem value='creation-asc'>
+      <MenuItem value="creation-asc">
         <ListItemIcon>
-          <TimeIcon fontSize='small' />
+          <TimeIcon fontSize="small" />
         </ListItemIcon>
         <ListItemText>Creation Date</ListItemText>
       </MenuItem>

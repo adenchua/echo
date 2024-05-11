@@ -15,8 +15,8 @@ const NotFoundPage = (): JSX.Element => {
         gap: 4,
       }}
     >
-      <Typography variant='h2'>404. Page Not Found.</Typography>
-      <Button component={Link} to='/home' sx={{ fontSize: 24 }}>
+      <Typography variant="h2">404. Page Not Found.</Typography>
+      <Button component={Link} to="/home" sx={{ fontSize: 24 }}>
         Take me home
       </Button>
     </Container>

@@ -18,10 +18,10 @@ const TicketSubtaskDeletable = (props: TicketSubtaskDeletableProps): JSX.Element
 
   return (
     <>
-      <Tooltip title='Delete subtask'>
+      <Tooltip title="Delete subtask">
         <Box
-          display='flex'
-          alignItems='center'
+          display="flex"
+          alignItems="center"
           gap={1}
           sx={{
             "&:hover": {
@@ -34,8 +34,8 @@ const TicketSubtaskDeletable = (props: TicketSubtaskDeletableProps): JSX.Element
             setShowConfirmationDialog(true);
           }}
         >
-          <DeleteIcon fontSize='small' color='inherit' />
-          <Typography variant='body2' noWrap color='inherit'>
+          <DeleteIcon fontSize="small" color="inherit" />
+          <Typography variant="body2" noWrap color="inherit">
             {title}
           </Typography>
         </Box>
@@ -44,11 +44,11 @@ const TicketSubtaskDeletable = (props: TicketSubtaskDeletableProps): JSX.Element
         isOpen={showConfirmationDialog}
         dialogContent={<DialogContentText>{title}</DialogContentText>}
         onClose={() => setShowConfirmationDialog(false)}
-        title='Confirm delete subtask'
+        title="Confirm delete subtask"
         titleIcon={<DeleteIcon />}
         disableActionButton={false}
         onAccept={() => onDeleteSubtask(id)}
-        acceptButtonText='Delete subtask'
+        acceptButtonText="Delete subtask"
       />
     </>
   );

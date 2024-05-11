@@ -18,5 +18,5 @@ root.render(
       <CssBaseline />
       <App />
     </ThemeProvider>
-  </LocalizationProvider>
+  </LocalizationProvider>,
 );

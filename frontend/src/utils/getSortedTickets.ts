@@ -10,7 +10,9 @@ const getSortedTickets = (sortSelection: TicketSortType, tickets: Ticket[]): Tic
         return bPriorityType - aPriorityType;
       });
     case "creation-asc":
-      return tickets.sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
+      return tickets.sort(
+        (a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime(),
+      );
     default:
       return tickets; // invalid sort order
   }

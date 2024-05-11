@@ -47,7 +47,7 @@ const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
       <>
         <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
           <RightDrawerTitle
-            title='Due date'
+            title="Due date"
             actionButton={
               <UpdateButton
                 onAccept={handleUpdateTicketDueDate}
@@ -56,7 +56,7 @@ const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
               />
             }
           />
-          <Box mb={3} width='100%'>
+          <Box mb={3} width="100%">
             <DateCalendar
               value={isDue ? null : dueDate}
               onChange={(newSelectedDate) => {
@@ -69,9 +69,9 @@ const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
               <Button
                 onClick={() => handleUpdateTicketDueDate(null)}
                 fullWidth
-                variant='outlined'
-                size='small'
-                color='warning'
+                variant="outlined"
+                size="small"
+                color="warning"
               >
                 Remove Due Date
               </Button>
@@ -79,14 +79,20 @@ const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
           </Box>
           <Divider flexItem />
         </ListItem>
-        <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
+        <SnackbarError
+          isOpen={currentLoadState === "ERROR"}
+          onClose={() => handleSetLoadingState("DEFAULT")}
+        />
       </>
     );
   }
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <RightDrawerTitle title='Due date' actionButton={<EditButton onStartEdit={handleToggleEditMode} />} />
+      <RightDrawerTitle
+        title="Due date"
+        actionButton={<EditButton onStartEdit={handleToggleEditMode} />}
+      />
       <ListItemText
         secondary={!dueDate || dueDate === "" ? "None" : format(new Date(dueDate), "dd MMMM yyyy")}
         secondaryTypographyProps={{

@@ -52,26 +52,26 @@ const EpicSummaryAccordionTicket = (props: EpicSummaryAccordionTicketProps): JSX
         "&: last-child": { borderBottom: 0 },
       }}
     >
-      <Tooltip title='Done'>
+      <Tooltip title="Done">
         <>
-          <StatusChipButton status={status} size='small' />
+          <StatusChipButton status={status} size="small" />
         </>
       </Tooltip>
       {isInSprint && (
-        <Tooltip title='In sprint'>
+        <Tooltip title="In sprint">
           <SprintActiveIcon sx={{ color: "warning.light" }} />
         </Tooltip>
       )}
       {!isInSprint && (
-        <Tooltip title='Not in sprint'>
-          <SprintInactiveIcon color='disabled' />
+        <Tooltip title="Not in sprint">
+          <SprintInactiveIcon color="disabled" />
         </Tooltip>
       )}
       <TicketTypeIcon type={type} />
-      <Typography variant='caption' color='grey.500' noWrap sx={{ flexShrink: 0 }}>
+      <Typography variant="caption" color="grey.500" noWrap sx={{ flexShrink: 0 }}>
         {`#${ticketNumber}`}
       </Typography>
-      <Typography variant='body2' noWrap>
+      <Typography variant="body2" noWrap>
         {title}
       </Typography>
       <Box flexGrow={1} />

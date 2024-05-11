@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+import { Schema, model } from "mongoose";
 
 const subtaskSchema = new Schema(
   {
@@ -13,9 +12,9 @@ const subtaskSchema = new Schema(
       default: false,
     },
   },
-  { versionKey: false }
+  { versionKey: false },
 );
 
-const Subtask = mongoose.model("Subtask", subtaskSchema);
+const Subtask = model("Subtask", subtaskSchema);
 
-module.exports = Subtask;
+export default Subtask;

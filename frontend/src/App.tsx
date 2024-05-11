@@ -12,11 +12,11 @@ function App() {
     <UserProjectsContextProvider>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<LoginPage />} />
-          <Route path='/home' element={<HomePage />} />
-          <Route path='/projects' element={<ProjectListingPage />} />
-          <Route path='/projects/id/:id' element={<DetailedProjectPageWrapper />} />
-          <Route path='*' element={<NotFoundPage />} />
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/projects" element={<ProjectListingPage />} />
+          <Route path="/projects/id/:id" element={<DetailedProjectPageWrapper />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </UserProjectsContextProvider>

@@ -18,9 +18,12 @@ const activeContextDefaultState: ActiveSprintContextStateType = {
   handleSetActiveSprint: () => {},
 };
 
-export const ActiveSprintContext = createContext<ActiveSprintContextStateType>(activeContextDefaultState);
+export const ActiveSprintContext =
+  createContext<ActiveSprintContextStateType>(activeContextDefaultState);
 
-const ActiveSprintContextProvider = ({ children }: ActiveSprintContextProviderProps): JSX.Element => {
+const ActiveSprintContextProvider = ({
+  children,
+}: ActiveSprintContextProviderProps): JSX.Element => {
   const [activeSprint, setActiveSprint] = useState<Sprint | null>(null);
 
   const handleSetActiveSprint = useCallback((newActiveSprint: Sprint) => {
@@ -32,7 +35,9 @@ const ActiveSprintContextProvider = ({ children }: ActiveSprintContextProviderPr
   }, []);
 
   return (
-    <ActiveSprintContext.Provider value={{ activeSprint, handleSetActiveSprint, handleRemoveActiveSprint }}>
+    <ActiveSprintContext.Provider
+      value={{ activeSprint, handleSetActiveSprint, handleRemoveActiveSprint }}
+    >
       {children}
     </ActiveSprintContext.Provider>
   );

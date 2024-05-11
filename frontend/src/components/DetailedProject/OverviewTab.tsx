@@ -26,11 +26,11 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
       <Grow>
         <Paper sx={{ p: 1, display: "flex", alignItems: "center", gap: 1 }} elevation={0}>
           <UserAvatar username={username} displayName={displayName} />
-          <Box width='160px'>
-            <Typography noWrap variant='body2' component='div'>
+          <Box width="160px">
+            <Typography noWrap variant="body2" component="div">
               {displayName}
             </Typography>
-            <Typography noWrap variant='caption' component='div' color='grey.500'>
+            <Typography noWrap variant="caption" component="div" color="grey.500">
               {title}
             </Typography>
           </Box>
@@ -41,14 +41,14 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
 
   return (
     <Box p={3}>
-      <Typography variant='h5' paragraph>
+      <Typography variant="h5" paragraph>
         Description
       </Typography>
-      <Typography color='textSecondary' textAlign='justify' mb={5} sx={{ whiteSpace: "pre-wrap" }}>
+      <Typography color="textSecondary" textAlign="justify" mb={5} sx={{ whiteSpace: "pre-wrap" }}>
         {description ?? "No project description."}
       </Typography>
-      <Box display='flex' alignItems='center' gap={2} mb={2}>
-        <Typography variant='h5'>Members</Typography>
+      <Box display="flex" alignItems="center" gap={2} mb={2}>
+        <Typography variant="h5">Members</Typography>
         <AddMemberToProjectButtonWithDialog projectId={projectId} />
       </Box>
       <Grid container spacing={2}>

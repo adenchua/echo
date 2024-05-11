@@ -2,11 +2,17 @@ import axios from "axios";
 
 import Ticket from "../../types/Ticket";
 import { API_ENDPOINT } from "../../utils/constants";
+import ApiResponseWrapper from "../../types/ApiResponseWrapper";
 
 const fetchTicketsByIds = async (ticketIds: string[]): Promise<Ticket[]> => {
   try {
-    const response = await axios.post<Ticket[]>(`${API_ENDPOINT}/tickets/bulk-retrieve`, { ticketIds });
-    return response.data;
+    const response = await axios.post<ApiResponseWrapper<Ticket[]>>(
+      `${API_ENDPOINT}/v1/tickets/bulk-retrieve`,
+      {
+        ticketIds,
+      },
+    );
+    return response.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error("Axios Error");

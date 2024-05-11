@@ -1,134 +1,123 @@
-const Epic = require("../models/epic");
-const Project = require("../models/project");
-const Ticket = require("../models/ticket");
-const { removeUndefinedKeysFromObject } = require("../utils/removeUndefinedKeysFromObject");
+import errorCodeToMessageMap from "../constants/errorMessages.js";
+import epicService from "../services/epicService.js";
+import projectService from "../services/projectService.js";
+import ticketService from "../services/ticketService.js";
+import ErrorResponse from "../utils/ErrorResponse.js";
+import { isProjectDeleted } from "../utils/projectUtils.js";
+import { PROJECT_NOT_FOUND_ERROR } from "./project.js";
+import { TICKET_NOT_FOUND_ERROR } from "./ticket.js";
 
-module.exports.createEpic = async (req, res) => {
+const EPIC_NOT_FOUND_ERROR = new ErrorResponse(
+  errorCodeToMessageMap["EPIC_NOT_FOUND"],
+  "EPIC_NOT_FOUND",
+  404,
+);
+
+export const createEpic = async (req, res, next) => {
   const { title, projectId } = req.body;
 
-  if (!title || !projectId) {
-    res.status(400).send();
-    return;
-  }
-
   try {
-    const project = await Project.findById(projectId);
-    const epic = new Epic({ title });
-    await epic.save();
-    project.epicIds.push(epic._id);
-    await project.save();
-    res.status(201).send(epic);
+    const project = await projectService.getProject(projectId);
+
+    if (isProjectDeleted(project)) {
+      throw PROJECT_NOT_FOUND_ERROR;
+    }
+
+    const epic = await epicService.createEpic(projectId, { title });
+    res.status(201).send({ data: epic });
   } catch (error) {
-    console.error("createEpic", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-module.exports.updateEpic = async (req, res) => {
+export const updateEpic = async (req, res, next) => {
   const { epicId } = req.params;
   const { title, description } = req.body;
 
-  if (!epicId) {
-    res.status(400).send();
-    return;
-  }
-
-  const keysToUpdate = removeUndefinedKeysFromObject({ title, description });
-
   try {
-    await Epic.findByIdAndUpdate(epicId, { ...keysToUpdate });
-    res.status(204).send();
+    const [epic] = await epicService.getEpics([epicId]);
+
+    if (epic == null) {
+      throw EPIC_NOT_FOUND_ERROR;
+    }
+
+    await epicService.updateEpic(epicId, { title, description });
+    res.sendStatus(204);
   } catch (error) {
-    console.error("updateEpic", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-module.exports.getEpics = async (req, res) => {
+export const getEpics = async (req, res, next) => {
   const { epicIds } = req.body;
-  const epics = [];
-
-  if (!epicIds || !Array.isArray(epicIds)) {
-    res.status(400).send();
-    return;
-  }
 
   try {
-    for (const epicId of epicIds) {
-      const epic = await Epic.findById(epicId);
-      if (epic) {
-        epics.push(epic);
-      }
-    }
-    res.status(200).send(epics);
+    const epics = await epicService.getEpics(epicIds);
+    res.send({ data: epics });
   } catch (error) {
-    console.error("getEpics", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-module.exports.addTicketToEpic = async (req, res) => {
+export const addTicketToEpic = async (req, res, next) => {
   const { epicId } = req.params;
   const { ticketId } = req.body;
 
-  if (!epicId || !ticketId) {
-    res.status(400).send();
-    return;
-  }
-
   try {
-    const epic = await Epic.findById(epicId);
-    await Epic.updateMany({ ticketIds: ticketId }, { $pullAll: { ticketIds: [ticketId] } }); // remove all instances of the ticketId in all epics
-    await Ticket.findByIdAndUpdate(ticketId, { epicId }); // add link to both sides
-    if (!epic.ticketIds.includes(ticketId)) {
-      epic.ticketIds.push(ticketId);
+    const [epic] = await epicService.getEpics([epicId]);
+    const [ticket] = await ticketService.getTickets([ticketId]);
+
+    if (epic == null) {
+      throw EPIC_NOT_FOUND_ERROR;
     }
-    await epic.save();
-    res.status(204).send();
+
+    if (ticket == null) {
+      throw TICKET_NOT_FOUND_ERROR;
+    }
+
+    await epicService.addTicketToEpic(ticketId, epicId);
+    res.sendStatus(204);
   } catch (error) {
-    console.error("addTicketToEpic", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-module.exports.removeTicketFromEpic = async (req, res) => {
+export const removeTicketFromEpic = async (req, res, next) => {
   const { epicId } = req.params;
   const { ticketId } = req.body;
 
-  if (!epicId || !ticketId) {
-    res.status(400).send();
-    return;
-  }
-
   try {
-    const epic = await Epic.findById(epicId);
-    await Ticket.findByIdAndUpdate(ticketId, { epicId: null }); // remove link from both sides
-    if (epic.ticketIds.includes(ticketId)) {
-      epic.ticketIds.pull(ticketId);
+    const [epic] = await epicService.getEpics([epicId]);
+    const [ticket] = await ticketService.getTickets([ticketId]);
+
+    if (epic == null) {
+      throw EPIC_NOT_FOUND_ERROR;
     }
-    await epic.save();
-    res.status(204).send();
+
+    if (ticket == null) {
+      throw TICKET_NOT_FOUND_ERROR;
+    }
+
+    await epicService.removeTicketFromEpic(ticketId, epicId);
+    res.sendStatus(204);
   } catch (error) {
-    console.error("addTicketToEpic", error);
-    res.status(500).send();
+    next(error);
   }
 };
 
-module.exports.deleteEpic = async (req, res) => {
+export const deleteEpic = async (req, res, next) => {
   const { epicId } = req.params;
 
-  if (!epicId) {
-    res.status(400).send();
-    return;
-  }
-
   try {
-    await Ticket.updateMany({ epicId: epicId }, { $unset: { epicId: "" } }); // remove tickets with this epic id
-    await Project.updateMany({ epicIds: epicId }, { $pullAll: { epicIds: [epicId] } }); // remove projects with this epic id
-    await Epic.findByIdAndDelete(epicId);
-    res.status(204).send();
+    const [epic] = await epicService.getEpics([epicId]);
+
+    if (epic == null) {
+      throw EPIC_NOT_FOUND_ERROR;
+    }
+
+    await epicService.deleteEpic(epicId);
+    res.sendStatus(204);
   } catch (error) {
-    console.error("deleteEpic", error);
-    res.status(500).send();
+    next(error);
   }
 };

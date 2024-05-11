@@ -69,7 +69,9 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
       }}
     >
       <AccordionSummary
-        expandIcon={<ArrowForwardIosSharpIcon color='primary' sx={{ fontSize: "0.9rem", mt: 0.5 }} />}
+        expandIcon={
+          <ArrowForwardIosSharpIcon color="primary" sx={{ fontSize: "0.9rem", mt: 0.5 }} />
+        }
         sx={{
           flexDirection: "row-reverse",
           "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
@@ -83,20 +85,20 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
           },
         }}
       >
-        <Typography noWrap variant='body2'>
+        <Typography noWrap variant="body2">
           {title}
         </Typography>
-        <Chip label={`${ticketIds.length} tickets`} size='small' />
+        <Chip label={`${ticketIds.length} tickets`} size="small" />
         <Box flexGrow={1} />
         <Box sx={{ width: 180, flexShrink: 0 }}>
-          <Typography variant='caption'>Progress:</Typography>
+          <Typography variant="caption">Progress:</Typography>
           <ProgressBarWithPercentage value={epicProgressionPercentage} />
         </Box>
-        <Tooltip title='Delete epic'>
+        <Tooltip title="Delete epic">
           <Button
-            variant='outlined'
-            size='small'
-            color='error'
+            variant="outlined"
+            size="small"
+            color="error"
             onClick={() => setIsDeleteEpicDialogOpened(true)}
             sx={{ ml: 4 }}
           >
@@ -117,15 +119,18 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
       >
         {currentLoadState !== "ERROR" && tickets && tickets.length === 0 && (
           <Box py={1} px={4}>
-            <Typography variant='body2' color='textSecondary'>
+            <Typography variant="body2" color="textSecondary">
               There are no tickets tagged to this epic.
             </Typography>
           </Box>
         )}
-        {tickets && tickets.map((ticket) => <EpicSummaryAccordionTicket key={ticket._id} ticket={ticket} />)}
+        {tickets &&
+          tickets.map((ticket) => <EpicSummaryAccordionTicket key={ticket._id} ticket={ticket} />)}
         {currentLoadState === "ERROR" && (
           <Box py={1} px={4}>
-            <Typography color='error'>Unable to retrieve tickets. Please try again later</Typography>
+            <Typography color="error">
+              Unable to retrieve tickets. Please try again later
+            </Typography>
           </Box>
         )}
       </AccordionDetails>

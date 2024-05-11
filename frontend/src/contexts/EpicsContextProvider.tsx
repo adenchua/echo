@@ -49,7 +49,7 @@ const EpicsContextProvider = ({ children }: EpicsContextProviderProps): JSX.Elem
           epic.ticketIds = epic.ticketIds.filter((_ticketId) => _ticketId !== ticketId);
         }
         return epic;
-      })
+      }),
     );
 
     // add ticket id to the new epic
@@ -61,7 +61,7 @@ const EpicsContextProvider = ({ children }: EpicsContextProviderProps): JSX.Elem
           }
         }
         return epic;
-      })
+      }),
     );
   }, []);
 
@@ -74,13 +74,20 @@ const EpicsContextProvider = ({ children }: EpicsContextProviderProps): JSX.Elem
           }
         }
         return epic;
-      })
+      }),
     );
   }, []);
 
   return (
     <EpicsContext.Provider
-      value={{ epics, addEpic, handleSetEpics, addTicketIdToEpic, deleteTicketIdFromEpic, deleteEpic }}
+      value={{
+        epics,
+        addEpic,
+        handleSetEpics,
+        addTicketIdToEpic,
+        deleteTicketIdFromEpic,
+        deleteEpic,
+      }}
     >
       {children}
     </EpicsContext.Provider>

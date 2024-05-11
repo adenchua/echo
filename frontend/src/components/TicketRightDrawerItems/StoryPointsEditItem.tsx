@@ -43,12 +43,16 @@ const StoryPointsEditItem = (props: StoryPointsEditItemProps): JSX.Element => {
       <>
         <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
           <RightDrawerTitle
-            title='Estimated story points'
+            title="Estimated story points"
             actionButton={
-              <UpdateButton onAccept={handleChangeStoryPoints} onCancel={handleToggleEditMode} showSaveButton={false} />
+              <UpdateButton
+                onAccept={handleChangeStoryPoints}
+                onCancel={handleToggleEditMode}
+                showSaveButton={false}
+              />
             }
           />
-          <Box mb={2} display='flex' gap={1}>
+          <Box mb={2} display="flex" gap={1}>
             {[0, 1, 2, 3, 5, 8, 13, 20].map((point) => (
               <Chip
                 key={point}
@@ -67,7 +71,10 @@ const StoryPointsEditItem = (props: StoryPointsEditItemProps): JSX.Element => {
           </Box>
           <Divider flexItem />
         </ListItem>
-        <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
+        <SnackbarError
+          isOpen={currentLoadState === "ERROR"}
+          onClose={() => handleSetLoadingState("DEFAULT")}
+        />
       </>
     );
   }
@@ -75,7 +82,7 @@ const StoryPointsEditItem = (props: StoryPointsEditItemProps): JSX.Element => {
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
       <RightDrawerTitle
-        title='Estimated story points'
+        title="Estimated story points"
         actionButton={<EditButton onStartEdit={handleToggleEditMode} />}
       />
       <Box mb={2}>

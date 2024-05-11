@@ -92,13 +92,21 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
     <div>
       <TicketNavbarWrapper isTicketSelected={!!selectedTicketId}>
         <TypographySprintInformation>
-          Product Backlog <span>&#8729;</span> {`${tickets.length} ${pluralize("ticket", "tickets", tickets.length)}`}
+          Product Backlog <span>&#8729;</span>{" "}
+          {`${tickets.length} ${pluralize("ticket", "tickets", tickets.length)}`}
         </TypographySprintInformation>
         <Box flexGrow={1} />
         <AddTicketButtonWithDialog projectId={projectId} />
         <TicketFilter onSelectHandler={handleFilterSelection} />
-        <TicketSortSelectDropdown sortSelection={sortSelection} onChangeHandler={handleSortSelectionOnChange} />
-        <SearchBar value={searchInput} onChange={(e) => setSearchInput(e.target.value)} placeholder='Search tickets' />
+        <TicketSortSelectDropdown
+          sortSelection={sortSelection}
+          onChangeHandler={handleSortSelectionOnChange}
+        />
+        <SearchBar
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          placeholder="Search tickets"
+        />
       </TicketNavbarWrapper>
     </div>
   );
@@ -128,7 +136,9 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
                 </Box>
               );
             })}
-          {tickets && tickets.length === 0 && <SecondaryText>There are no tickets in the backlog.</SecondaryText>}
+          {tickets && tickets.length === 0 && (
+            <SecondaryText>There are no tickets in the backlog.</SecondaryText>
+          )}
         </Box>
       </Box>
       {renderDrawer()}

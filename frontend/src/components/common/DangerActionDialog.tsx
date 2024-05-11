@@ -29,7 +29,7 @@ const DangerActionDialog = (props: DangerActionDialogProps): JSX.Element => {
     acceptButtonText = "Confirm",
   } = props;
   return (
-    <Dialog open={isOpen} maxWidth='sm' fullWidth>
+    <Dialog open={isOpen} maxWidth="sm" fullWidth>
       <DialogTitle
         sx={{
           borderTop: "6px solid",
@@ -40,7 +40,7 @@ const DangerActionDialog = (props: DangerActionDialogProps): JSX.Element => {
           gap: 2,
         }}
       >
-        <Avatar variant='rounded' sx={{ bgcolor: "error.main" }}>
+        <Avatar variant="rounded" sx={{ bgcolor: "error.main" }}>
           {titleIcon}
         </Avatar>
         {title}
@@ -50,7 +50,7 @@ const DangerActionDialog = (props: DangerActionDialogProps): JSX.Element => {
         <Button sx={{ color: "grey.600", borderColor: "grey.600" }} onClick={onClose}>
           Cancel
         </Button>
-        <Button disabled={disableActionButton} onClick={onAccept} color='error'>
+        <Button disabled={disableActionButton} onClick={onAccept} color="error">
           {acceptButtonText}
         </Button>
       </DialogActions>

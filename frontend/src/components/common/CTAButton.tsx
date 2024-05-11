@@ -10,7 +10,7 @@ interface CTAButtonProps {
 const CTAButton = (props: CTAButtonProps): JSX.Element => {
   const { text, onClick, icon } = props;
   return (
-    <Button startIcon={icon} onClick={onClick} variant='contained'>
+    <Button startIcon={icon} onClick={onClick} variant="contained">
       {text}
     </Button>
   );

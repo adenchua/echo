@@ -1,12 +1,30 @@
-const { Router } = require("express");
+import { Router } from "express";
 
-const { createSubtask, deleteSubtask, getSubtasks, updateSubtask } = require("../controllers/subtask");
+import {
+  createSubtask,
+  deleteSubtask,
+  getSubtasks,
+  updateSubtask,
+} from "../controllers/subtask.js";
+import { validationErrorHandling } from "../middlewares/validationErrorHandlingMiddleware.js";
+import {
+  createSubtaskValidationChain,
+  deleteSubtaskValidationChain,
+  getSubtasksValidationChain,
+  updateSubtaskValidationChain,
+} from "../middlewares/subtaskValidationMiddleware.js";
 
 const router = Router();
 
-router.route("/").post(createSubtask);
-router.route("/id/:subtaskId").delete(deleteSubtask);
-router.route("/id/:subtaskId").patch(updateSubtask);
-router.route("/bulk-retrieve").post(getSubtasks);
+router.route("/").post(createSubtaskValidationChain, validationErrorHandling, createSubtask);
+router
+  .route("/id/:subtaskId")
+  .delete(deleteSubtaskValidationChain, validationErrorHandling, deleteSubtask);
+router
+  .route("/id/:subtaskId")
+  .patch(updateSubtaskValidationChain, validationErrorHandling, updateSubtask);
+router
+  .route("/bulk-retrieve")
+  .post(getSubtasksValidationChain, validationErrorHandling, getSubtasks);
 
-module.exports = router;
+export default router;

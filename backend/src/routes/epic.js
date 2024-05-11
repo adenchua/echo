@@ -1,21 +1,34 @@
-const { Router } = require("express");
+import { Router } from "express";
 
-const {
+import {
   addTicketToEpic,
   createEpic,
+  deleteEpic,
   getEpics,
   removeTicketFromEpic,
   updateEpic,
-  deleteEpic,
-} = require("../controllers/epic");
+} from "../controllers/epic.js";
+import {
+  addTicketToEpicValidationChain,
+  createEpicValidationChain,
+  deleteEpicValidationChain,
+  getEpicsValidationChain,
+  removeTicketFromEpicValidationChain,
+  updateEpicValidationChain,
+} from "../middlewares/epicValidationMiddleware.js";
+import { validationErrorHandling } from "../middlewares/validationErrorHandlingMiddleware.js";
 
 const router = Router();
 
-router.route("/").post(createEpic);
-router.route("/id/:epicId").patch(updateEpic);
-router.route("/id/:epicId").delete(deleteEpic);
-router.route("/bulk-retrieve").post(getEpics);
-router.route("/add-ticket/:epicId").post(addTicketToEpic);
-router.route("/remove-ticket/:epicId").post(removeTicketFromEpic);
+router.route("/").post(createEpicValidationChain, validationErrorHandling, createEpic);
+router.route("/id/:epicId").patch(updateEpicValidationChain, validationErrorHandling, updateEpic);
+router.route("/id/:epicId").delete(deleteEpicValidationChain, validationErrorHandling, deleteEpic);
+router.route("/bulk-retrieve").post(getEpicsValidationChain, validationErrorHandling, getEpics);
+router
+  .route("/add-ticket/:epicId")
+  .post(addTicketToEpicValidationChain, validationErrorHandling, addTicketToEpic);
+router
+  .route("/remove-ticket/:epicId")
+  .post(removeTicketFromEpicValidationChain, validationErrorHandling, removeTicketFromEpic);
 
-module.exports = router;
+export default router;

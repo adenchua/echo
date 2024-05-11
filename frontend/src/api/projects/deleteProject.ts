@@ -4,8 +4,7 @@ import { API_ENDPOINT } from "../../utils/constants";
 
 const deleteProject = async (projectId: string): Promise<void> => {
   try {
-    await axios.delete(`${API_ENDPOINT}/projects/id/${projectId}`);
-    return;
+    await axios.delete(`${API_ENDPOINT}/v1/projects/id/${projectId}`);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error("Axios Error");

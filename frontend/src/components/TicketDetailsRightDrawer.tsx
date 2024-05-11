@@ -50,9 +50,9 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
 
   return (
     <Drawer
-      anchor='right'
+      anchor="right"
       open={isOpen}
-      variant='persistent'
+      variant="persistent"
       sx={{
         width: TICKET_DRAWER_WIDTH,
         flexShrink: 0,
@@ -64,7 +64,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
     >
       <List>
         <ListItem disablePadding sx={{ pl: 1, py: 1 }}>
-          <IconButton size='small' onClick={onClose}>
+          <IconButton size="small" onClick={onClose}>
             <CloseIcon />
           </IconButton>
         </ListItem>
@@ -81,7 +81,12 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
         {epics.length > 0 && <EpicLinkEditItem ticketId={id} epicId={epicId} />}
 
         <ListItem sx={{ mt: 1 }}>
-          <Button fullWidth variant='outlined' color='error' onClick={() => setIsDeleteDialogOpen(true)}>
+          <Button
+            fullWidth
+            variant="outlined"
+            color="error"
+            onClick={() => setIsDeleteDialogOpen(true)}
+          >
             Delete Ticket
           </Button>
         </ListItem>

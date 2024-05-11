@@ -95,14 +95,15 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
     const dayDifference = differenceInBusinessDays(new Date(endDate), new Date());
 
     return (
-      <Box display='flex' alignItems='baseline' gap={1}>
+      <Box display="flex" alignItems="baseline" gap={1}>
+        <TypographySprintInformation>Sprint {number}</TypographySprintInformation>
         <TypographySprintInformation>
-          Sprint {number} <span>&#8729;</span>
+          <span>&#8729;</span> {formattedStartDate} to {formattedEndDate}
         </TypographySprintInformation>
         {dayDifference >= 0 && (
           <TypographySprintInformation>
-            {formattedStartDate} to {formattedEndDate}
-            <span>&#8729;</span> {dayDifference} business {pluralize("day", "days", dayDifference)} remaining
+            <span>&#8729;</span> {dayDifference} business {pluralize("day", "days", dayDifference)}{" "}
+            remaining
           </TypographySprintInformation>
         )}
       </Box>
@@ -137,7 +138,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
         <Box flexGrow={1} />
         {(!activeSprint || activeSprint.hasEnded) && (
           <Button
-            size='small'
+            size="small"
             startIcon={<StartSprintIcon />}
             sx={{ whiteSpace: "nowrap" }}
             onClick={() => setShowStartSprintDialog(true)}
@@ -147,9 +148,9 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
         )}
         {activeSprint && !activeSprint.hasEnded && (
           <Button
-            size='small'
+            size="small"
             startIcon={<EndSprintIcon />}
-            color='error'
+            color="error"
             sx={{ whiteSpace: "nowrap" }}
             onClick={() => setShowEndSprintDialog(true)}
           >
@@ -157,8 +158,15 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
           </Button>
         )}
         <TicketFilter onSelectHandler={handleFilterSelection} />
-        <TicketSortSelectDropdown sortSelection={sortSelection} onChangeHandler={handleSortSelectionOnChange} />
-        <SearchBar value={searchInput} onChange={(e) => setSearchInput(e.target.value)} placeholder='Search tickets' />
+        <TicketSortSelectDropdown
+          sortSelection={sortSelection}
+          onChangeHandler={handleSortSelectionOnChange}
+        />
+        <SearchBar
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          placeholder="Search tickets"
+        />
       </TicketNavbarWrapper>
     </div>
   );

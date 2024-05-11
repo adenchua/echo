@@ -30,7 +30,9 @@ interface AddMemberToProjectButtonWithDialogProps {
   projectId: string;
 }
 
-const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithDialogProps): JSX.Element => {
+const AddMemberToProjectButtonWithDialog = (
+  props: AddMemberToProjectButtonWithDialogProps,
+): JSX.Element => {
   const { projectId } = props;
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [availableMembers, setAvailableMembers] = useState<User[]>([]);
@@ -46,7 +48,9 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
       try {
         const currentMemberIdsInProject = [...admins, ...members].map((member) => member._id);
         const response = await fetchAllUsers();
-        const filteredMembers = response.filter((member) => !currentMemberIdsInProject.includes(member._id));
+        const filteredMembers = response.filter(
+          (member) => !currentMemberIdsInProject.includes(member._id),
+        );
         if (isComponentMounted) {
           setAvailableMembers(filteredMembers);
         }
@@ -94,23 +98,23 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
 
   return (
     <>
-      <CTAButton icon={<AddIcon />} onClick={() => setIsDialogOpen(true)} text='Add Member' />
+      <CTAButton icon={<AddIcon />} onClick={() => setIsDialogOpen(true)} text="Add Member" />
       <ActionDialog
         isOpen={isDialogOpen}
         onClose={handleCloseDialog}
         onAccept={handleAddUsers}
-        title='Add team members'
+        title="Add team members"
         titleIcon={<ManageAccountsIcon />}
-        acceptButtonText='Add members'
+        acceptButtonText="Add members"
         disableActionButton={selectedMembers.length === 0 || currentLoadState !== "DEFAULT"}
         dialogContent={
           <>
             {currentLoadState === "ERROR" && (
-              <DialogErrorText text='Sorry, something went wrong. Please try again later' />
+              <DialogErrorText text="Sorry, something went wrong. Please try again later" />
             )}
             {currentLoadState !== "ERROR" && (
               <>
-                <Box display='flex' gap={1} flexWrap='wrap' mb={2}>
+                <Box display="flex" gap={1} flexWrap="wrap" mb={2}>
                   {selectedMembers.map((member) => (
                     <Chip
                       key={member._id}
@@ -124,17 +128,20 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
                   fullWidth
-                  placeholder='Search members'
+                  placeholder="Search members"
                 />
                 <List dense disablePadding>
                   {availableMembers && availableMembers.length === 0 && (
-                    <Typography variant='body2' fontStyle='italic' color='GrayText' mt={2}>
+                    <Typography variant="body2" fontStyle="italic" color="GrayText" mt={2}>
                       No available members to add to the project
                     </Typography>
                   )}
                   <List sx={{ maxHeight: "300px", overflowY: "auto" }}>
                     {availableMembers?.map((member: User) => {
-                      if (matchString(searchInput, member.username) || matchString(searchInput, member.displayName)) {
+                      if (
+                        matchString(searchInput, member.username) ||
+                        matchString(searchInput, member.displayName)
+                      ) {
                         return (
                           <ListItem key={member._id} disablePadding disableGutters>
                             <ListItemButton
@@ -143,11 +150,21 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
                               onClick={() => handleToggleSelectedMember(member)}
                               selected={selectedMembers.includes(member)}
                             >
-                              <Checkbox edge='start' checked={selectedMembers.includes(member)} size='small' />
+                              <Checkbox
+                                edge="start"
+                                checked={selectedMembers.includes(member)}
+                                size="small"
+                              />
                               <ListItemAvatar>
-                                <UserAvatar username={member.username} displayName={member.displayName} />
+                                <UserAvatar
+                                  username={member.username}
+                                  displayName={member.displayName}
+                                />
                               </ListItemAvatar>
-                              <ListItemText primary={member.displayName} secondary={`@${member.username}`} />
+                              <ListItemText
+                                primary={member.displayName}
+                                secondary={`@${member.username}`}
+                              />
                             </ListItemButton>
                           </ListItem>
                         );
@@ -164,7 +181,7 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
       <SnackbarSuccess
         onClose={() => handleSetLoadingState("DEFAULT")}
         isOpen={currentLoadState === "SUCCESS"}
-        message='Successfully added selected members to the project'
+        message="Successfully added selected members to the project"
       />
     </>
   );

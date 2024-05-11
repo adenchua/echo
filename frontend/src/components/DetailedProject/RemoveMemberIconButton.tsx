@@ -19,11 +19,11 @@ const RemoveMemberIconButton = (props: RemoveMemberIconButtonProps): JSX.Element
 
   return (
     <>
-      <Tooltip title='Remove from project'>
+      <Tooltip title="Remove from project">
         <span>
           <IconButton
-            size='small'
-            color='error'
+            size="small"
+            color="error"
             onClick={() => setIsDialogOpened(true)}
             disabled={isDisabled}
             sx={{ ml: 1 }}
@@ -36,7 +36,7 @@ const RemoveMemberIconButton = (props: RemoveMemberIconButtonProps): JSX.Element
         isOpen={isDialogOpened}
         dialogContent={
           <>
-            <DialogContentText mb={4} color='error'>
+            <DialogContentText mb={4} color="error">
               This action will prevent this member from viewing or editing the project:
             </DialogContentText>
             <DialogContentText>
@@ -46,7 +46,7 @@ const RemoveMemberIconButton = (props: RemoveMemberIconButtonProps): JSX.Element
         }
         onAccept={() => onRemoveMember(member)}
         onClose={() => setIsDialogOpened(false)}
-        title='Remove member from project'
+        title="Remove member from project"
         titleIcon={<DeleteIcon />}
         disableActionButton={false}
       />

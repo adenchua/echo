@@ -46,7 +46,7 @@ const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
       <>
         <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
           <RightDrawerTitle
-            title='Status'
+            title="Status"
             actionButton={
               <UpdateButton
                 onAccept={handleUpdateTicketStatus}
@@ -55,19 +55,26 @@ const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
               />
             }
           />
-          <Box mb={2} width='100%'>
-            <Select value={status} onChange={(e) => handleUpdateTicketStatus(e.target.value as TicketStatus)}>
+          <Box mb={2} width="100%">
+            <Select
+              value={status}
+              onChange={(e) => handleUpdateTicketStatus(e.target.value as TicketStatus)}
+            >
               {["todo", "progress", "review", "completed", "stuck", "hold"].map((ticketStatus) => (
-                <MenuItem key={ticketStatus} value={ticketStatus} sx={{ display: "flex", justifyContent: "center" }}>
-                  <StatusChipButton status={ticketStatus as TicketStatus} size='medium' />
+                <MenuItem
+                  key={ticketStatus}
+                  value={ticketStatus}
+                  sx={{ display: "flex", justifyContent: "center" }}
+                >
+                  <StatusChipButton status={ticketStatus as TicketStatus} size="medium" />
                 </MenuItem>
               ))}
             </Select>
             {status !== "completed" && (
               <Button
                 fullWidth
-                variant='outlined'
-                size='small'
+                variant="outlined"
+                size="small"
                 sx={{ mt: 2 }}
                 onClick={() => handleUpdateTicketStatus("completed")}
               >
@@ -77,16 +84,22 @@ const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
           </Box>
           <Divider flexItem />
         </ListItem>
-        <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
+        <SnackbarError
+          isOpen={currentLoadState === "ERROR"}
+          onClose={() => handleSetLoadingState("DEFAULT")}
+        />
       </>
     );
   }
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <RightDrawerTitle title='Status' actionButton={<EditButton onStartEdit={handleToggleEditMode} />} />
+      <RightDrawerTitle
+        title="Status"
+        actionButton={<EditButton onStartEdit={handleToggleEditMode} />}
+      />
       <Box mb={2}>
-        <StatusChipButton status={status} size='medium' />
+        <StatusChipButton status={status} size="medium" />
       </Box>
       <Divider flexItem />
     </ListItem>

@@ -52,7 +52,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
   const renderEpicTypography = (): JSX.Element => {
     if (!epicId) {
       return (
-        <Typography variant='body2' color='textSecondary' sx={{ mb: 2 }}>
+        <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
           None
         </Typography>
       );
@@ -62,14 +62,14 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
 
     if (!epicToDisplay) {
       return (
-        <Typography variant='body2' color='textSecondary' sx={{ mb: 2 }}>
+        <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
           Invalid Epic
         </Typography>
       );
     }
 
     return (
-      <Typography variant='body2' color='textSecondary' maxWidth='100%' noWrap sx={{ mb: 2 }}>
+      <Typography variant="body2" color="textSecondary" maxWidth="100%" noWrap sx={{ mb: 2 }}>
         {epicToDisplay.title}
       </Typography>
     );
@@ -80,7 +80,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
       <>
         <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
           <RightDrawerTitle
-            title='Epic'
+            title="Epic"
             actionButton={
               <UpdateButton
                 onAccept={handleUpdateTicketEpicLink}
@@ -89,7 +89,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
               />
             }
           />
-          <Box mb={2} width='100%'>
+          <Box mb={2} width="100%">
             <Select
               value={epicId ? epicId : ""}
               onChange={(e) => {
@@ -105,9 +105,9 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
             {epicId && (
               <Button
                 fullWidth
-                color='warning'
-                variant='outlined'
-                size='small'
+                color="warning"
+                variant="outlined"
+                size="small"
                 sx={{ mt: 2 }}
                 onClick={() => handleDeleteTicketEpicLink()}
               >
@@ -117,14 +117,20 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
           </Box>
           <Divider flexItem />
         </ListItem>
-        <SnackbarError isOpen={currentLoadState === "ERROR"} onClose={() => handleSetLoadingState("DEFAULT")} />
+        <SnackbarError
+          isOpen={currentLoadState === "ERROR"}
+          onClose={() => handleSetLoadingState("DEFAULT")}
+        />
       </>
     );
   }
 
   return (
     <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <RightDrawerTitle title='Epic' actionButton={<EditButton onStartEdit={handleToggleEditMode} />} />
+      <RightDrawerTitle
+        title="Epic"
+        actionButton={<EditButton onStartEdit={handleToggleEditMode} />}
+      />
       {renderEpicTypography()}
       <Divider flexItem />
     </ListItem>

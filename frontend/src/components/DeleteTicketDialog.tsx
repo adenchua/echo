@@ -43,18 +43,18 @@ const DeleteTicketDialog = (props: DeleteTicketDialogProps): JSX.Element => {
       isOpen={isDialogOpened}
       onClose={onClose}
       onAccept={handleDelete}
-      title='Are you sure you want to delete the following ticket?'
+      title="Are you sure you want to delete the following ticket?"
       titleIcon={<DeleteIcon />}
       dialogContent={
         <>
           <DialogContentText>{title}</DialogContentText>
           {currentLoadState === "ERROR" && (
-            <DialogErrorText text='Failed to delete ticket. Please try again later.' mt={4} />
+            <DialogErrorText text="Failed to delete ticket. Please try again later." mt={4} />
           )}
         </>
       }
       disableActionButton={false}
-      acceptButtonText='Delete ticket'
+      acceptButtonText="Delete ticket"
     />
   );
 };

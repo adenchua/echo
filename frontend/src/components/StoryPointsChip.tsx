@@ -11,9 +11,9 @@ const StoryPointsChip = (props: StoryPointsChipProps): JSX.Element => {
   const { storyPoints } = props;
 
   return (
-    <Tooltip title='Story points'>
+    <Tooltip title="Story points">
       <Chip
-        size='small'
+        size="small"
         label={storyPoints}
         sx={{
           "& .MuiChip-label": {

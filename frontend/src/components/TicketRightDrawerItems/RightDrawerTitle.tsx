@@ -9,8 +9,8 @@ interface RightDrawerTitleProps {
 const RightDrawerTitle = (props: RightDrawerTitleProps): JSX.Element => {
   const { actionButton, title } = props;
   return (
-    <Box display='flex' alignItems='baseline' width='100%' mb={1.5}>
-      <Typography variant='body2'>{title}</Typography>
+    <Box display="flex" alignItems="baseline" width="100%" mb={1.5}>
+      <Typography variant="body2">{title}</Typography>
       {actionButton}
     </Box>
   );

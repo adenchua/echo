@@ -59,13 +59,21 @@ const Navbar = (): JSX.Element => {
 
   return (
     <>
-      <Box sx={{ bgcolor: "grey.800", height: "100%", display: "flex", flexDirection: "column", pb: 2 }}>
-        <Toolbar component={Link} to='/home' sx={{ textDecoration: "none", color: "inherit" }}>
-          <Box display='flex' alignItems='baseline' gap={1}>
-            <Typography variant='h4' color='primary.light'>
+      <Box
+        sx={{
+          bgcolor: "grey.800",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          pb: 2,
+        }}
+      >
+        <Toolbar component={Link} to="/home" sx={{ textDecoration: "none", color: "inherit" }}>
+          <Box display="flex" alignItems="baseline" gap={1}>
+            <Typography variant="h4" color="primary.light">
               echo<span style={{ color: "orange" }}>.yl</span>
             </Typography>
-            <Typography variant='caption' sx={{ color: "#FFF" }}>
+            <Typography variant="caption" sx={{ color: "#FFF" }}>
               v.{APP_VERSION}
             </Typography>
           </Box>
@@ -73,21 +81,27 @@ const Navbar = (): JSX.Element => {
         <Divider />
         <List
           subheader={
-            <ListSubheader component='div' sx={{ bgcolor: "grey.800", color: "#FFF" }}>
+            <ListSubheader component="div" sx={{ bgcolor: "grey.800", color: "#FFF" }}>
               Navigation
             </ListSubheader>
           }
           sx={{ px: 1 }}
         >
           {navigationItems.map(({ icon, text, link }) => (
-            <NavbarListItem linkTo={link} buttonText={text} icon={icon} isSelected={link === pathname} key={text} />
+            <NavbarListItem
+              linkTo={link}
+              buttonText={text}
+              icon={icon}
+              isSelected={link === pathname}
+              key={text}
+            />
           ))}
         </List>
         <Divider />
         {projects && projects.length > 0 && (
           <List
             subheader={
-              <ListSubheader component='div' sx={{ bgcolor: "grey.800", color: "#FFF" }}>
+              <ListSubheader component="div" sx={{ bgcolor: "grey.800", color: "#FFF" }}>
                 My Projects
               </ListSubheader>
             }
@@ -112,7 +126,7 @@ const Navbar = (): JSX.Element => {
       <SnackbarError
         isOpen={currentLoadState === "ERROR"}
         onClose={() => handleSetLoadingState("DEFAULT")}
-        text='An error occured while trying to fetch your projects. Please try again later'
+        text="An error occured while trying to fetch your projects. Please try again later"
       />
     </>
   );

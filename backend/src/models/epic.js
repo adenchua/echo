@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+import { Schema, model } from "mongoose";
 
 const epicSchema = new Schema(
   {
@@ -27,9 +26,9 @@ const epicSchema = new Schema(
       default: Date.now,
     },
   },
-  { versionKey: false }
+  { versionKey: false },
 );
 
-const Epic = mongoose.model("Epic", epicSchema);
+const Epic = model("Epic", epicSchema);
 
-module.exports = Epic;
+export default Epic;
