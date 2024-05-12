@@ -14,7 +14,7 @@ export const createProject = async (req, res, next) => {
   const { title, adminId, type } = req.body;
 
   try {
-    const newProject = await projectService.createProject({ title, adminId: [adminId], type });
+    const newProject = await projectService.createProject({ title, adminIds: [adminId], type });
     res.status(201).send({ data: newProject });
   } catch (error) {
     next(error);
