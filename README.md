@@ -14,6 +14,8 @@ With Echo, you can:
 
 Experience the power of Echo and revolutionize the way you manage projects. Say hello to efficiency, collaboration, and success—all in one place. Try Echo today for free and unleash your team's full potential.
 
+![app splash](./assets/app_example.png)
+
 ## Project Motivation
 
 This project initially began as a personal endeavor to address the prevalent project management challenges within my workplace. In our software development projects, task tracking and management relied heavily on Excel, which proved to be cumbersome due to limitations in cloud syncing functionality. With Excel, only one user could access and edit the task list at a time, leading to frequent sync conflicts and outdated versions being loaded from the server. Consequently, managing tasks became an arduous chore rather than a streamlined process, contributing to inefficiency and frustration among team members.
