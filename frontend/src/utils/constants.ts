@@ -1,6 +1,6 @@
-export const API_ENDPOINT = "/api";
+export const SERVER_API_URL = "/api";
 
-export const UMS_API_ENDPOINT = process.env.REACT_APP_UMS_ENDPOINT || "http://localhost:5100/api";
+export const UMS_API_URL = process.env.REACT_APP_UMS_API_URL || "http://localhost:5100";
 
 export const APP_VERSION = "1.4.0";
 

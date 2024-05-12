@@ -1,13 +1,13 @@
 import axios from "axios";
 
 import Sprint from "../../types/Sprint";
-import { API_ENDPOINT } from "../../utils/constants";
+import { SERVER_API_URL } from "../../utils/constants";
 import ApiResponseWrapper from "../../types/ApiResponseWrapper";
 
 const startSprint = async (projectId: string, endDateISOString: string): Promise<Sprint> => {
   try {
     const response = await axios.post<ApiResponseWrapper<Sprint>>(
-      `${API_ENDPOINT}/v1/sprints/start`,
+      `${SERVER_API_URL}/v1/sprints/start`,
       {
         projectId,
         endDateISOString,

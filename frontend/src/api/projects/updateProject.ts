@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { API_ENDPOINT } from "../../utils/constants";
+import { SERVER_API_URL } from "../../utils/constants";
 
 const updateProject = async (
   projectId: string,
@@ -8,7 +8,7 @@ const updateProject = async (
   description: string,
 ): Promise<void> => {
   try {
-    await axios.patch(`${API_ENDPOINT}/v1/projects/id/${projectId}`, { title, description });
+    await axios.patch(`${SERVER_API_URL}/v1/projects/id/${projectId}`, { title, description });
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error("Axios Error");

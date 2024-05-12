@@ -1,13 +1,13 @@
 import axios from "axios";
 
 import Epic from "../../types/Epic";
-import { API_ENDPOINT } from "../../utils/constants";
+import { SERVER_API_URL } from "../../utils/constants";
 import ApiResponseWrapper from "../../types/ApiResponseWrapper";
 
 const fetchEpics = async (epicIds: string[]): Promise<Epic[]> => {
   try {
     const response = await axios.post<ApiResponseWrapper<Epic[]>>(
-      `${API_ENDPOINT}/v1/epics/bulk-retrieve`,
+      `${SERVER_API_URL}/v1/epics/bulk-retrieve`,
       {
         epicIds,
       },

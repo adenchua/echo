@@ -1,13 +1,13 @@
 import axios from "axios";
 
 import Project from "../../types/Project";
-import { API_ENDPOINT } from "../../utils/constants";
+import { SERVER_API_URL } from "../../utils/constants";
 import ApiResponseWrapper from "../../types/ApiResponseWrapper";
 
 const fetchAllProjectsByUser = async (userId: string): Promise<Project[]> => {
   try {
     const response = await axios.get<ApiResponseWrapper<Project[]>>(
-      `${API_ENDPOINT}/v1/projects/user/${userId}`,
+      `${SERVER_API_URL}/v1/projects/user/${userId}`,
     );
     return response.data.data;
   } catch (error) {

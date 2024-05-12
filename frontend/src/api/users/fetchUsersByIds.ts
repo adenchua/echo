@@ -1,11 +1,11 @@
 import axios from "axios";
 
 import User from "../../types/User";
-import { UMS_API_ENDPOINT } from "../../utils/constants";
+import { UMS_API_URL } from "../../utils/constants";
 
 const fetchUsersByIds = async (userIds: string[]): Promise<User[]> => {
   try {
-    const response = await axios.post<User[]>(`${UMS_API_ENDPOINT}/users/bulk-retrieve`, {
+    const response = await axios.post<User[]>(`${UMS_API_URL}/api/users/bulk-retrieve`, {
       userIds,
     });
     return response.data;

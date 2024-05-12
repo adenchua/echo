@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import Ticket, { TicketPriority, TicketType } from "../../types/Ticket";
-import { API_ENDPOINT } from "../../utils/constants";
+import { SERVER_API_URL } from "../../utils/constants";
 import ApiResponseWrapper from "../../types/ApiResponseWrapper";
 
 const createTicket = async (
@@ -11,7 +11,7 @@ const createTicket = async (
   type: TicketType,
 ): Promise<Ticket> => {
   try {
-    const response = await axios.post<ApiResponseWrapper<Ticket>>(`${API_ENDPOINT}/v1/tickets`, {
+    const response = await axios.post<ApiResponseWrapper<Ticket>>(`${SERVER_API_URL}/v1/tickets`, {
       title,
       projectId,
       priority,
