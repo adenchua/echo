@@ -164,7 +164,7 @@ class OfflineBacklogGenerator {
               gap: 8px;
             }
             .ticket-section {
-              margin: 24px 0px;
+              margin: 48px 0px;
             }
             .ticket-section-title {
               margin-bottom: 8px;
