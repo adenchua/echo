@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode, useCallback } from "react";
+import { ReactNode, createContext, useCallback, useMemo, useState } from "react";
 
 import Epic from "../types/Epic";
 
@@ -8,6 +8,7 @@ interface EpicsContextProviderProps {
 
 type EpicsContextStateType = {
   epics: Epic[];
+  epicsMap: Record<string, Epic>;
   addEpic: (newEpic: Epic) => void;
   handleSetEpics: (epics: Epic[]) => void;
   addTicketIdToEpic: (epicId: string, ticketId: string) => void;
@@ -17,6 +18,7 @@ type EpicsContextStateType = {
 
 const epicContextDefaultProps: EpicsContextStateType = {
   epics: [],
+  epicsMap: {},
   addEpic: () => {},
   handleSetEpics: () => {},
   addTicketIdToEpic: () => {},
@@ -28,6 +30,15 @@ export const EpicsContext = createContext<EpicsContextStateType>(epicContextDefa
 
 const EpicsContextProvider = ({ children }: EpicsContextProviderProps): JSX.Element => {
   const [epics, setEpics] = useState<Epic[]>([]);
+  const epicsMap: Record<string, Epic> = useMemo(() => {
+    const temp: Record<string, Epic> = {};
+
+    epics.forEach((epic) => {
+      temp[epic._id] = epic;
+    });
+
+    return temp;
+  }, [epics]);
 
   const addEpic = useCallback((newEpic: Epic): void => {
     setEpics((prevState) => [...prevState, newEpic]);
@@ -82,6 +93,7 @@ const EpicsContextProvider = ({ children }: EpicsContextProviderProps): JSX.Elem
     <EpicsContext.Provider
       value={{
         epics,
+        epicsMap,
         addEpic,
         handleSetEpics,
         addTicketIdToEpic,

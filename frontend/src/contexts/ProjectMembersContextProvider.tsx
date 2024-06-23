@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode, useCallback } from "react";
+import { createContext, useState, ReactNode, useCallback, useMemo } from "react";
 
 import User from "../types/User";
 
@@ -9,6 +9,7 @@ interface ProjectMembersContextProviderProps {
 type ProjectMembersStateType = {
   members: User[];
   admins: User[];
+  usersMap: Record<string, User>;
   handleSetMembers: (newMembers: User[]) => void;
   handleSetAdmins: (newAdmins: User[]) => void;
   handleAddMembers: (newMembers: User[]) => void;
@@ -19,6 +20,7 @@ type ProjectMembersStateType = {
 const projectMembersDefaultState: ProjectMembersStateType = {
   members: [],
   admins: [],
+  usersMap: {},
   handleSetAdmins: () => {},
   handleSetMembers: () => {},
   handleAddMembers: () => {},
@@ -35,6 +37,19 @@ const ProjectMembersContextProvider = ({
 }: ProjectMembersContextProviderProps): JSX.Element => {
   const [members, setMembers] = useState<User[]>([]);
   const [admins, setAdmins] = useState<User[]>([]);
+  const usersMap = useMemo(() => {
+    const temp: Record<string, User> = {};
+
+    members.forEach((member) => {
+      temp[member._id] = member;
+    });
+
+    admins.forEach((admin) => {
+      temp[admin._id] = admin;
+    });
+
+    return temp;
+  }, [members, admins]);
 
   const handleSetMembers = useCallback((newMembers: User[]): void => {
     setMembers(newMembers);
@@ -70,6 +85,7 @@ const ProjectMembersContextProvider = ({
       value={{
         members,
         admins,
+        usersMap,
         handleSetAdmins,
         handleSetMembers,
         handleAddMembers,

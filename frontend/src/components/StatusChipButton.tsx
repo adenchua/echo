@@ -21,7 +21,7 @@ const StatusChipButton = (props: StatusChipButtonProps): JSX.Element => {
       return (
         <Chip
           label="In Progress"
-          sx={{ minWidth: CHIP_MIN_WIDTH, bgcolor: "warning.light", color: "#FFF" }}
+          sx={{ minWidth: CHIP_MIN_WIDTH, bgcolor: "warning.light" }}
           size={size}
         />
       );
