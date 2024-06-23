@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2024-06-23
+
+### CHANGED
+
+- font color of 'In Progress' chip to black to increase contrast
+
+### ADDED
+
+- new download for offline feature for product and sprint backlogs
+
 ## [1.4.0] - 2024-04-21
 
 ### FIXED

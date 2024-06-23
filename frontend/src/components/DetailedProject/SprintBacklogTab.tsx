@@ -4,11 +4,15 @@ import { SelectChangeEvent } from "@mui/material/Select";
 import { differenceInBusinessDays, format } from "date-fns";
 import { useContext, useMemo, useState } from "react";
 
+import OfflineBacklogGenerator from "../../classes/OfflineBacklogGenerator";
 import { ActiveSprintContext } from "../../contexts/ActiveSprintContextProvider";
+import { EpicsContext } from "../../contexts/EpicsContextProvider";
+import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
 import { TicketsContext } from "../../contexts/TicketsContextProvider";
 import useSprintBacklog from "../../hooks/useSprintBacklog";
 import Project from "../../types/Project";
 import { TICKET_DRAWER_WIDTH } from "../../utils/constants";
+import download from "../../utils/downloadHtmlDoc";
 import getFilteredTickets from "../../utils/getFilteredTickets";
 import getSortedTickets from "../../utils/getSortedTickets";
 import getTicketsByEpics from "../../utils/getTicketsByEpics";
@@ -23,6 +27,7 @@ import TicketSortSelectDropdown, { TicketSortType } from "../TicketSortSelectDro
 import SearchBar from "../common/SearchBar";
 import SecondaryText from "../common/SecondaryText";
 import TypographySprintInformation from "../common/TypographySprintInformation";
+import DownloadIcon from "../icons/DownloadIcon";
 import EndSprintIcon from "../icons/EndSprintIcon";
 import StartSprintIcon from "../icons/StartSprintIcon";
 
@@ -34,6 +39,8 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   const { project } = props;
   const { _id: projectId } = project;
   const { tickets } = useContext(TicketsContext);
+  const { usersMap } = useContext(ProjectMembersContext);
+  const { epicsMap } = useContext(EpicsContext);
   const { activeSprint } = useContext(ActiveSprintContext);
   const { onStartSprint, onEndSprint } = useSprintBacklog();
   const [searchInput, setSearchInput] = useState<string>("");
@@ -171,10 +178,30 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
     </div>
   );
 
+  const getHtmlString = (): string => {
+    const offlineBacklogGenerator = new OfflineBacklogGenerator(
+      displayedTicketsByEpics,
+      project.title,
+      false,
+      usersMap,
+      epicsMap,
+    );
+
+    return offlineBacklogGenerator.generateHtmlDocument();
+  };
+
   return (
     <Box sx={{ mr: selectedTicketId ? `${TICKET_DRAWER_WIDTH}px` : "" }}>
       {renderTicketNavbar()}
       <Box p={3} mt={5}>
+        {sprintTickets && sprintTickets.length > 0 && (
+          <Button
+            onClick={() => download(`${project.title}-sprint-backlog.html`, getHtmlString())}
+            startIcon={<DownloadIcon />}
+          >
+            Download for offline (.html)
+          </Button>
+        )}
         {sprintTickets && sprintTickets.length === 0 && (
           <SecondaryText>There are no tickets in the backlog.</SecondaryText>
         )}
