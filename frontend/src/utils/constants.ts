@@ -2,7 +2,7 @@ export const SERVER_API_URL = "/api";
 
 export const UMS_API_URL = process.env.REACT_APP_UMS_API_URL || "http://localhost:5100";
 
-export const APP_VERSION = "1.5.0";
+export const APP_VERSION = "1.5.1";
 
 export const TICKET_DRAWER_WIDTH = 480;
 
