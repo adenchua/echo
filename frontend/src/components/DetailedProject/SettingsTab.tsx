@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid2";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useContext, useState } from "react";
@@ -69,7 +69,7 @@ const SettingsTab = (props: SettingsTabProps) => {
       <Divider sx={{ mb: 3 }} />
 
       <Grid container mb={4} spacing={3}>
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <Typography variant="h6" gutterBottom>
             Details
           </Typography>
@@ -77,7 +77,7 @@ const SettingsTab = (props: SettingsTabProps) => {
             Customize project title, description and logo.
           </Typography>
         </Grid>
-        <Grid item xs={12} md={8}>
+        <Grid size={{ xs: 12, md: 8 }}>
           <Typography gutterBottom variant="body2">
             Project Title
           </Typography>
@@ -115,7 +115,7 @@ const SettingsTab = (props: SettingsTabProps) => {
 
       {isLoggedInUserAdmin && (
         <Grid container mb={4} alignItems="flex-start" spacing={3}>
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="h6" gutterBottom color="error">
               Delete Project
             </Typography>
@@ -123,7 +123,7 @@ const SettingsTab = (props: SettingsTabProps) => {
               Once you delete this project, all tickets and sprint information will be lost forever.
             </Typography>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid size={{ xs: 12, md: 8 }}>
             <TextField
               variant="filled"
               fullWidth

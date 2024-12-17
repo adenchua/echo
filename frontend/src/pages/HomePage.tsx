@@ -1,5 +1,5 @@
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid2";
 import Typography from "@mui/material/Typography";
 import teal from "@mui/material/colors/teal";
 import { Link, Navigate } from "react-router-dom";
@@ -21,7 +21,7 @@ const HomePage = () => {
   return (
     <PageLayoutWrapper>
       <Grid container justifyContent="space-around" spacing={4} mb={12} mt={2}>
-        <Grid item>
+        <Grid>
           <Slide direction="right">
             <Typography sx={{ maxWidth: 500 }} variant="h3" gutterBottom>
               Project management made easy
@@ -40,14 +40,14 @@ const HomePage = () => {
             </Button>
           </Slide>
         </Grid>
-        <Grid item>
+        <Grid>
           <Slide direction="left">
-            <img src="/assets/landing_collab.svg" height="360px" alt="project collab" />
+            <img src="/public/assets/landing_collab.svg" height="360px" alt="project collab" />
           </Slide>
         </Grid>
       </Grid>
       <Grid container justifyContent="space-evenly" spacing={4}>
-        <Grid item>
+        <Grid>
           <Grow>
             <div>
               <FeatureCard
@@ -57,7 +57,7 @@ const HomePage = () => {
             </div>
           </Grow>
         </Grid>
-        <Grid item>
+        <Grid>
           <Grow>
             <div>
               <FeatureCard
@@ -67,7 +67,7 @@ const HomePage = () => {
             </div>
           </Grow>
         </Grid>
-        <Grid item>
+        <Grid>
           <Grow>
             <div>
               <FeatureCard

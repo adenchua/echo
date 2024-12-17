@@ -13,10 +13,10 @@ const config: Configuration = {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].bundle.js",
     publicPath: "http://localhost:3000",
-    clean: true, // only used files will be generated
+    clean: true,
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".json"],
+    extensions: [".ts", ".tsx", ".js", ".json", ".css"],
   },
   module: {
     rules: [
@@ -26,8 +26,16 @@ const config: Configuration = {
         loader: "babel-loader",
       },
       {
-        test: /\.css$/,
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: ["file-loader"],
+      },
+      {
+        test: /\.css$/i,
         use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
       },
     ],
   },

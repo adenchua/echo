@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid2";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { useContext } from "react";
@@ -53,14 +53,10 @@ const OverviewTab = (props: OverviewTabProps) => {
       </Box>
       <Grid container spacing={2}>
         {admins.map((admin) => (
-          <Grid item key={admin._id}>
-            {renderMemberCard(admin)}
-          </Grid>
+          <Grid key={admin._id}>{renderMemberCard(admin)}</Grid>
         ))}
         {members.map((member) => (
-          <Grid item key={member._id}>
-            {renderMemberCard(member)}
-          </Grid>
+          <Grid key={member._id}>{renderMemberCard(member)}</Grid>
         ))}
       </Grid>
     </Box>
