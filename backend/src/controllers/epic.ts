@@ -1,3 +1,6 @@
+import { Request, Response } from "express";
+import { Types } from "mongoose";
+
 import errorCodeToMessageMap from "../constants/errorMessages";
 import epicService from "../services/epicService";
 import projectService from "../services/projectService";
@@ -13,111 +16,87 @@ const EPIC_NOT_FOUND_ERROR = new ErrorResponse(
   404,
 );
 
-export const createEpic = async (req, res, next) => {
-  const { title, projectId } = req.body;
+export const createEpic = async (request: Request, response: Response): Promise<void> => {
+  const { title, projectId } = request.body;
 
-  try {
-    const project = await projectService.getProject(projectId);
+  const project = await projectService.getProject(projectId);
 
-    if (isProjectDeleted(project)) {
-      throw PROJECT_NOT_FOUND_ERROR;
-    }
-
-    const epic = await epicService.createEpic(projectId, { title });
-    res.status(201).send({ data: epic });
-  } catch (error) {
-    next(error);
+  if (isProjectDeleted(project)) {
+    throw PROJECT_NOT_FOUND_ERROR;
   }
+
+  const epic = await epicService.createEpic(projectId, { title });
+  response.status(201).send({ data: epic });
 };
 
-export const updateEpic = async (req, res, next) => {
-  const { epicId } = req.params;
-  const { title, description } = req.body;
+export const updateEpic = async (request: Request, response: Response): Promise<void> => {
+  const { epicId } = request.params;
+  const { title, description } = request.body;
 
-  try {
-    const [epic] = await epicService.getEpics([epicId]);
+  const [epic] = await epicService.getEpics([epicId as unknown as Types.ObjectId]);
 
-    if (epic == null) {
-      throw EPIC_NOT_FOUND_ERROR;
-    }
-
-    await epicService.updateEpic(epicId, { title, description });
-    res.sendStatus(204);
-  } catch (error) {
-    next(error);
+  if (epic == null) {
+    throw EPIC_NOT_FOUND_ERROR;
   }
+
+  await epicService.updateEpic(epicId as unknown as Types.ObjectId, { title, description });
+  response.sendStatus(204);
 };
 
-export const getEpics = async (req, res, next) => {
-  const { epicIds } = req.body;
+export const getEpics = async (request: Request, response: Response): Promise<void> => {
+  const { epicIds } = request.body;
 
-  try {
-    const epics = await epicService.getEpics(epicIds);
-    res.send({ data: epics });
-  } catch (error) {
-    next(error);
-  }
+  const epics = await epicService.getEpics(epicIds);
+  response.send({ data: epics });
 };
 
-export const addTicketToEpic = async (req, res, next) => {
-  const { epicId } = req.params;
-  const { ticketId } = req.body;
+export const addTicketToEpic = async (request: Request, response: Response): Promise<void> => {
+  const { epicId } = request.params;
+  const { ticketId } = request.body;
 
-  try {
-    const [epic] = await epicService.getEpics([epicId]);
-    const [ticket] = await ticketService.getTickets([ticketId]);
+  const [epic] = await epicService.getEpics([epicId as unknown as Types.ObjectId]);
+  const [ticket] = await ticketService.getTickets([ticketId]);
 
-    if (epic == null) {
-      throw EPIC_NOT_FOUND_ERROR;
-    }
-
-    if (ticket == null) {
-      throw TICKET_NOT_FOUND_ERROR;
-    }
-
-    await epicService.addTicketToEpic(ticketId, epicId);
-    res.sendStatus(204);
-  } catch (error) {
-    next(error);
+  if (epic == null) {
+    throw EPIC_NOT_FOUND_ERROR;
   }
+
+  if (ticket == null) {
+    throw TICKET_NOT_FOUND_ERROR;
+  }
+
+  await epicService.addTicketToEpic(ticketId, epicId as unknown as Types.ObjectId);
+  response.sendStatus(204);
 };
 
-export const removeTicketFromEpic = async (req, res, next) => {
-  const { epicId } = req.params;
-  const { ticketId } = req.body;
+export const removeTicketFromEpic = async (request: Request, response: Response): Promise<void> => {
+  const { epicId } = request.params;
+  const { ticketId } = request.body;
 
-  try {
-    const [epic] = await epicService.getEpics([epicId]);
-    const [ticket] = await ticketService.getTickets([ticketId]);
+  const [epic] = await epicService.getEpics([epicId as unknown as Types.ObjectId]);
+  const [ticket] = await ticketService.getTickets([ticketId]);
 
-    if (epic == null) {
-      throw EPIC_NOT_FOUND_ERROR;
-    }
-
-    if (ticket == null) {
-      throw TICKET_NOT_FOUND_ERROR;
-    }
-
-    await epicService.removeTicketFromEpic(ticketId, epicId);
-    res.sendStatus(204);
-  } catch (error) {
-    next(error);
+  if (epic == null) {
+    throw EPIC_NOT_FOUND_ERROR;
   }
+
+  if (ticket == null) {
+    throw TICKET_NOT_FOUND_ERROR;
+  }
+
+  await epicService.removeTicketFromEpic(ticketId, epicId as unknown as Types.ObjectId);
+  response.sendStatus(204);
 };
 
-export const deleteEpic = async (req, res, next) => {
-  const { epicId } = req.params;
+export const deleteEpic = async (request: Request, response: Response): Promise<void> => {
+  const { epicId } = request.params;
 
-  try {
-    const [epic] = await epicService.getEpics([epicId]);
+  const [epic] = await epicService.getEpics([epicId as unknown as Types.ObjectId]);
 
-    if (epic == null) {
-      throw EPIC_NOT_FOUND_ERROR;
-    }
-
-    await epicService.deleteEpic(epicId);
-    res.sendStatus(204);
-  } catch (error) {
-    next(error);
+  if (epic == null) {
+    throw EPIC_NOT_FOUND_ERROR;
   }
+
+  await epicService.deleteEpic(epicId as unknown as Types.ObjectId);
+  response.sendStatus(204);
 };

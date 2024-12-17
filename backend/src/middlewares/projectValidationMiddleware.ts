@@ -64,7 +64,7 @@ export const promoteMemberToAdministratorValidationChain = [
   COMMON_PROJECT_VALIDATION_CHAIN.invalidBodyUserId.notEmpty(),
 ];
 
-export const demoteAdmintoMemberValidationChain = [
+export const demoteAdminToMemberValidationChain = [
   COMMON_PROJECT_VALIDATION_CHAIN.invalidParamProjectId.notEmpty(),
   COMMON_PROJECT_VALIDATION_CHAIN.invalidBodyUserId.notEmpty(),
 ];

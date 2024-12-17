@@ -1,9 +1,14 @@
+import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 
-export const validationErrorHandling = (req, res, next) => {
-  const result = validationResult(req);
+export const validationErrorHandling = (
+  request: Request,
+  response: Response,
+  next: NextFunction,
+) => {
+  const result = validationResult(request);
   if (!result.isEmpty()) {
-    res.status(400).send({ errors: result.array() });
+    response.status(400).send({ errors: result.array() });
     return;
   }
 

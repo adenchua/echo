@@ -1,16 +1,16 @@
-import Epic from "../models/epic";
-import Project from "../models/project";
-import Ticket from "../models/ticket";
-import objectUtils from "../utils/objectUtils";
-import projectService from "./projectService";
+import { HydratedDocument, Types } from "mongoose";
 
-/**
- * Creates a new ticket for a project
- * @param {string} projectId - Project ID of project to add ticket to
- * @param {Ticket} ticketFields - ticket fields for the new ticket
- * @returns Ticket
- */
-const createTicket = async (projectId, ticketFields) => {
+import Epic from "../models/epic";
+import Project, { IProject } from "../models/project";
+import Ticket, { ITicket } from "../models/ticket";
+import objectUtils from "../utils/objectUtils";
+import { isProjectDeleted } from "../utils/projectUtils";
+
+/** Creates a new ticket for a project */
+const createTicket = async (
+  projectId: Types.ObjectId,
+  ticketFields: Partial<ITicket>,
+): Promise<HydratedDocument<ITicket>> => {
   const {
     title,
     description,
@@ -40,12 +40,19 @@ const createTicket = async (projectId, ticketFields) => {
   });
 
   let ticketNumber = 1;
-  const project = await projectService.getProject(projectId);
+  const project = (await Project.findById(projectId)) as HydratedDocument<IProject>;
+
+  if (isProjectDeleted(project)) {
+    throw new Error("Project not found");
+  }
+
   // update ticket number to the latest ticket number + 1
   if (project.backlogIds.length > 0) {
     const latestTicketId = project.backlogIds[project.backlogIds.length - 1];
     const latestTicket = await Ticket.findById(latestTicketId);
-    ticketNumber = latestTicket.ticketNumber + 1;
+    if (latestTicket != null) {
+      ticketNumber = latestTicket.ticketNumber + 1;
+    }
   }
 
   const newTicket = new Ticket({ ...definedKeys, ticketNumber });
@@ -56,12 +63,11 @@ const createTicket = async (projectId, ticketFields) => {
   return newTicket;
 };
 
-/**
- * Updates an existing ticket using ticket ID
- * @param {string} ticketId - ticket ID of ticket to update
- * @param {Ticket} ticketFields - updated fields to update ticket
- */
-const updateTicket = async (ticketId, ticketFields) => {
+/** Updates an existing ticket using ticket ID */
+const updateTicket = async (
+  ticketId: Types.ObjectId,
+  ticketFields: Partial<ITicket>,
+): Promise<void> => {
   const {
     title,
     description,
@@ -89,23 +95,16 @@ const updateTicket = async (ticketId, ticketFields) => {
   await Ticket.findByIdAndUpdate(ticketId, { ...keysToUpdate });
 };
 
-/**
- * Deletes an existing ticket
- * @param {string} ticketId - ticket ID of ticket to delete
- */
-const deleteTicket = async (ticketId) => {
+/** Deletes an existing ticket */
+const deleteTicket = async (ticketId: Types.ObjectId): Promise<void> => {
   await Epic.updateMany({ ticketIds: ticketId }, { $pullAll: { ticketIds: [ticketId] } }); // remove deleted ticket from epics
   await Project.updateMany({ backlogIds: ticketId }, { $pullAll: { backlogIds: [ticketId] } }); // remove deleted ticket from project
   await Ticket.findByIdAndDelete(ticketId);
 };
 
-/**
- * Retrieves a list of tickets from given list of ticket IDs
- * @param {string} ticketIds - ticket IDs of ticket to retrieve
- * @returns Array<Ticket>
- */
-const getTickets = async (ticketIds) => {
-  const result = [];
+/** Retrieves a list of tickets from given list of ticket IDs */
+const getTickets = async (ticketIds: Types.ObjectId[]): Promise<HydratedDocument<ITicket>[]> => {
+  const result: HydratedDocument<ITicket>[] = [];
   for (const ticketId of ticketIds) {
     const ticket = await Ticket.findById(ticketId);
     if (ticket) {

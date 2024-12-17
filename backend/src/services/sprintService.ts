@@ -1,16 +1,22 @@
-import Project from "../models/project";
-import Sprint from "../models/sprint";
+import { HydratedDocument, Types } from "mongoose";
+
+import Project, { IProject } from "../models/project";
+import Sprint, { ISprint } from "../models/sprint";
 import Ticket from "../models/ticket";
 import objectUtils from "../utils/objectUtils";
+import { isProjectDeleted } from "../utils/projectUtils";
 
-/**
- * Starts a sprint in a project
- * @param {string} projectId
- * @param {Sprint} sprintFields
- * @returns Sprint
- */
-const startSprint = async (projectId, sprintFields) => {
-  const project = await Project.findById(projectId);
+/** Starts a sprint in a project **/
+const startSprint = async (
+  projectId: Types.ObjectId,
+  sprintFields: Partial<ISprint>,
+): Promise<ISprint> => {
+  const project = (await Project.findById(projectId)) as HydratedDocument<IProject>;
+
+  if (isProjectDeleted(project)) {
+    throw new Error("Project not found");
+  }
+
   const { number, startDate, endDate, incompleteTicketIds, completedTicketIds, hasEnded } =
     sprintFields;
 
@@ -31,23 +37,29 @@ const startSprint = async (projectId, sprintFields) => {
   return newSprint;
 };
 
-// TODO: should not require project ID, add relation from sprint to project
-/**
- * Ends an active sprint in a project
- * @param {string} sprintId
- * @param {string} projectId
- * @returns Sprint
- */
-const endSprint = async (sprintId, projectId) => {
-  const completedTicketIds = [];
-  const incompleteTicketIds = [];
+/** Ends an active sprint in a project **/
+const endSprint = async (
+  sprintId: Types.ObjectId,
+  projectId: Types.ObjectId,
+): Promise<HydratedDocument<ISprint>> => {
+  const completedTicketIds: Types.ObjectId[] = [];
+  const incompleteTicketIds: Types.ObjectId[] = [];
   const sprint = await Sprint.findById(sprintId);
-  const project = await Project.findById(projectId);
+
+  const project = (await Project.findById(projectId)) as HydratedDocument<IProject>;
+
+  if (isProjectDeleted(project)) {
+    throw new Error("Project not found");
+  }
+
+  if (sprint == null) {
+    throw new Error("Sprint not found");
+  }
 
   for (const ticketId of project.backlogIds) {
     const ticket = await Ticket.findById(ticketId);
     if (!ticket) {
-      project.backlogIds.pull(ticketId); // remove invalid ticket from backlog
+      project.backlogIds = project.backlogIds.filter((_backlogId) => _backlogId !== ticketId);
       continue; // invalid ticketIds will return null, causing the next statements to break
     }
     if (ticket.isInSprint && ticket.status === "completed") {
@@ -60,7 +72,10 @@ const endSprint = async (sprintId, projectId) => {
     }
   }
 
-  completedTicketIds.forEach((ticketId) => project.backlogIds.pull(ticketId)); // remove completed tickets from product backlog
+  // remove completed tickets from product backlog
+  completedTicketIds.forEach((ticketId) => {
+    project.backlogIds = project.backlogIds.filter((_backlogId) => _backlogId !== ticketId);
+  });
 
   sprint.hasEnded = true;
   sprint.completedTicketIds = completedTicketIds;
@@ -71,13 +86,9 @@ const endSprint = async (sprintId, projectId) => {
   return sprint;
 };
 
-/**
- * Retrieves a list of sprint by sprint IDs
- * @param {Array<string>} sprintIds - sprint IDs to retrieve sprint from
- * @returns Array<Sprint>
- */
-const getSprints = async (sprintIds) => {
-  const result = [];
+/** Retrieves a list of sprint by sprint IDs **/
+const getSprints = async (sprintIds: Types.ObjectId[]): Promise<HydratedDocument<ISprint>[]> => {
+  const result: HydratedDocument<ISprint>[] = [];
 
   for (const sprintId of sprintIds) {
     const sprint = await Sprint.findById(sprintId);

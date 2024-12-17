@@ -1,3 +1,6 @@
+import { Request, Response } from "express";
+import { Types } from "mongoose";
+
 import errorCodeToMessageMap from "../constants/errorMessages";
 import subtaskService from "../services/subtaskService";
 import ticketService from "../services/ticketService";
@@ -10,65 +13,52 @@ const SUBTASK_NOT_FOUND_ERROR = new ErrorResponse(
   404,
 );
 
-export const createSubtask = async (req, res, next) => {
-  const { ticketId, title } = req.body;
+export const createSubtask = async (request: Request, response: Response): Promise<void> => {
+  const { ticketId, title } = request.body;
 
-  try {
-    const [ticket] = await ticketService.getTickets([ticketId]);
+  const [ticket] = await ticketService.getTickets([ticketId]);
 
-    if (ticket == null) {
-      throw TICKET_NOT_FOUND_ERROR;
-    }
-
-    const newSubtask = await subtaskService.createSubtask(ticketId, { title });
-    res.status(201).send({ data: newSubtask });
-  } catch (error) {
-    next(error);
+  if (ticket == null) {
+    throw TICKET_NOT_FOUND_ERROR;
   }
+
+  const newSubtask = await subtaskService.createSubtask(ticketId, { title });
+  response.status(201).send({ data: newSubtask });
 };
 
-export const updateSubtask = async (req, res, next) => {
-  const { subtaskId } = req.params;
-  const { title, isCompleted } = req.body;
+export const updateSubtask = async (request: Request, response: Response): Promise<void> => {
+  const { subtaskId } = request.params;
+  const { title, isCompleted } = request.body;
 
-  try {
-    const [subtask] = await subtaskService.getSubtasks([subtaskId]);
+  const [subtask] = await subtaskService.getSubtasks([subtaskId as unknown as Types.ObjectId]);
 
-    if (subtask == null) {
-      throw SUBTASK_NOT_FOUND_ERROR;
-    }
-
-    await subtaskService.updateSubtask(subtaskId, { title, isCompleted });
-    res.sendStatus(204);
-  } catch (error) {
-    next(error);
+  if (subtask == null) {
+    throw SUBTASK_NOT_FOUND_ERROR;
   }
+
+  await subtaskService.updateSubtask(subtaskId as unknown as Types.ObjectId, {
+    title,
+    isCompleted,
+  });
+  response.sendStatus(204);
 };
 
-export const deleteSubtask = async (req, res, next) => {
-  const { subtaskId } = req.params;
+export const deleteSubtask = async (request: Request, response: Response): Promise<void> => {
+  const { subtaskId } = request.params;
 
-  try {
-    const [subtask] = await subtaskService.getSubtasks([subtaskId]);
+  const [subtask] = await subtaskService.getSubtasks([subtaskId as unknown as Types.ObjectId]);
 
-    if (subtask == null) {
-      throw SUBTASK_NOT_FOUND_ERROR;
-    }
-
-    await subtaskService.deleteSubtask(subtaskId);
-    res.sendStatus(204);
-  } catch (error) {
-    next(error);
+  if (subtask == null) {
+    throw SUBTASK_NOT_FOUND_ERROR;
   }
+
+  await subtaskService.deleteSubtask(subtaskId as unknown as Types.ObjectId);
+  response.sendStatus(204);
 };
 
-export const getSubtasks = async (req, res, next) => {
-  const { subtaskIds } = req.body;
+export const getSubtasks = async (request: Request, response: Response): Promise<void> => {
+  const { subtaskIds } = request.body;
 
-  try {
-    const subtasks = await subtaskService.getSubtasks(subtaskIds);
-    res.send({ data: subtasks });
-  } catch (error) {
-    next(error);
-  }
+  const subtasks = await subtaskService.getSubtasks(subtaskIds);
+  response.send({ data: subtasks });
 };

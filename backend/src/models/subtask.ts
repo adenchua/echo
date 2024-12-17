@@ -1,6 +1,11 @@
 import { Schema, model } from "mongoose";
 
-const subtaskSchema = new Schema(
+export interface ISubtask {
+  title: string;
+  isCompleted: boolean;
+}
+
+const subtaskSchema = new Schema<ISubtask>(
   {
     title: {
       type: String,

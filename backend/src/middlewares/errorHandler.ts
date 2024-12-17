@@ -1,4 +1,7 @@
-const errorHandler = (error, req, res, next) => {
+import { Request, Response, NextFunction } from "express";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const errorHandler = (error, request: Request, response: Response, next: NextFunction) => {
   const errorStatusCode = error.statusCode || 500;
   const errorMessage = error.message || "Something went wrong";
   const errorCode = error.errorCode || "INTERNAL_SERVER_ERROR";
@@ -12,7 +15,7 @@ const errorHandler = (error, req, res, next) => {
 
   console.error(error);
 
-  res.status(errorStatusCode).send({
+  response.status(errorStatusCode).send({
     status: "error",
     error: errorResponse,
   });

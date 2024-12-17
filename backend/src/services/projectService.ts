@@ -1,12 +1,13 @@
-import Project from "../models/project";
-import objectUtils from "../utils/objectUtils";
+import { HydratedDocument, Types } from "mongoose";
 
-/**
- * Creates a project in the database
- * @param {Project} projectFields - project fields to create a Project
- * @returns Project
- */
-const createProject = async (projectFields) => {
+import Project, { IProject } from "../models/project";
+import objectUtils from "../utils/objectUtils";
+import { isProjectDeleted } from "../utils/projectUtils";
+
+/** Creates a project in the database */
+const createProject = async (
+  projectFields: Partial<IProject>,
+): Promise<HydratedDocument<IProject>> => {
   const {
     title,
     type,
@@ -39,33 +40,34 @@ const createProject = async (projectFields) => {
   return newProject;
 };
 
-/**
- * Retrieves a project by project ID. Returns null if project by the project ID cannot be found
- * @param {string} projectId - project ID of project to retrieve from
- * @returns Project or null
- */
-const getProject = async (projectId) => {
-  const project = await Project.findById(projectId);
+/** Retrieves a project by project ID. Returns null if project by the project ID cannot be found */
+const getProject = async (
+  projectId: Types.ObjectId,
+): Promise<HydratedDocument<IProject> | null> => {
+  const project = (await Project.findById(projectId)) as HydratedDocument<IProject>;
 
-  if (project == null || project.isDeleted) {
-    return null; // do not return deleted projects to client
+  if (isProjectDeleted(project)) {
+    throw new Error("Project not found");
   }
 
   return project;
 };
 
-/**
- * Add a list of members to a project.
- * @param {Array<string>} memberIds - list of member IDs of members to add to project
- * @param {string} projectId - project ID of project to add members to
- */
-const addMembersToProject = async (memberIds, projectId) => {
-  const project = await getProject(projectId);
+/** Add a list of members to a project */
+const addMembersToProject = async (
+  memberIds: Types.ObjectId[],
+  projectId: Types.ObjectId,
+): Promise<void> => {
+  const project = (await Project.findById(projectId)) as HydratedDocument<IProject>;
+
+  if (isProjectDeleted(project)) {
+    throw new Error("Project not found");
+  }
 
   for (const memberId of memberIds) {
-    if (project.adminIds.includes(memberId)) {
-      project.adminIds.pull(memberId); // if admin, remove and put into member list
-    }
+    // if admin, remove and put into member list
+    project.adminIds = project.adminIds.filter((_adminId) => _adminId !== memberId);
+
     if (!project.memberIds.includes(memberId)) {
       project.memberIds.push(memberId);
     }
@@ -74,35 +76,31 @@ const addMembersToProject = async (memberIds, projectId) => {
   await project.save();
 };
 
-/**
- * Remove a member from a project
- * @param {string} memberId - member ID of member to remove from project
- * @param {string} projectId - project ID of project to remove member from
- */
-const removeMemberFromProject = async (memberId, projectId) => {
-  const project = await getProject(projectId);
+/** Remove a member from a project */
+const removeMemberFromProject = async (
+  memberId: Types.ObjectId,
+  projectId: Types.ObjectId,
+): Promise<void> => {
+  const project = (await Project.findById(projectId)) as HydratedDocument<IProject>;
 
-  if (project.memberIds.includes(memberId)) {
-    project.memberIds.pull(memberId);
-    await project.save();
+  if (isProjectDeleted(project)) {
+    throw new Error("Project not found");
   }
+
+  project.memberIds = project.memberIds.filter((_memberId) => _memberId !== memberId);
+  await project.save();
 };
 
-/**
- * Update a project in the database
- * @param {string} projectId - project ID of project to update
- * @param {Project} projectFields - project fields to update
- */
-const updateProject = async (projectId, projectFields) => {
+/** Update a project in the database */
+const updateProject = async (
+  projectId: Types.ObjectId,
+  projectFields: Partial<IProject>,
+): Promise<void> => {
   await Project.findByIdAndUpdate(projectId, { ...projectFields });
 };
 
-/**
- * Retrieves a list of projects by user ID. The user can be a member/admin of the project
- * @param {string} userId - retrieves projects by this user ID
- * @returns A list of projects
- */
-const getProjectsOfUser = async (userId) => {
+/** Retrieves a list of projects by user ID. The user can be a member/admin of the project */
+const getProjectsOfUser = async (userId: Types.ObjectId): Promise<HydratedDocument<IProject>[]> => {
   const projectsWithUsersAsAdmins = await Project.find({ adminIds: userId, isDeleted: false });
   const projectsWithUsersAsMembers = await Project.find({ memberIds: userId, isDeleted: false });
   const projects = [...projectsWithUsersAsAdmins, ...projectsWithUsersAsMembers];
@@ -110,37 +108,39 @@ const getProjectsOfUser = async (userId) => {
   return projects;
 };
 
-/**
- * Promotes a member to an administrator in a project
- * @param {string} memberId - member ID of project to promote to admin
- * @param {string} projectId - project ID of project
- */
-const promoteMemberToAdmin = async (memberId, projectId) => {
-  const project = await getProject(projectId);
+/** Promotes a member to an administrator in a project */
+const promoteMemberToAdmin = async (
+  memberId: Types.ObjectId,
+  projectId: Types.ObjectId,
+): Promise<void> => {
+  const project = (await Project.findById(projectId)) as HydratedDocument<IProject>;
+
+  if (isProjectDeleted(project)) {
+    throw new Error("Project not found");
+  }
 
   if (!project.adminIds.includes(memberId)) {
     project.adminIds.push(memberId);
   }
 
-  if (project.memberIds.includes(memberId)) {
-    project.memberIds.pull(memberId);
-  }
+  project.memberIds = project.memberIds.filter((_memberId) => _memberId !== memberId);
 
   await project.save();
 };
 
-/**
- * Demotes an administrator to a member in a project.
- * @param {string} adminId - admin ID of the project to demote to a member
- * @param {string} projectId - project ID of the project
- */
-const demoteAdminToMember = async (adminId, projectId) => {
-  const project = await getProject(projectId);
+/** Demotes an administrator to a member in a project */
+const demoteAdminToMember = async (
+  adminId: Types.ObjectId,
+  projectId: Types.ObjectId,
+): Promise<void> => {
+  const project = (await Project.findById(projectId)) as HydratedDocument<IProject>;
+
+  if (isProjectDeleted(project)) {
+    throw new Error("Project not found");
+  }
 
   // remove user from admin id list
-  if (project.adminIds.includes(adminId)) {
-    project.adminIds.pull(adminId);
-  }
+  project.adminIds = project.adminIds.filter((_adminId) => adminId !== _adminId);
 
   // add user to members list
   if (!project.memberIds.includes(adminId)) {
@@ -150,11 +150,8 @@ const demoteAdminToMember = async (adminId, projectId) => {
   await project.save();
 };
 
-/**
- * Performs a safe delete of a project. Deleted projects cannot be retrieved by clients
- * @param {string} projectId - project ID of project to delete
- */
-const deleteProject = async (projectId) => {
+/** Performs a safe delete of a project. Deleted projects cannot be retrieved by clients */
+const deleteProject = async (projectId: Types.ObjectId): Promise<void> => {
   await Project.findByIdAndUpdate(projectId, { isDeleted: true }); // safe delete.
 };
 

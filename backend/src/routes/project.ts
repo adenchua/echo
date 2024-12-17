@@ -5,7 +5,7 @@ import {
   addMembersToProject,
   createProject,
   deleteProject,
-  demoteAdmintoMember,
+  demoteAdminToMember,
   getProject,
   getProjectsOfUser,
   promoteMemberToAdministrator,
@@ -18,7 +18,7 @@ import {
   addMembersToProjectValidationChain,
   createProjectValidationChain,
   deleteProjectValidationChain,
-  demoteAdmintoMemberValidationChain,
+  demoteAdminToMemberValidationChain,
   getProjectValidationChain,
   promoteMemberToAdministratorValidationChain,
   removeMemberFromProjectValidationChain,
@@ -55,6 +55,6 @@ router
   );
 router
   .route("/admins/demote/:projectId")
-  .post(demoteAdmintoMemberValidationChain, validationErrorHandling, demoteAdmintoMember);
+  .post(demoteAdminToMemberValidationChain, validationErrorHandling, demoteAdminToMember);
 
 export default router;

@@ -1,6 +1,26 @@
-import { Schema, model } from "mongoose";
+import { Schema, Types, model } from "mongoose";
 
-const ticketSchema = new Schema(
+type Status = "todo" | "progress" | "review" | "completed" | "stuck" | "hold";
+type Priority = "low" | "medium" | "high" | "highest";
+type TicketType = "story" | "task" | "bug";
+
+export interface ITicket {
+  title: string;
+  description: string;
+  assigneeId: Types.ObjectId;
+  createdDate: Date;
+  dueDate: Date;
+  status: Status;
+  priority: Priority;
+  type: TicketType;
+  subtaskIds: Types.ObjectId[];
+  isInSprint: boolean;
+  ticketNumber: number;
+  epicId: Types.ObjectId;
+  storyPoints: number;
+}
+
+const ticketSchema = new Schema<ITicket>(
   {
     title: {
       type: String,

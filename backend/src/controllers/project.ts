@@ -1,3 +1,6 @@
+import { Request, Response } from "express";
+import { Types } from "mongoose";
+
 import errorCodeToMessageMap from "../constants/errorMessages";
 import projectService from "../services/projectService";
 import ErrorResponse from "../utils/ErrorResponse";
@@ -10,180 +13,146 @@ export const PROJECT_NOT_FOUND_ERROR = new ErrorResponse(
   404,
 );
 
-export const createProject = async (req, res, next) => {
-  const { title, adminId, type } = req.body;
+export const createProject = async (request: Request, response: Response): Promise<void> => {
+  const { title, adminId, type } = request.body;
 
-  try {
-    const newProject = await projectService.createProject({ title, adminIds: [adminId], type });
-    res.status(201).send({ data: newProject });
-  } catch (error) {
-    next(error);
-  }
+  const newProject = await projectService.createProject({ title, adminIds: [adminId], type });
+  response.status(201).send({ data: newProject });
 };
 
-export const getProject = async (req, res, next) => {
-  const { projectId } = req.params;
+export const getProject = async (request: Request, response: Response): Promise<void> => {
+  const { projectId } = request.params;
 
-  try {
-    const project = await projectService.getProject(projectId);
-    if (isProjectDeleted(project)) {
-      throw PROJECT_NOT_FOUND_ERROR;
-    }
-
-    res.send({ data: project });
-  } catch (error) {
-    next(error);
+  const project = await projectService.getProject(projectId as unknown as Types.ObjectId);
+  if (isProjectDeleted(project)) {
+    throw PROJECT_NOT_FOUND_ERROR;
   }
+
+  response.send({ data: project });
 };
 
-export const addMemberToProject = async (req, res, next) => {
-  const { projectId } = req.params;
-  const { userId } = req.body;
+export const addMemberToProject = async (request: Request, response: Response): Promise<void> => {
+  const { projectId } = request.params;
+  const { userId } = request.body;
 
-  try {
-    const project = await projectService.getProject(projectId);
+  const project = await projectService.getProject(projectId as unknown as Types.ObjectId);
 
-    if (isProjectDeleted(project)) {
-      throw PROJECT_NOT_FOUND_ERROR;
-    }
-
-    await projectService.addMembersToProject([userId], projectId);
-    res.sendStatus(204);
-  } catch (error) {
-    next(error);
+  if (isProjectDeleted(project)) {
+    throw PROJECT_NOT_FOUND_ERROR;
   }
+
+  await projectService.addMembersToProject([userId], projectId as unknown as Types.ObjectId);
+  response.sendStatus(204);
 };
 
-export const addMembersToProject = async (req, res, next) => {
-  const { projectId } = req.params;
-  const { userIds } = req.body;
+export const addMembersToProject = async (request: Request, response: Response): Promise<void> => {
+  const { projectId } = request.params;
+  const { userIds } = request.body;
 
-  try {
-    const project = await projectService.getProject(projectId);
+  const project = await projectService.getProject(projectId as unknown as Types.ObjectId);
 
-    if (isProjectDeleted(project)) {
-      throw PROJECT_NOT_FOUND_ERROR;
-    }
-
-    await projectService.addMembersToProject(userIds, projectId);
-    res.sendStatus(204);
-  } catch (error) {
-    next(error);
+  if (isProjectDeleted(project)) {
+    throw PROJECT_NOT_FOUND_ERROR;
   }
+
+  await projectService.addMembersToProject(userIds, projectId as unknown as Types.ObjectId);
+  response.sendStatus(204);
 };
 
-export const removeMemberFromProject = async (req, res, next) => {
-  const { projectId } = req.params;
-  const { userId } = req.body;
+export const removeMemberFromProject = async (
+  request: Request,
+  response: Response,
+): Promise<void> => {
+  const { projectId } = request.params;
+  const { userId } = request.body;
 
-  try {
-    const project = await projectService.getProject(projectId);
+  const project = await projectService.getProject(projectId as unknown as Types.ObjectId);
 
-    if (isProjectDeleted(project)) {
-      throw PROJECT_NOT_FOUND_ERROR;
-    }
-
-    await projectService.removeMemberFromProject(userId, projectId);
-    res.sendStatus(204);
-  } catch (error) {
-    next(error);
+  if (isProjectDeleted(project)) {
+    throw PROJECT_NOT_FOUND_ERROR;
   }
+
+  await projectService.removeMemberFromProject(userId, projectId as unknown as Types.ObjectId);
+  response.sendStatus(204);
 };
 
-export const updateProject = async (req, res, next) => {
-  const { projectId } = req.params;
-  const { title, description, announcement, picture, type } = req.body;
+export const updateProject = async (request: Request, response: Response): Promise<void> => {
+  const { projectId } = request.params;
+  const { title, description, announcement, picture, type } = request.body;
 
-  try {
-    const project = await projectService.getProject(projectId);
+  const project = await projectService.getProject(projectId as unknown as Types.ObjectId);
 
-    if (isProjectDeleted(project)) {
-      throw PROJECT_NOT_FOUND_ERROR;
-    }
-
-    const definedKeys = objectUtils.removeUndefinedKeysFromObject({
-      title,
-      description,
-      announcement,
-      picture,
-      type,
-    });
-
-    await projectService.updateProject(projectId, definedKeys);
-    res.sendStatus(204);
-  } catch (error) {
-    next(error);
+  if (isProjectDeleted(project)) {
+    throw PROJECT_NOT_FOUND_ERROR;
   }
+
+  const definedKeys = objectUtils.removeUndefinedKeysFromObject({
+    title,
+    description,
+    announcement,
+    picture,
+    type,
+  });
+
+  await projectService.updateProject(projectId as unknown as Types.ObjectId, definedKeys);
+  response.sendStatus(204);
 };
 
-export const getProjectsOfUser = async (req, res, next) => {
-  const { userId } = req.params;
+export const getProjectsOfUser = async (request: Request, response: Response): Promise<void> => {
+  const { userId } = request.params;
 
-  try {
-    const projects = await projectService.getProjectsOfUser(userId);
-    res.send({ data: projects });
-  } catch (error) {
-    next(error);
-  }
+  const projects = await projectService.getProjectsOfUser(userId as unknown as Types.ObjectId);
+  response.send({ data: projects });
 };
 
-export const promoteMemberToAdministrator = async (req, res, next) => {
-  const { projectId } = req.params;
-  const { userId } = req.body;
+export const promoteMemberToAdministrator = async (
+  request: Request,
+  response: Response,
+): Promise<void> => {
+  const { projectId } = request.params;
+  const { userId } = request.body;
 
-  try {
-    const project = await projectService.getProject(projectId);
+  const project = await projectService.getProject(projectId as unknown as Types.ObjectId);
 
-    if (isProjectDeleted(project)) {
-      throw PROJECT_NOT_FOUND_ERROR;
-    }
-
-    await projectService.promoteMemberToAdmin(userId, projectId);
-    res.sendStatus(204);
-  } catch (error) {
-    next(error);
+  if (isProjectDeleted(project)) {
+    throw PROJECT_NOT_FOUND_ERROR;
   }
+
+  await projectService.promoteMemberToAdmin(userId, projectId as unknown as Types.ObjectId);
+  response.sendStatus(204);
 };
 
-export const demoteAdmintoMember = async (req, res, next) => {
-  const { projectId } = req.params;
-  const { userId } = req.body;
+export const demoteAdminToMember = async (request: Request, response: Response): Promise<void> => {
+  const { projectId } = request.params;
+  const { userId } = request.body;
 
-  try {
-    const project = await projectService.getProject(projectId);
+  const project = await projectService.getProject(projectId as unknown as Types.ObjectId);
 
-    if (isProjectDeleted(project)) {
-      throw PROJECT_NOT_FOUND_ERROR;
-    }
-
-    if (project.adminIds.length <= 1) {
-      throw new ErrorResponse(
-        errorCodeToMessageMap["LAST_PROJECT_ADMINISTRATOR"],
-        "LAST_PROJECT_ADMINISTRATOR",
-        400,
-      );
-    }
-
-    await projectService.demoteAdminToMember(userId, projectId);
-    res.sendStatus(204);
-  } catch (error) {
-    next(error);
+  if (!project || isProjectDeleted(project)) {
+    throw PROJECT_NOT_FOUND_ERROR;
   }
+
+  if (project.adminIds.length <= 1) {
+    throw new ErrorResponse(
+      errorCodeToMessageMap["LAST_PROJECT_ADMINISTRATOR"],
+      "LAST_PROJECT_ADMINISTRATOR",
+      400,
+    );
+  }
+
+  await projectService.demoteAdminToMember(userId, projectId as unknown as Types.ObjectId);
+  response.sendStatus(204);
 };
 
-export const deleteProject = async (req, res, next) => {
-  const { projectId } = req.params;
+export const deleteProject = async (request: Request, response: Response): Promise<void> => {
+  const { projectId } = request.params;
 
-  try {
-    const project = await projectService.getProject(projectId);
+  const project = await projectService.getProject(projectId as unknown as Types.ObjectId);
 
-    if (isProjectDeleted(project)) {
-      throw PROJECT_NOT_FOUND_ERROR;
-    }
-
-    await projectService.deleteProject(projectId);
-    res.sendStatus(204);
-  } catch (error) {
-    next(error);
+  if (isProjectDeleted(project)) {
+    throw PROJECT_NOT_FOUND_ERROR;
   }
+
+  await projectService.deleteProject(projectId as unknown as Types.ObjectId);
+  response.sendStatus(204);
 };

@@ -1,6 +1,15 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Types } from "mongoose";
 
-const epicSchema = new Schema(
+export interface IEpic {
+  title: string;
+  description: string;
+  ticketIds: Types.ObjectId[];
+  startDate: Date;
+  endDate: Date;
+  createdDate: Date;
+}
+
+const epicSchema = new Schema<IEpic>(
   {
     title: {
       type: String,

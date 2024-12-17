@@ -1,6 +1,15 @@
-import { Schema, model } from "mongoose";
+import { Schema, Types, model } from "mongoose";
 
-const sprintSchema = new Schema(
+export interface ISprint {
+  number: number;
+  startDate: Date;
+  endDate: Date;
+  incompleteTicketIds: Types.ObjectId[];
+  completedTicketIds: Types.ObjectId[];
+  hasEnded: boolean;
+}
+
+const sprintSchema = new Schema<ISprint>(
   {
     number: {
       type: Number,

@@ -1,6 +1,21 @@
-import { Schema, model } from "mongoose";
+import { Schema, Types, model } from "mongoose";
 
-const projectSchema = new Schema(
+export interface IProject {
+  title: string;
+  type: string;
+  description: string;
+  announcement: string;
+  adminIds: Types.ObjectId[];
+  memberIds: Types.ObjectId[];
+  createdDate: Date;
+  epicIds: Types.ObjectId[];
+  backlogIds: Types.ObjectId[];
+  sprintIds: Types.ObjectId[];
+  picture: number;
+  isDeleted: boolean;
+}
+
+const projectSchema = new Schema<IProject>(
   {
     title: {
       type: String,
