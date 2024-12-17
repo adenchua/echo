@@ -20,7 +20,7 @@ interface EpicLinkEditItemProps {
   epicId: string;
 }
 
-const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
+const EpicLinkEditItem = (props: EpicLinkEditItemProps) => {
   const { epicId, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const { onAddTicketToEpic, onRemoveTicketFromEpic } = useProductBacklog();
@@ -49,7 +49,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
     }
   };
 
-  const renderEpicTypography = (): JSX.Element => {
+  const renderEpicTypography = () => {
     if (!epicId) {
       return (
         <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>

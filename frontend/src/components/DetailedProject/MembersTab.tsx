@@ -35,7 +35,7 @@ interface MembersTabProps {
   project: Project;
 }
 
-const MembersTab = (props: MembersTabProps): JSX.Element => {
+const MembersTab = (props: MembersTabProps) => {
   const { project } = props;
   const { _id: projectId } = project;
   const {

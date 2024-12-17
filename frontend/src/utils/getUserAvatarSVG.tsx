@@ -7,7 +7,7 @@ const getUserAvatarSVG = (username: string): string => {
     backgroundColor: ["#eeeeee"],
   });
 
-  return svg.toDataUriSync();
+  return svg.toDataUri();
 };
 
 export default getUserAvatarSVG;

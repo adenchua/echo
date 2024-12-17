@@ -2,7 +2,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 
 import PageLayoutWrapper from "./PageLayoutWrapper";
 
-const Loading = (): JSX.Element => {
+const Loading = () => {
   return (
     <PageLayoutWrapper disablePadding>
       <LinearProgress />

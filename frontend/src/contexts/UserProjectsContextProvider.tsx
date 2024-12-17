@@ -25,9 +25,7 @@ export const UserProjectsContext = createContext<UserProjectsContextStateType>(
   userProjectsContextDefaultValues,
 );
 
-const UserProjectsContextProvider = ({
-  children,
-}: UserProjectsContextProviderProps): JSX.Element => {
+const UserProjectsContextProvider = ({ children }: UserProjectsContextProviderProps) => {
   const [projects, setProjects] = useState<Project[]>([]);
 
   const addProject = useCallback((newProject: Project): void => {

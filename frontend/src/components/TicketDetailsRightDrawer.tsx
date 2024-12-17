@@ -28,7 +28,7 @@ interface TicketDetailsRightDrawerProps {
   projectId: string;
 }
 
-const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Element => {
+const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps) => {
   const { ticket, onClose, isOpen, projectId } = props;
   const {
     _id: id,

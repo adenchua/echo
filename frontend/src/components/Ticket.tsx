@@ -27,7 +27,7 @@ interface TicketProps {
   bgGrey: boolean;
 }
 
-const Ticket = (props: TicketProps): JSX.Element => {
+const Ticket = (props: TicketProps) => {
   const { ticket, showSprintToggleCheckBox, bgGrey } = props;
   const [assignee, setAssignee] = useState<User | null>(null);
   const { currentLoadState, handleSetLoadingState } = useLoad();

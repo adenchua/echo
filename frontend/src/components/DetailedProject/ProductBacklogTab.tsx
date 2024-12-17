@@ -29,7 +29,7 @@ interface ProductBacklogTabProps {
   project: Project;
 }
 
-const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
+const ProductBacklogTab = (props: ProductBacklogTabProps) => {
   const { project } = props;
   const { _id: projectId } = project;
   const { tickets } = useContext(TicketsContext);
@@ -96,7 +96,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
     );
   };
 
-  const renderTicketNavbar = (): JSX.Element => (
+  const renderTicketNavbar = () => (
     <div>
       <TicketNavbarWrapper isTicketSelected={!!selectedTicketId}>
         <TypographySprintInformation>

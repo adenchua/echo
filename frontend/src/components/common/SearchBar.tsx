@@ -3,7 +3,7 @@ import TextField, { TextFieldProps } from "@mui/material/TextField";
 
 import SearchIcon from "../icons/SearchIcon";
 
-const SearchBar = (props: TextFieldProps): JSX.Element => {
+const SearchBar = (props: TextFieldProps) => {
   const { value, onChange, placeholder = "Search", ...rest } = props;
 
   return (

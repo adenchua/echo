@@ -17,7 +17,7 @@ interface DangerActionDialogProps {
   acceptButtonText?: string;
 }
 
-const DangerActionDialog = (props: DangerActionDialogProps): JSX.Element => {
+const DangerActionDialog = (props: DangerActionDialogProps) => {
   const {
     isOpen,
     onClose,

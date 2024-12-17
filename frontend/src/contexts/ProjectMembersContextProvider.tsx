@@ -32,9 +32,7 @@ export const ProjectMembersContext = createContext<ProjectMembersStateType>(
   projectMembersDefaultState,
 );
 
-const ProjectMembersContextProvider = ({
-  children,
-}: ProjectMembersContextProviderProps): JSX.Element => {
+const ProjectMembersContextProvider = ({ children }: ProjectMembersContextProviderProps) => {
   const [members, setMembers] = useState<User[]>([]);
   const [admins, setAdmins] = useState<User[]>([]);
   const usersMap = useMemo(() => {

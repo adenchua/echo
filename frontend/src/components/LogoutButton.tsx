@@ -7,7 +7,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import ActionDialog from "./common/ActionDialog";
 
-const LogoutButton = (): JSX.Element => {
+const LogoutButton = () => {
   const [isDialogOpened, setIsDialogOpened] = useState<boolean>(false);
   const navigate = useNavigate();
   const { removeKeyValue } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");

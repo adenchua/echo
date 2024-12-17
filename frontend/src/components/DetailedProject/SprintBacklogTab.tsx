@@ -35,7 +35,7 @@ interface SprintBacklogTabProps {
   project: Project;
 }
 
-const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
+const SprintBacklogTab = (props: SprintBacklogTabProps) => {
   const { project } = props;
   const { _id: projectId } = project;
   const { tickets } = useContext(TicketsContext);
@@ -86,7 +86,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
     setSelectedTicketId(ticketId);
   };
 
-  const renderSprintDetails = (): JSX.Element => {
+  const renderSprintDetails = () => {
     if (!activeSprint) {
       return (
         <TypographySprintInformation>
@@ -138,7 +138,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
     );
   };
 
-  const renderTicketNavbar = (): JSX.Element => (
+  const renderTicketNavbar = () => (
     <div>
       <TicketNavbarWrapper isTicketSelected={!!selectedTicketId}>
         {renderSprintDetails()}

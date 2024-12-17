@@ -17,7 +17,7 @@ interface HighestPriorityIconProps {
     | "warning";
 }
 
-const HighestPriorityIcon = (props: HighestPriorityIconProps): JSX.Element => {
+const HighestPriorityIcon = (props: HighestPriorityIconProps) => {
   const { fontSize = "small", color = "inherit" } = props;
   return (
     <Tooltip title="Urgent">

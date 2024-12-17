@@ -6,7 +6,7 @@ interface ProgressBarWithPercentageProps {
   value: number;
 }
 
-const ProgressBarWithPercentage = (props: ProgressBarWithPercentageProps): JSX.Element => {
+const ProgressBarWithPercentage = (props: ProgressBarWithPercentageProps) => {
   const { value } = props;
   let displayedValue = value;
 

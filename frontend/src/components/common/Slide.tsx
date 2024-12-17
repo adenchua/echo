@@ -1,6 +1,6 @@
 import MuiSlide, { SlideProps } from "@mui/material/Slide";
 
-const Slide = (props: SlideProps): JSX.Element => {
+const Slide = (props: SlideProps) => {
   return <MuiSlide in mountOnEnter unmountOnExit timeout={700} {...props} />;
 };
 

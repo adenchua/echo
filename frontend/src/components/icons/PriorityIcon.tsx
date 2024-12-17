@@ -11,7 +11,7 @@ interface PriorityIconProps {
   fontSize?: "medium" | "small" | "inherit" | "large";
 }
 
-const PriorityIcon = (props: PriorityIconProps): JSX.Element => {
+const PriorityIcon = (props: PriorityIconProps) => {
   const { priority, fontSize = "small" } = props;
 
   switch (priority) {

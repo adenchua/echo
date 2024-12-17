@@ -17,7 +17,7 @@ interface ActionDialogProps {
   acceptButtonText?: string;
 }
 
-const ActionDialog = (props: ActionDialogProps): JSX.Element => {
+const ActionDialog = (props: ActionDialogProps) => {
   const {
     isOpen,
     onClose,

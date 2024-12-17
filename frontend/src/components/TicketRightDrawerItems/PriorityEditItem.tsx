@@ -20,7 +20,7 @@ interface PriorityEditItemProps {
   priority: TicketPriority;
 }
 
-const PriorityEditItem = (props: PriorityEditItemProps): JSX.Element => {
+const PriorityEditItem = (props: PriorityEditItemProps) => {
   const { priority, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const { currentLoadState, handleSetLoadingState } = useLoad();

@@ -15,7 +15,7 @@ interface EpicCreationFormProps {
   projectId: string;
 }
 
-const EpicCreationForm = (props: EpicCreationFormProps): JSX.Element => {
+const EpicCreationForm = (props: EpicCreationFormProps) => {
   const { onClose, projectId } = props;
   const [titleInput, setTitleInput] = useState<string>("");
   const { currentLoadState, handleSetLoadingState } = useLoad();

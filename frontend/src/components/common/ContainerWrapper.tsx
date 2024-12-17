@@ -4,7 +4,7 @@ interface ContainerWrapperProps {
   children: React.ReactNode;
 }
 
-const ContainerWrapper = (props: ContainerWrapperProps): JSX.Element => {
+const ContainerWrapper = (props: ContainerWrapperProps) => {
   const { children } = props;
   return (
     <Container disableGutters sx={{ marginLeft: 0 }} maxWidth="md">

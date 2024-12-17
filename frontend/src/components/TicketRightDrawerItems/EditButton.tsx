@@ -4,7 +4,7 @@ interface EditButtonProps {
   onStartEdit: any;
 }
 
-const EditButton = (props: EditButtonProps): JSX.Element => {
+const EditButton = (props: EditButtonProps) => {
   const { onStartEdit } = props;
 
   return (

@@ -11,7 +11,7 @@ interface TicketSubtaskDeletableProps {
   onDeleteSubtask: (subtaskId: string) => Promise<void>;
 }
 
-const TicketSubtaskDeletable = (props: TicketSubtaskDeletableProps): JSX.Element => {
+const TicketSubtaskDeletable = (props: TicketSubtaskDeletableProps) => {
   const [showConfirmationDialog, setShowConfirmationDialog] = useState<boolean>(false);
   const { subtask, onDeleteSubtask } = props;
   const { _id: id, title } = subtask;

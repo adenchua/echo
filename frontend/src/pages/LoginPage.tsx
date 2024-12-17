@@ -14,7 +14,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import { loginErrorCodeToMessageHelper } from "../utils/loginErrorCodeToMessageHelper";
 
-const LoginPage = (): JSX.Element => {
+const LoginPage = () => {
   const [usernameInput, setUsernameInput] = useState<string>("");
   const [passwordInput, setPasswordInput] = useState<string>("");
   const { currentLoadState, handleSetLoadingState } = useLoad();
@@ -39,7 +39,7 @@ const LoginPage = (): JSX.Element => {
     }
   };
 
-  const renderLoginForm = (): JSX.Element => {
+  const renderLoginForm = () => {
     return (
       <Paper
         sx={{

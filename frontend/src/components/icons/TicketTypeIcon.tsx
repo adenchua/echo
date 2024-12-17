@@ -10,7 +10,7 @@ interface TicketTypeIconProps {
   fontSize?: "small" | "inherit" | "large" | "medium";
 }
 
-const TicketTypeIcon = (props: TicketTypeIconProps): JSX.Element => {
+const TicketTypeIcon = (props: TicketTypeIconProps) => {
   const { type, fontSize = "small" } = props;
 
   switch (type) {

@@ -7,7 +7,7 @@ interface CTAButtonProps {
   icon?: ReactNode;
 }
 
-const CTAButton = (props: CTAButtonProps): JSX.Element => {
+const CTAButton = (props: CTAButtonProps) => {
   const { text, onClick, icon } = props;
   return (
     <Button startIcon={icon} onClick={onClick} variant="contained">

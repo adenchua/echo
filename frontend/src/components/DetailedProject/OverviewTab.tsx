@@ -15,12 +15,12 @@ interface OverviewTabProps {
   project: Project;
 }
 
-const OverviewTab = (props: OverviewTabProps): JSX.Element => {
+const OverviewTab = (props: OverviewTabProps) => {
   const { project } = props;
   const { _id: projectId, description } = project;
   const { members, admins } = useContext(ProjectMembersContext);
 
-  const renderMemberCard = (member: User): JSX.Element => {
+  const renderMemberCard = (member: User) => {
     const { displayName, username, title } = member;
     return (
       <Grow>

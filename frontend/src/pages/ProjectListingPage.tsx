@@ -17,7 +17,7 @@ import Project from "../types/Project";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import { matchString } from "../utils/stringUtils";
 
-const ProjectListingPage = (): JSX.Element => {
+const ProjectListingPage = () => {
   const [searchInput, setSearchInput] = useState<string>("");
   const { projects } = useContext(UserProjectsContext);
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
@@ -26,7 +26,7 @@ const ProjectListingPage = (): JSX.Element => {
     return <Navigate to="/" />;
   }
 
-  const renderTitleHeaders = (): JSX.Element => {
+  const renderTitleHeaders = () => {
     return (
       <Box mb={1} p={1} display="flex" alignItems="center" gap={8}>
         <Typography variant="body2" sx={{ width: "242px" }}>
@@ -45,7 +45,7 @@ const ProjectListingPage = (): JSX.Element => {
     );
   };
 
-  const renderNoProjectsMessage = (): JSX.Element => (
+  const renderNoProjectsMessage = () => (
     <Typography variant="body2" sx={{ color: "GrayText", fontStyle: "italic" }}>
       There are no projects listed.
     </Typography>

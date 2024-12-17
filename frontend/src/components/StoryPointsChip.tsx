@@ -7,7 +7,7 @@ interface StoryPointsChipProps {
   storyPoints: StoryPoints;
 }
 
-const StoryPointsChip = (props: StoryPointsChipProps): JSX.Element => {
+const StoryPointsChip = (props: StoryPointsChipProps) => {
   const { storyPoints } = props;
 
   return (

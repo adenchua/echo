@@ -8,7 +8,7 @@ interface TicketNavbarWrapperProps {
   children: React.ReactNode;
 }
 
-const TicketNavbarWrapper = (props: TicketNavbarWrapperProps): JSX.Element => {
+const TicketNavbarWrapper = (props: TicketNavbarWrapperProps) => {
   const { children, isTicketSelected } = props;
   return (
     <AppBar

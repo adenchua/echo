@@ -20,7 +20,7 @@ import SnackbarSuccess from "./common/SnackbarSuccess";
 
 type ProjectType = (typeof PROJECT_TYPES)[number];
 
-const CreateProjectButtonWithDialog = (): JSX.Element => {
+const CreateProjectButtonWithDialog = () => {
   const defaultProjectType = PROJECT_TYPES[0];
 
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);

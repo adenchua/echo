@@ -30,7 +30,7 @@ interface AssigneeEditItemProps {
   assigneeId: string;
 }
 
-const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
+const AssigneeEditItem = (props: AssigneeEditItemProps) => {
   const { assigneeId, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const { currentLoadState, handleSetLoadingState } = useLoad();
@@ -76,7 +76,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
     }
   };
 
-  const renderAssigneeChip = (): JSX.Element => {
+  const renderAssigneeChip = () => {
     if (!assignee) {
       return <ListItemText secondary="None" />;
     }

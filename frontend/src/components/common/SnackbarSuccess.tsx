@@ -6,7 +6,7 @@ interface SnackbarSuccessProps {
   message: string;
 }
 
-const SnackbarSuccess = (props: SnackbarSuccessProps): JSX.Element => {
+const SnackbarSuccess = (props: SnackbarSuccessProps) => {
   const { isOpen, onClose, message } = props;
 
   return (

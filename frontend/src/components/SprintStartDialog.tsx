@@ -20,7 +20,7 @@ interface SprintStartDialogProps {
   sprintTicketsCount: number;
 }
 
-const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
+const SprintStartDialog = (props: SprintStartDialogProps) => {
   const { onStartSprint, projectId, sprintTicketsCount, showStartSprintDialog, onClose } = props;
   const [endDateInput, setEndDateInput] = useState<Date | null>(null);
   const { currentLoadState, handleSetLoadingState } = useLoad();
@@ -50,7 +50,7 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
     }
   };
 
-  const renderSuccessMessageContent = (): JSX.Element => {
+  const renderSuccessMessageContent = () => {
     if (!newSprint) {
       return (
         <DialogErrorText text="Something went wrong retrieving the new sprint. Please try again later" />
@@ -84,7 +84,7 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
     );
   };
 
-  const renderDialogContent = (): JSX.Element => (
+  const renderDialogContent = () => (
     <>
       {sprintTicketsCount > 0 && (
         <DialogContentText sx={{ mb: 4 }}>

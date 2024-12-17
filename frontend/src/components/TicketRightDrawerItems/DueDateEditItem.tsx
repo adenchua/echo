@@ -19,7 +19,7 @@ interface DueDateEditItemProps {
   dueDate: string;
 }
 
-const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
+const DueDateEditItem = (props: DueDateEditItemProps) => {
   const { dueDate, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const { currentLoadState, handleSetLoadingState } = useLoad();

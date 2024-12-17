@@ -20,7 +20,7 @@ interface AddTicketButtonWithDialogProps {
   projectId: string;
 }
 
-const AddTicketButtonWithDialog = (props: AddTicketButtonWithDialogProps): JSX.Element => {
+const AddTicketButtonWithDialog = (props: AddTicketButtonWithDialogProps) => {
   const { projectId } = props;
   const [showDialog, setShowDialog] = useState<boolean>(false);
   const [titleInput, setTitleInput] = useState<string>("");

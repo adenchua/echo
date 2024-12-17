@@ -11,7 +11,7 @@ interface StatusChipButtonProps {
   size: MuiChipSizeType;
 }
 
-const StatusChipButton = (props: StatusChipButtonProps): JSX.Element => {
+const StatusChipButton = (props: StatusChipButtonProps) => {
   const { status, size } = props;
 
   switch (status) {

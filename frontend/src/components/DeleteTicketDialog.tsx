@@ -15,7 +15,7 @@ interface DeleteTicketDialogProps {
   projectId: string;
 }
 
-const DeleteTicketDialog = (props: DeleteTicketDialogProps): JSX.Element => {
+const DeleteTicketDialog = (props: DeleteTicketDialogProps) => {
   const { isDialogOpened, onClose, ticket, projectId } = props;
   const { currentLoadState, handleSetLoadingState } = useLoad();
   const { title, _id: ticketId, epicId } = ticket;

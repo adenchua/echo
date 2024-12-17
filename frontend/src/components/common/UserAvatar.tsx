@@ -8,7 +8,7 @@ interface UserAvatarProps {
   displayName: string;
 }
 
-const UserAvatar = (props: UserAvatarProps): JSX.Element => {
+const UserAvatar = (props: UserAvatarProps) => {
   const { username, displayName } = props;
 
   return (

@@ -12,12 +12,12 @@ interface ToolbarContentProps {
   project: Project;
 }
 
-const ToolbarContent = (props: ToolbarContentProps): JSX.Element => {
+const ToolbarContent = (props: ToolbarContentProps) => {
   const { project } = props;
   const query = useQuery();
   const { title } = project;
 
-  const renderTabLink = (displayedTitle: string, tabKey: string): JSX.Element => {
+  const renderTabLink = (displayedTitle: string, tabKey: string) => {
     const isTabSelected = query.get("tab") === tabKey;
     return (
       <Link

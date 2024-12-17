@@ -13,7 +13,7 @@ interface RemoveMemberIconButtonProps {
   onRemoveMember: (member: User) => void;
 }
 
-const RemoveMemberIconButton = (props: RemoveMemberIconButtonProps): JSX.Element => {
+const RemoveMemberIconButton = (props: RemoveMemberIconButtonProps) => {
   const [isDialogOpened, setIsDialogOpened] = useState<boolean>(false);
   const { member, isDisabled, onRemoveMember } = props;
 

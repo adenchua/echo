@@ -18,7 +18,7 @@ interface EpicSummaryAccordionTicketProps {
   ticket: Ticket;
 }
 
-const EpicSummaryAccordionTicket = (props: EpicSummaryAccordionTicketProps): JSX.Element => {
+const EpicSummaryAccordionTicket = (props: EpicSummaryAccordionTicketProps) => {
   const { ticket } = props;
   const { title, ticketNumber, isInSprint, status, type, assigneeId } = ticket;
 

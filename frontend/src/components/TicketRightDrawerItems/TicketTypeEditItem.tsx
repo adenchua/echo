@@ -20,7 +20,7 @@ interface TicketTypeEditItemProps {
   type: TicketType;
 }
 
-const TicketTypeEditItem = (props: TicketTypeEditItemProps): JSX.Element => {
+const TicketTypeEditItem = (props: TicketTypeEditItemProps) => {
   const { type, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const { onUpdateTicket } = useProductBacklog();

@@ -12,7 +12,7 @@ interface NavbarListItemProps {
   linkTo: string;
 }
 
-const NavbarListItem = (props: NavbarListItemProps): JSX.Element => {
+const NavbarListItem = (props: NavbarListItemProps) => {
   const { linkTo, isSelected, icon, buttonText } = props;
 
   return (

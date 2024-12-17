@@ -11,7 +11,7 @@ import Slide from "../components/common/Slide";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 
-const HomePage = (): JSX.Element => {
+const HomePage = () => {
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
 
   if (!loggedInUserId) {

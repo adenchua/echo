@@ -20,7 +20,7 @@ interface ProjectListingItemProps {
   project: Project;
 }
 
-const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
+const ProjectListingItem = (props: ProjectListingItemProps) => {
   const { project } = props;
   const { _id: projectId, title, type, sprintIds, adminIds, memberIds, backlogIds } = project;
   const [sprints, setSprints] = useState<Sprint[]>([]);
@@ -70,7 +70,7 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
     getUsers();
   }, [backlogIds, sprintIds, adminIds, memberIds]);
 
-  const renderSprintStatusSpan = (sprints: Sprint[]): JSX.Element => {
+  const renderSprintStatusSpan = (sprints: Sprint[]) => {
     let span = (
       <Typography component="span" fontSize="inherit" sx={{ color: "error.main" }}>
         Stopped
@@ -88,7 +88,7 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
     return span;
   };
 
-  const renderAvatarGroups = (users: User[]): JSX.Element => {
+  const renderAvatarGroups = (users: User[]) => {
     return (
       <AvatarGroup
         sx={{

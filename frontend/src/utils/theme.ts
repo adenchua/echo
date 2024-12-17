@@ -1,10 +1,10 @@
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import teal from "@mui/material/colors/teal";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
-import "@fontsource/lato";
+// import "@fontsource/roboto/300.css";
+// import "@fontsource/roboto/400.css";
+// import "@fontsource/roboto/500.css";
+// import "@fontsource/roboto/700.css";
+// import "@fontsource/lato";
 
 let theme = createTheme({
   typography: {

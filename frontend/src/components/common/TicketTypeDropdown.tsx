@@ -10,7 +10,7 @@ interface TicketTypeDropdownProps {
   onChange: (event: SelectChangeEvent<unknown>, child: React.ReactNode) => void;
 }
 
-const TicketTypeDropdown = (props: TicketTypeDropdownProps): JSX.Element => {
+const TicketTypeDropdown = (props: TicketTypeDropdownProps) => {
   const { selectedValue, onChange } = props;
 
   return (

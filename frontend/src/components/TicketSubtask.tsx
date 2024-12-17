@@ -9,7 +9,7 @@ interface TicketSubtaskProps {
   onToggleCompletion: (subtaskId: string) => void;
 }
 
-const TicketSubtask = (props: TicketSubtaskProps): JSX.Element => {
+const TicketSubtask = (props: TicketSubtaskProps) => {
   const { subtask, onToggleCompletion } = props;
   const { _id: id, title, isCompleted } = subtask;
 

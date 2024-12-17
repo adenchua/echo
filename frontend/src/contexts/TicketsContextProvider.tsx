@@ -31,7 +31,7 @@ const ticketContextDefaultValues: TicketsContextStateType = {
 
 export const TicketsContext = createContext<TicketsContextStateType>(ticketContextDefaultValues);
 
-const TicketsContextProvider = ({ children }: TicketsContextProviderProps): JSX.Element => {
+const TicketsContextProvider = ({ children }: TicketsContextProviderProps) => {
   const [tickets, setTickets] = useState<Ticket[]>([]);
 
   const addTicket = useCallback((newTicket: Ticket): void => {

@@ -6,7 +6,7 @@ interface UpdateButtonProps {
   onCancel: any;
 }
 
-const UpdateButton = (props: UpdateButtonProps): JSX.Element => {
+const UpdateButton = (props: UpdateButtonProps) => {
   const { onAccept, onCancel, showSaveButton } = props;
 
   return (

@@ -16,7 +16,7 @@ interface TitleEditItemProps {
   title: string;
 }
 
-const TitleEditItem = (props: TitleEditItemProps): JSX.Element => {
+const TitleEditItem = (props: TitleEditItemProps) => {
   const { title, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const { currentLoadState, handleSetLoadingState } = useLoad();

@@ -21,7 +21,7 @@ interface SettingsTabProps {
   handleUpdateProjectFields: (updatedFields: ProjectUpdateFieldsType) => void;
 }
 
-const SettingsTab = (props: SettingsTabProps): JSX.Element => {
+const SettingsTab = (props: SettingsTabProps) => {
   const { project, handleUpdateProjectFields } = props;
   const { title, description, _id: projectId, adminIds } = project;
   const [titleInput, setTitleInput] = useState<string>(title);

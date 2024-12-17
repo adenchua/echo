@@ -49,7 +49,7 @@ interface FilterSelectWrapperProps {
   label: string;
 }
 
-const FilterSelectWrapper = (props: FilterSelectWrapperProps): JSX.Element => {
+const FilterSelectWrapper = (props: FilterSelectWrapperProps) => {
   const { children, label } = props;
 
   return (
@@ -62,7 +62,7 @@ const FilterSelectWrapper = (props: FilterSelectWrapperProps): JSX.Element => {
   );
 };
 
-const TicketFilter = (props: TicketFilterProps): JSX.Element => {
+const TicketFilter = (props: TicketFilterProps) => {
   const { onSelectHandler } = props;
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [filterText, setFilterText] = useState<string>("");

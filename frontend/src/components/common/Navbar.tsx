@@ -31,7 +31,7 @@ const navigationItems = [
   },
 ];
 
-const Navbar = (): JSX.Element => {
+const Navbar = () => {
   const { pathname } = useLocation();
   const { id: selectedProjectId } = useParams<{ id: string }>();
   const { currentLoadState, handleSetLoadingState } = useLoad();

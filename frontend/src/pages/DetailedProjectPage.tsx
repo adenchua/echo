@@ -26,7 +26,7 @@ import useQuery from "../hooks/useQuery";
 import Project, { ProjectUpdateFieldsType } from "../types/Project";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 
-const DetailedProjectPage = (): JSX.Element => {
+const DetailedProjectPage = () => {
   // using this instead of useLocalStorage hook because theres a bug where cached value is used
   const loggedInUserId = window.localStorage.getItem(LOCAL_STORAGE_UID_KEY);
   const { id } = useParams<{ id: string }>();

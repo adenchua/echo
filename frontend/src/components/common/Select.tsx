@@ -1,6 +1,6 @@
 import { SelectProps, Select as MuiSelect } from "@mui/material";
 
-const Select = (props: SelectProps): JSX.Element => {
+const Select = (props: SelectProps) => {
   return (
     <MuiSelect
       fullWidth

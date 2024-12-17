@@ -14,7 +14,7 @@ interface ConfirmationDialogProps {
   titleIcon: ReactNode;
 }
 
-const ConfirmationDialog = (props: ConfirmationDialogProps): JSX.Element => {
+const ConfirmationDialog = (props: ConfirmationDialogProps) => {
   const { isOpen, onClose, dialogContent, title, titleIcon } = props;
   return (
     <Dialog open={isOpen} maxWidth="sm" fullWidth>

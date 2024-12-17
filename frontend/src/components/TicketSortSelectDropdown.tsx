@@ -24,7 +24,7 @@ interface TicketSortSelectDropdownProps {
   onChangeHandler: (e: SelectChangeEvent) => void;
 }
 
-const TicketSortSelectDropdown = (props: TicketSortSelectDropdownProps): JSX.Element => {
+const TicketSortSelectDropdown = (props: TicketSortSelectDropdownProps) => {
   const { sortSelection, onChangeHandler } = props;
 
   return (

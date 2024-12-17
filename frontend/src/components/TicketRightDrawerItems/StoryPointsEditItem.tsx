@@ -17,7 +17,7 @@ interface StoryPointsEditItemProps {
   storyPoints: StoryPoints;
 }
 
-const StoryPointsEditItem = (props: StoryPointsEditItemProps): JSX.Element => {
+const StoryPointsEditItem = (props: StoryPointsEditItemProps) => {
   const { storyPoints, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const { onUpdateTicket } = useProductBacklog();

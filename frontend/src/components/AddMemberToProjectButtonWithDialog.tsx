@@ -30,9 +30,7 @@ interface AddMemberToProjectButtonWithDialogProps {
   projectId: string;
 }
 
-const AddMemberToProjectButtonWithDialog = (
-  props: AddMemberToProjectButtonWithDialogProps,
-): JSX.Element => {
+const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithDialogProps) => {
   const { projectId } = props;
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [availableMembers, setAvailableMembers] = useState<User[]>([]);

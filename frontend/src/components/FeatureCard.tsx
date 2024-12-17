@@ -7,7 +7,7 @@ interface FeatureCardProps {
   secondaryTitle: string;
 }
 
-const FeatureCard = (props: FeatureCardProps): JSX.Element => {
+const FeatureCard = (props: FeatureCardProps) => {
   const { title, secondaryTitle } = props;
 
   return (

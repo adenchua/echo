@@ -28,7 +28,7 @@ const epicContextDefaultProps: EpicsContextStateType = {
 
 export const EpicsContext = createContext<EpicsContextStateType>(epicContextDefaultProps);
 
-const EpicsContextProvider = ({ children }: EpicsContextProviderProps): JSX.Element => {
+const EpicsContextProvider = ({ children }: EpicsContextProviderProps) => {
   const [epics, setEpics] = useState<Epic[]>([]);
   const epicsMap: Record<string, Epic> = useMemo(() => {
     const temp: Record<string, Epic> = {};

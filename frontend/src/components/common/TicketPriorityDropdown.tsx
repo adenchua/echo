@@ -10,7 +10,7 @@ interface TicketPriorityDropdownProps {
   onChange: (event: SelectChangeEvent<unknown>, child: React.ReactNode) => void;
 }
 
-const TicketPriorityDropdown = (props: TicketPriorityDropdownProps): JSX.Element => {
+const TicketPriorityDropdown = (props: TicketPriorityDropdownProps) => {
   const { selectedValue, onChange } = props;
 
   return (

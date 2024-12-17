@@ -5,7 +5,7 @@ interface TextButtonProps {
   text: string;
 }
 
-const TextButton = (props: TextButtonProps): JSX.Element => {
+const TextButton = (props: TextButtonProps) => {
   const { handleOnClick, text } = props;
   return (
     <Typography

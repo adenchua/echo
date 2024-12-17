@@ -15,7 +15,7 @@ interface PageLayoutWrapperProps {
   toolbarContent?: React.ReactNode;
 }
 
-const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
+const PageLayoutWrapper = (props: PageLayoutWrapperProps) => {
   const { children, toolbarContent, disablePadding = false } = props;
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -23,7 +23,7 @@ const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
     setDrawerOpen(!drawerOpen);
   };
 
-  const renderHamburgerIcon = (): JSX.Element => {
+  const renderHamburgerIcon = () => {
     return (
       <IconButton
         color="inherit"
@@ -37,7 +37,7 @@ const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
     );
   };
 
-  const renderToolbarContent = (): JSX.Element => {
+  const renderToolbarContent = () => {
     if (toolbarContent) {
       return (
         <>

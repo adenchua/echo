@@ -12,7 +12,7 @@ interface PromoteMemberIconButtonProps {
   onConfirm: (member: User) => void;
 }
 
-const PromoteMemberIconButton = (props: PromoteMemberIconButtonProps): JSX.Element => {
+const PromoteMemberIconButton = (props: PromoteMemberIconButtonProps) => {
   const [isDialogOpened, setIsDialogOpened] = useState<boolean>(false);
   const { member, onConfirm } = props;
 

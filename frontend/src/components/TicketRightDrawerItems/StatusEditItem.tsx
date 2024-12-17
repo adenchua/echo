@@ -20,7 +20,7 @@ interface StatusEditItemProps {
   status: TicketStatus;
 }
 
-const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
+const StatusEditItem = (props: StatusEditItemProps) => {
   const { status, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const { onUpdateTicket } = useProductBacklog();

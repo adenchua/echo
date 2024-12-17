@@ -14,7 +14,7 @@ interface DeleteEpicDialogProps {
   epic: Epic;
 }
 
-const DeleteEpicDialog = (props: DeleteEpicDialogProps): JSX.Element => {
+const DeleteEpicDialog = (props: DeleteEpicDialogProps) => {
   const { isDialogOpened, onClose, epic } = props;
   const { title, ticketIds, _id: epicId } = epic;
   const { deleteEpic: deleteEpicInContext } = useContext(EpicsContext);

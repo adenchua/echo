@@ -1,3 +1,5 @@
+import path from "path";
+
 import commonWebpackConfig, { Configuration } from "./webpack.common";
 
 const config: Configuration = {
@@ -12,6 +14,10 @@ const config: Configuration = {
     historyApiFallback: { index: "/" },
     port: 3000, // starts the webpack server at this port number
     compress: true, // enable gzip compression for everything served
+    static: {
+      directory: path.resolve(__dirname, "./public"),
+      publicPath: "/public",
+    },
   },
 };
 

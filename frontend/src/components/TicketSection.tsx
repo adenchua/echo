@@ -19,7 +19,7 @@ interface TicketSectionProps {
   selectedTicketId: string | null;
 }
 
-const TicketSection = (props: TicketSectionProps): JSX.Element => {
+const TicketSection = (props: TicketSectionProps) => {
   const { tickets, epicId, searchInput, onSelectTicket, selectedTicketId } = props;
   const [showTickets, setShowTickets] = useState<boolean>(true);
   const { epics } = useContext(EpicsContext);

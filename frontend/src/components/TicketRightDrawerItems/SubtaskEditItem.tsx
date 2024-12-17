@@ -18,7 +18,7 @@ interface SubtaskEditItemProps {
   ticketId: string;
 }
 
-const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
+const SubtaskEditItem = (props: SubtaskEditItemProps) => {
   const { subtaskIds, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const [subtasks, setSubtasks] = useState<Subtask[]>([]);

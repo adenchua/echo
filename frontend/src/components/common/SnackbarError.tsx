@@ -6,7 +6,7 @@ interface SnackbarErrorProps {
   text?: string;
 }
 
-const SnackbarError = (props: SnackbarErrorProps): JSX.Element => {
+const SnackbarError = (props: SnackbarErrorProps) => {
   const { isOpen, onClose, text = "Something went wrong, please try again later" } = props;
 
   return (

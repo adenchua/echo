@@ -19,7 +19,7 @@ interface SprintEndDialogProps {
   sprintTickets: Ticket[];
 }
 
-const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
+const SprintEndDialog = (props: SprintEndDialogProps) => {
   const { onEndSprint, projectId, sprintId, sprintTickets, showEndSprintDialog, onClose } = props;
   const { currentLoadState, handleSetLoadingState } = useLoad();
   const [completedSprint, setCompletedSprint] = useState<Sprint | null>(null);
@@ -53,7 +53,7 @@ const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
     }
   };
 
-  const renderSuccessDialogContent = (): JSX.Element => {
+  const renderSuccessDialogContent = () => {
     let numberOfCompletedTickets = 0;
     let numberOfIncompleteTickets = 0;
     let completionRate = 0;
@@ -91,7 +91,7 @@ const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
     );
   };
 
-  const renderDialogContent = (): JSX.Element => (
+  const renderDialogContent = () => (
     <>
       <DialogContentText mb={3}>
         <Typography

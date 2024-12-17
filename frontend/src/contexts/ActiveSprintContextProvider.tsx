@@ -21,9 +21,7 @@ const activeContextDefaultState: ActiveSprintContextStateType = {
 export const ActiveSprintContext =
   createContext<ActiveSprintContextStateType>(activeContextDefaultState);
 
-const ActiveSprintContextProvider = ({
-  children,
-}: ActiveSprintContextProviderProps): JSX.Element => {
+const ActiveSprintContextProvider = ({ children }: ActiveSprintContextProviderProps) => {
   const [activeSprint, setActiveSprint] = useState<Sprint | null>(null);
 
   const handleSetActiveSprint = useCallback((newActiveSprint: Sprint) => {

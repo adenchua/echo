@@ -16,7 +16,7 @@ interface DescriptionEditItemProps {
   ticketId: string;
 }
 
-const DescriptionEditItem = (props: DescriptionEditItemProps): JSX.Element => {
+const DescriptionEditItem = (props: DescriptionEditItemProps) => {
   const { description, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const { currentLoadState, handleSetLoadingState } = useLoad();

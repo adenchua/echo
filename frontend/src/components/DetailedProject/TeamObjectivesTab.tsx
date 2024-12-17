@@ -13,7 +13,7 @@ interface TeamObjectivesTabProps {
   project: Project;
 }
 
-const TeamObjectivesTab = (props: TeamObjectivesTabProps): JSX.Element => {
+const TeamObjectivesTab = (props: TeamObjectivesTabProps) => {
   const [showCreationForm, setShowCreationForm] = useState<boolean>(false);
   const { epics } = useContext(EpicsContext);
 

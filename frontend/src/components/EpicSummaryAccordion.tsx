@@ -21,7 +21,7 @@ interface EpicSummaryAccordionProps {
   epic: Epic;
 }
 
-const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => {
+const EpicSummaryAccordion = (props: EpicSummaryAccordionProps) => {
   const { epic } = props;
   const { title, ticketIds } = epic;
   const { currentLoadState, handleSetLoadingState } = useLoad();
