@@ -6,15 +6,15 @@ import {
   getTicket,
   getTickets,
   updateTicket,
-} from "../controllers/ticket.js";
+} from "../controllers/ticket";
 import {
   createTicketValidationChain,
   deleteTicketValidationChain,
   getTicketValidationChain,
   getTicketsValidationChain,
   updateTicketValidationChain,
-} from "../middlewares/ticketValidationMiddleware.js";
-import { validationErrorHandling } from "../middlewares/validationErrorHandlingMiddleware.js";
+} from "../middlewares/ticketValidationMiddleware";
+import { validationErrorHandling } from "../middlewares/validationErrorHandlingMiddleware";
 
 const router = Router();
 

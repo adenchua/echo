@@ -1,8 +1,8 @@
-import errorCodeToMessageMap from "../constants/errorMessages.js";
-import subtaskService from "../services/subtaskService.js";
-import ticketService from "../services/ticketService.js";
-import ErrorResponse from "../utils/ErrorResponse.js";
-import { TICKET_NOT_FOUND_ERROR } from "./ticket.js";
+import errorCodeToMessageMap from "../constants/errorMessages";
+import subtaskService from "../services/subtaskService";
+import ticketService from "../services/ticketService";
+import ErrorResponse from "../utils/ErrorResponse";
+import { TICKET_NOT_FOUND_ERROR } from "./ticket";
 
 const SUBTASK_NOT_FOUND_ERROR = new ErrorResponse(
   errorCodeToMessageMap["SUBTASK_NOT_FOUND"],

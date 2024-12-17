@@ -1,5 +1,5 @@
-import Project from "../models/project.js";
-import objectUtils from "../utils/objectUtils.js";
+import Project from "../models/project";
+import objectUtils from "../utils/objectUtils";
 
 /**
  * Creates a project in the database

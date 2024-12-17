@@ -1,8 +1,8 @@
-import Epic from "../models/epic.js";
-import Project from "../models/project.js";
-import Ticket from "../models/ticket.js";
-import objectUtils from "../utils/objectUtils.js";
-import projectService from "./projectService.js";
+import Epic from "../models/epic";
+import Project from "../models/project";
+import Ticket from "../models/ticket";
+import objectUtils from "../utils/objectUtils";
+import projectService from "./projectService";
 
 /**
  * Creates a new epic and adds it to an existing project

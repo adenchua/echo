@@ -1,18 +1,13 @@
 import { Router } from "express";
 
-import {
-  createSubtask,
-  deleteSubtask,
-  getSubtasks,
-  updateSubtask,
-} from "../controllers/subtask.js";
-import { validationErrorHandling } from "../middlewares/validationErrorHandlingMiddleware.js";
+import { createSubtask, deleteSubtask, getSubtasks, updateSubtask } from "../controllers/subtask";
+import { validationErrorHandling } from "../middlewares/validationErrorHandlingMiddleware";
 import {
   createSubtaskValidationChain,
   deleteSubtaskValidationChain,
   getSubtasksValidationChain,
   updateSubtaskValidationChain,
-} from "../middlewares/subtaskValidationMiddleware.js";
+} from "../middlewares/subtaskValidationMiddleware";
 
 const router = Router();
 

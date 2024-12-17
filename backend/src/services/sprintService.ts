@@ -1,7 +1,7 @@
-import Project from "../models/project.js";
-import Sprint from "../models/sprint.js";
-import Ticket from "../models/ticket.js";
-import objectUtils from "../utils/objectUtils.js";
+import Project from "../models/project";
+import Sprint from "../models/sprint";
+import Ticket from "../models/ticket";
+import objectUtils from "../utils/objectUtils";
 
 /**
  * Starts a sprint in a project

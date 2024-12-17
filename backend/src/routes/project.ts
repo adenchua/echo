@@ -11,7 +11,7 @@ import {
   promoteMemberToAdministrator,
   removeMemberFromProject,
   updateProject,
-} from "../controllers/project.js";
+} from "../controllers/project";
 
 import {
   addMemberToProjectValidationChain,
@@ -23,8 +23,8 @@ import {
   promoteMemberToAdministratorValidationChain,
   removeMemberFromProjectValidationChain,
   updateProjectValidationChain,
-} from "../middlewares/projectValidationMiddleware.js";
-import { validationErrorHandling } from "../middlewares/validationErrorHandlingMiddleware.js";
+} from "../middlewares/projectValidationMiddleware";
+import { validationErrorHandling } from "../middlewares/validationErrorHandlingMiddleware";
 
 const router = Router();
 

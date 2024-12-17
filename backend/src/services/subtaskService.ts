@@ -1,6 +1,6 @@
-import Subtask from "../models/subtask.js";
-import Ticket from "../models/ticket.js";
-import objectUtils from "../utils/objectUtils.js";
+import Subtask from "../models/subtask";
+import Ticket from "../models/ticket";
+import objectUtils from "../utils/objectUtils";
 
 /**
  * Creates a new subtask for a ticket

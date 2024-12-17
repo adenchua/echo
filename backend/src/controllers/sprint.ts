@@ -1,9 +1,9 @@
-import errorCodeToMessageMap from "../constants/errorMessages.js";
-import projectService from "../services/projectService.js";
-import sprintService from "../services/sprintService.js";
-import ErrorResponse from "../utils/ErrorResponse.js";
-import { isProjectDeleted } from "../utils/projectUtils.js";
-import { PROJECT_NOT_FOUND_ERROR } from "./project.js";
+import errorCodeToMessageMap from "../constants/errorMessages";
+import projectService from "../services/projectService";
+import sprintService from "../services/sprintService";
+import ErrorResponse from "../utils/ErrorResponse";
+import { isProjectDeleted } from "../utils/projectUtils";
+import { PROJECT_NOT_FOUND_ERROR } from "./project";
 
 const EXISTING_ACTIVE_SPRINT_ERROR = new ErrorResponse(
   errorCodeToMessageMap["EXISTING_ACTIVE_SPRINT"],

@@ -1,8 +1,8 @@
-import errorCodeToMessageMap from "../constants/errorMessages.js";
-import projectService from "../services/projectService.js";
-import ErrorResponse from "../utils/ErrorResponse.js";
-import objectUtils from "../utils/objectUtils.js";
-import { isProjectDeleted } from "../utils/projectUtils.js";
+import errorCodeToMessageMap from "../constants/errorMessages";
+import projectService from "../services/projectService";
+import ErrorResponse from "../utils/ErrorResponse";
+import objectUtils from "../utils/objectUtils";
+import { isProjectDeleted } from "../utils/projectUtils";
 
 export const PROJECT_NOT_FOUND_ERROR = new ErrorResponse(
   errorCodeToMessageMap["PROJECT_NOT_FOUND"],

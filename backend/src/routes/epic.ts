@@ -7,7 +7,7 @@ import {
   getEpics,
   removeTicketFromEpic,
   updateEpic,
-} from "../controllers/epic.js";
+} from "../controllers/epic";
 import {
   addTicketToEpicValidationChain,
   createEpicValidationChain,
@@ -15,8 +15,8 @@ import {
   getEpicsValidationChain,
   removeTicketFromEpicValidationChain,
   updateEpicValidationChain,
-} from "../middlewares/epicValidationMiddleware.js";
-import { validationErrorHandling } from "../middlewares/validationErrorHandlingMiddleware.js";
+} from "../middlewares/epicValidationMiddleware";
+import { validationErrorHandling } from "../middlewares/validationErrorHandlingMiddleware";
 
 const router = Router();
 

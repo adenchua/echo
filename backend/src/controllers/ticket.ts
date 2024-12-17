@@ -1,9 +1,9 @@
-import errorCodeToMessageMap from "../constants/errorMessages.js";
-import projectService from "../services/projectService.js";
-import ticketService from "../services/ticketService.js";
-import ErrorResponse from "../utils/ErrorResponse.js";
-import { isProjectDeleted } from "../utils/projectUtils.js";
-import { PROJECT_NOT_FOUND_ERROR } from "./project.js";
+import errorCodeToMessageMap from "../constants/errorMessages";
+import projectService from "../services/projectService";
+import ticketService from "../services/ticketService";
+import ErrorResponse from "../utils/ErrorResponse";
+import { isProjectDeleted } from "../utils/projectUtils";
+import { PROJECT_NOT_FOUND_ERROR } from "./project";
 
 export const TICKET_NOT_FOUND_ERROR = new ErrorResponse(
   errorCodeToMessageMap["TICKET_NOT_FOUND"],
