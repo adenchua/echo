@@ -17,6 +17,8 @@ const DATABASE_URL = process.env.DATABASE_URL || "mongodb://localhost:27017/echo
 const API_PREPEND = "/api";
 
 app.use(cors());
+app.use(express.json()); // parses incoming requests with JSON payloads
+app.use(express.urlencoded({ extended: true })); // parses urlencoded bodies with qs library
 app.use(morgan("dev")); // logging middleware
 app.use(helmet()); // secure server by setting recommended HTTP response headers
 
