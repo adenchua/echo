@@ -7,7 +7,7 @@ import ListSubheader from "@mui/material/ListSubheader";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useContext, useEffect } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router";
 
 import fetchAllProjectsByUser from "../../api/projects/fetchAllProjectsByUser";
 import { UserProjectsContext } from "../../contexts/UserProjectsContextProvider";

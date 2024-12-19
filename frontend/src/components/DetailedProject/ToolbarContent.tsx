@@ -3,7 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import ProjectIcon from "@mui/icons-material/GitHub";
 import Link from "@mui/material/Link";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink } from "react-router";
 
 import Project from "../../types/Project";
 import useQuery from "../../hooks/useQuery";

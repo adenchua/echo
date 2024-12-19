@@ -11,28 +11,6 @@ let theme = createTheme({
     },
   },
   components: {
-    MuiTextField: {
-      defaultProps: {
-        inputProps: { style: { padding: 7 } },
-      },
-    },
-    MuiButtonBase: {
-      defaultProps: {
-        disableRipple: true,
-        disableTouchRipple: true,
-      },
-    },
-    MuiButton: {
-      defaultProps: {
-        disableElevation: true,
-      },
-      styleOverrides: {
-        root: {
-          textTransform: "none",
-          borderRadius: 100,
-        },
-      },
-    },
     MuiDialog: {
       styleOverrides: {
         paper: {

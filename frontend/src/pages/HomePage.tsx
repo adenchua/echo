@@ -2,7 +2,7 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid2";
 import Typography from "@mui/material/Typography";
 import teal from "@mui/material/colors/teal";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router";
 
 import FeatureCard from "../components/FeatureCard";
 import Grow from "../components/common/Grow";

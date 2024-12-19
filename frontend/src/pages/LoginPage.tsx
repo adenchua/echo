@@ -2,11 +2,12 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRightAlt";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
+import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 import login from "../api/authentication/login";
 import useLoad from "../hooks/useLoad";
@@ -86,6 +87,9 @@ const LoginPage = () => {
             {currentLoadState === "LOADING" ? "Logging in..." : "Login"}
           </Button>
         </form>
+        <Link onClick={() => navigate("/sign-up")} mt={2}>
+          New to echo? Register here
+        </Link>
       </Paper>
     );
   };

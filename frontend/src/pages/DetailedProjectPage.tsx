@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { useContext, useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router";
 
 import fetchEpics from "../api/epics/fetchEpics";
 import fetchProject from "../api/projects/fetchProject";

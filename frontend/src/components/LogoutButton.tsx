@@ -2,7 +2,7 @@ import LogoutIcon from "@mui/icons-material/LogoutOutlined";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import ActionDialog from "./common/ActionDialog";

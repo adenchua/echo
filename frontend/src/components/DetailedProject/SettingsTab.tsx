@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid2";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 import deleteProject from "../../api/projects/deleteProject";
 import updateProject from "../../api/projects/updateProject";

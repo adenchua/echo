@@ -4,7 +4,7 @@ import Hidden from "@mui/material/Hidden";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { useContext, useState } from "react";
-import { Navigate, Link as RouterLink } from "react-router-dom";
+import { Navigate, Link as RouterLink } from "react-router";
 
 import CreateProjectButtonWithDialog from "../components/CreateProjectButtonWithDialog";
 import ProjectListingItem from "../components/ProjectListingItem";
