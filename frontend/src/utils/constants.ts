@@ -1,6 +1,4 @@
-export const SERVER_API_URL = "http://localhost:5000/api";
-
-export const UMS_API_URL = "http://localhost:5100";
+export const SERVER_API_URL = "http://localhost:5084";
 
 export const APP_VERSION = "1.5.2";
 

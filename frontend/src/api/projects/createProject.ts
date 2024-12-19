@@ -7,7 +7,7 @@ import ApiResponseWrapper from "../../types/ApiResponseWrapper";
 const createProject = async (title: string, adminId: string, type: string): Promise<Project> => {
   try {
     const response = await axios.post<ApiResponseWrapper<Project>>(
-      `${SERVER_API_URL}/v1/projects`,
+      `${SERVER_API_URL}/api/v1/projects`,
       {
         title,
         adminId,

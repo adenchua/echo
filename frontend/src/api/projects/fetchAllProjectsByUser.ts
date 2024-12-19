@@ -7,7 +7,7 @@ import ApiResponseWrapper from "../../types/ApiResponseWrapper";
 const fetchAllProjectsByUser = async (userId: string): Promise<Project[]> => {
   try {
     const response = await axios.get<ApiResponseWrapper<Project[]>>(
-      `${SERVER_API_URL}/v1/projects/user/${userId}`,
+      `${SERVER_API_URL}/api/v1/projects/user/${userId}`,
     );
     return response.data.data;
   } catch (error) {

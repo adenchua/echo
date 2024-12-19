@@ -6,12 +6,12 @@ import Checkbox from "@mui/material/Checkbox";
 import Chip from "@mui/material/Chip";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import { useContext, useEffect, useState } from "react";
 
-import { ListItemAvatar } from "@mui/material";
 import addMembersToProject from "../api/projects/addMembersToProject";
 import fetchAllUsers from "../api/users/fetchAllUsers";
 import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";

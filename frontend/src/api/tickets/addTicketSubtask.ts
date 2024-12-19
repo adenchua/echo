@@ -7,7 +7,7 @@ import ApiResponseWrapper from "../../types/ApiResponseWrapper";
 const addTicketSubtask = async (ticketId: string, title: string): Promise<Subtask> => {
   try {
     const response = await axios.post<ApiResponseWrapper<Subtask>>(
-      `${SERVER_API_URL}/v1/subtasks`,
+      `${SERVER_API_URL}/api/v1/subtasks`,
       {
         ticketId,
         title,

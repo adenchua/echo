@@ -28,8 +28,7 @@ const LoginPage = () => {
 
     try {
       handleSetLoadingState("LOADING");
-      const user = await login(usernameInput, passwordInput);
-      const { _id: userId } = user;
+      const userId = await login(usernameInput, passwordInput);
       setValueInStorage(userId);
       navigate("/home"); // redirect to homepage upon login
     } catch (error) {

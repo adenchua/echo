@@ -8,7 +8,7 @@ const updateSubtask = async (
   fieldsToUpdate: SubtaskUpdateFields,
 ): Promise<void> => {
   try {
-    await axios.patch<void>(`${SERVER_API_URL}/v1/subtasks/id/${subtaskId}`, fieldsToUpdate);
+    await axios.patch<void>(`${SERVER_API_URL}/api/v1/subtasks/id/${subtaskId}`, fieldsToUpdate);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error("Axios Error");
