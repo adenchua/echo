@@ -35,7 +35,7 @@ const TicketSubtaskDeletable = (props: TicketSubtaskDeletableProps) => {
           }}
         >
           <DeleteIcon fontSize="small" color="inherit" />
-          <Typography variant="body2" noWrap color="inherit">
+          <Typography noWrap color="inherit">
             {title}
           </Typography>
         </Box>

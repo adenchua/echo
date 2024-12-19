@@ -3,7 +3,6 @@ import PersonIcon from "@mui/icons-material/PersonOutline";
 import CloseIcon from "@mui/icons-material/RestartAltOutlined";
 import RuleIcon from "@mui/icons-material/RuleOutlined";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -22,6 +21,7 @@ import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
 import { sliceLongString } from "../utils/stringUtils";
 import StatusChipButton from "./StatusChipButton";
+import Button from "./common/Button";
 import Select from "./common/Select";
 
 export type TicketFilterType =
@@ -101,29 +101,9 @@ const TicketFilter = (props: TicketFilterProps) => {
 
   return (
     <div>
-      {filterText && (
-        <Button
-          aria-describedby={id}
-          size="small"
-          color="primary"
-          variant="contained"
-          onClick={handleClick}
-          sx={{ whiteSpace: "nowrap" }}
-        >
-          Filters: {filterText}
-        </Button>
-      )}
-      {!filterText && (
-        <Button
-          aria-describedby={id}
-          size="small"
-          color="inherit"
-          onClick={handleClick}
-          sx={{ color: "#9e9e9e", whiteSpace: "nowrap" }}
-        >
-          Filters: None
-        </Button>
-      )}
+      <Button color="secondary" onClick={handleClick} sx={{ whiteSpace: "nowrap" }}>
+        Filters: {filterText ? filterText : "None"}
+      </Button>
       <Popover
         id={id}
         open={open}
@@ -161,54 +141,48 @@ const TicketFilter = (props: TicketFilterProps) => {
             <ListItemText>Not in sprint</ListItemText>
           </MenuItem>
           <Divider />
-
-          <FilterSelectWrapper label="Status">
-            <Select
-              label="Status"
-              defaultValue=""
-              onChange={(e) =>
-                handleSelectNewFilter(
-                  `status-${e.target.value as TicketStatus}`,
-                  statusToTextMapping[e.target.value as TicketStatus],
-                )
-              }
-            >
-              {["todo", "progress", "review", "completed", "stuck", "hold"].map((ticketStatus) => (
-                <MenuItem
-                  key={ticketStatus}
-                  value={ticketStatus}
-                  sx={{ display: "flex", justifyContent: "center" }}
-                >
-                  <StatusChipButton status={ticketStatus as TicketStatus} size="small" />
+          <Select
+            label="Status"
+            defaultValue=""
+            onChange={(e) =>
+              handleSelectNewFilter(
+                `status-${e.target.value as TicketStatus}`,
+                statusToTextMapping[e.target.value as TicketStatus],
+              )
+            }
+          >
+            {["todo", "progress", "review", "completed", "stuck", "hold"].map((ticketStatus) => (
+              <MenuItem
+                key={ticketStatus}
+                value={ticketStatus}
+                sx={{ display: "flex", justifyContent: "center" }}
+              >
+                <StatusChipButton status={ticketStatus as TicketStatus} size="small" />
+              </MenuItem>
+            ))}
+          </Select>
+          <Select
+            defaultValue=""
+            label="Assignee"
+            onChange={(e) =>
+              handleSelectNewFilter(
+                `assignee-${e.target.value}`,
+                getUserDisplayName(e.target.value as string),
+              )
+            }
+          >
+            {[...admins, ...members].map((user) => {
+              const { displayName, _id: userId, username } = user;
+              return (
+                <MenuItem key={userId} value={userId} dense>
+                  <ListItemAvatar>
+                    <Avatar sx={{ height: 24, width: 24 }} src={getUserAvatarSVG(username)} />
+                  </ListItemAvatar>
+                  <ListItemText>{displayName}</ListItemText>
                 </MenuItem>
-              ))}
-            </Select>
-          </FilterSelectWrapper>
-
-          <FilterSelectWrapper label="Assignee">
-            <Select
-              defaultValue=""
-              label="Assignee"
-              onChange={(e) =>
-                handleSelectNewFilter(
-                  `assignee-${e.target.value}`,
-                  getUserDisplayName(e.target.value as string),
-                )
-              }
-            >
-              {[...admins, ...members].map((user) => {
-                const { displayName, _id: userId, username } = user;
-                return (
-                  <MenuItem key={userId} value={userId} dense>
-                    <ListItemAvatar>
-                      <Avatar sx={{ height: 24, width: 24 }} src={getUserAvatarSVG(username)} />
-                    </ListItemAvatar>
-                    <ListItemText>{displayName}</ListItemText>
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FilterSelectWrapper>
+              );
+            })}
+          </Select>
 
           <Divider />
           <MenuItem onClick={() => handleSelectNewFilter(null, "")}>

@@ -1,4 +1,4 @@
-import Button from "@mui/material/Button";
+import ButtonText from "../common/ButtonText";
 
 interface UpdateButtonProps {
   showSaveButton: boolean;
@@ -11,14 +11,8 @@ const UpdateButton = (props: UpdateButtonProps) => {
 
   return (
     <>
-      <Button variant="text" onClick={onCancel} size="small">
-        Cancel
-      </Button>
-      {showSaveButton && (
-        <Button variant="text" onClick={onAccept} size="small">
-          Save
-        </Button>
-      )}
+      <ButtonText onClick={onCancel}>Cancel</ButtonText>
+      {showSaveButton && <ButtonText onClick={onAccept}>Save</ButtonText>}
     </>
   );
 };

@@ -6,15 +6,16 @@ import Select from "./Select";
 import PriorityIcon from "../icons/PriorityIcon";
 
 interface TicketPriorityDropdownProps {
+  label: string;
   selectedValue: string;
   onChange: (event: SelectChangeEvent<unknown>, child: React.ReactNode) => void;
 }
 
 const TicketPriorityDropdown = (props: TicketPriorityDropdownProps) => {
-  const { selectedValue, onChange } = props;
+  const { selectedValue, onChange, label } = props;
 
   return (
-    <Select value={selectedValue} onChange={onChange}>
+    <Select value={selectedValue} onChange={onChange} label={label}>
       <MenuItem value="low">
         <PriorityIcon priority="low" />
         <Typography ml={1}>Low</Typography>

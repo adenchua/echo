@@ -31,7 +31,7 @@ const TicketNavbarWrapper = (props: TicketNavbarWrapperProps) => {
           alignItems: "center",
           borderBottom: "1px solid",
           borderColor: "divider",
-          gap: 2,
+          gap: 1,
         }}
         elevation={0}
         square

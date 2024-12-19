@@ -1,6 +1,4 @@
-import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid2";
-import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
 
 import { DialogContentText } from "@mui/material";
@@ -8,10 +6,12 @@ import useLoad from "../hooks/useLoad";
 import useProductBacklog from "../hooks/useProductBacklog";
 import { TicketPriority, TicketType } from "../types/Ticket";
 import ActionDialog from "./common/ActionDialog";
+import Button from "./common/Button";
 import DialogErrorText from "./common/DialogErrorText";
 import TicketPriorityDropdown from "./common/TicketPriorityDropdown";
 import TicketTypeDropdown from "./common/TicketTypeDropdown";
 import AddTicketIcon from "./icons/AddTicketIcon";
+import TextField from "./common/TextField";
 
 const DEFAULT_TICKET_TYPE: TicketType = "task";
 const DEFAULT_PRIORITY: TicketPriority = "medium";
@@ -52,11 +52,7 @@ const AddTicketButtonWithDialog = (props: AddTicketButtonWithDialogProps) => {
 
   return (
     <>
-      <Button
-        startIcon={<AddTicketIcon fontSize="small" />}
-        onClick={() => setShowDialog(true)}
-        size="small"
-      >
+      <Button startIcon={<AddTicketIcon />} onClick={() => setShowDialog(true)}>
         Add Ticket
       </Button>
       <ActionDialog
@@ -68,26 +64,24 @@ const AddTicketButtonWithDialog = (props: AddTicketButtonWithDialogProps) => {
         disableActionButton={currentLoadState === "LOADING" || titleInput.length === 0}
         dialogContent={
           <>
-            <DialogContentText>Title</DialogContentText>
             <TextField
-              variant="filled"
-              fullWidth
-              autoFocus
+              sx={{ mt: 1, mb: 2 }}
+              label="Ticket title"
               placeholder="As a user, I want to add an item to my cart"
               value={titleInput}
               onChange={(e) => setTitleInput(e.target.value)}
             />
             <Grid container spacing={2} mt={1}>
               <Grid size={6}>
-                <DialogContentText>Ticket type</DialogContentText>
                 <TicketTypeDropdown
+                  label="Ticket type"
                   selectedValue={ticketType}
                   onChange={(event, child) => setTicketType(event.target.value as TicketType)}
                 />
               </Grid>
               <Grid size={6}>
-                <DialogContentText>Priority</DialogContentText>
                 <TicketPriorityDropdown
+                  label="Priority"
                   selectedValue={priority}
                   onChange={(event, child) => setPriority(event.target.value as TicketPriority)}
                 />

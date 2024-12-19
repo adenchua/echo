@@ -26,7 +26,6 @@ const ToolbarContent = (props: ToolbarContentProps) => {
         underline="none"
       >
         <Typography
-          variant="body2"
           color={isTabSelected ? "primary.main" : "grey.500"}
           sx={{
             "&:hover": {

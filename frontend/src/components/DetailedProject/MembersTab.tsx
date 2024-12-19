@@ -120,12 +120,8 @@ const MembersTab = (props: MembersTabProps) => {
                         avatar={<UserAvatar username={username} displayName={displayName} />}
                         title={
                           <>
+                            <Typography display="inline">{`${displayName} `}</Typography>{" "}
                             <Typography
-                              variant="body2"
-                              display="inline"
-                            >{`${displayName} `}</Typography>{" "}
-                            <Typography
-                              variant="body2"
                               color="grey.500"
                               display="inline"
                             >{`@${username}`}</Typography>
@@ -135,15 +131,11 @@ const MembersTab = (props: MembersTabProps) => {
                       />
                     </TableCell>
                     <TableCell align="left">
-                      <Typography variant="body2">{title}</Typography>
+                      <Typography>{title}</Typography>
                     </TableCell>
                     <TableCell align="left">
-                      {isAdmin && (
-                        <Typography color="error" variant="body2">
-                          Admin
-                        </Typography>
-                      )}
-                      {!isAdmin && <Typography variant="body2">Member</Typography>}
+                      {isAdmin && <Typography color="error">Admin</Typography>}
+                      {!isAdmin && <Typography>Member</Typography>}
                     </TableCell>
                     {isLoggedInUserAnAdmin && (
                       <TableCell align="center">

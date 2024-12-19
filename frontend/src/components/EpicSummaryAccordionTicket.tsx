@@ -71,9 +71,7 @@ const EpicSummaryAccordionTicket = (props: EpicSummaryAccordionTicketProps) => {
       <Typography variant="caption" color="grey.500" noWrap sx={{ flexShrink: 0 }}>
         {`#${ticketNumber}`}
       </Typography>
-      <Typography variant="body2" noWrap>
-        {title}
-      </Typography>
+      <Typography noWrap>{title}</Typography>
       <Box flexGrow={1} />
       {assignee && (
         <Avatar

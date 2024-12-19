@@ -35,26 +35,16 @@ const TicketSortSelectDropdown = (props: TicketSortSelectDropdownProps) => {
       onChange={onChangeHandler}
       SelectDisplayProps={{
         style: {
-          fontSize: 14,
-          color: "#9e9e9e",
+          backgroundColor: "#E0E0E0",
+          borderRadius: 100,
         },
       }}
       sx={{
-        borderRadius: 0,
-        "& .MuiSelect-select": {
-          padding: "3px 6px",
-        },
         "& .MuiOutlinedInput-notchedOutline": {
           border: "none",
         },
-        "& .MuiSelect-iconOutlined": {
-          color: "#9e9e9e",
-        },
       }}
       MenuProps={{
-        PaperProps: {
-          elevation: 2,
-        },
         MenuListProps: {
           dense: true,
         },

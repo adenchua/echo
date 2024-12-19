@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import MenuItem from "@mui/material/MenuItem";
@@ -9,6 +8,7 @@ import useLoad from "../../hooks/useLoad";
 import useProductBacklog from "../../hooks/useProductBacklog";
 import { TicketStatus } from "../../types/Ticket";
 import StatusChipButton from "../StatusChipButton";
+import Button from "../common/Button";
 import Select from "../common/Select";
 import SnackbarError from "../common/SnackbarError";
 import EditButton from "./EditButton";
@@ -57,6 +57,7 @@ const StatusEditItem = (props: StatusEditItemProps) => {
           />
           <Box mb={2} width="100%">
             <Select
+              label="Status"
               value={status}
               onChange={(e) => handleUpdateTicketStatus(e.target.value as TicketStatus)}
             >
@@ -73,8 +74,6 @@ const StatusEditItem = (props: StatusEditItemProps) => {
             {status !== "completed" && (
               <Button
                 fullWidth
-                variant="outlined"
-                size="small"
                 sx={{ mt: 2 }}
                 onClick={() => handleUpdateTicketStatus("completed")}
               >

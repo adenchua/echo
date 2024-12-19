@@ -1,11 +1,12 @@
 import axios from "axios";
 
+import ApiResponseWrapper from "../../types/ApiResponseWrapper";
 import User from "../../types/User";
 import { SERVER_API_URL } from "../../utils/constants";
 
 const fetchUsersByIds = async (userIds: string[]): Promise<User[]> => {
   try {
-    const response = await axios.post<{ data: User[] }>(
+    const response = await axios.post<ApiResponseWrapper<User[]>>(
       `${SERVER_API_URL}/api/v1/users/bulk-fetch`,
       { userIds },
     );

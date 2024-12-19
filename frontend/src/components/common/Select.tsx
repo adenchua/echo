@@ -11,7 +11,17 @@ const Select = (props: SelectProps) => {
   return (
     <FormControl fullWidth>
       <InputLabel>{label}</InputLabel>
-      <MuiSelect label={label} fullWidth {...rest} />
+      <MuiSelect
+        SelectDisplayProps={{
+          style: {
+            display: "flex",
+            flexWrap: "nowrap",
+          },
+        }}
+        label={label}
+        fullWidth
+        {...rest}
+      />
     </FormControl>
   );
 };

@@ -1,6 +1,5 @@
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
@@ -18,6 +17,7 @@ import User from "../../types/User";
 import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
 import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
 import { sliceLongString } from "../../utils/stringUtils";
+import Button from "../common/Button";
 import Select from "../common/Select";
 import SnackbarError from "../common/SnackbarError";
 import UserAvatar from "../common/UserAvatar";
@@ -106,6 +106,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps) => {
           />
           <Box mb={2} width="100%">
             <Select
+              label="Select assignee"
               onChange={(e) => handleUpdateTicketAssignee(e.target.value as string)}
               value={assigneeId ? assigneeId : ""}
             >
@@ -123,8 +124,6 @@ const AssigneeEditItem = (props: AssigneeEditItemProps) => {
             </Select>
             <Button
               fullWidth
-              variant="outlined"
-              size="small"
               sx={{ mt: 2 }}
               onClick={() => {
                 if (loggedInUserId) {
@@ -137,10 +136,8 @@ const AssigneeEditItem = (props: AssigneeEditItemProps) => {
             {assigneeId && (
               <Button
                 fullWidth
-                color="warning"
-                variant="outlined"
-                size="small"
                 sx={{ mt: 2 }}
+                color="secondary"
                 onClick={() => handleUpdateTicketAssignee("")}
               >
                 Remove Assignee

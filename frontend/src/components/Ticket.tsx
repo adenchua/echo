@@ -108,9 +108,7 @@ const Ticket = (props: TicketProps) => {
         <Typography variant="caption" color="grey.500" noWrap sx={{ minWidth: 24 }}>
           {`#${ticketNumber}`}
         </Typography>
-        <Typography variant="body2" noWrap>
-          {title}
-        </Typography>
+        <Typography noWrap>{title}</Typography>
         <Box flexGrow={1} />
         {status !== "completed" && (
           <Tooltip title="Due date">

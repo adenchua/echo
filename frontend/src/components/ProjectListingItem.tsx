@@ -114,12 +114,12 @@ const ProjectListingItem = (props: ProjectListingItemProps) => {
           <ProjectIcon />
         </Avatar>
         <Box sx={{ width: "200px" }}>
-          <Typography variant="body2" noWrap lineHeight="16px">
+          <Typography noWrap lineHeight="16px">
             {title} <br /> <span style={{ fontSize: 12, color: "#969892" }}>{type}</span>
           </Typography>
         </Box>
       </Box>
-      <Typography variant="body2" sx={{ width: "64px" }} noWrap>
+      <Typography sx={{ width: "64px" }} noWrap>
         {renderSprintStatusSpan(sprints)}
       </Typography>
       <Box sx={{ width: "160px" }}>

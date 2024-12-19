@@ -1,4 +1,3 @@
-import AddIcon from "@mui/icons-material/Add";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -20,7 +19,7 @@ import User from "../types/User";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
 import { matchString } from "../utils/stringUtils";
 import ActionDialog from "./common/ActionDialog";
-import CTAButton from "./common/CTAButton";
+import Button from "./common/Button";
 import DialogErrorText from "./common/DialogErrorText";
 import SearchBar from "./common/SearchBar";
 import SnackbarSuccess from "./common/SnackbarSuccess";
@@ -96,7 +95,7 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
 
   return (
     <>
-      <CTAButton icon={<AddIcon />} onClick={() => setIsDialogOpen(true)} text="Add Member" />
+      <Button onClick={() => setIsDialogOpen(true)}>Add Member</Button>
       <ActionDialog
         isOpen={isDialogOpen}
         onClose={handleCloseDialog}
@@ -129,7 +128,7 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
                 />
                 <List dense disablePadding>
                   {availableMembers && availableMembers.length === 0 && (
-                    <Typography variant="body2" fontStyle="italic" color="GrayText" mt={2}>
+                    <Typography fontStyle="italic" color="GrayText" mt={2}>
                       No available members to add to the project
                     </Typography>
                   )}

@@ -63,8 +63,6 @@ class UserService {
       }
     }
 
-    console.log(result);
-
     return result;
   }
 

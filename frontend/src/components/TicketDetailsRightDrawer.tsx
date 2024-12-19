@@ -1,5 +1,4 @@
 import CloseIcon from "@mui/icons-material/Close";
-import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
@@ -20,6 +19,7 @@ import StoryPointsEditItem from "./TicketRightDrawerItems/StoryPointsEditItem";
 import SubtaskEditItem from "./TicketRightDrawerItems/SubtaskEditItem";
 import TicketTypeEditItem from "./TicketRightDrawerItems/TicketTypeEditItem";
 import TitleEditItem from "./TicketRightDrawerItems/TitleEditItem";
+import Button from "./common/Button";
 
 interface TicketDetailsRightDrawerProps {
   ticket: Ticket;
@@ -64,7 +64,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps) => {
     >
       <List>
         <ListItem disablePadding sx={{ pl: 1, py: 1 }}>
-          <IconButton size="small" onClick={onClose}>
+          <IconButton size="small" onClick={onClose} color="primary">
             <CloseIcon />
           </IconButton>
         </ListItem>
@@ -81,12 +81,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps) => {
         {epics.length > 0 && <EpicLinkEditItem ticketId={id} epicId={epicId} />}
 
         <ListItem sx={{ mt: 1 }}>
-          <Button
-            fullWidth
-            variant="outlined"
-            color="error"
-            onClick={() => setIsDeleteDialogOpen(true)}
-          >
+          <Button fullWidth color="danger" onClick={() => setIsDeleteDialogOpen(true)}>
             Delete Ticket
           </Button>
         </ListItem>

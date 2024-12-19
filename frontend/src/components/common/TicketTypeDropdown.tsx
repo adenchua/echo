@@ -6,15 +6,16 @@ import TicketTypeIcon from "../icons/TicketTypeIcon";
 import Select from "./Select";
 
 interface TicketTypeDropdownProps {
+  label: string;
   selectedValue: string;
   onChange: (event: SelectChangeEvent<unknown>, child: React.ReactNode) => void;
 }
 
 const TicketTypeDropdown = (props: TicketTypeDropdownProps) => {
-  const { selectedValue, onChange } = props;
+  const { selectedValue, onChange, label } = props;
 
   return (
-    <Select value={selectedValue} onChange={onChange}>
+    <Select label={label} value={selectedValue} onChange={onChange}>
       <MenuItem value="task">
         <TicketTypeIcon type="task" />
         <Typography ml={1}>Task</Typography>

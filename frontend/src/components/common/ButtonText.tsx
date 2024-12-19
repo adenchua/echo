@@ -1,7 +1,7 @@
 import { CircularProgress } from "@mui/material";
 import MuiButton, { ButtonProps as MuiButtonProps } from "@mui/material/Button";
 
-interface ButtonProps
+interface ButtonTextProps
   extends Omit<
     MuiButtonProps,
     | "color"
@@ -17,13 +17,13 @@ interface ButtonProps
   state?: "default" | "loading" | "disabled";
 }
 
-const Button = (props: ButtonProps) => {
+const ButtonText = (props: ButtonTextProps) => {
   const { color = "primary", state = "default", sx, ...rest } = props;
 
   return (
     <MuiButton
       startIcon={state === "loading" && <CircularProgress color="inherit" size={16} />}
-      variant="contained"
+      variant="text"
       disableElevation
       disableFocusRipple
       disableRipple
@@ -40,12 +40,11 @@ const Button = (props: ButtonProps) => {
             return "primary";
         }
       })()}
-      size="large"
-      sx={{ height: "40px", textTransform: "none", borderRadius: 100, ...sx, textWrap: "nowrap" }}
+      sx={{ textTransform: "none", borderRadius: 100, ...sx, textWrap: "nowrap" }}
       disabled={state === "disabled" || state === "loading"}
       {...rest}
     />
   );
 };
 
-export default Button;
+export default ButtonText;

@@ -30,7 +30,7 @@ const TicketSubtask = (props: TicketSubtaskProps) => {
         onClick={() => onToggleCompletion(id)}
       >
         {<CheckCircleOutlined fontSize="small" color="inherit" />}
-        <Typography variant="body2" noWrap color="inherit">
+        <Typography noWrap color="inherit">
           {title}
         </Typography>
       </Box>

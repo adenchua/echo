@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { differenceInBusinessDays, format } from "date-fns";
 import { useContext, useMemo, useState } from "react";
@@ -30,6 +29,7 @@ import TypographySprintInformation from "../common/TypographySprintInformation";
 import DownloadIcon from "../icons/DownloadIcon";
 import EndSprintIcon from "../icons/EndSprintIcon";
 import StartSprintIcon from "../icons/StartSprintIcon";
+import Button from "../common/Button";
 
 interface SprintBacklogTabProps {
   project: Project;
@@ -145,7 +145,6 @@ const SprintBacklogTab = (props: SprintBacklogTabProps) => {
         <Box flexGrow={1} />
         {(!activeSprint || activeSprint.hasEnded) && (
           <Button
-            size="small"
             startIcon={<StartSprintIcon />}
             sx={{ whiteSpace: "nowrap" }}
             onClick={() => setShowStartSprintDialog(true)}
@@ -155,9 +154,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps) => {
         )}
         {activeSprint && !activeSprint.hasEnded && (
           <Button
-            size="small"
             startIcon={<EndSprintIcon />}
-            color="error"
             sx={{ whiteSpace: "nowrap" }}
             onClick={() => setShowEndSprintDialog(true)}
           >
@@ -193,13 +190,15 @@ const SprintBacklogTab = (props: SprintBacklogTabProps) => {
   return (
     <Box sx={{ mr: selectedTicketId ? `${TICKET_DRAWER_WIDTH}px` : "" }}>
       {renderTicketNavbar()}
-      <Box p={3} mt={5}>
+      <Box p={3} mt={8}>
         {sprintTickets && sprintTickets.length > 0 && (
           <Button
             onClick={() => download(`${project.title}-sprint-backlog.html`, getHtmlString())}
             startIcon={<DownloadIcon />}
+            color="secondary"
+            sx={{ mb: 4 }}
           >
-            Download for offline (.html)
+            Download copy (.html)
           </Button>
         )}
         {sprintTickets && sprintTickets.length === 0 && (

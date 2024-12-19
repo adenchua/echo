@@ -1,8 +1,6 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid2";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
@@ -14,7 +12,9 @@ import useLoad from "../../hooks/useLoad";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import Project, { ProjectUpdateFieldsType } from "../../types/Project";
 import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
+import Button from "../common/Button";
 import SnackbarError from "../common/SnackbarError";
+import TextField from "../common/TextField";
 
 interface SettingsTabProps {
   project: Project;
@@ -63,9 +63,7 @@ const SettingsTab = (props: SettingsTabProps) => {
 
   return (
     <Box p={3}>
-      <Typography variant="h5" paragraph>
-        Project Settings
-      </Typography>
+      <Typography variant="h5">Project Settings</Typography>
       <Divider sx={{ mb: 3 }} />
 
       <Grid container mb={4} spacing={3}>
@@ -77,38 +75,35 @@ const SettingsTab = (props: SettingsTabProps) => {
             Customize project title, description and logo.
           </Typography>
         </Grid>
-        <Grid size={{ xs: 12, md: 8 }}>
-          <Typography gutterBottom variant="body2">
-            Project Title
-          </Typography>
-          <TextField
-            variant="filled"
-            fullWidth
-            sx={{ maxWidth: 400, mb: 3 }}
-            value={titleInput}
-            onChange={(e) => setTitleInput(e.target.value)}
-          />
-          <Typography gutterBottom variant="body2">
-            Project Description
-          </Typography>
-          <TextField
-            variant="filled"
-            fullWidth
-            sx={{ maxWidth: 400, mb: 3 }}
-            multiline
-            rows={3}
-            onChange={(e) => setDescriptionInput(e.target.value)}
-            value={descriptionInput}
-            placeholder="Give your project a detailed description"
-          />
-          <Button
-            sx={{ display: "block" }}
-            variant="contained"
-            onClick={handleUpdateProject}
-            disabled={currentLoadState === "LOADING" || titleInput.length === 0}
-          >
-            Update details
-          </Button>
+        <Grid container size={{ xs: 12, md: 8 }}>
+          <Grid size={12}>
+            <TextField
+              label="Project title"
+              sx={{ maxWidth: 400 }}
+              value={titleInput}
+              onChange={(e) => setTitleInput(e.target.value)}
+            />
+          </Grid>
+          <Grid size={12}>
+            <TextField
+              label="Project description"
+              sx={{ maxWidth: 400 }}
+              multiline
+              rows={3}
+              onChange={(e) => setDescriptionInput(e.target.value)}
+              value={descriptionInput}
+            />
+          </Grid>
+          <Grid size={12}>
+            <Button
+              onClick={handleUpdateProject}
+              state={
+                currentLoadState === "LOADING" || titleInput.length === 0 ? "disabled" : "default"
+              }
+            >
+              Update details
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
       <Divider sx={{ mb: 3 }} />
@@ -123,30 +118,31 @@ const SettingsTab = (props: SettingsTabProps) => {
               Once you delete this project, all tickets and sprint information will be lost forever.
             </Typography>
           </Grid>
-          <Grid size={{ xs: 12, md: 8 }}>
+          <Grid size={{ xs: 12, md: 8 }} container>
             <TextField
-              variant="filled"
-              fullWidth
-              size="small"
+              label="Confirmation field"
               helperText={`Type: '${title}' to enable deletion`}
-              sx={{ maxWidth: 400, mb: 3 }}
+              sx={{ maxWidth: 400 }}
               value={deletionInput}
               onChange={(e) => setDeletionInput(e.target.value)}
             />
-            {deletionInput === title && (
-              <Typography color="error" paragraph>
-                Warning! There is no turning back now...
-              </Typography>
-            )}
-            <Button
-              color="error"
-              variant="contained"
-              sx={{ display: "block" }}
-              disabled={currentLoadState === "LOADING" || deletionInput !== title}
-              onClick={handleDeleteProject}
-            >
-              Delete this project
-            </Button>
+
+            <Grid size={12}>
+              {deletionInput === title && (
+                <Typography color="error" mb={1}>
+                  Warning! There is no turning back now...
+                </Typography>
+              )}
+              <Button
+                state={
+                  currentLoadState === "LOADING" || deletionInput !== title ? "disabled" : "default"
+                }
+                color="danger"
+                onClick={handleDeleteProject}
+              >
+                Delete this project
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
       )}

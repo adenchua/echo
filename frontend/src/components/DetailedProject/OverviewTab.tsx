@@ -27,7 +27,7 @@ const OverviewTab = (props: OverviewTabProps) => {
         <Paper sx={{ p: 1, display: "flex", alignItems: "center", gap: 1 }} elevation={0}>
           <UserAvatar username={username} displayName={displayName} />
           <Box width="160px">
-            <Typography noWrap variant="body2" component="div">
+            <Typography noWrap component="div">
               {displayName}
             </Typography>
             <Typography noWrap variant="caption" component="div" color="grey.500">

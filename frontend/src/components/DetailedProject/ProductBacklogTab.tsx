@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { useContext, useMemo, useState } from "react";
 
@@ -20,6 +19,7 @@ import TicketFilter, { TicketFilterType } from "../TicketFilter";
 import TicketNavbarWrapper from "../TicketNavbarWrapper";
 import TicketSection from "../TicketSection";
 import TicketSortSelectDropdown, { TicketSortType } from "../TicketSortSelectDropdown";
+import Button from "../common/Button";
 import SearchBar from "../common/SearchBar";
 import SecondaryText from "../common/SecondaryText";
 import TypographySprintInformation from "../common/TypographySprintInformation";
@@ -135,13 +135,15 @@ const ProductBacklogTab = (props: ProductBacklogTabProps) => {
     <>
       <Box sx={{ mr: selectedTicketId ? `${TICKET_DRAWER_WIDTH}px` : "" }}>
         {renderTicketNavbar()}
-        <Box p={3} mt={5}>
+        <Box p={3} mt={8}>
           {tickets && tickets.length > 0 && (
             <Button
               onClick={() => download(`${project.title}-product-backlog.html`, getHtmlString())}
               startIcon={<DownloadIcon />}
+              color="secondary"
+              sx={{ mb: 4 }}
             >
-              Download for offline (.html)
+              Download copy (.html)
             </Button>
           )}
           {displayedTicketsByEpics &&

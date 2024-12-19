@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -9,6 +8,7 @@ import { useState } from "react";
 
 import useLoad from "../../hooks/useLoad";
 import useProductBacklog from "../../hooks/useProductBacklog";
+import Button from "../common/Button";
 import SnackbarError from "../common/SnackbarError";
 import EditButton from "./EditButton";
 import RightDrawerTitle from "./RightDrawerTitle";
@@ -66,13 +66,7 @@ const DueDateEditItem = (props: DueDateEditItemProps) => {
               reduceAnimations
             />
             {dueDate && (
-              <Button
-                onClick={() => handleUpdateTicketDueDate(null)}
-                fullWidth
-                variant="outlined"
-                size="small"
-                color="warning"
-              >
+              <Button onClick={() => handleUpdateTicketDueDate(null)} fullWidth>
                 Remove Due Date
               </Button>
             )}

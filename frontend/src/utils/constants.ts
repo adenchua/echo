@@ -1,6 +1,6 @@
 export const SERVER_API_URL = "http://localhost:5084";
 
-export const APP_VERSION = "1.5.2";
+export const APP_VERSION = "1.6.0";
 
 export const TICKET_DRAWER_WIDTH = 480;
 
