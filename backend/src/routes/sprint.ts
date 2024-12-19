@@ -7,13 +7,15 @@ import {
   getSprintsValidationChain,
   startSprintValidationChain,
 } from "../middlewares/sprintValidationMiddleware";
-import { validationErrorHandling } from "../middlewares/validationErrorHandlingMiddleware";
+import validationErrorMiddleware from "../middlewares/validationErrorHandlingMiddleware";
 
 const router = Router();
 
-router.route("/start").post(startSprintValidationChain, validationErrorHandling, startSprint);
-router.route("/end").post(endSprintValidationChain, validationErrorHandling, endSprint);
-router.route("/id/:sprintId").get(getSprintValidationChain, validationErrorHandling, getSprint);
-router.route("/bulk-retrieve").post(getSprintsValidationChain, validationErrorHandling, getSprints);
+router.route("/start").post(startSprintValidationChain, validationErrorMiddleware, startSprint);
+router.route("/end").post(endSprintValidationChain, validationErrorMiddleware, endSprint);
+router.route("/id/:sprintId").get(getSprintValidationChain, validationErrorMiddleware, getSprint);
+router
+  .route("/bulk-retrieve")
+  .post(getSprintsValidationChain, validationErrorMiddleware, getSprints);
 
 export default router;

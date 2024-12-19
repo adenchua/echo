@@ -10,6 +10,7 @@ import subtaskRouter from "./routes/subtask";
 import sprintRouter from "./routes/sprint";
 import ticketRouter from "./routes/ticket";
 import errorHandler from "./middlewares/errorHandler";
+import userRouter from "./routes/userRouter";
 
 const app = express();
 const PORT = process.env.SERVER_PORT_NUMBER || 5084;
@@ -27,6 +28,7 @@ app.use(`${API_PREPEND}/v1/epics`, epicRouter);
 app.use(`${API_PREPEND}/v1/subtasks`, subtaskRouter);
 app.use(`${API_PREPEND}/v1/sprints`, sprintRouter);
 app.use(`${API_PREPEND}/v1/tickets`, ticketRouter);
+app.use(`${API_PREPEND}/v1/users`, userRouter);
 
 app.all(`/healthcheck`, (req, res) => {
   res.send({ message: "OK" });

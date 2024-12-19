@@ -24,37 +24,39 @@ import {
   removeMemberFromProjectValidationChain,
   updateProjectValidationChain,
 } from "../middlewares/projectValidationMiddleware";
-import { validationErrorHandling } from "../middlewares/validationErrorHandlingMiddleware";
+import validationErrorMiddleware from "../middlewares/validationErrorHandlingMiddleware";
 
 const router = Router();
 
-router.route("/").post(createProjectValidationChain, validationErrorHandling, createProject);
-router.route("/id/:projectId").get(getProjectValidationChain, validationErrorHandling, getProject);
+router.route("/").post(createProjectValidationChain, validationErrorMiddleware, createProject);
 router
   .route("/id/:projectId")
-  .patch(updateProjectValidationChain, validationErrorHandling, updateProject);
+  .get(getProjectValidationChain, validationErrorMiddleware, getProject);
 router
   .route("/id/:projectId")
-  .delete(deleteProjectValidationChain, validationErrorHandling, deleteProject);
+  .patch(updateProjectValidationChain, validationErrorMiddleware, updateProject);
+router
+  .route("/id/:projectId")
+  .delete(deleteProjectValidationChain, validationErrorMiddleware, deleteProject);
 router
   .route("/members/add/:projectId")
-  .post(addMemberToProjectValidationChain, validationErrorHandling, addMemberToProject);
+  .post(addMemberToProjectValidationChain, validationErrorMiddleware, addMemberToProject);
 router
   .route("/members/bulk-add/:projectId")
-  .post(addMembersToProjectValidationChain, validationErrorHandling, addMembersToProject);
+  .post(addMembersToProjectValidationChain, validationErrorMiddleware, addMembersToProject);
 router
   .route("/members/remove/:projectId")
-  .post(removeMemberFromProjectValidationChain, validationErrorHandling, removeMemberFromProject);
+  .post(removeMemberFromProjectValidationChain, validationErrorMiddleware, removeMemberFromProject);
 router.route("/user/:userId").get(getProjectsOfUser);
 router
   .route("/admins/promote/:projectId")
   .post(
     promoteMemberToAdministratorValidationChain,
-    validationErrorHandling,
+    validationErrorMiddleware,
     promoteMemberToAdministrator,
   );
 router
   .route("/admins/demote/:projectId")
-  .post(demoteAdminToMemberValidationChain, validationErrorHandling, demoteAdminToMember);
+  .post(demoteAdminToMemberValidationChain, validationErrorMiddleware, demoteAdminToMember);
 
 export default router;

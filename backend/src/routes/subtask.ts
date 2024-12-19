@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import { createSubtask, deleteSubtask, getSubtasks, updateSubtask } from "../controllers/subtask";
-import { validationErrorHandling } from "../middlewares/validationErrorHandlingMiddleware";
+import validationErrorMiddleware from "../middlewares/validationErrorHandlingMiddleware";
 import {
   createSubtaskValidationChain,
   deleteSubtaskValidationChain,
@@ -11,15 +11,15 @@ import {
 
 const router = Router();
 
-router.route("/").post(createSubtaskValidationChain, validationErrorHandling, createSubtask);
+router.route("/").post(createSubtaskValidationChain, validationErrorMiddleware, createSubtask);
 router
   .route("/id/:subtaskId")
-  .delete(deleteSubtaskValidationChain, validationErrorHandling, deleteSubtask);
+  .delete(deleteSubtaskValidationChain, validationErrorMiddleware, deleteSubtask);
 router
   .route("/id/:subtaskId")
-  .patch(updateSubtaskValidationChain, validationErrorHandling, updateSubtask);
+  .patch(updateSubtaskValidationChain, validationErrorMiddleware, updateSubtask);
 router
   .route("/bulk-retrieve")
-  .post(getSubtasksValidationChain, validationErrorHandling, getSubtasks);
+  .post(getSubtasksValidationChain, validationErrorMiddleware, getSubtasks);
 
 export default router;

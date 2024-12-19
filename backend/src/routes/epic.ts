@@ -16,19 +16,21 @@ import {
   removeTicketFromEpicValidationChain,
   updateEpicValidationChain,
 } from "../middlewares/epicValidationMiddleware";
-import { validationErrorHandling } from "../middlewares/validationErrorHandlingMiddleware";
+import validationErrorMiddleware from "../middlewares/validationErrorHandlingMiddleware";
 
 const router = Router();
 
-router.route("/").post(createEpicValidationChain, validationErrorHandling, createEpic);
-router.route("/id/:epicId").patch(updateEpicValidationChain, validationErrorHandling, updateEpic);
-router.route("/id/:epicId").delete(deleteEpicValidationChain, validationErrorHandling, deleteEpic);
-router.route("/bulk-retrieve").post(getEpicsValidationChain, validationErrorHandling, getEpics);
+router.route("/").post(createEpicValidationChain, validationErrorMiddleware, createEpic);
+router.route("/id/:epicId").patch(updateEpicValidationChain, validationErrorMiddleware, updateEpic);
+router
+  .route("/id/:epicId")
+  .delete(deleteEpicValidationChain, validationErrorMiddleware, deleteEpic);
+router.route("/bulk-retrieve").post(getEpicsValidationChain, validationErrorMiddleware, getEpics);
 router
   .route("/add-ticket/:epicId")
-  .post(addTicketToEpicValidationChain, validationErrorHandling, addTicketToEpic);
+  .post(addTicketToEpicValidationChain, validationErrorMiddleware, addTicketToEpic);
 router
   .route("/remove-ticket/:epicId")
-  .post(removeTicketFromEpicValidationChain, validationErrorHandling, removeTicketFromEpic);
+  .post(removeTicketFromEpicValidationChain, validationErrorMiddleware, removeTicketFromEpic);
 
 export default router;

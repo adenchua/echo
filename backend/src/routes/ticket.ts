@@ -14,18 +14,20 @@ import {
   getTicketsValidationChain,
   updateTicketValidationChain,
 } from "../middlewares/ticketValidationMiddleware";
-import { validationErrorHandling } from "../middlewares/validationErrorHandlingMiddleware";
+import validationErrorMiddleware from "../middlewares/validationErrorHandlingMiddleware";
 
 const router = Router();
 
-router.route("/").post(createTicketValidationChain, validationErrorHandling, createTicket);
+router.route("/").post(createTicketValidationChain, validationErrorMiddleware, createTicket);
 router
   .route("/id/:ticketId")
-  .patch(updateTicketValidationChain, validationErrorHandling, updateTicket);
+  .patch(updateTicketValidationChain, validationErrorMiddleware, updateTicket);
 router
   .route("/id/:ticketId")
-  .post(deleteTicketValidationChain, validationErrorHandling, deleteTicket);
-router.route("/id/:ticketId").get(getTicketValidationChain, validationErrorHandling, getTicket);
-router.route("/bulk-retrieve").post(getTicketsValidationChain, validationErrorHandling, getTickets);
+  .post(deleteTicketValidationChain, validationErrorMiddleware, deleteTicket);
+router.route("/id/:ticketId").get(getTicketValidationChain, validationErrorMiddleware, getTicket);
+router
+  .route("/bulk-retrieve")
+  .post(getTicketsValidationChain, validationErrorMiddleware, getTickets);
 
 export default router;
