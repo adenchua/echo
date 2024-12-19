@@ -24,7 +24,7 @@ const NavbarListItem = (props: NavbarListItemProps) => {
       sx={{
         "&.Mui-selected": {
           bgcolor: "primary.main",
-          borderRadius: 0.5,
+          borderRadius: 100,
           "&:hover": { bgcolor: "primary.main" },
         },
       }}
@@ -37,7 +37,9 @@ const NavbarListItem = (props: NavbarListItemProps) => {
       <ListItemText
         primary={buttonText}
         sx={{ color: "#FFF" }}
-        primaryTypographyProps={{ noWrap: true }}
+        slotProps={{
+          primary: { noWrap: true },
+        }}
       />
     </ListItemButton>
   );

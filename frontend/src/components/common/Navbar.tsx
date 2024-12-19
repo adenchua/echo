@@ -14,9 +14,9 @@ import { UserProjectsContext } from "../../contexts/UserProjectsContextProvider"
 import useLoad from "../../hooks/useLoad";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { APP_VERSION, LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
+import LogoutButton from "../LogoutButton";
 import NavbarListItem from "./NavbarListItem";
 import SnackbarError from "./SnackbarError";
-import LogoutButton from "../LogoutButton";
 
 const navigationItems = [
   {
