@@ -5,11 +5,11 @@ import { SERVER_API_URL } from "../../utils/constants";
 
 const registerUser = async (username: string, password: string): Promise<User> => {
   try {
-    const response = await axios.post<User>(`${SERVER_API_URL}/api/v1/users`, {
+    const response = await axios.post<{ data: User }>(`${SERVER_API_URL}/api/v1/users`, {
       username,
       password,
     });
-    return response.data;
+    return response.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error("Axios Error");

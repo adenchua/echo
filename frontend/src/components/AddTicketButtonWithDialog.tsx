@@ -78,14 +78,14 @@ const AddTicketButtonWithDialog = (props: AddTicketButtonWithDialogProps) => {
               onChange={(e) => setTitleInput(e.target.value)}
             />
             <Grid container spacing={2} mt={1}>
-              <Grid item xs={6}>
+              <Grid size={6}>
                 <DialogContentText>Ticket type</DialogContentText>
                 <TicketTypeDropdown
                   selectedValue={ticketType}
                   onChange={(event, child) => setTicketType(event.target.value as TicketType)}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid size={6}>
                 <DialogContentText>Priority</DialogContentText>
                 <TicketPriorityDropdown
                   selectedValue={priority}
@@ -98,7 +98,6 @@ const AddTicketButtonWithDialog = (props: AddTicketButtonWithDialogProps) => {
             )}
           </>
         }
-        acceptButtonText="Add ticket"
       />
     </>
   );

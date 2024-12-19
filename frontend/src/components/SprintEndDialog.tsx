@@ -125,7 +125,7 @@ const SprintEndDialog = (props: SprintEndDialogProps) => {
         dialogContent={renderSuccessDialogContent()}
         isOpen={currentLoadState === "SUCCESS"}
         onClose={() => handleSetLoadingState("DEFAULT")}
-        title="Succcessfully ended sprint!"
+        title="Successfully ended sprint!"
         titleIcon={<SprintEndIcon />}
       />
     </>

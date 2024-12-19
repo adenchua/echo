@@ -1,7 +1,7 @@
 import LogoutIcon from "@mui/icons-material/LogoutOutlined";
 import { useState } from "react";
-
 import { useNavigate } from "react-router";
+
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import ActionDialog from "./common/ActionDialog";
@@ -35,7 +35,6 @@ const LogoutButton = () => {
         titleIcon={<LogoutIcon />}
         onAccept={handleLogout}
         disableActionButton={false}
-        acceptButtonText="Logout"
       />
     </>
   );

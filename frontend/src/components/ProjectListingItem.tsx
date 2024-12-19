@@ -2,7 +2,6 @@ import ProjectIcon from "@mui/icons-material/GitHub";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
-import Hidden from "@mui/material/Hidden";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
@@ -95,10 +94,11 @@ const ProjectListingItem = (props: ProjectListingItemProps) => {
           "& .MuiAvatar-root": { width: 32, height: 32, fontSize: 16 },
         }}
       >
-        {users.map((user) => {
-          const { username, _id: userId, displayName } = user;
-          return <UserAvatar key={userId} username={username} displayName={displayName} />;
-        })}
+        {users &&
+          users.map((user) => {
+            const { username, _id: userId, displayName } = user;
+            return <UserAvatar key={userId} username={username} displayName={displayName} />;
+          })}
       </AvatarGroup>
     );
   };
@@ -122,12 +122,10 @@ const ProjectListingItem = (props: ProjectListingItemProps) => {
       <Typography variant="body2" sx={{ width: "64px" }} noWrap>
         {renderSprintStatusSpan(sprints)}
       </Typography>
-      <Hidden smDown>
-        <Box sx={{ width: "160px" }}>
-          <ProgressBarWithPercentage value={activeSprintProgressPercentage} />
-        </Box>
-        {renderAvatarGroups(users)}
-      </Hidden>
+      <Box sx={{ width: "160px" }}>
+        <ProgressBarWithPercentage value={activeSprintProgressPercentage} />
+      </Box>
+      {renderAvatarGroups(users)}
     </Paper>
   );
 };

@@ -30,7 +30,7 @@ const Button = (props: ButtonProps) => {
       disableTouchRipple
       color={color === "primary" ? "primary" : "inherit"}
       size="large"
-      sx={{ height: "48px", textTransform: "none", borderRadius: 100, ...sx }}
+      sx={{ height: "40px", textTransform: "none", borderRadius: 100, ...sx }}
       disabled={state === "disabled" || state === "loading"}
       {...rest}
     />

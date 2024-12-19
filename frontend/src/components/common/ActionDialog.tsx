@@ -1,10 +1,11 @@
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { ReactNode } from "react";
+
+import Button from "./Button";
 
 interface ActionDialogProps {
   isOpen: boolean;
@@ -14,20 +15,10 @@ interface ActionDialogProps {
   title: string;
   titleIcon: ReactNode;
   disableActionButton: boolean;
-  acceptButtonText?: string;
 }
 
 const ActionDialog = (props: ActionDialogProps) => {
-  const {
-    isOpen,
-    onClose,
-    onAccept,
-    dialogContent,
-    title,
-    titleIcon,
-    disableActionButton,
-    acceptButtonText = "Confirm",
-  } = props;
+  const { isOpen, onClose, onAccept, dialogContent, title, titleIcon, disableActionButton } = props;
   return (
     <Dialog open={isOpen} maxWidth="sm" fullWidth>
       <DialogTitle
@@ -47,11 +38,11 @@ const ActionDialog = (props: ActionDialogProps) => {
       </DialogTitle>
       <DialogContent>{dialogContent}</DialogContent>
       <DialogActions>
-        <Button sx={{ color: "grey.600", borderColor: "grey.600" }} onClick={onClose}>
+        <Button color="secondary" onClick={onClose}>
           Close
         </Button>
-        <Button disabled={disableActionButton} onClick={onAccept}>
-          {acceptButtonText}
+        <Button state={disableActionButton ? "disabled" : "default"} onClick={onAccept}>
+          Confirm
         </Button>
       </DialogActions>
     </Dialog>

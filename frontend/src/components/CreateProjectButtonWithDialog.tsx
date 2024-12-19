@@ -1,10 +1,6 @@
-import AddIcon from "@mui/icons-material/Add";
 import ProjectIcon from "@mui/icons-material/GitHub";
-import { DialogContentText } from "@mui/material";
 import Box from "@mui/material/Box";
-import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
-import TextField from "@mui/material/TextField";
 import { useContext, useEffect, useState } from "react";
 
 import createProject from "../api/projects/createProject";
@@ -13,10 +9,11 @@ import useLoad from "../hooks/useLoad";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LOCAL_STORAGE_UID_KEY, PROJECT_TYPES } from "../utils/constants";
 import ActionDialog from "./common/ActionDialog";
-import CTAButton from "./common/CTAButton";
-import DialogErrorText from "./common/DialogErrorText";
+import BannerError from "./common/BannerError";
+import Button from "./common/Button";
 import Select from "./common/Select";
 import SnackbarSuccess from "./common/SnackbarSuccess";
+import TextField from "./common/TextField";
 
 type ProjectType = (typeof PROJECT_TYPES)[number];
 
@@ -65,40 +62,33 @@ const CreateProjectButtonWithDialog = () => {
 
   return (
     <>
-      <CTAButton icon={<AddIcon />} text="New Project" onClick={() => setIsDialogOpen(true)} />
+      <Button onClick={() => setIsDialogOpen(true)}>New project</Button>
       <ActionDialog
         dialogContent={
-          <>
-            <DialogContentText>Project Title</DialogContentText>
+          <div>
+            {currentLoadState === "ERROR" && (
+              <BannerError sx={{ mb: 2 }}>Something went wrong. Please try again later</BannerError>
+            )}
             <TextField
-              placeholder="My awesome project"
-              autoFocus
-              margin="dense"
-              fullWidth
-              variant="filled"
-              sx={{ mb: 4 }}
+              label="Project title"
+              sx={{ mb: 4, mt: 1 }}
               value={projectTitle}
               onChange={(e) => setProjectTitle(e.target.value)}
             />
             <Box mb={4}>
-              <DialogContentText mb={1}>Project Type</DialogContentText>
-              <FormControl fullWidth variant="filled">
-                <Select
-                  value={projectType}
-                  onChange={(e) => handleProjectTypeChange(e.target.value as ProjectType)}
-                >
-                  {PROJECT_TYPES.map((projectType) => (
-                    <MenuItem value={projectType} key={projectType} dense>
-                      {projectType}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <Select
+                label="Project type"
+                value={projectType}
+                onChange={(e) => handleProjectTypeChange(e.target.value as ProjectType)}
+              >
+                {PROJECT_TYPES.map((projectType) => (
+                  <MenuItem value={projectType} key={projectType} dense>
+                    {projectType}
+                  </MenuItem>
+                ))}
+              </Select>
             </Box>
-            {currentLoadState === "ERROR" && (
-              <DialogErrorText text="Something went wrong. Please try again later." />
-            )}
-          </>
+          </div>
         }
         disableActionButton={projectTitle.length === 0 || currentLoadState === "LOADING"}
         isOpen={isDialogOpen}
@@ -106,7 +96,6 @@ const CreateProjectButtonWithDialog = () => {
         onAccept={handleAddProject}
         title="Create new project"
         titleIcon={<ProjectIcon />}
-        acceptButtonText="Create project"
       />
       <SnackbarSuccess
         isOpen={currentLoadState === "SUCCESS"}

@@ -1,14 +1,13 @@
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import Hidden from "@mui/material/Hidden";
-import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { useContext, useState } from "react";
-import { Navigate, Link as RouterLink } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 
 import CreateProjectButtonWithDialog from "../components/CreateProjectButtonWithDialog";
 import ProjectListingItem from "../components/ProjectListingItem";
 import Grow from "../components/common/Grow";
+import Link from "../components/common/Link";
 import PageLayoutWrapper from "../components/common/PageLayoutWrapper";
 import SearchBar from "../components/common/SearchBar";
 import { UserProjectsContext } from "../contexts/UserProjectsContextProvider";
@@ -21,6 +20,7 @@ const ProjectListingPage = () => {
   const [searchInput, setSearchInput] = useState<string>("");
   const { projects } = useContext(UserProjectsContext);
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
+  const navigate = useNavigate();
 
   if (!loggedInUserId) {
     return <Navigate to="/" />;
@@ -29,31 +29,21 @@ const ProjectListingPage = () => {
   const renderTitleHeaders = () => {
     return (
       <Box mb={1} p={1} display="flex" alignItems="center" gap={8}>
-        <Typography variant="body2" sx={{ width: "242px" }}>
-          Project
-        </Typography>
-        <Typography variant="body2" sx={{ width: "64px" }} noWrap>
+        <Typography sx={{ width: "242px" }}>Project</Typography>
+        <Typography sx={{ width: "64px" }} noWrap>
           Sprint
         </Typography>
-        <Hidden smDown>
-          <Typography variant="body2" sx={{ width: "160px" }}>
-            Current Tasks
-          </Typography>
-          <Typography variant="body2">Members</Typography>
-        </Hidden>
+        <Typography sx={{ width: "160px" }}>Current Tasks</Typography>
+        <Typography>Members</Typography>
       </Box>
     );
   };
 
-  const renderNoProjectsMessage = () => (
-    <Typography variant="body2" sx={{ color: "GrayText", fontStyle: "italic" }}>
-      There are no projects listed.
-    </Typography>
-  );
+  const renderNoProjectsMessage = () => <Typography>There are no projects listed</Typography>;
 
   return (
     <PageLayoutWrapper>
-      <Typography variant="h5" paragraph>
+      <Typography variant="h4" mb={2}>
         Projects
       </Typography>
       <Box display="flex" gap={2}>
@@ -70,18 +60,13 @@ const ProjectListingPage = () => {
       {projects.map((project: Project) => {
         if (matchString(searchInput, project.title)) {
           return (
-            <Link
-              component={RouterLink}
-              to={`/projects/id/${project._id}?tab=overview`}
-              key={project._id}
-              underline="none"
-            >
-              <Grow timeout={400}>
-                <div>
+            <Grow timeout={400}>
+              <div key={project._id}>
+                <Link onClick={() => navigate(`/projects/id/${project._id}?tab=overview`)}>
                   <ProjectListingItem project={project} />
-                </div>
-              </Grow>
-            </Link>
+                </Link>
+              </div>
+            </Grow>
           );
         }
         return null;

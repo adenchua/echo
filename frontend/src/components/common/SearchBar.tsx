@@ -8,14 +8,19 @@ const SearchBar = (props: TextFieldProps) => {
 
   return (
     <TextField
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <SearchIcon sx={{ marginBottom: "12px" }} fontSize="small" />
-          </InputAdornment>
-        ),
+      slotProps={{
+        input: {
+          sx: {
+            borderRadius: 100,
+            height: "40px",
+          },
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon color="inherit" />
+            </InputAdornment>
+          ),
+        },
       }}
-      variant="filled"
       type="search"
       placeholder={placeholder}
       value={value}

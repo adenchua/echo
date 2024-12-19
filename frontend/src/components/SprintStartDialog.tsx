@@ -133,7 +133,6 @@ const SprintStartDialog = (props: SprintStartDialogProps) => {
       <ActionDialog
         isOpen={showStartSprintDialog}
         onClose={handleClose}
-        acceptButtonText="Start sprint"
         onAccept={handleStartSprint}
         disableActionButton={!endDateInput || !isValid(endDateInput) || sprintTicketsCount === 0}
         dialogContent={renderDialogContent()}

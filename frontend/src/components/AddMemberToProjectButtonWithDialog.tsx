@@ -103,7 +103,6 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
         onAccept={handleAddUsers}
         title="Add team members"
         titleIcon={<ManageAccountsIcon />}
-        acceptButtonText="Add members"
         disableActionButton={selectedMembers.length === 0 || currentLoadState !== "DEFAULT"}
         dialogContent={
           <>

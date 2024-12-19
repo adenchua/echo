@@ -5,6 +5,7 @@ import { useMemo, useState, useTransition } from "react";
 import { useNavigate } from "react-router";
 
 import registerUser from "../api/users/registerUser";
+import BannerError from "../components/common/BannerError";
 import Button from "../components/common/Button";
 import ConfirmationDialog from "../components/common/ConfirmationDialog";
 import Link from "../components/common/Link";
@@ -76,9 +77,7 @@ const UserSignUpPage = () => {
               Register an account with echo
             </Typography>
             {showError && (
-              <Typography color="error" mb={4}>
-                Failed to register, please try again
-              </Typography>
+              <BannerError sx={{ mb: 4 }}>Failed to register, please try again</BannerError>
             )}
             <TextField
               label="Username"
