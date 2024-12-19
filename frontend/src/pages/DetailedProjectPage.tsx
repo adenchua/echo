@@ -14,7 +14,7 @@ import SettingsTab from "../components/DetailedProject/SettingsTab";
 import SprintBacklogTab from "../components/DetailedProject/SprintBacklogTab";
 import TeamObjectivesTab from "../components/DetailedProject/TeamObjectivesTab";
 import ToolbarContent from "../components/DetailedProject/ToolbarContent";
-import ErrorBanner from "../components/common/ErrorBanner";
+import BannerError from "../components/common/BannerError";
 import Loading from "../components/common/Loading";
 import PageLayoutWrapper from "../components/common/PageLayoutWrapper";
 import { ActiveSprintContext } from "../contexts/ActiveSprintContextProvider";
@@ -98,7 +98,7 @@ const DetailedProjectPage = () => {
   if (currentLoadState === "ERROR" || project == null) {
     return (
       <PageLayoutWrapper>
-        <ErrorBanner />
+        <BannerError>Something went wrong, please try again later </BannerError>
       </PageLayoutWrapper>
     );
   }

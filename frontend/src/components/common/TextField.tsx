@@ -5,7 +5,7 @@ interface TextFieldProps extends Omit<MuiTextFieldProps, "label"> {
 }
 
 const TextField = (props: TextFieldProps) => {
-  const { label, sx, ...rest } = props;
+  const { label, ...rest } = props;
 
   return <MuiTextField fullWidth label={label} {...rest} />;
 };

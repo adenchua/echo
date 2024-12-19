@@ -1,5 +1,5 @@
-import { ArrowForward, Celebration } from "@mui/icons-material";
-import { Box, Link, Typography } from "@mui/material";
+import { Celebration } from "@mui/icons-material";
+import { Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useMemo, useState, useTransition } from "react";
 import { useNavigate } from "react-router";
@@ -7,7 +7,9 @@ import { useNavigate } from "react-router";
 import registerUser from "../api/users/registerUser";
 import Button from "../components/common/Button";
 import ConfirmationDialog from "../components/common/ConfirmationDialog";
+import Link from "../components/common/Link";
 import TextField from "../components/common/TextField";
+import RightArrowIcon from "../components/icons/RightArrowIcon";
 import User from "../types/User";
 
 const UserSignUpPage = () => {
@@ -138,7 +140,7 @@ const UserSignUpPage = () => {
                   return "default";
                 })()}
                 type="submit"
-                endIcon={<ArrowForward />}
+                endIcon={<RightArrowIcon />}
               >
                 Register
               </Button>
@@ -156,7 +158,8 @@ const UserSignUpPage = () => {
             <Typography component="span" color="primary">
               @{usernameInput}
             </Typography>
-            , welcome to echo! Click <Link href="/">here</Link> to return to the login page
+            , welcome to echo! Click <Link onClick={() => navigate("/")}>here</Link> to return to
+            the login page
           </Typography>
         }
         onClose={handleCloseSuccessDialog}
