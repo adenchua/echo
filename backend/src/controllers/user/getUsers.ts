@@ -5,8 +5,8 @@ import { ValidationChain, body } from "express-validator";
 import UserService from "../../services/UserService";
 
 export const getUsersValidationChains: ValidationChain[] = [
-  body("userIds").isArray({ min: 1 }).notEmpty(),
-  body("userIds.*").isMongoId().notEmpty(),
+  body("userIds").notEmpty(),
+  body("userIds.*").isMongoId(),
 ];
 
 interface RequestBody {

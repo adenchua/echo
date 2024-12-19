@@ -8,8 +8,9 @@ const SALT_ROUNDS = 10;
 class UserService {
   /** removes the password field and not return it to the caller */
   private sanitizePassword(user: HydratedDocument<IUser>): Partial<IUser> {
+    const userClone = user.toObject();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...rest } = user;
+    const { password, ...rest } = userClone;
 
     return rest;
   }
@@ -61,6 +62,8 @@ class UserService {
         result.push(this.sanitizePassword(temp));
       }
     }
+
+    console.log(result);
 
     return result;
   }
