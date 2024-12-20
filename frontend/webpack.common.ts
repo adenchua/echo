@@ -12,8 +12,6 @@ const config: Configuration = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].bundle.js",
-    publicPath: "http://localhost:3000",
-    clean: true,
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".json", ".css"],

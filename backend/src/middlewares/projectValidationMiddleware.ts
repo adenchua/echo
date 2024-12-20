@@ -40,7 +40,7 @@ export const addMembersToProjectValidationChain = [
   body("userIds", "INVALID_USER_IDS")
     .notEmpty()
     .isArray({ min: 0 })
-    .custom((values) => values.every((value) => isValidObjectId(value))),
+    .custom((values) => values.every((value: string) => isValidObjectId(value))),
 ];
 
 export const updateProjectValidationChain = [

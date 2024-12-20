@@ -3,6 +3,7 @@ import { Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { JSX, useMemo, useState, useTransition } from "react";
 import { useNavigate } from "react-router";
+import BackgroundImage from "../assets/wait_in_line.svg";
 
 import registerUser from "../api/users/registerUser";
 import BannerError from "../components/common/BannerError";
@@ -69,7 +70,7 @@ const UserSignUpPage = (): JSX.Element => {
             justifyContent: "center",
           }}
         >
-          <img src="/public/assets/wait_in_line.svg" height="360px" alt="sign up" />
+          <img src={BackgroundImage} height="360px" alt="sign up" />
         </Grid>
         <Grid size={6} sx={{ p: 12 }}>
           <form onSubmit={handleSubmit}>

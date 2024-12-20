@@ -1,13 +1,13 @@
 services:
   mongodb:
-    image: mongo:5.0
+    image: mongo:8.0
     volumes:
       - ./database:/data/db
     restart: always
 
   server:
     build: ./backend
-    image: echo-server:1.5.2
+    image: echo-server:1.6.0
     restart: always
     depends_on:
       - mongodb
@@ -16,9 +16,7 @@ services:
 
   nginx:
     build: ./frontend
-    image: echo-nginx:1.5.2
+    image: echo-nginx:1.6.0
     restart: always
     ports:
-      - 3200:80
-    env_file:
-      - ./frontend/.env
+      - 3100:80

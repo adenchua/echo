@@ -2,11 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
     "start:dev": "node --env-file=.env --import=tsx ./src/index.ts",
-    "start:prod": "set NODE_ENV=production&& node src/index.js",
+    "start:prod": "set NODE_ENV=production&& node --env-file=.env dist/index.js",
     "format": "prettier --write '**/**/*.{js,ts,json,cjs,md}' --config ../.prettierrc.json",
     "lint": "eslint src/**/*"
   },

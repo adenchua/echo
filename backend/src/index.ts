@@ -14,7 +14,7 @@ import userRouter from "./routes/userRouter";
 
 const app = express();
 const PORT = process.env.SERVER_PORT_NUMBER || 5084;
-const DATABASE_URL = process.env.DATABASE_URL || "mongodb://localhost:27017/echo";
+const DATABASE_URL = process.env.DATABASE_URL || "mongodb://0.0.0.0:27017/echo";
 const API_PREPEND = "/api";
 
 app.use(cors());

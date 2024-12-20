@@ -1,4 +1,4 @@
-export const SERVER_API_URL = "http://localhost:5084";
+export const SERVER_API_URL = "";
 
 export const APP_VERSION = "1.6.0";
 

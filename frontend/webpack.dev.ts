@@ -12,7 +12,7 @@ const config: Configuration = {
     },
     hot: true, // hot reload
     historyApiFallback: { index: "/" },
-    port: 3000, // starts the webpack server at this port number
+    port: 3100, // starts the webpack server at this port number
     compress: true, // enable gzip compression for everything served
     static: {
       directory: path.resolve(__dirname, "./public"),

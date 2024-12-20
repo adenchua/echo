@@ -1,16 +1,17 @@
 import Grid from "@mui/material/Grid2";
 import Typography from "@mui/material/Typography";
 import teal from "@mui/material/colors/teal";
-import { Navigate, useNavigate } from "react-router";
 import { JSX } from "react";
+import { Navigate, useNavigate } from "react-router";
+import BackgroundImage from "../assets/landing_collab.svg";
 
 import FeatureCard from "../components/FeatureCard";
+import Button from "../components/common/Button";
 import Grow from "../components/common/Grow";
 import PageLayoutWrapper from "../components/common/PageLayoutWrapper";
 import Slide from "../components/common/Slide";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
-import Button from "../components/common/Button";
 
 const HomePage = (): JSX.Element => {
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
@@ -42,7 +43,7 @@ const HomePage = (): JSX.Element => {
         </Grid>
         <Grid>
           <Slide direction="left">
-            <img src="/public/assets/landing_collab.svg" height="360px" alt="project collab" />
+            <img src={BackgroundImage} height="360px" alt="project collab" />
           </Slide>
         </Grid>
       </Grid>
