@@ -2,13 +2,9 @@ import Box from "@mui/material/Box";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { JSX, useContext, useMemo, useState } from "react";
 
-import OfflineBacklogGenerator from "../../classes/OfflineBacklogGenerator";
-import { EpicsContext } from "../../contexts/EpicsContextProvider";
-import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
 import { TicketsContext } from "../../contexts/TicketsContextProvider";
 import Project from "../../types/Project";
 import { TICKET_DRAWER_WIDTH } from "../../utils/constants";
-import download from "../../utils/downloadHtmlDoc";
 import getFilteredTickets from "../../utils/getFilteredTickets";
 import getSortedTickets from "../../utils/getSortedTickets";
 import getTicketsByEpics from "../../utils/getTicketsByEpics";
@@ -19,11 +15,9 @@ import TicketFilter, { TicketFilterType } from "../TicketFilter";
 import TicketNavbarWrapper from "../TicketNavbarWrapper";
 import TicketSection from "../TicketSection";
 import TicketSortSelectDropdown, { TicketSortType } from "../TicketSortSelectDropdown";
-import Button from "../common/Button";
 import SearchBar from "../common/SearchBar";
 import SecondaryText from "../common/SecondaryText";
 import TypographySprintInformation from "../common/TypographySprintInformation";
-import DownloadIcon from "../icons/DownloadIcon";
 
 interface ProductBacklogTabProps {
   project: Project;
@@ -33,8 +27,6 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
   const { project } = props;
   const { _id: projectId } = project;
   const { tickets } = useContext(TicketsContext);
-  const { usersMap } = useContext(ProjectMembersContext);
-  const { epicsMap } = useContext(EpicsContext);
   const [searchInput, setSearchInput] = useState<string>("");
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
   const [sortSelection, setSortSelection] = useState<TicketSortType>("priority-dsc");
@@ -117,33 +109,11 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
     </div>
   );
 
-  const getHtmlString = (): string => {
-    const offlineBacklogGenerator = new OfflineBacklogGenerator(
-      displayedTicketsByEpics,
-      project.title,
-      true,
-      usersMap,
-      epicsMap,
-    );
-
-    return offlineBacklogGenerator.generateHtmlDocument();
-  };
-
   return (
     <>
       <Box sx={{ mr: selectedTicketId ? `${TICKET_DRAWER_WIDTH}px` : "" }}>
         {renderTicketNavbar()}
         <Box p={3} mt={8}>
-          {tickets && tickets.length > 0 && (
-            <Button
-              onClick={() => download(`${project.title}-product-backlog.html`, getHtmlString())}
-              startIcon={<DownloadIcon />}
-              color="secondary"
-              sx={{ mb: 4 }}
-            >
-              Download copy (.html)
-            </Button>
-          )}
           {displayedTicketsByEpics &&
             displayedTicketsByEpics.map((displayedTicketsByEpic) => {
               const { epicId, tickets: displayedTickets } = displayedTicketsByEpic;
