@@ -33,7 +33,7 @@ const StoryPointsEditItem = (props: StoryPointsEditItemProps) => {
       await onUpdateTicket(ticketId, { storyPoints: newStoryPoints });
       handleSetLoadingState("SUCCESS");
       handleToggleEditMode();
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -46,7 +46,7 @@ const StoryPointsEditItem = (props: StoryPointsEditItemProps) => {
             title="Estimated story points"
             actionButton={
               <UpdateButton
-                onAccept={handleChangeStoryPoints}
+                onAccept={undefined}
                 onCancel={handleToggleEditMode}
                 showSaveButton={false}
               />

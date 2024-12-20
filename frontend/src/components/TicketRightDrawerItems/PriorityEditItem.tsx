@@ -39,7 +39,7 @@ const PriorityEditItem = (props: PriorityEditItemProps) => {
       await onUpdateTicket(ticketId, { priority: newPriority });
       handleSetLoadingState("SUCCESS");
       handleToggleEditMode();
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -52,15 +52,16 @@ const PriorityEditItem = (props: PriorityEditItemProps) => {
             title="Priority"
             actionButton={
               <UpdateButton
-                onAccept={handleChangePriority}
+                onAccept={undefined}
                 onCancel={handleToggleEditMode}
                 showSaveButton={false}
               />
             }
           />
           <TicketPriorityDropdown
+            label="Select priority"
             selectedValue={priority}
-            onChange={(event, child) => handleChangePriority(event.target.value as TicketPriority)}
+            onChange={(event) => handleChangePriority(event.target.value as TicketPriority)}
           />
           <Divider flexItem sx={{ mt: 2 }} />
         </ListItem>

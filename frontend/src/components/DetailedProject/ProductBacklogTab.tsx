@@ -50,8 +50,6 @@ const ProductBacklogTab = (props: ProductBacklogTabProps) => {
 
   const displayedTicketsByEpics = useMemo(() => {
     return getTicketsByEpics(sortedTickets);
-    //temp fix to get sort working
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortedTickets, sortSelection]);
 
   const handleFilterSelection = (newFilter: TicketFilterType): void => {

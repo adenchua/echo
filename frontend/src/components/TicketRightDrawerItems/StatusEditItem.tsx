@@ -36,7 +36,7 @@ const StatusEditItem = (props: StatusEditItemProps) => {
       await onUpdateTicket(ticketId, { status: newStatus });
       handleSetLoadingState("SUCCESS");
       handleToggleEditMode();
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -49,7 +49,7 @@ const StatusEditItem = (props: StatusEditItemProps) => {
             title="Status"
             actionButton={
               <UpdateButton
-                onAccept={handleUpdateTicketStatus}
+                onAccept={undefined}
                 onCancel={handleToggleEditMode}
                 showSaveButton={false}
               />

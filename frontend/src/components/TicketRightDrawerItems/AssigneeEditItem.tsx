@@ -71,7 +71,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps) => {
       await onUpdateTicket(ticketId, { assigneeId: newAssigneeId ? newAssigneeId : null }); // if no assignee, newAssigneeId will be empty string
       handleSetLoadingState("SUCCESS");
       handleToggleEditMode();
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -98,7 +98,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps) => {
             title="Assignee"
             actionButton={
               <UpdateButton
-                onAccept={handleUpdateTicketAssignee}
+                onAccept={undefined}
                 onCancel={handleToggleEditMode}
                 showSaveButton={false}
               />

@@ -39,7 +39,7 @@ const TicketTypeEditItem = (props: TicketTypeEditItemProps) => {
       await onUpdateTicket(ticketId, { type: newType });
       handleSetLoadingState("SUCCESS");
       handleToggleEditMode();
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -52,15 +52,16 @@ const TicketTypeEditItem = (props: TicketTypeEditItemProps) => {
             title="Type"
             actionButton={
               <UpdateButton
-                onAccept={handleChangeTicketType}
+                onAccept={undefined}
                 onCancel={handleToggleEditMode}
                 showSaveButton={false}
               />
             }
           />
           <TicketTypeDropdown
+            label="Select type"
             selectedValue={type}
-            onChange={(event, child) => handleChangeTicketType(event.target.value as TicketType)}
+            onChange={(event) => handleChangeTicketType(event.target.value as TicketType)}
           />
           <Divider flexItem sx={{ mt: 2 }} />
         </ListItem>

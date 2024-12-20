@@ -48,7 +48,7 @@ const SprintEndDialog = (props: SprintEndDialogProps) => {
       setCompletedSprint(response);
       handleClose();
       handleSetLoadingState("SUCCESS");
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -73,7 +73,7 @@ const SprintEndDialog = (props: SprintEndDialogProps) => {
           <Typography component="span" color="primary">
             {completedSprint?.number}
           </Typography>
-          ! Here's a quick breakdown on the sprint:
+          ! Here&apos;s a quick breakdown on the sprint:
         </DialogContentText>
         <DialogContentText>
           Completed tickets:{" "}

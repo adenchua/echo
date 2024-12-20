@@ -66,7 +66,7 @@ const Ticket = (props: TicketProps) => {
       handleSetLoadingState("LOADING");
       await onUpdateTicket(id, { isInSprint: updatedIsInSprintStatus });
       handleSetLoadingState("SUCCESS");
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };

@@ -9,8 +9,8 @@ import Button from "./Button";
 
 interface DangerActionDialogProps {
   isOpen: boolean;
-  onClose: () => void;
-  onAccept: (...args: any[]) => void;
+  onClose: React.MouseEventHandler<HTMLButtonElement>;
+  onAccept: React.MouseEventHandler<HTMLButtonElement>;
   dialogContent: ReactNode;
   title: string;
   titleIcon: ReactNode;

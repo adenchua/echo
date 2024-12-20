@@ -55,7 +55,7 @@ const CreateProjectButtonWithDialog = () => {
       addProject(project);
       handleCloseDialog();
       handleSetLoadingState("SUCCESS");
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };

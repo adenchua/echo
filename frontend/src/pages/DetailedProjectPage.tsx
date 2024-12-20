@@ -73,13 +73,12 @@ const DetailedProjectPage = () => {
         setProject(response);
 
         handleSetLoadingState("DEFAULT");
-      } catch (error) {
+      } catch {
         handleSetLoadingState("ERROR");
       }
     };
 
     getProject();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const handleUpdateProjectFields = (updatedFields: ProjectUpdateFieldsType): void => {

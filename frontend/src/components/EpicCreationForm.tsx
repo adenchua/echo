@@ -37,7 +37,7 @@ const EpicCreationForm = (props: EpicCreationFormProps) => {
       addEpic(newEpic);
       handleSetLoadingState("DEFAULT");
       onClose();
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };

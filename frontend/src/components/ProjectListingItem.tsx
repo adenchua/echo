@@ -32,14 +32,18 @@ const ProjectListingItem = (props: ProjectListingItemProps) => {
         const response = await fetchSprintsByIds(sprintIds);
         setSprints(response);
         getActiveSprintProgressPercentage(response);
-      } catch (error) {}
+      } catch {
+        // do nothing
+      }
     };
 
     const getUsers = async () => {
       try {
         const response = await fetchUsersByIds([...adminIds, ...memberIds]);
         setUsers(response);
-      } catch (error) {}
+      } catch {
+        // do nothing
+      }
     };
 
     const getActiveSprintProgressPercentage = async (sprints: Sprint[]) => {
@@ -62,7 +66,9 @@ const ProjectListingItem = (props: ProjectListingItemProps) => {
           Math.floor((completedTicketCount / ticketsInSprint.length) * 100).toFixed(),
         );
         setActiveSprintProgressPercentage(result);
-      } catch (error) {}
+      } catch {
+        // do nothing
+      }
     };
 
     getSprintsAndProgress();

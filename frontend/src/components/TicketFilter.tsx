@@ -4,8 +4,6 @@ import CloseIcon from "@mui/icons-material/RestartAltOutlined";
 import RuleIcon from "@mui/icons-material/RuleOutlined";
 import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
@@ -43,24 +41,6 @@ const statusToTextMapping: Record<TicketStatus, string> = {
 interface TicketFilterProps {
   onSelectHandler: (newFilter: TicketFilterType) => void;
 }
-
-interface FilterSelectWrapperProps {
-  children: React.ReactNode;
-  label: string;
-}
-
-const FilterSelectWrapper = (props: FilterSelectWrapperProps) => {
-  const { children, label } = props;
-
-  return (
-    <MenuItem sx={{ mb: 1 }}>
-      <FormControl sx={{ width: "100%" }} size="small">
-        <InputLabel sx={{ fontSize: 12 }}>{label}</InputLabel>
-        {children}
-      </FormControl>
-    </MenuItem>
-  );
-};
 
 const TicketFilter = (props: TicketFilterProps) => {
   const { onSelectHandler } = props;

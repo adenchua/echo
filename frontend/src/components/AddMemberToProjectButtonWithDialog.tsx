@@ -52,7 +52,7 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
           setAvailableMembers(filteredMembers);
         }
         handleSetLoadingState("DEFAULT");
-      } catch (error) {
+      } catch {
         handleSetLoadingState("ERROR");
       }
     };
@@ -88,7 +88,7 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
       handleAddMembers(selectedMembers);
       handleSetLoadingState("SUCCESS");
       handleCloseDialog();
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };

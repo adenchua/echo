@@ -46,7 +46,7 @@ const SettingsTab = (props: SettingsTabProps) => {
       updateProjectInContext(projectId, updatableFields);
       handleUpdateProjectFields(updatableFields); // updates in overview page
       handleSetLoadingState("SUCCESS");
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -56,7 +56,7 @@ const SettingsTab = (props: SettingsTabProps) => {
       handleSetLoadingState("LOADING");
       await deleteProject(projectId);
       navigate("/projects");
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };

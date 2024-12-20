@@ -25,7 +25,9 @@ const DeleteEpicDialog = (props: DeleteEpicDialogProps) => {
       await deleteEpic(epicId);
       deleteEpicInContext(epicId);
       ticketIds.forEach((ticketId) => updateTicket(ticketId, { epicId: null })); // unlink epicId from each ticket
-    } catch (error) {}
+    } catch {
+      // do nothing
+    }
   };
 
   return (
@@ -36,7 +38,7 @@ const DeleteEpicDialog = (props: DeleteEpicDialogProps) => {
         <>
           <DialogContentText mb={4} color="error">
             Are you sure you want to delete the following epic? This action also will move
-            unfinished tickets to "Others":
+            unfinished tickets to &quot;Others&quot;:
           </DialogContentText>
           <DialogContentText>{title}</DialogContentText>
         </>

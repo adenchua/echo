@@ -21,7 +21,7 @@ const UserSignUpPage = () => {
   const [showError, setShowError] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const usernameError = useMemo(
     () => usernameInput.length > 0 && usernameInput.length < 4,
@@ -43,7 +43,7 @@ const UserSignUpPage = () => {
         setShowError(false);
         const newUser = await registerUser(usernameInput, passwordInput);
         setUser(newUser);
-      } catch (error) {
+      } catch {
         setShowError(true);
       }
     });

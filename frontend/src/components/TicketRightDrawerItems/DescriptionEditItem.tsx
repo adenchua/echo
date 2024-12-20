@@ -39,7 +39,7 @@ const DescriptionEditItem = (props: DescriptionEditItemProps) => {
       });
       handleSetLoadingState("SUCCESS");
       handleToggleEditMode();
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };

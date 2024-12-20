@@ -23,13 +23,13 @@ import TicketFilter, { TicketFilterType } from "../TicketFilter";
 import TicketNavbarWrapper from "../TicketNavbarWrapper";
 import TicketSection from "../TicketSection";
 import TicketSortSelectDropdown, { TicketSortType } from "../TicketSortSelectDropdown";
+import Button from "../common/Button";
 import SearchBar from "../common/SearchBar";
 import SecondaryText from "../common/SecondaryText";
 import TypographySprintInformation from "../common/TypographySprintInformation";
 import DownloadIcon from "../icons/DownloadIcon";
 import EndSprintIcon from "../icons/EndSprintIcon";
 import StartSprintIcon from "../icons/StartSprintIcon";
-import Button from "../common/Button";
 
 interface SprintBacklogTabProps {
   project: Project;
@@ -61,8 +61,6 @@ const SprintBacklogTab = (props: SprintBacklogTabProps) => {
 
   const displayedTicketsByEpics = useMemo(() => {
     return getTicketsByEpics(sortedTickets);
-    //temp fix to get sort working
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortSelection, sortedTickets]);
 
   const handleFilterSelection = (newFilter: TicketFilterType): void => {

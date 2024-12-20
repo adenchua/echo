@@ -49,7 +49,7 @@ const Navbar = () => {
         const response = await fetchAllProjectsByUser(loggedInUserId);
         handleSetProject(response);
         handleSetLoadingState("DEFAULT");
-      } catch (error) {
+      } catch {
         handleSetLoadingState("ERROR");
       }
     };

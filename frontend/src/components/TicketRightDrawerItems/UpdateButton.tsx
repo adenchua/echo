@@ -2,8 +2,8 @@ import ButtonText from "../common/ButtonText";
 
 interface UpdateButtonProps {
   showSaveButton: boolean;
-  onAccept: any;
-  onCancel: any;
+  onAccept: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  onCancel: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const UpdateButton = (props: UpdateButtonProps) => {

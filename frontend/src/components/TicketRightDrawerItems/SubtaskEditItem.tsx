@@ -70,7 +70,7 @@ const SubtaskEditItem = (props: SubtaskEditItemProps) => {
       await onAddSubtaskToTicket(ticketId, titleInput);
       handleSetLoadingState("DEFAULT");
       setTitleInput(""); // reset title input upon creation
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -93,7 +93,7 @@ const SubtaskEditItem = (props: SubtaskEditItemProps) => {
         }),
       );
       handleSetLoadingState("DEFAULT");
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };

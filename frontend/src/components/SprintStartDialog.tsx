@@ -45,7 +45,7 @@ const SprintStartDialog = (props: SprintStartDialogProps) => {
       setNewSprint(response);
       handleClose();
       handleSetLoadingState("SUCCESS");
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };

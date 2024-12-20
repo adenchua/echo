@@ -51,7 +51,7 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps) => {
         const response = await fetchTicketsByIds(ticketIds);
         setTickets(response);
         handleSetLoadingState("DEFAULT");
-      } catch (error) {
+      } catch {
         handleSetLoadingState("ERROR");
       }
     };

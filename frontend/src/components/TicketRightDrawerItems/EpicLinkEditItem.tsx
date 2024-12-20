@@ -35,7 +35,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps) => {
     try {
       await onAddTicketToEpic(ticketId, newEpicLinkId);
       handleToggleEditMode();
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -44,7 +44,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps) => {
     try {
       await onRemoveTicketFromEpic(ticketId, epicId);
       handleToggleEditMode();
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -83,7 +83,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps) => {
             title="Epic"
             actionButton={
               <UpdateButton
-                onAccept={handleUpdateTicketEpicLink}
+                onAccept={undefined}
                 onCancel={handleToggleEditMode}
                 showSaveButton={false}
               />

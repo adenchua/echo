@@ -62,7 +62,7 @@ const MembersTab = (props: MembersTabProps) => {
       await removeMemberFromProject(projectId, member._id);
       handleSetLoadingState("DEFAULT");
       handleRemoveMemberInContext(member);
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -73,7 +73,7 @@ const MembersTab = (props: MembersTabProps) => {
       await promoteMemberToAdmin(projectId, member._id);
       handleSetLoadingState("DEFAULT");
       handlePromoteMemberInContext(member);
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };

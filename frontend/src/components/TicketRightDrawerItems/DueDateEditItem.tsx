@@ -37,7 +37,7 @@ const DueDateEditItem = (props: DueDateEditItemProps) => {
       await onUpdateTicket(ticketId, { dueDate: dueDateInputInISOString });
       handleToggleEditMode();
       handleSetLoadingState("SUCCESS");
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -50,7 +50,7 @@ const DueDateEditItem = (props: DueDateEditItemProps) => {
             title="Due date"
             actionButton={
               <UpdateButton
-                onAccept={handleUpdateTicketDueDate}
+                onAccept={undefined}
                 onCancel={handleToggleEditMode}
                 showSaveButton={false}
               />

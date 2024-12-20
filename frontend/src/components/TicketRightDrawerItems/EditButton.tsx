@@ -1,7 +1,7 @@
 import ButtonText from "../common/ButtonText";
 
 interface EditButtonProps {
-  onStartEdit: any;
+  onStartEdit: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const EditButton = (props: EditButtonProps) => {

@@ -1,17 +1,16 @@
 import Grid from "@mui/material/Grid2";
 import { useEffect, useState } from "react";
 
-import { DialogContentText } from "@mui/material";
 import useLoad from "../hooks/useLoad";
 import useProductBacklog from "../hooks/useProductBacklog";
 import { TicketPriority, TicketType } from "../types/Ticket";
 import ActionDialog from "./common/ActionDialog";
 import Button from "./common/Button";
 import DialogErrorText from "./common/DialogErrorText";
+import TextField from "./common/TextField";
 import TicketPriorityDropdown from "./common/TicketPriorityDropdown";
 import TicketTypeDropdown from "./common/TicketTypeDropdown";
 import AddTicketIcon from "./icons/AddTicketIcon";
-import TextField from "./common/TextField";
 
 const DEFAULT_TICKET_TYPE: TicketType = "task";
 const DEFAULT_PRIORITY: TicketPriority = "medium";
@@ -45,7 +44,7 @@ const AddTicketButtonWithDialog = (props: AddTicketButtonWithDialogProps) => {
       await onAddTicket(titleInput, projectId, priority, ticketType);
       handleSetLoadingState("SUCCESS");
       setShowDialog(false); //close dialog upon creation
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -76,14 +75,14 @@ const AddTicketButtonWithDialog = (props: AddTicketButtonWithDialogProps) => {
                 <TicketTypeDropdown
                   label="Ticket type"
                   selectedValue={ticketType}
-                  onChange={(event, child) => setTicketType(event.target.value as TicketType)}
+                  onChange={(event) => setTicketType(event.target.value as TicketType)}
                 />
               </Grid>
               <Grid size={6}>
                 <TicketPriorityDropdown
                   label="Priority"
                   selectedValue={priority}
-                  onChange={(event, child) => setPriority(event.target.value as TicketPriority)}
+                  onChange={(event) => setPriority(event.target.value as TicketPriority)}
                 />
               </Grid>
             </Grid>

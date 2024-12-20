@@ -33,7 +33,7 @@ const DeleteTicketDialog = (props: DeleteTicketDialogProps) => {
       handleSetLoadingState("LOADING");
       await onDeleteTicket(ticketId, projectId, epicId);
       handleSetLoadingState("SUCCESS");
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };

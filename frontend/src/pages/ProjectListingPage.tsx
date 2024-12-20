@@ -60,8 +60,8 @@ const ProjectListingPage = () => {
       {projects.map((project: Project) => {
         if (matchString(searchInput, project.title)) {
           return (
-            <Grow timeout={400}>
-              <div key={project._id}>
+            <Grow timeout={400} key={project._id}>
+              <div>
                 <Link onClick={() => navigate(`/projects/id/${project._id}?tab=overview`)}>
                   <ProjectListingItem project={project} />
                 </Link>

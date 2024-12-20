@@ -40,7 +40,7 @@ const TitleEditItem = (props: TitleEditItemProps) => {
       });
       handleSetLoadingState("SUCCESS");
       handleToggleEditMode();
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };

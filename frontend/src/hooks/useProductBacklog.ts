@@ -30,7 +30,7 @@ const useProductBacklog = () => {
     try {
       const newTicket = await createTicket(title, projectId, priority, type);
       addTicket(newTicket);
-    } catch (error) {
+    } catch {
       throw new Error("Failed to create ticket");
     }
   };
@@ -42,7 +42,7 @@ const useProductBacklog = () => {
     try {
       await updateTicket(ticketId, updatedFields);
       updateTicketContext(ticketId, updatedFields);
-    } catch (error) {
+    } catch {
       throw new Error("Failed to update ticket");
     }
   };
@@ -58,7 +58,7 @@ const useProductBacklog = () => {
       if (epicId) {
         deleteTicketIdFromEpic(epicId, ticketId); // delete ticket from epic
       }
-    } catch (error) {
+    } catch {
       throw new Error("Failed to delete ticket");
     }
   };
@@ -68,7 +68,7 @@ const useProductBacklog = () => {
       await addTicketToEpic(ticketId, epicId);
       addTicketIdToEpic(epicId, ticketId);
       updateTicketContext(ticketId, { epicId });
-    } catch (error) {
+    } catch {
       throw new Error("Failed to add ticket to epic");
     }
   };
@@ -78,7 +78,7 @@ const useProductBacklog = () => {
       await removeTicketFromEpic(ticketId, epicId);
       deleteTicketIdFromEpic(epicId, ticketId);
       updateTicketContext(ticketId, { epicId: "" });
-    } catch (error) {
+    } catch {
       throw new Error("Failed to remove ticket from epic");
     }
   };
@@ -87,7 +87,7 @@ const useProductBacklog = () => {
     try {
       const newSubtask = await addTicketSubtask(ticketId, title);
       addSubtaskIdToTicketContext(ticketId, newSubtask._id);
-    } catch (error) {
+    } catch {
       throw new Error("Failed to add subtask to ticket");
     }
   };
@@ -96,7 +96,7 @@ const useProductBacklog = () => {
     try {
       await deleteTicketSubtask(subtaskId);
       removeSubtaskIdFromTicketContext(ticketId, subtaskId);
-    } catch (error) {
+    } catch {
       throw new Error("Failed to delete subtask from ticket");
     }
   };
