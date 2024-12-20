@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { Types } from "mongoose";
 
 import errorCodeToMessageMap from "../constants/errorMessages";
 import subtaskService from "../services/subtaskService";
@@ -30,13 +29,13 @@ export const updateSubtask = async (request: Request, response: Response): Promi
   const { subtaskId } = request.params;
   const { title, isCompleted } = request.body;
 
-  const [subtask] = await subtaskService.getSubtasks([subtaskId as unknown as Types.ObjectId]);
+  const [subtask] = await subtaskService.getSubtasks([subtaskId]);
 
   if (subtask == null) {
     throw SUBTASK_NOT_FOUND_ERROR;
   }
 
-  await subtaskService.updateSubtask(subtaskId as unknown as Types.ObjectId, {
+  await subtaskService.updateSubtask(subtaskId, {
     title,
     isCompleted,
   });
@@ -46,13 +45,13 @@ export const updateSubtask = async (request: Request, response: Response): Promi
 export const deleteSubtask = async (request: Request, response: Response): Promise<void> => {
   const { subtaskId } = request.params;
 
-  const [subtask] = await subtaskService.getSubtasks([subtaskId as unknown as Types.ObjectId]);
+  const [subtask] = await subtaskService.getSubtasks([subtaskId]);
 
   if (subtask == null) {
     throw SUBTASK_NOT_FOUND_ERROR;
   }
 
-  await subtaskService.deleteSubtask(subtaskId as unknown as Types.ObjectId);
+  await subtaskService.deleteSubtask(subtaskId);
   response.sendStatus(204);
 };
 

@@ -9,7 +9,7 @@ import projectService from "./projectService";
 
 /** Creates a new epic and adds it to an existing project */
 const createEpic = async (
-  projectId: Types.ObjectId,
+  projectId: string,
   epicFields: Partial<IEpic>,
 ): Promise<HydratedDocument<IEpic>> => {
   const { title, description, startDate, endDate, ticketIds } = epicFields;
@@ -40,7 +40,7 @@ const createEpic = async (
 };
 
 /** Updates an existing Epic */
-const updateEpic = async (epicId: Types.ObjectId, epicFields: Partial<IEpic>): Promise<void> => {
+const updateEpic = async (epicId: string, epicFields: Partial<IEpic>): Promise<void> => {
   const { title, description, ticketIds, startDate, endDate } = epicFields;
   const keysToUpdate = objectUtils.removeUndefinedKeysFromObject({
     title,
@@ -53,7 +53,7 @@ const updateEpic = async (epicId: Types.ObjectId, epicFields: Partial<IEpic>): P
 };
 
 /** Retrieves a list of Epics by epic IDs */
-const getEpics = async (epicIds: Types.ObjectId[]): Promise<HydratedDocument<IEpic>[]> => {
+const getEpics = async (epicIds: string[]): Promise<HydratedDocument<IEpic>[]> => {
   const result: HydratedDocument<IEpic>[] = [];
   for (const epicId of epicIds) {
     const epic = await Epic.findById(epicId);
@@ -66,7 +66,7 @@ const getEpics = async (epicIds: Types.ObjectId[]): Promise<HydratedDocument<IEp
 };
 
 /** Adds a ticket to an existing Epic */
-const addTicketToEpic = async (ticketId: Types.ObjectId, epicId: Types.ObjectId): Promise<void> => {
+const addTicketToEpic = async (ticketId: string, epicId: string): Promise<void> => {
   const epic = await Epic.findById(epicId);
 
   if (epic == null) {
@@ -75,17 +75,16 @@ const addTicketToEpic = async (ticketId: Types.ObjectId, epicId: Types.ObjectId)
 
   await Epic.updateMany({ ticketIds: ticketId }, { $pullAll: { ticketIds: [ticketId] } }); // remove all instances of this ticketId in other epics
   await Ticket.findByIdAndUpdate(ticketId, { epicId }); // add link to ticket side
-  if (!epic.ticketIds.includes(ticketId)) {
-    epic.ticketIds.push(ticketId); // add link to epic side
+
+  const epicTicketIds = epic.ticketIds.map((ticketId) => ticketId.toHexString());
+  if (!epicTicketIds.includes(ticketId)) {
+    epic.ticketIds.push(new Types.ObjectId(ticketId)); // add link to epic side
     await epic.save();
   }
 };
 
 /** Removes a ticket from an existing Epic */
-const removeTicketFromEpic = async (
-  ticketId: Types.ObjectId,
-  epicId: Types.ObjectId,
-): Promise<void> => {
+const removeTicketFromEpic = async (ticketId: string, epicId: string): Promise<void> => {
   const epic = await Epic.findById(epicId);
 
   if (epic == null) {
@@ -93,12 +92,12 @@ const removeTicketFromEpic = async (
   }
 
   await Ticket.findByIdAndUpdate(ticketId, { epicId: null }); // remove link from ticket side
-  epic.ticketIds = epic.ticketIds.filter((_ticketId) => _ticketId !== ticketId);
+  epic.ticketIds = epic.ticketIds.filter((_ticketId) => _ticketId.toHexString() !== ticketId);
   await epic.save();
 };
 
 /** Deletes an epic from the database. (WARNING: HARD DELETE OPERATION) */
-const deleteEpic = async (epicId: Types.ObjectId): Promise<void> => {
+const deleteEpic = async (epicId: string): Promise<void> => {
   await Ticket.updateMany({ epicId: epicId }, { $unset: { epicId: "" } }); // remove tickets with this epic id
   await Project.updateMany({ epicIds: epicId }, { $pullAll: { epicIds: [epicId] } }); // remove projects with this epic id
   await Epic.findByIdAndDelete(epicId);

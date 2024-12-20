@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { Types } from "mongoose";
 
 import errorCodeToMessageMap from "../constants/errorMessages";
 import projectService from "../services/projectService";
@@ -23,7 +22,7 @@ export const createProject = async (request: Request, response: Response): Promi
 export const getProject = async (request: Request, response: Response): Promise<void> => {
   const { projectId } = request.params;
 
-  const project = await projectService.getProject(projectId as unknown as Types.ObjectId);
+  const project = await projectService.getProject(projectId);
   if (isProjectDeleted(project)) {
     throw PROJECT_NOT_FOUND_ERROR;
   }
@@ -35,13 +34,13 @@ export const addMemberToProject = async (request: Request, response: Response): 
   const { projectId } = request.params;
   const { userId } = request.body;
 
-  const project = await projectService.getProject(projectId as unknown as Types.ObjectId);
+  const project = await projectService.getProject(projectId);
 
   if (isProjectDeleted(project)) {
     throw PROJECT_NOT_FOUND_ERROR;
   }
 
-  await projectService.addMembersToProject([userId], projectId as unknown as Types.ObjectId);
+  await projectService.addMembersToProject([userId], projectId);
   response.sendStatus(204);
 };
 
@@ -49,13 +48,13 @@ export const addMembersToProject = async (request: Request, response: Response):
   const { projectId } = request.params;
   const { userIds } = request.body;
 
-  const project = await projectService.getProject(projectId as unknown as Types.ObjectId);
+  const project = await projectService.getProject(projectId);
 
   if (isProjectDeleted(project)) {
     throw PROJECT_NOT_FOUND_ERROR;
   }
 
-  await projectService.addMembersToProject(userIds, projectId as unknown as Types.ObjectId);
+  await projectService.addMembersToProject(userIds, projectId);
   response.sendStatus(204);
 };
 
@@ -66,13 +65,13 @@ export const removeMemberFromProject = async (
   const { projectId } = request.params;
   const { userId } = request.body;
 
-  const project = await projectService.getProject(projectId as unknown as Types.ObjectId);
+  const project = await projectService.getProject(projectId);
 
   if (isProjectDeleted(project)) {
     throw PROJECT_NOT_FOUND_ERROR;
   }
 
-  await projectService.removeMemberFromProject(userId, projectId as unknown as Types.ObjectId);
+  await projectService.removeMemberFromProject(userId, projectId);
   response.sendStatus(204);
 };
 
@@ -80,7 +79,7 @@ export const updateProject = async (request: Request, response: Response): Promi
   const { projectId } = request.params;
   const { title, description, announcement, picture, type } = request.body;
 
-  const project = await projectService.getProject(projectId as unknown as Types.ObjectId);
+  const project = await projectService.getProject(projectId);
 
   if (isProjectDeleted(project)) {
     throw PROJECT_NOT_FOUND_ERROR;
@@ -94,14 +93,14 @@ export const updateProject = async (request: Request, response: Response): Promi
     type,
   });
 
-  await projectService.updateProject(projectId as unknown as Types.ObjectId, definedKeys);
+  await projectService.updateProject(projectId, definedKeys);
   response.sendStatus(204);
 };
 
 export const getProjectsOfUser = async (request: Request, response: Response): Promise<void> => {
   const { userId } = request.params;
 
-  const projects = await projectService.getProjectsOfUser(userId as unknown as Types.ObjectId);
+  const projects = await projectService.getProjectsOfUser(userId);
   response.send({ data: projects });
 };
 
@@ -112,13 +111,13 @@ export const promoteMemberToAdministrator = async (
   const { projectId } = request.params;
   const { userId } = request.body;
 
-  const project = await projectService.getProject(projectId as unknown as Types.ObjectId);
+  const project = await projectService.getProject(projectId);
 
   if (isProjectDeleted(project)) {
     throw PROJECT_NOT_FOUND_ERROR;
   }
 
-  await projectService.promoteMemberToAdmin(userId, projectId as unknown as Types.ObjectId);
+  await projectService.promoteMemberToAdmin(userId, projectId);
   response.sendStatus(204);
 };
 
@@ -126,7 +125,7 @@ export const demoteAdminToMember = async (request: Request, response: Response):
   const { projectId } = request.params;
   const { userId } = request.body;
 
-  const project = await projectService.getProject(projectId as unknown as Types.ObjectId);
+  const project = await projectService.getProject(projectId);
 
   if (!project || isProjectDeleted(project)) {
     throw PROJECT_NOT_FOUND_ERROR;
@@ -140,19 +139,19 @@ export const demoteAdminToMember = async (request: Request, response: Response):
     );
   }
 
-  await projectService.demoteAdminToMember(userId, projectId as unknown as Types.ObjectId);
+  await projectService.demoteAdminToMember(userId, projectId);
   response.sendStatus(204);
 };
 
 export const deleteProject = async (request: Request, response: Response): Promise<void> => {
   const { projectId } = request.params;
 
-  const project = await projectService.getProject(projectId as unknown as Types.ObjectId);
+  const project = await projectService.getProject(projectId);
 
   if (isProjectDeleted(project)) {
     throw PROJECT_NOT_FOUND_ERROR;
   }
 
-  await projectService.deleteProject(projectId as unknown as Types.ObjectId);
+  await projectService.deleteProject(projectId);
   response.sendStatus(204);
 };

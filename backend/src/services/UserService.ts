@@ -1,5 +1,5 @@
 import { compare, hash } from "bcrypt";
-import { HydratedDocument, Types } from "mongoose";
+import { HydratedDocument } from "mongoose";
 
 import User, { IUser } from "../models/user";
 
@@ -41,7 +41,7 @@ class UserService {
   }
 
   /** Retrieves a user by user ID */
-  async getUser(userId: Types.ObjectId): Promise<Partial<IUser> | null> {
+  async fetchUserById(userId: string): Promise<Partial<IUser> | null> {
     const user = await User.findById(userId);
 
     if (user == null) {
@@ -52,7 +52,7 @@ class UserService {
   }
 
   /** Retrieves a list of users by user IDs */
-  async getUsers(userIds: Types.ObjectId[]): Promise<Partial<IUser>[]> {
+  async fetchUsersByIds(userIds: string[]): Promise<Partial<IUser>[]> {
     const result: Partial<IUser>[] = [];
 
     for (const userId of userIds) {
@@ -62,6 +62,18 @@ class UserService {
         result.push(this.sanitizePassword(temp));
       }
     }
+
+    return result;
+  }
+
+  /** Retrieves a list of users matching the given username or displayname */
+  async fetchUsers(queryString: string): Promise<Partial<IUser>[]> {
+    const regexp = new RegExp(queryString, "i");
+    const matchedUsers = await User.find({
+      $or: [{ username: regexp }, { displayName: regexp }],
+    });
+
+    const result = matchedUsers.map((user) => this.sanitizePassword(user));
 
     return result;
   }

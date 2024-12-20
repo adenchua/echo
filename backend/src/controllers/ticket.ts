@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { Types } from "mongoose";
 
 import errorCodeToMessageMap from "../constants/errorMessages";
 import projectService from "../services/projectService";
@@ -41,13 +40,13 @@ export const updateTicket = async (request: Request, response: Response): Promis
     storyPoints,
   } = request.body;
 
-  const [ticket] = await ticketService.getTickets([ticketId as unknown as Types.ObjectId]);
+  const [ticket] = await ticketService.getTickets([ticketId]);
 
   if (ticket == null) {
     throw TICKET_NOT_FOUND_ERROR;
   }
 
-  await ticketService.updateTicket(ticketId as unknown as Types.ObjectId, {
+  await ticketService.updateTicket(ticketId, {
     title,
     description,
     status,
@@ -65,13 +64,13 @@ export const updateTicket = async (request: Request, response: Response): Promis
 export const deleteTicket = async (request: Request, response: Response): Promise<void> => {
   const { ticketId } = request.params;
 
-  const [ticket] = await ticketService.getTickets([ticketId as unknown as Types.ObjectId]);
+  const [ticket] = await ticketService.getTickets([ticketId]);
 
   if (ticket == null) {
     throw TICKET_NOT_FOUND_ERROR;
   }
 
-  await ticketService.deleteTicket(ticketId as unknown as Types.ObjectId);
+  await ticketService.deleteTicket(ticketId);
   response.sendStatus(204);
 };
 
@@ -85,7 +84,7 @@ export const getTickets = async (request: Request, response: Response): Promise<
 export const getTicket = async (request: Request, response: Response): Promise<void> => {
   const { ticketId } = request.params;
 
-  const [ticket] = await ticketService.getTickets([ticketId as unknown as Types.ObjectId]);
+  const [ticket] = await ticketService.getTickets([ticketId]);
 
   if (ticket == null) {
     throw TICKET_NOT_FOUND_ERROR;

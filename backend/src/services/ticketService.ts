@@ -1,4 +1,4 @@
-import { HydratedDocument, Types } from "mongoose";
+import { HydratedDocument } from "mongoose";
 
 import Epic from "../models/epic";
 import Project, { IProject } from "../models/project";
@@ -8,7 +8,7 @@ import { isProjectDeleted } from "../utils/projectUtils";
 
 /** Creates a new ticket for a project */
 const createTicket = async (
-  projectId: Types.ObjectId,
+  projectId: string,
   ticketFields: Partial<ITicket>,
 ): Promise<HydratedDocument<ITicket>> => {
   const {
@@ -64,10 +64,7 @@ const createTicket = async (
 };
 
 /** Updates an existing ticket using ticket ID */
-const updateTicket = async (
-  ticketId: Types.ObjectId,
-  ticketFields: Partial<ITicket>,
-): Promise<void> => {
+const updateTicket = async (ticketId: string, ticketFields: Partial<ITicket>): Promise<void> => {
   const {
     title,
     description,
@@ -96,14 +93,14 @@ const updateTicket = async (
 };
 
 /** Deletes an existing ticket */
-const deleteTicket = async (ticketId: Types.ObjectId): Promise<void> => {
+const deleteTicket = async (ticketId: string): Promise<void> => {
   await Epic.updateMany({ ticketIds: ticketId }, { $pullAll: { ticketIds: [ticketId] } }); // remove deleted ticket from epics
   await Project.updateMany({ backlogIds: ticketId }, { $pullAll: { backlogIds: [ticketId] } }); // remove deleted ticket from project
   await Ticket.findByIdAndDelete(ticketId);
 };
 
 /** Retrieves a list of tickets from given list of ticket IDs */
-const getTickets = async (ticketIds: Types.ObjectId[]): Promise<HydratedDocument<ITicket>[]> => {
+const getTickets = async (ticketIds: string[]): Promise<HydratedDocument<ITicket>[]> => {
   const result: HydratedDocument<ITicket>[] = [];
   for (const ticketId of ticketIds) {
     const ticket = await Ticket.findById(ticketId);

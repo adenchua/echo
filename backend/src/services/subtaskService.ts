@@ -1,4 +1,4 @@
-import { HydratedDocument, Types } from "mongoose";
+import { HydratedDocument } from "mongoose";
 
 import Subtask, { ISubtask } from "../models/subtask";
 import Ticket from "../models/ticket";
@@ -6,7 +6,7 @@ import objectUtils from "../utils/objectUtils";
 
 /** Creates a new subtask for a ticket */
 const createSubtask = async (
-  ticketId: Types.ObjectId,
+  ticketId: string,
   subtaskFields: Partial<ISubtask>,
 ): Promise<HydratedDocument<ISubtask>> => {
   const { title, isCompleted } = subtaskFields;
@@ -25,7 +25,7 @@ const createSubtask = async (
 
 /** Updates a current subtask by the subtask ID */
 const updateSubtask = async (
-  subtaskId: Types.ObjectId,
+  subtaskId: string,
   subtaskFields: Partial<ISubtask>,
 ): Promise<void> => {
   const { title, isCompleted } = subtaskFields;
@@ -35,13 +35,13 @@ const updateSubtask = async (
 };
 
 /** Deletes an existing subtask in the database. WARNING: HARD-DELETE */
-const deleteSubtask = async (subtaskId: Types.ObjectId): Promise<void> => {
+const deleteSubtask = async (subtaskId: string): Promise<void> => {
   await Ticket.updateMany({ subtaskIds: subtaskId }, { $pullAll: { subtaskIds: [subtaskId] } }); // remove ticket with this subtask id
   await Subtask.findByIdAndDelete(subtaskId);
 };
 
 /** Returns a list of subtasks by subtask IDs */
-const getSubtasks = async (subtaskIds: Types.ObjectId[]): Promise<HydratedDocument<ISubtask>[]> => {
+const getSubtasks = async (subtaskIds: string[]): Promise<HydratedDocument<ISubtask>[]> => {
   const result: HydratedDocument<ISubtask>[] = [];
   for (const subtaskId of subtaskIds) {
     const subtask = await Subtask.findById(subtaskId);

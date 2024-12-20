@@ -1,11 +1,11 @@
-import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/PersonRemoveAlt1Outlined";
+import IconButton from "@mui/material/IconButton";
 import { JSX, useState } from "react";
 
-import Tooltip from "../common/Tooltip";
+import { DialogContentText } from "@mui/material";
 import User from "../../types/User";
 import DangerActionDialog from "../common/DangerActionDialog";
-import { DialogContentText } from "@mui/material";
+import Tooltip from "../common/Tooltip";
 
 interface RemoveMemberIconButtonProps {
   member: User;
@@ -37,16 +37,13 @@ const RemoveMemberIconButton = (props: RemoveMemberIconButtonProps): JSX.Element
         dialogContent={
           <>
             <DialogContentText mb={4} color="error">
-              This action will prevent this member from viewing or editing the project:
-            </DialogContentText>
-            <DialogContentText>
-              {member.displayName} (@{member.username})
+              This action will prevent @{member.username} from viewing or editing the project
             </DialogContentText>
           </>
         }
         onAccept={() => onRemoveMember(member)}
         onClose={() => setIsDialogOpened(false)}
-        title="Remove member from project"
+        title={`Remove @${member.username} from project`}
         titleIcon={<DeleteIcon />}
         disableActionButton={false}
       />

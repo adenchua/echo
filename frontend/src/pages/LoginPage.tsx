@@ -50,7 +50,7 @@ const LoginPage = (): JSX.Element => {
           alignItems: "center",
         }}
       >
-        <Typography variant="h5" sx={{ mb: 6 }}>
+        <Typography variant="h5" sx={{ mb: 2 }}>
           Login to echo.yl
         </Typography>
         {errorMessage && <BannerError sx={{ mb: 2 }}>{errorMessage}</BannerError>}

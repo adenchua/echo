@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { Types } from "mongoose";
 
 import errorCodeToMessageMap from "../constants/errorMessages";
 import epicService from "../services/epicService";
@@ -33,13 +32,13 @@ export const updateEpic = async (request: Request, response: Response): Promise<
   const { epicId } = request.params;
   const { title, description } = request.body;
 
-  const [epic] = await epicService.getEpics([epicId as unknown as Types.ObjectId]);
+  const [epic] = await epicService.getEpics([epicId]);
 
   if (epic == null) {
     throw EPIC_NOT_FOUND_ERROR;
   }
 
-  await epicService.updateEpic(epicId as unknown as Types.ObjectId, { title, description });
+  await epicService.updateEpic(epicId, { title, description });
   response.sendStatus(204);
 };
 
@@ -54,7 +53,7 @@ export const addTicketToEpic = async (request: Request, response: Response): Pro
   const { epicId } = request.params;
   const { ticketId } = request.body;
 
-  const [epic] = await epicService.getEpics([epicId as unknown as Types.ObjectId]);
+  const [epic] = await epicService.getEpics([epicId]);
   const [ticket] = await ticketService.getTickets([ticketId]);
 
   if (epic == null) {
@@ -65,7 +64,7 @@ export const addTicketToEpic = async (request: Request, response: Response): Pro
     throw TICKET_NOT_FOUND_ERROR;
   }
 
-  await epicService.addTicketToEpic(ticketId, epicId as unknown as Types.ObjectId);
+  await epicService.addTicketToEpic(ticketId, epicId);
   response.sendStatus(204);
 };
 
@@ -73,7 +72,7 @@ export const removeTicketFromEpic = async (request: Request, response: Response)
   const { epicId } = request.params;
   const { ticketId } = request.body;
 
-  const [epic] = await epicService.getEpics([epicId as unknown as Types.ObjectId]);
+  const [epic] = await epicService.getEpics([epicId]);
   const [ticket] = await ticketService.getTickets([ticketId]);
 
   if (epic == null) {
@@ -84,19 +83,19 @@ export const removeTicketFromEpic = async (request: Request, response: Response)
     throw TICKET_NOT_FOUND_ERROR;
   }
 
-  await epicService.removeTicketFromEpic(ticketId, epicId as unknown as Types.ObjectId);
+  await epicService.removeTicketFromEpic(ticketId, epicId);
   response.sendStatus(204);
 };
 
 export const deleteEpic = async (request: Request, response: Response): Promise<void> => {
   const { epicId } = request.params;
 
-  const [epic] = await epicService.getEpics([epicId as unknown as Types.ObjectId]);
+  const [epic] = await epicService.getEpics([epicId]);
 
   if (epic == null) {
     throw EPIC_NOT_FOUND_ERROR;
   }
 
-  await epicService.deleteEpic(epicId as unknown as Types.ObjectId);
+  await epicService.deleteEpic(epicId);
   response.sendStatus(204);
 };

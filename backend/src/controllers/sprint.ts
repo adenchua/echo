@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { Types } from "mongoose";
 
 import errorCodeToMessageMap from "../constants/errorMessages";
 import projectService from "../services/projectService";
@@ -35,7 +34,9 @@ export const startSprint = async (request: Request, response: Response): Promise
     throw PROJECT_NOT_FOUND_ERROR;
   }
 
-  const projectSprints = await sprintService.getSprints(project!.sprintIds as Types.ObjectId[]);
+  const sprintIds = project!.sprintIds.map((sprintId) => sprintId.toHexString());
+
+  const projectSprints = await sprintService.getSprints(sprintIds);
   if (!projectSprints.every((sprint) => sprint.hasEnded)) {
     // already has active sprint
     throw EXISTING_ACTIVE_SPRINT_ERROR;
@@ -81,7 +82,7 @@ export const getSprints = async (request: Request, response: Response): Promise<
 export const getSprint = async (request: Request, response: Response): Promise<void> => {
   const { sprintId } = request.params;
 
-  const [sprint] = await sprintService.getSprints([sprintId as unknown as Types.ObjectId]);
+  const [sprint] = await sprintService.getSprints([sprintId]);
 
   if (sprint == null) {
     throw SPRINT_NOT_EXIST_ERROR;

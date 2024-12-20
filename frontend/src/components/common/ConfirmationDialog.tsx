@@ -18,7 +18,7 @@ interface ConfirmationDialogProps {
 const ConfirmationDialog = (props: ConfirmationDialogProps): JSX.Element => {
   const { isOpen, onClose, dialogContent, title, titleIcon } = props;
   return (
-    <Dialog open={isOpen} maxWidth="sm">
+    <Dialog open={isOpen} maxWidth="sm" fullWidth>
       <DialogTitle
         sx={{
           borderTop: "6px solid",
