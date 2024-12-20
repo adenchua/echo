@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { useContext } from "react";
+import { JSX, useContext } from "react";
 
 import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
 import Project from "../../types/Project";
@@ -15,12 +15,12 @@ interface OverviewTabProps {
   project: Project;
 }
 
-const OverviewTab = (props: OverviewTabProps) => {
+const OverviewTab = (props: OverviewTabProps): JSX.Element => {
   const { project } = props;
   const { _id: projectId, description } = project;
   const { members, admins } = useContext(ProjectMembersContext);
 
-  const renderMemberCard = (member: User) => {
+  const renderMemberCard = (member: User): JSX.Element => {
     const { displayName, username, title } = member;
     return (
       <Grow>

@@ -1,10 +1,11 @@
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import { JSX } from "react";
 import { useNavigate } from "react-router";
 
 import Button from "../components/common/Button";
 
-const NotFoundPage = () => {
+const NotFoundPage = (): JSX.Element => {
   const navigate = useNavigate();
   return (
     <Container

@@ -1,6 +1,7 @@
 import BugIcon from "@mui/icons-material/BugReportOutlined";
 import UserStoryIcon from "@mui/icons-material/HistoryEduOutlined";
 import TaskIcon from "@mui/icons-material/TaskOutlined";
+import { JSX } from "react";
 
 import { TicketType } from "../../types/Ticket";
 import Tooltip from "../common/Tooltip";
@@ -10,7 +11,7 @@ interface TicketTypeIconProps {
   fontSize?: "small" | "inherit" | "large" | "medium";
 }
 
-const TicketTypeIcon = (props: TicketTypeIconProps) => {
+const TicketTypeIcon = (props: TicketTypeIconProps): JSX.Element => {
   const { type, fontSize = "small" } = props;
 
   switch (type) {

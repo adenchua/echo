@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { differenceInBusinessDays, format } from "date-fns";
-import { useContext, useMemo, useState } from "react";
+import { JSX, useContext, useMemo, useState } from "react";
 
 import OfflineBacklogGenerator from "../../classes/OfflineBacklogGenerator";
 import { ActiveSprintContext } from "../../contexts/ActiveSprintContextProvider";
@@ -35,7 +35,7 @@ interface SprintBacklogTabProps {
   project: Project;
 }
 
-const SprintBacklogTab = (props: SprintBacklogTabProps) => {
+const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   const { project } = props;
   const { _id: projectId } = project;
   const { tickets } = useContext(TicketsContext);
@@ -71,7 +71,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps) => {
     setSortSelection(e.target.value as TicketSortType);
   };
 
-  const handleSetSelectedTicket = (ticketId: string) => {
+  const handleSetSelectedTicket = (ticketId: string): void => {
     if (!selectedTicketId) {
       setSelectedTicketId(ticketId);
       return;
@@ -84,7 +84,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps) => {
     setSelectedTicketId(ticketId);
   };
 
-  const renderSprintDetails = () => {
+  const renderSprintDetails = (): JSX.Element | null => {
     if (!activeSprint) {
       return (
         <TypographySprintInformation>
@@ -115,7 +115,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps) => {
     );
   };
 
-  const renderDrawer = () => {
+  const renderDrawer = (): JSX.Element | null => {
     if (!selectedTicketId) {
       return null;
     }
@@ -136,7 +136,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps) => {
     );
   };
 
-  const renderTicketNavbar = () => (
+  const renderTicketNavbar = (): JSX.Element => (
     <div>
       <TicketNavbarWrapper isTicketSelected={!!selectedTicketId}>
         {renderSprintDetails()}

@@ -1,7 +1,7 @@
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
+import { JSX, useState } from "react";
 import { useNavigate } from "react-router";
 
 import login from "../api/authentication/login";
@@ -15,7 +15,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import { loginErrorCodeToMessageHelper } from "../utils/loginErrorCodeToMessageHelper";
 
-const LoginPage = () => {
+const LoginPage = (): JSX.Element => {
   const [usernameInput, setUsernameInput] = useState<string>("");
   const [passwordInput, setPasswordInput] = useState<string>("");
   const { currentLoadState, handleSetLoadingState } = useLoad();
@@ -39,7 +39,7 @@ const LoginPage = () => {
     }
   };
 
-  const renderLoginForm = () => {
+  const renderLoginForm = (): JSX.Element => {
     return (
       <Paper
         sx={{

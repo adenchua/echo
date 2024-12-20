@@ -1,6 +1,6 @@
 import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { DialogContentText } from "@mui/material";
-import { useEffect } from "react";
+import { JSX, useEffect } from "react";
 
 import useProductBacklog from "../hooks/useProductBacklog";
 import Ticket from "../types/Ticket";
@@ -15,7 +15,7 @@ interface DeleteTicketDialogProps {
   projectId: string;
 }
 
-const DeleteTicketDialog = (props: DeleteTicketDialogProps) => {
+const DeleteTicketDialog = (props: DeleteTicketDialogProps): JSX.Element => {
   const { isDialogOpened, onClose, ticket, projectId } = props;
   const { currentLoadState, handleSetLoadingState } = useLoad();
   const { title, _id: ticketId, epicId } = ticket;

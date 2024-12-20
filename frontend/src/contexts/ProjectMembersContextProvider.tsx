@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode, useCallback, useMemo } from "react";
+import { createContext, useState, ReactNode, useCallback, useMemo, JSX } from "react";
 
 import User from "../types/User";
 
@@ -32,7 +32,9 @@ export const ProjectMembersContext = createContext<ProjectMembersStateType>(
   projectMembersDefaultState,
 );
 
-const ProjectMembersContextProvider = ({ children }: ProjectMembersContextProviderProps) => {
+const ProjectMembersContextProvider = ({
+  children,
+}: ProjectMembersContextProviderProps): JSX.Element => {
   const [members, setMembers] = useState<User[]>([]);
   const [admins, setAdmins] = useState<User[]>([]);
   const usersMap = useMemo(() => {

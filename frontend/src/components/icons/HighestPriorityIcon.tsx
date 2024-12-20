@@ -1,5 +1,6 @@
 import ChevronUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Box from "@mui/material/Box";
+import { JSX } from "react";
 
 import Tooltip from "../common/Tooltip";
 
@@ -17,7 +18,7 @@ interface HighestPriorityIconProps {
     | "warning";
 }
 
-const HighestPriorityIcon = (props: HighestPriorityIconProps) => {
+const HighestPriorityIcon = (props: HighestPriorityIconProps): JSX.Element => {
   const { fontSize = "small", color = "inherit" } = props;
   return (
     <Tooltip title="Urgent">

@@ -1,12 +1,13 @@
 import LinearProgress, { LinearProgressProps } from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { JSX } from "react";
 
 interface ProgressBarWithPercentageProps {
   value: number;
 }
 
-const ProgressBarWithPercentage = (props: ProgressBarWithPercentageProps) => {
+const ProgressBarWithPercentage = (props: ProgressBarWithPercentageProps): JSX.Element => {
   const { value } = props;
   let displayedValue = value;
 
@@ -14,7 +15,7 @@ const ProgressBarWithPercentage = (props: ProgressBarWithPercentageProps) => {
     displayedValue = 0; // prevent display of NaN%
   }
 
-  function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
+  function LinearProgressWithLabel(props: LinearProgressProps & { value: number }): JSX.Element {
     return (
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Box sx={{ width: "100%", mr: 1 }}>

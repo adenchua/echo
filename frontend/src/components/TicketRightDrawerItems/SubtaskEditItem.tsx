@@ -1,5 +1,5 @@
 import { Box, Divider, ListItem, ListItemText, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 
 import fetchSubtasksByIds from "../../api/tickets/fetchSubtasksByIds";
 import updateSubtask from "../../api/tickets/updateSubtask";
@@ -18,7 +18,7 @@ interface SubtaskEditItemProps {
   ticketId: string;
 }
 
-const SubtaskEditItem = (props: SubtaskEditItemProps) => {
+const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
   const { subtaskIds, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const [subtasks, setSubtasks] = useState<Subtask[]>([]);
@@ -36,7 +36,7 @@ const SubtaskEditItem = (props: SubtaskEditItemProps) => {
   useEffect(() => {
     let isMounted = true;
 
-    const getSubtasks = async () => {
+    const getSubtasks = async (): Promise<void> => {
       try {
         handleSetLoadingState("LOADING");
         const response = await fetchSubtasksByIds(subtaskIds);
@@ -51,7 +51,7 @@ const SubtaskEditItem = (props: SubtaskEditItemProps) => {
 
     getSubtasks();
 
-    return () => {
+    return (): void => {
       isMounted = false;
     };
   }, [subtaskIds, handleSetLoadingState]);

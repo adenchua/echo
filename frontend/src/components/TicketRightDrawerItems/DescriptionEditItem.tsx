@@ -2,7 +2,7 @@ import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import TextField from "@mui/material/TextField";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 
 import useLoad from "../../hooks/useLoad";
 import useProductBacklog from "../../hooks/useProductBacklog";
@@ -16,7 +16,7 @@ interface DescriptionEditItemProps {
   ticketId: string;
 }
 
-const DescriptionEditItem = (props: DescriptionEditItemProps) => {
+const DescriptionEditItem = (props: DescriptionEditItemProps): JSX.Element => {
   const { description, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const { currentLoadState, handleSetLoadingState } = useLoad();

@@ -1,6 +1,6 @@
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/PersonRemoveAlt1Outlined";
-import { useState } from "react";
+import { JSX, useState } from "react";
 
 import Tooltip from "../common/Tooltip";
 import User from "../../types/User";
@@ -13,7 +13,7 @@ interface RemoveMemberIconButtonProps {
   onRemoveMember: (member: User) => void;
 }
 
-const RemoveMemberIconButton = (props: RemoveMemberIconButtonProps) => {
+const RemoveMemberIconButton = (props: RemoveMemberIconButtonProps): JSX.Element => {
   const [isDialogOpened, setIsDialogOpened] = useState<boolean>(false);
   const { member, isDisabled, onRemoveMember } = props;
 

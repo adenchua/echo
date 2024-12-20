@@ -1,4 +1,5 @@
 import Chip from "@mui/material/Chip";
+import { JSX } from "react";
 
 import { TicketStatus } from "../types/Ticket";
 
@@ -11,7 +12,7 @@ interface StatusChipButtonProps {
   size: MuiChipSizeType;
 }
 
-const StatusChipButton = (props: StatusChipButtonProps) => {
+const StatusChipButton = (props: StatusChipButtonProps): JSX.Element => {
   const { status, size } = props;
 
   switch (status) {

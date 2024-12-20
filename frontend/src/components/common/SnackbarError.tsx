@@ -1,4 +1,5 @@
 import { Snackbar } from "@mui/material";
+import { JSX } from "react";
 
 interface SnackbarErrorProps {
   isOpen: boolean;
@@ -6,7 +7,7 @@ interface SnackbarErrorProps {
   text?: string;
 }
 
-const SnackbarError = (props: SnackbarErrorProps) => {
+const SnackbarError = (props: SnackbarErrorProps): JSX.Element => {
   const { isOpen, onClose, text = "Something went wrong, please try again later" } = props;
 
   return (

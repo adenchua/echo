@@ -2,7 +2,7 @@ import Avatar from "@mui/material/Avatar";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import { ReactNode } from "react";
+import { JSX, ReactNode } from "react";
 import { Link } from "react-router";
 
 interface NavbarListItemProps {
@@ -12,7 +12,7 @@ interface NavbarListItemProps {
   linkTo: string;
 }
 
-const NavbarListItem = (props: NavbarListItemProps) => {
+const NavbarListItem = (props: NavbarListItemProps): JSX.Element => {
   const { linkTo, isSelected, icon, buttonText } = props;
 
   return (

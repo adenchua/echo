@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import MenuItem from "@mui/material/MenuItem";
-import { useState } from "react";
+import { JSX, useState } from "react";
 
 import useLoad from "../../hooks/useLoad";
 import useProductBacklog from "../../hooks/useProductBacklog";
@@ -20,7 +20,7 @@ interface StatusEditItemProps {
   status: TicketStatus;
 }
 
-const StatusEditItem = (props: StatusEditItemProps) => {
+const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
   const { status, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const { onUpdateTicket } = useProductBacklog();

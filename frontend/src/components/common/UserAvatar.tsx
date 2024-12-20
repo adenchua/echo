@@ -1,4 +1,5 @@
 import { Avatar } from "@mui/material";
+import { JSX } from "react";
 
 import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
 import Tooltip from "./Tooltip";
@@ -8,7 +9,7 @@ interface UserAvatarProps {
   displayName: string;
 }
 
-const UserAvatar = (props: UserAvatarProps) => {
+const UserAvatar = (props: UserAvatarProps): JSX.Element => {
   const { username, displayName } = props;
 
   return (

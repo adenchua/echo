@@ -3,7 +3,7 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import { useContext, useState } from "react";
+import { JSX, useContext, useState } from "react";
 
 import { EpicsContext } from "../contexts/EpicsContextProvider";
 import Ticket from "../types/Ticket";
@@ -28,7 +28,7 @@ interface TicketDetailsRightDrawerProps {
   projectId: string;
 }
 
-const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps) => {
+const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Element => {
   const { ticket, onClose, isOpen, projectId } = props;
   const {
     _id: id,

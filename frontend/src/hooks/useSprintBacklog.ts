@@ -6,7 +6,12 @@ import { ActiveSprintContext } from "../contexts/ActiveSprintContextProvider";
 import { TicketsContext } from "../contexts/TicketsContextProvider";
 import Sprint from "../types/Sprint";
 
-const useSprintBacklog = () => {
+interface HookInterface {
+  onStartSprint: (projectId: string, endDate: Date | null) => Promise<Sprint>;
+  onEndSprint: (projectId: string, sprintId: string) => Promise<Sprint>;
+}
+
+const useSprintBacklog = (): HookInterface => {
   const { removeCompletedTickets } = useContext(TicketsContext);
   const { handleRemoveActiveSprint, handleSetActiveSprint } = useContext(ActiveSprintContext);
 

@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-import { useContext, useState } from "react";
+import { JSX, useContext, useState } from "react";
 import { Navigate, useNavigate } from "react-router";
 
 import CreateProjectButtonWithDialog from "../components/CreateProjectButtonWithDialog";
@@ -16,7 +16,7 @@ import Project from "../types/Project";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import { matchString } from "../utils/stringUtils";
 
-const ProjectListingPage = () => {
+const ProjectListingPage = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>("");
   const { projects } = useContext(UserProjectsContext);
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
@@ -26,7 +26,7 @@ const ProjectListingPage = () => {
     return <Navigate to="/" />;
   }
 
-  const renderTitleHeaders = () => {
+  const renderTitleHeaders = (): JSX.Element => {
     return (
       <Box mb={1} p={1} display="flex" alignItems="center" gap={8}>
         <Typography sx={{ width: "242px" }}>Project</Typography>
@@ -39,7 +39,9 @@ const ProjectListingPage = () => {
     );
   };
 
-  const renderNoProjectsMessage = () => <Typography>There are no projects listed</Typography>;
+  const renderNoProjectsMessage = (): JSX.Element => (
+    <Typography>There are no projects listed</Typography>
+  );
 
   return (
     <PageLayoutWrapper>

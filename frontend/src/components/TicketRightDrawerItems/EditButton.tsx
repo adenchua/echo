@@ -1,10 +1,12 @@
+import { JSX } from "react";
+
 import ButtonText from "../common/ButtonText";
 
 interface EditButtonProps {
   onStartEdit: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const EditButton = (props: EditButtonProps) => {
+const EditButton = (props: EditButtonProps): JSX.Element => {
   const { onStartEdit } = props;
 
   return (

@@ -1,7 +1,7 @@
 import { Celebration } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { useMemo, useState, useTransition } from "react";
+import { JSX, useMemo, useState, useTransition } from "react";
 import { useNavigate } from "react-router";
 
 import registerUser from "../api/users/registerUser";
@@ -13,7 +13,7 @@ import TextField from "../components/common/TextField";
 import RightArrowIcon from "../components/icons/RightArrowIcon";
 import User from "../types/User";
 
-const UserSignUpPage = () => {
+const UserSignUpPage = (): JSX.Element => {
   const [usernameInput, setUsernameInput] = useState<string>("");
   const [passwordInput, setPasswordInput] = useState<string>("");
   const [confirmPasswordInput, setConfirmPasswordInput] = useState<string>("");
@@ -36,7 +36,7 @@ const UserSignUpPage = () => {
     [passwordInput, confirmPasswordInput],
   );
 
-  async function handleSubmit(event: React.FormEvent) {
+  async function handleSubmit(event: React.FormEvent): Promise<void> {
     event.preventDefault();
     startTransition(async () => {
       try {
@@ -49,7 +49,7 @@ const UserSignUpPage = () => {
     });
   }
 
-  function handleCloseSuccessDialog() {
+  function handleCloseSuccessDialog(): void {
     setUser(null);
     setUsernameInput("");
     setPasswordInput("");
@@ -120,7 +120,7 @@ const UserSignUpPage = () => {
                 Return to login
               </Button>
               <Button
-                state={(function () {
+                state={(function (): "disabled" | "default" | "loading" {
                   if (
                     usernameInput.length === 0 ||
                     passwordInput.length === 0 ||

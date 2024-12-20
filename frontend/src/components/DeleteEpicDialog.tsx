@@ -1,5 +1,5 @@
 import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import { useContext } from "react";
+import { JSX, useContext } from "react";
 
 import { DialogContentText } from "@mui/material";
 import deleteEpic from "../api/epics/deleteEpic";
@@ -14,7 +14,7 @@ interface DeleteEpicDialogProps {
   epic: Epic;
 }
 
-const DeleteEpicDialog = (props: DeleteEpicDialogProps) => {
+const DeleteEpicDialog = (props: DeleteEpicDialogProps): JSX.Element => {
   const { isDialogOpened, onClose, epic } = props;
   const { title, ticketIds, _id: epicId } = epic;
   const { deleteEpic: deleteEpicInContext } = useContext(EpicsContext);

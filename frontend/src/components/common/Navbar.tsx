@@ -6,7 +6,7 @@ import List from "@mui/material/List";
 import ListSubheader from "@mui/material/ListSubheader";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { useContext, useEffect } from "react";
+import { JSX, useContext, useEffect } from "react";
 import { Link, useLocation, useParams } from "react-router";
 
 import fetchAllProjectsByUser from "../../api/projects/fetchAllProjectsByUser";
@@ -31,7 +31,7 @@ const navigationItems = [
   },
 ];
 
-const Navbar = () => {
+const Navbar = (): JSX.Element => {
   const { pathname } = useLocation();
   const { id: selectedProjectId } = useParams<{ id: string }>();
   const { currentLoadState, handleSetLoadingState } = useLoad();
@@ -39,7 +39,7 @@ const Navbar = () => {
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
 
   useEffect(() => {
-    const getUserProjects = async () => {
+    const getUserProjects = async (): Promise<void> => {
       if (!loggedInUserId) {
         return;
       }
@@ -126,7 +126,7 @@ const Navbar = () => {
       <SnackbarError
         isOpen={currentLoadState === "ERROR"}
         onClose={() => handleSetLoadingState("DEFAULT")}
-        text="An error occured while trying to fetch your projects. Please try again later"
+        text="An error occurred while trying to fetch your projects. Please try again later"
       />
     </>
   );

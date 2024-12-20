@@ -10,7 +10,7 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import Popover from "@mui/material/Popover";
-import { useCallback, useContext, useState } from "react";
+import { JSX, useCallback, useContext, useState } from "react";
 
 import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
 import { useLocalStorage } from "../hooks/useLocalStorage";
@@ -42,7 +42,7 @@ interface TicketFilterProps {
   onSelectHandler: (newFilter: TicketFilterType) => void;
 }
 
-const TicketFilter = (props: TicketFilterProps) => {
+const TicketFilter = (props: TicketFilterProps): JSX.Element => {
   const { onSelectHandler } = props;
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [filterText, setFilterText] = useState<string>("");
@@ -65,11 +65,11 @@ const TicketFilter = (props: TicketFilterProps) => {
     [members, admins],
   );
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setAnchorEl(null);
   };
 

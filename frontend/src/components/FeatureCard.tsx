@@ -1,13 +1,14 @@
 import DoneIcon from "@mui/icons-material/DoneOutlineOutlined";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import { JSX } from "react";
 
 interface FeatureCardProps {
   title: string;
   secondaryTitle: string;
 }
 
-const FeatureCard = (props: FeatureCardProps) => {
+const FeatureCard = (props: FeatureCardProps): JSX.Element => {
   const { title, secondaryTitle } = props;
 
   return (

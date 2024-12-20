@@ -2,6 +2,7 @@ import Grid from "@mui/material/Grid2";
 import Typography from "@mui/material/Typography";
 import teal from "@mui/material/colors/teal";
 import { Navigate, useNavigate } from "react-router";
+import { JSX } from "react";
 
 import FeatureCard from "../components/FeatureCard";
 import Grow from "../components/common/Grow";
@@ -11,7 +12,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import Button from "../components/common/Button";
 
-const HomePage = () => {
+const HomePage = (): JSX.Element => {
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
   const navigate = useNavigate();
 

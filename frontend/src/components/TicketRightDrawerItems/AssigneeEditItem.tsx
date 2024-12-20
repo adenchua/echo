@@ -6,7 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
-import { useContext, useEffect, useState } from "react";
+import { JSX, useContext, useEffect, useState } from "react";
 
 import fetchUsersByIds from "../../api/users/fetchUsersByIds";
 import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
@@ -30,7 +30,7 @@ interface AssigneeEditItemProps {
   assigneeId: string;
 }
 
-const AssigneeEditItem = (props: AssigneeEditItemProps) => {
+const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
   const { assigneeId, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const { currentLoadState, handleSetLoadingState } = useLoad();
@@ -43,7 +43,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps) => {
   useEffect(() => {
     let isMounted = true;
 
-    const getAssigneeDetails = async () => {
+    const getAssigneeDetails = async (): Promise<void> => {
       if (!assigneeId) {
         setAssignee(null);
         return;
@@ -56,7 +56,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps) => {
 
     getAssigneeDetails();
 
-    return () => {
+    return (): void => {
       isMounted = false;
     };
   }, [assigneeId]);
@@ -76,7 +76,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps) => {
     }
   };
 
-  const renderAssigneeChip = () => {
+  const renderAssigneeChip = (): JSX.Element => {
     if (!assignee) {
       return <ListItemText secondary="None" />;
     }

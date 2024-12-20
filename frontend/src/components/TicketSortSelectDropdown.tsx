@@ -4,6 +4,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import PriorityIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
 import TimeIcon from "@mui/icons-material/AccessTime";
+import { JSX } from "react";
 
 export type TicketSortType = "priority-dsc" | "creation-asc";
 
@@ -24,7 +25,7 @@ interface TicketSortSelectDropdownProps {
   onChangeHandler: (e: SelectChangeEvent) => void;
 }
 
-const TicketSortSelectDropdown = (props: TicketSortSelectDropdownProps) => {
+const TicketSortSelectDropdown = (props: TicketSortSelectDropdownProps): JSX.Element => {
   const { sortSelection, onChangeHandler } = props;
 
   return (

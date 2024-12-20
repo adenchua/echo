@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
-import { useState } from "react";
+import { JSX, useState } from "react";
 
 import useLoad from "../../hooks/useLoad";
 import useProductBacklog from "../../hooks/useProductBacklog";
@@ -17,7 +17,7 @@ interface StoryPointsEditItemProps {
   storyPoints: StoryPoints;
 }
 
-const StoryPointsEditItem = (props: StoryPointsEditItemProps) => {
+const StoryPointsEditItem = (props: StoryPointsEditItemProps): JSX.Element => {
   const { storyPoints, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const { onUpdateTicket } = useProductBacklog();

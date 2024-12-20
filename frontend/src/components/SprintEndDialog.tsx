@@ -1,7 +1,7 @@
 import SprintEndIcon from "@mui/icons-material/EventRepeatOutlined";
 import DialogContentText from "@mui/material/DialogContentText";
 import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 
 import useLoad from "../hooks/useLoad";
 import Sprint from "../types/Sprint";
@@ -19,7 +19,7 @@ interface SprintEndDialogProps {
   sprintTickets: Ticket[];
 }
 
-const SprintEndDialog = (props: SprintEndDialogProps) => {
+const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
   const { onEndSprint, projectId, sprintId, sprintTickets, showEndSprintDialog, onClose } = props;
   const { currentLoadState, handleSetLoadingState } = useLoad();
   const [completedSprint, setCompletedSprint] = useState<Sprint | null>(null);
@@ -53,7 +53,7 @@ const SprintEndDialog = (props: SprintEndDialogProps) => {
     }
   };
 
-  const renderSuccessDialogContent = () => {
+  const renderSuccessDialogContent = (): JSX.Element => {
     let numberOfCompletedTickets = 0;
     let numberOfIncompleteTickets = 0;
     let completionRate = 0;
@@ -91,7 +91,7 @@ const SprintEndDialog = (props: SprintEndDialogProps) => {
     );
   };
 
-  const renderDialogContent = () => (
+  const renderDialogContent = (): JSX.Element => (
     <>
       <DialogContentText mb={3}>
         <Typography

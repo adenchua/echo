@@ -1,6 +1,6 @@
 import { HighlightOffOutlined as DeleteIcon } from "@mui/icons-material";
 import { Box, DialogContentText, Typography } from "@mui/material";
-import { useState } from "react";
+import { JSX, useState } from "react";
 
 import Subtask from "../types/Subtask";
 import DangerActionDialog from "./common/DangerActionDialog";
@@ -11,7 +11,7 @@ interface TicketSubtaskDeletableProps {
   onDeleteSubtask: (subtaskId: string) => Promise<void>;
 }
 
-const TicketSubtaskDeletable = (props: TicketSubtaskDeletableProps) => {
+const TicketSubtaskDeletable = (props: TicketSubtaskDeletableProps): JSX.Element => {
   const [showConfirmationDialog, setShowConfirmationDialog] = useState<boolean>(false);
   const { subtask, onDeleteSubtask } = props;
   const { _id: id, title } = subtask;

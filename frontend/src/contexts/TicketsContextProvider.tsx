@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode, useCallback } from "react";
+import { createContext, useState, ReactNode, useCallback, JSX } from "react";
 import _ from "lodash";
 
 import Ticket, { TicketUpdateFields } from "../types/Ticket";
@@ -31,7 +31,7 @@ const ticketContextDefaultValues: TicketsContextStateType = {
 
 export const TicketsContext = createContext<TicketsContextStateType>(ticketContextDefaultValues);
 
-const TicketsContextProvider = ({ children }: TicketsContextProviderProps) => {
+const TicketsContextProvider = ({ children }: TicketsContextProviderProps): JSX.Element => {
   const [tickets, setTickets] = useState<Ticket[]>([]);
 
   const addTicket = useCallback((newTicket: Ticket): void => {

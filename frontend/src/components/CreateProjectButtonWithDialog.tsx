@@ -1,7 +1,7 @@
 import ProjectIcon from "@mui/icons-material/GitHub";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
-import { useContext, useEffect, useState } from "react";
+import { JSX, useContext, useEffect, useState } from "react";
 
 import createProject from "../api/projects/createProject";
 import { UserProjectsContext } from "../contexts/UserProjectsContextProvider";
@@ -17,7 +17,7 @@ import TextField from "./common/TextField";
 
 type ProjectType = (typeof PROJECT_TYPES)[number];
 
-const CreateProjectButtonWithDialog = () => {
+const CreateProjectButtonWithDialog = (): JSX.Element => {
   const defaultProjectType = PROJECT_TYPES[0];
 
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
@@ -40,7 +40,7 @@ const CreateProjectButtonWithDialog = () => {
     setIsDialogOpen(false);
   };
 
-  const handleProjectTypeChange = (newProjectType: ProjectType) => {
+  const handleProjectTypeChange = (newProjectType: ProjectType): void => {
     setProjectType(newProjectType);
   };
 

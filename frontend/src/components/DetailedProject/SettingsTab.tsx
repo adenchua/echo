@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid2";
 import Typography from "@mui/material/Typography";
-import { useContext, useState } from "react";
+import { JSX, useContext, useState } from "react";
 import { useNavigate } from "react-router";
 
 import deleteProject from "../../api/projects/deleteProject";
@@ -21,7 +21,7 @@ interface SettingsTabProps {
   handleUpdateProjectFields: (updatedFields: ProjectUpdateFieldsType) => void;
 }
 
-const SettingsTab = (props: SettingsTabProps) => {
+const SettingsTab = (props: SettingsTabProps): JSX.Element => {
   const { project, handleUpdateProjectFields } = props;
   const { title, description, _id: projectId, adminIds } = project;
   const [titleInput, setTitleInput] = useState<string>(title);

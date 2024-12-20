@@ -4,7 +4,7 @@ import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { compareAsc, format } from "date-fns";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 
 import fetchUsersByIds from "../api/users/fetchUsersByIds";
 import useLoad from "../hooks/useLoad";
@@ -27,7 +27,7 @@ interface TicketProps {
   bgGrey: boolean;
 }
 
-const Ticket = (props: TicketProps) => {
+const Ticket = (props: TicketProps): JSX.Element => {
   const { ticket, showSprintToggleCheckBox, bgGrey } = props;
   const [assignee, setAssignee] = useState<User | null>(null);
   const { currentLoadState, handleSetLoadingState } = useLoad();
@@ -48,7 +48,7 @@ const Ticket = (props: TicketProps) => {
   const isDue = dueDate && compareAsc(new Date(), new Date(dueDate)) === 1 ? true : false;
 
   useEffect(() => {
-    const getAssigneeDetails = async () => {
+    const getAssigneeDetails = async (): Promise<void> => {
       if (!assigneeId) {
         setAssignee(null); // prevent avatar from still showing on the ticket when assignee is removed
         return;
@@ -60,7 +60,9 @@ const Ticket = (props: TicketProps) => {
     getAssigneeDetails();
   }, [assigneeId]);
 
-  const handleToggleTicketInSprint = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleToggleTicketInSprint = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): Promise<void> => {
     const updatedIsInSprintStatus = event.target.checked;
     try {
       handleSetLoadingState("LOADING");

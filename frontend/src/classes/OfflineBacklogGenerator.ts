@@ -115,7 +115,7 @@ class OfflineBacklogGenerator {
     </div>`;
   };
 
-  generateHtmlDocument = () => {
+  generateHtmlDocument = (): string => {
     return `<!DOCTYPE html>
         <head>
           <title>echo.yl - Offline View</title>

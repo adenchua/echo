@@ -1,3 +1,5 @@
+import { JSX } from "react";
+
 import ButtonText from "../common/ButtonText";
 
 interface UpdateButtonProps {
@@ -6,7 +8,7 @@ interface UpdateButtonProps {
   onCancel: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const UpdateButton = (props: UpdateButtonProps) => {
+const UpdateButton = (props: UpdateButtonProps): JSX.Element => {
   const { onAccept, onCancel, showSaveButton } = props;
 
   return (

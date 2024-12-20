@@ -1,5 +1,5 @@
 import Grid from "@mui/material/Grid2";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 
 import useLoad from "../hooks/useLoad";
 import useProductBacklog from "../hooks/useProductBacklog";
@@ -19,7 +19,7 @@ interface AddTicketButtonWithDialogProps {
   projectId: string;
 }
 
-const AddTicketButtonWithDialog = (props: AddTicketButtonWithDialogProps) => {
+const AddTicketButtonWithDialog = (props: AddTicketButtonWithDialogProps): JSX.Element => {
   const { projectId } = props;
   const [showDialog, setShowDialog] = useState<boolean>(false);
   const [titleInput, setTitleInput] = useState<string>("");

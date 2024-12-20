@@ -1,4 +1,5 @@
 import { Snackbar } from "@mui/material";
+import { JSX } from "react";
 
 interface SnackbarSuccessProps {
   isOpen: boolean;
@@ -6,7 +7,7 @@ interface SnackbarSuccessProps {
   message: string;
 }
 
-const SnackbarSuccess = (props: SnackbarSuccessProps) => {
+const SnackbarSuccess = (props: SnackbarSuccessProps): JSX.Element => {
   const { isOpen, onClose, message } = props;
 
   return (

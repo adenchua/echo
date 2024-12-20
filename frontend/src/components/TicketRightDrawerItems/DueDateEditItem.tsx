@@ -4,7 +4,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { compareAsc, format } from "date-fns";
-import { useState } from "react";
+import { JSX, useState } from "react";
 
 import useLoad from "../../hooks/useLoad";
 import useProductBacklog from "../../hooks/useProductBacklog";
@@ -19,7 +19,7 @@ interface DueDateEditItemProps {
   dueDate: string;
 }
 
-const DueDateEditItem = (props: DueDateEditItemProps) => {
+const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
   const { dueDate, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const { currentLoadState, handleSetLoadingState } = useLoad();

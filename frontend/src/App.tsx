@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router";
+import { JSX } from "react";
 
 import UserProjectsContextProvider from "./contexts/UserProjectsContextProvider";
 import DetailedProjectPageWrapper from "./pages/DetailedProjectPageWrapper";
@@ -8,7 +9,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import ProjectListingPage from "./pages/ProjectListingPage";
 import UserSignUpPage from "./pages/UserSignupPage";
 
-function App() {
+function App(): JSX.Element {
   return (
     <UserProjectsContextProvider>
       <BrowserRouter>

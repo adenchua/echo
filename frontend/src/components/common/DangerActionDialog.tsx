@@ -3,7 +3,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { ReactNode } from "react";
+import { JSX, ReactNode } from "react";
 
 import Button from "./Button";
 
@@ -18,7 +18,7 @@ interface DangerActionDialogProps {
   acceptButtonText?: string;
 }
 
-const DangerActionDialog = (props: DangerActionDialogProps) => {
+const DangerActionDialog = (props: DangerActionDialogProps): JSX.Element => {
   const {
     isOpen,
     onClose,

@@ -1,5 +1,6 @@
 import { CheckCircleOutlined } from "@mui/icons-material";
 import { Typography, Box } from "@mui/material";
+import { JSX } from "react";
 
 import Subtask from "../types/Subtask";
 import Tooltip from "./common/Tooltip";
@@ -9,7 +10,7 @@ interface TicketSubtaskProps {
   onToggleCompletion: (subtaskId: string) => void;
 }
 
-const TicketSubtask = (props: TicketSubtaskProps) => {
+const TicketSubtask = (props: TicketSubtaskProps): JSX.Element => {
   const { subtask, onToggleCompletion } = props;
   const { _id: id, title, isCompleted } = subtask;
 

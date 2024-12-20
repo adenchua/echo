@@ -1,6 +1,6 @@
 import IconButton from "@mui/material/IconButton";
 import PromoteAdminIcon from "@mui/icons-material/AddModeratorOutlined";
-import { useState } from "react";
+import { JSX, useState } from "react";
 
 import Tooltip from "../common/Tooltip";
 import User from "../../types/User";
@@ -12,7 +12,7 @@ interface PromoteMemberIconButtonProps {
   onConfirm: (member: User) => void;
 }
 
-const PromoteMemberIconButton = (props: PromoteMemberIconButtonProps) => {
+const PromoteMemberIconButton = (props: PromoteMemberIconButtonProps): JSX.Element => {
   const [isDialogOpened, setIsDialogOpened] = useState<boolean>(false);
   const { member, onConfirm } = props;
 

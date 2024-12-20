@@ -1,5 +1,6 @@
 import Paper from "@mui/material/Paper";
 import AppBar from "@mui/material/AppBar";
+import { JSX } from "react";
 
 import { DRAWER_WIDTH, TICKET_DRAWER_WIDTH } from "../utils/constants";
 
@@ -8,7 +9,7 @@ interface TicketNavbarWrapperProps {
   children: React.ReactNode;
 }
 
-const TicketNavbarWrapper = (props: TicketNavbarWrapperProps) => {
+const TicketNavbarWrapper = (props: TicketNavbarWrapperProps): JSX.Element => {
   const { children, isTicketSelected } = props;
   return (
     <AppBar

@@ -11,7 +11,22 @@ import { EpicsContext } from "../contexts/EpicsContextProvider";
 import { TicketsContext } from "../contexts/TicketsContextProvider";
 import { TicketPriority, TicketType, TicketUpdateFields } from "../types/Ticket";
 
-const useProductBacklog = () => {
+interface HookResponse {
+  onAddTicket: (
+    title: string,
+    projectId: string,
+    priority: TicketPriority,
+    type: TicketType,
+  ) => Promise<void>;
+  onUpdateTicket: (ticketId: string, updatedFields: TicketUpdateFields) => Promise<void>;
+  onDeleteTicket: (ticketId: string, projectId: string, epicId: string) => Promise<void>;
+  onAddTicketToEpic: (ticketId: string, epicId: string) => Promise<void>;
+  onRemoveTicketFromEpic: (ticketId: string, epicId: string) => Promise<void>;
+  onAddSubtaskToTicket: (ticketId: string, title: string) => Promise<void>;
+  onDeleteSubtaskFromTicket: (ticketId: string, title: string) => Promise<void>;
+}
+
+const useProductBacklog = (): HookResponse => {
   const {
     addTicket,
     updateTicket: updateTicketContext,

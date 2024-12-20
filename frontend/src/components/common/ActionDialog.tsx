@@ -3,7 +3,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { ReactNode } from "react";
+import { JSX, ReactNode } from "react";
 
 import Button from "./Button";
 
@@ -17,7 +17,7 @@ interface ActionDialogProps {
   disableActionButton: boolean;
 }
 
-const ActionDialog = (props: ActionDialogProps) => {
+const ActionDialog = (props: ActionDialogProps): JSX.Element => {
   const { isOpen, onClose, onAccept, dialogContent, title, titleIcon, disableActionButton } = props;
   return (
     <Dialog open={isOpen} maxWidth="sm" fullWidth>

@@ -1,7 +1,7 @@
 import DialogContentText from "@mui/material/DialogContentText";
 import Typography from "@mui/material/Typography";
 import { differenceInCalendarDays, format, isValid } from "date-fns";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 
 import { DateCalendar } from "@mui/x-date-pickers";
 import useLoad from "../hooks/useLoad";
@@ -20,7 +20,7 @@ interface SprintStartDialogProps {
   sprintTicketsCount: number;
 }
 
-const SprintStartDialog = (props: SprintStartDialogProps) => {
+const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
   const { onStartSprint, projectId, sprintTicketsCount, showStartSprintDialog, onClose } = props;
   const [endDateInput, setEndDateInput] = useState<Date | null>(null);
   const { currentLoadState, handleSetLoadingState } = useLoad();
@@ -50,7 +50,7 @@ const SprintStartDialog = (props: SprintStartDialogProps) => {
     }
   };
 
-  const renderSuccessMessageContent = () => {
+  const renderSuccessMessageContent = (): JSX.Element => {
     if (!newSprint) {
       return (
         <DialogErrorText text="Something went wrong retrieving the new sprint. Please try again later" />
@@ -84,7 +84,7 @@ const SprintStartDialog = (props: SprintStartDialogProps) => {
     );
   };
 
-  const renderDialogContent = () => (
+  const renderDialogContent = (): JSX.Element => (
     <>
       {sprintTicketsCount > 0 && (
         <DialogContentText sx={{ mb: 4 }}>

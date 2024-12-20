@@ -8,7 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import { useContext, useMemo, useState } from "react";
+import { JSX, useContext, useMemo, useState } from "react";
 
 import promoteMemberToAdmin from "../../api/projects/promoteMemberToAdmin";
 import removeMemberFromProject from "../../api/projects/removeMemberFromProject";
@@ -35,7 +35,7 @@ interface MembersTabProps {
   project: Project;
 }
 
-const MembersTab = (props: MembersTabProps) => {
+const MembersTab = (props: MembersTabProps): JSX.Element => {
   const { project } = props;
   const { _id: projectId } = project;
   const {

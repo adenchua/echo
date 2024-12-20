@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useCallback, useMemo, useState } from "react";
+import { JSX, ReactNode, createContext, useCallback, useMemo, useState } from "react";
 
 import Epic from "../types/Epic";
 
@@ -28,7 +28,7 @@ const epicContextDefaultProps: EpicsContextStateType = {
 
 export const EpicsContext = createContext<EpicsContextStateType>(epicContextDefaultProps);
 
-const EpicsContextProvider = ({ children }: EpicsContextProviderProps) => {
+const EpicsContextProvider = ({ children }: EpicsContextProviderProps): JSX.Element => {
   const [epics, setEpics] = useState<Epic[]>([]);
   const epicsMap: Record<string, Epic> = useMemo(() => {
     const temp: Record<string, Epic> = {};

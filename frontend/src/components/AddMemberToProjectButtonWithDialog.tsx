@@ -9,7 +9,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
-import { useContext, useEffect, useState } from "react";
+import { JSX, useContext, useEffect, useState } from "react";
 
 import addMembersToProject from "../api/projects/addMembersToProject";
 import fetchAllUsers from "../api/users/fetchAllUsers";
@@ -29,7 +29,9 @@ interface AddMemberToProjectButtonWithDialogProps {
   projectId: string;
 }
 
-const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithDialogProps) => {
+const AddMemberToProjectButtonWithDialog = (
+  props: AddMemberToProjectButtonWithDialogProps,
+): JSX.Element => {
   const { projectId } = props;
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [availableMembers, setAvailableMembers] = useState<User[]>([]);
@@ -40,7 +42,7 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
 
   useEffect(() => {
     let isComponentMounted = true;
-    const getUsers = async () => {
+    const getUsers = async (): Promise<void> => {
       handleSetLoadingState("LOADING");
       try {
         const currentMemberIdsInProject = [...admins, ...members].map((member) => member._id);
@@ -61,7 +63,7 @@ const AddMemberToProjectButtonWithDialog = (props: AddMemberToProjectButtonWithD
       getUsers();
     }
 
-    return () => {
+    return (): void => {
       isComponentMounted = false;
     };
   }, [isDialogOpen, admins, members, handleSetLoadingState]);

@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import { SelectChangeEvent } from "@mui/material/Select";
-import { useContext, useMemo, useState } from "react";
+import { JSX, useContext, useMemo, useState } from "react";
 
 import OfflineBacklogGenerator from "../../classes/OfflineBacklogGenerator";
 import { EpicsContext } from "../../contexts/EpicsContextProvider";
@@ -29,7 +29,7 @@ interface ProductBacklogTabProps {
   project: Project;
 }
 
-const ProductBacklogTab = (props: ProductBacklogTabProps) => {
+const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
   const { project } = props;
   const { _id: projectId } = project;
   const { tickets } = useContext(TicketsContext);
@@ -73,7 +73,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps) => {
     setSelectedTicketId(ticketId);
   };
 
-  const renderDrawer = () => {
+  const renderDrawer = (): JSX.Element | null => {
     if (!selectedTicketId) {
       return null;
     }
@@ -94,7 +94,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps) => {
     );
   };
 
-  const renderTicketNavbar = () => (
+  const renderTicketNavbar = (): JSX.Element => (
     <div>
       <TicketNavbarWrapper isTicketSelected={!!selectedTicketId}>
         <TypographySprintInformation>

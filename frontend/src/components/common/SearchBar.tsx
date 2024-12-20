@@ -1,9 +1,10 @@
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField, { TextFieldProps } from "@mui/material/TextField";
+import { JSX } from "react";
 
 import SearchIcon from "../icons/SearchIcon";
 
-const SearchBar = (props: TextFieldProps) => {
+const SearchBar = (props: TextFieldProps): JSX.Element => {
   const { value, onChange, placeholder = "Search", ...rest } = props;
 
   return (

@@ -2,7 +2,7 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 
 import fetchUsersByIds from "../api/users/fetchUsersByIds";
 import Ticket from "../types/Ticket";
@@ -18,14 +18,14 @@ interface EpicSummaryAccordionTicketProps {
   ticket: Ticket;
 }
 
-const EpicSummaryAccordionTicket = (props: EpicSummaryAccordionTicketProps) => {
+const EpicSummaryAccordionTicket = (props: EpicSummaryAccordionTicketProps): JSX.Element => {
   const { ticket } = props;
   const { title, ticketNumber, isInSprint, status, type, assigneeId } = ticket;
 
   const [assignee, setAssignee] = useState<User | null>(null);
 
   useEffect(() => {
-    const getAssigneeDetails = async () => {
+    const getAssigneeDetails = async (): Promise<void> => {
       if (!assigneeId) {
         setAssignee(null);
         return;

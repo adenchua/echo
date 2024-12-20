@@ -4,7 +4,7 @@ import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 
 import fetchSprintsByIds from "../api/sprints/fetchSprintsByIds";
 import fetchTicketsByIds from "../api/tickets/fetchTicketsByIds";
@@ -19,7 +19,7 @@ interface ProjectListingItemProps {
   project: Project;
 }
 
-const ProjectListingItem = (props: ProjectListingItemProps) => {
+const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
   const { project } = props;
   const { _id: projectId, title, type, sprintIds, adminIds, memberIds, backlogIds } = project;
   const [sprints, setSprints] = useState<Sprint[]>([]);
@@ -27,7 +27,7 @@ const ProjectListingItem = (props: ProjectListingItemProps) => {
   const [activeSprintProgressPercentage, setActiveSprintProgressPercentage] = useState<number>(0);
 
   useEffect(() => {
-    const getSprintsAndProgress = async () => {
+    const getSprintsAndProgress = async (): Promise<void> => {
       try {
         const response = await fetchSprintsByIds(sprintIds);
         setSprints(response);
@@ -37,7 +37,7 @@ const ProjectListingItem = (props: ProjectListingItemProps) => {
       }
     };
 
-    const getUsers = async () => {
+    const getUsers = async (): Promise<void> => {
       try {
         const response = await fetchUsersByIds([...adminIds, ...memberIds]);
         setUsers(response);
@@ -46,7 +46,7 @@ const ProjectListingItem = (props: ProjectListingItemProps) => {
       }
     };
 
-    const getActiveSprintProgressPercentage = async (sprints: Sprint[]) => {
+    const getActiveSprintProgressPercentage = async (sprints: Sprint[]): Promise<void> => {
       try {
         const activeSprint = sprints.find((sprint) => sprint.hasEnded === false);
         if (!activeSprint) {
@@ -75,7 +75,7 @@ const ProjectListingItem = (props: ProjectListingItemProps) => {
     getUsers();
   }, [backlogIds, sprintIds, adminIds, memberIds]);
 
-  const renderSprintStatusSpan = (sprints: Sprint[]) => {
+  const renderSprintStatusSpan = (sprints: Sprint[]): JSX.Element => {
     let span = (
       <Typography component="span" fontSize="inherit" sx={{ color: "error.main" }}>
         Stopped
@@ -93,7 +93,7 @@ const ProjectListingItem = (props: ProjectListingItemProps) => {
     return span;
   };
 
-  const renderAvatarGroups = (users: User[]) => {
+  const renderAvatarGroups = (users: User[]): JSX.Element => {
     return (
       <AvatarGroup
         sx={{

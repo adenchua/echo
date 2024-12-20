@@ -3,7 +3,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { ReactNode } from "react";
+import { JSX, ReactNode } from "react";
 
 import Button from "./Button";
 
@@ -15,7 +15,7 @@ interface ConfirmationDialogProps {
   titleIcon: ReactNode;
 }
 
-const ConfirmationDialog = (props: ConfirmationDialogProps) => {
+const ConfirmationDialog = (props: ConfirmationDialogProps): JSX.Element => {
   const { isOpen, onClose, dialogContent, title, titleIcon } = props;
   return (
     <Dialog open={isOpen} maxWidth="sm">

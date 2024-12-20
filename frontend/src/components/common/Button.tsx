@@ -1,5 +1,6 @@
 import { CircularProgress } from "@mui/material";
 import MuiButton, { ButtonProps as MuiButtonProps } from "@mui/material/Button";
+import { JSX } from "react";
 
 interface ButtonProps
   extends Omit<
@@ -17,7 +18,7 @@ interface ButtonProps
   state?: "default" | "loading" | "disabled";
 }
 
-const Button = (props: ButtonProps) => {
+const Button = (props: ButtonProps): JSX.Element => {
   const { color = "primary", state = "default", sx, ...rest } = props;
 
   return (
@@ -28,7 +29,7 @@ const Button = (props: ButtonProps) => {
       disableFocusRipple
       disableRipple
       disableTouchRipple
-      color={(function () {
+      color={(function (): "primary" | "inherit" | "error" {
         switch (color) {
           case "primary":
             return "primary";

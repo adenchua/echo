@@ -3,7 +3,7 @@ import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
-import { useContext, useState } from "react";
+import { JSX, useContext, useState } from "react";
 
 import { EpicsContext } from "../../contexts/EpicsContextProvider";
 import useLoad from "../../hooks/useLoad";
@@ -20,7 +20,7 @@ interface EpicLinkEditItemProps {
   epicId: string;
 }
 
-const EpicLinkEditItem = (props: EpicLinkEditItemProps) => {
+const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
   const { epicId, ticketId } = props;
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const { onAddTicketToEpic, onRemoveTicketFromEpic } = useProductBacklog();
@@ -49,7 +49,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps) => {
     }
   };
 
-  const renderEpicTypography = () => {
+  const renderEpicTypography = (): JSX.Element => {
     if (!epicId) {
       return (
         <Typography color="textSecondary" sx={{ mb: 2 }}>

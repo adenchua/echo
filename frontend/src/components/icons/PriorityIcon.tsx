@@ -1,6 +1,7 @@
 import LowPriorityIcon from "@mui/icons-material/KeyboardArrowDown";
 import HighPriorityIcon from "@mui/icons-material/KeyboardArrowUp";
 import MediumPriorityIcon from "@mui/icons-material/Remove";
+import { JSX } from "react";
 
 import { TicketPriority } from "../../types/Ticket";
 import HighestPriorityIcon from "./HighestPriorityIcon";
@@ -11,7 +12,7 @@ interface PriorityIconProps {
   fontSize?: "medium" | "small" | "inherit" | "large";
 }
 
-const PriorityIcon = (props: PriorityIconProps) => {
+const PriorityIcon = (props: PriorityIconProps): JSX.Element => {
   const { priority, fontSize = "small" } = props;
 
   switch (priority) {

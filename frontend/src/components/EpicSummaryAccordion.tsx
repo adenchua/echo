@@ -5,7 +5,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
-import { useEffect, useMemo, useState } from "react";
+import { JSX, useEffect, useMemo, useState } from "react";
 
 import fetchTicketsByIds from "../api/tickets/fetchTicketsByIds";
 import useLoad from "../hooks/useLoad";
@@ -21,7 +21,7 @@ interface EpicSummaryAccordionProps {
   epic: Epic;
 }
 
-const EpicSummaryAccordion = (props: EpicSummaryAccordionProps) => {
+const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => {
   const { epic } = props;
   const { title, ticketIds } = epic;
   const { currentLoadState, handleSetLoadingState } = useLoad();

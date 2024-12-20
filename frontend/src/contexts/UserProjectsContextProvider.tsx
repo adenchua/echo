@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode, useCallback } from "react";
+import { createContext, useState, ReactNode, useCallback, JSX } from "react";
 import _ from "lodash";
 
 import Project, { ProjectUpdateFieldsType } from "../types/Project";
@@ -25,7 +25,9 @@ export const UserProjectsContext = createContext<UserProjectsContextStateType>(
   userProjectsContextDefaultValues,
 );
 
-const UserProjectsContextProvider = ({ children }: UserProjectsContextProviderProps) => {
+const UserProjectsContextProvider = ({
+  children,
+}: UserProjectsContextProviderProps): JSX.Element => {
   const [projects, setProjects] = useState<Project[]>([]);
 
   const addProject = useCallback((newProject: Project): void => {

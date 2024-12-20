@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode, useCallback } from "react";
+import { createContext, useState, ReactNode, useCallback, JSX } from "react";
 
 import Sprint from "../types/Sprint";
 
@@ -21,7 +21,9 @@ const activeContextDefaultState: ActiveSprintContextStateType = {
 export const ActiveSprintContext =
   createContext<ActiveSprintContextStateType>(activeContextDefaultState);
 
-const ActiveSprintContextProvider = ({ children }: ActiveSprintContextProviderProps) => {
+const ActiveSprintContextProvider = ({
+  children,
+}: ActiveSprintContextProviderProps): JSX.Element => {
   const [activeSprint, setActiveSprint] = useState<Sprint | null>(null);
 
   const handleSetActiveSprint = useCallback((newActiveSprint: Sprint) => {
