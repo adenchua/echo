@@ -53,7 +53,7 @@ const LoginPage = (): JSX.Element => {
         <Typography variant="h5" sx={{ mb: 2 }}>
           Login to echo.yl
         </Typography>
-        {errorMessage && <BannerError sx={{ mb: 2 }}>{errorMessage}</BannerError>}
+        {errorMessage && <BannerError sx={{ mb: 2, width: '100%' }}>{errorMessage}</BannerError>}
         <form onSubmit={handleLogin}>
           <TextField
             label="Username"
