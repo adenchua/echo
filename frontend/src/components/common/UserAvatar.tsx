@@ -1,4 +1,5 @@
 import { Avatar } from "@mui/material";
+import { JSX } from "react";
 
 import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
 import Tooltip from "./Tooltip";

@@ -3,10 +3,9 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
-import { useEffect, useMemo, useState } from "react";
+import { JSX, useEffect, useMemo, useState } from "react";
 
 import fetchTicketsByIds from "../api/tickets/fetchTicketsByIds";
 import useLoad from "../hooks/useLoad";
@@ -15,6 +14,7 @@ import Ticket from "../types/Ticket";
 import DeleteEpicDialog from "./DeleteEpicDialog";
 import EpicSummaryAccordionTicket from "./EpicSummaryAccordionTicket";
 import ProgressBarWithPercentage from "./ProgressBarWithPercentage";
+import Button from "./common/Button";
 import Tooltip from "./common/Tooltip";
 
 interface EpicSummaryAccordionProps {
@@ -51,7 +51,7 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
         const response = await fetchTicketsByIds(ticketIds);
         setTickets(response);
         handleSetLoadingState("DEFAULT");
-      } catch (error) {
+      } catch {
         handleSetLoadingState("ERROR");
       }
     };
@@ -85,9 +85,7 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
           },
         }}
       >
-        <Typography noWrap variant="body2">
-          {title}
-        </Typography>
+        <Typography noWrap>{title}</Typography>
         <Chip label={`${ticketIds.length} tickets`} size="small" />
         <Box flexGrow={1} />
         <Box sx={{ width: 180, flexShrink: 0 }}>
@@ -95,13 +93,7 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
           <ProgressBarWithPercentage value={epicProgressionPercentage} />
         </Box>
         <Tooltip title="Delete epic">
-          <Button
-            variant="outlined"
-            size="small"
-            color="error"
-            onClick={() => setIsDeleteEpicDialogOpened(true)}
-            sx={{ ml: 4 }}
-          >
+          <Button color="danger" onClick={() => setIsDeleteEpicDialogOpened(true)} sx={{ ml: 4 }}>
             Delete epic
           </Button>
         </Tooltip>
@@ -119,9 +111,7 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
       >
         {currentLoadState !== "ERROR" && tickets && tickets.length === 0 && (
           <Box py={1} px={4}>
-            <Typography variant="body2" color="textSecondary">
-              There are no tickets tagged to this epic.
-            </Typography>
+            <Typography color="textSecondary">There are no tickets tagged to this epic.</Typography>
           </Box>
         )}
         {tickets &&

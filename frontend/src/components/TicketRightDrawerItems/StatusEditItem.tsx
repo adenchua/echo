@@ -1,14 +1,14 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import MenuItem from "@mui/material/MenuItem";
-import { useState } from "react";
+import { JSX, useState } from "react";
 
 import useLoad from "../../hooks/useLoad";
 import useProductBacklog from "../../hooks/useProductBacklog";
 import { TicketStatus } from "../../types/Ticket";
 import StatusChipButton from "../StatusChipButton";
+import Button from "../common/Button";
 import Select from "../common/Select";
 import SnackbarError from "../common/SnackbarError";
 import EditButton from "./EditButton";
@@ -36,7 +36,7 @@ const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
       await onUpdateTicket(ticketId, { status: newStatus });
       handleSetLoadingState("SUCCESS");
       handleToggleEditMode();
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -49,7 +49,7 @@ const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
             title="Status"
             actionButton={
               <UpdateButton
-                onAccept={handleUpdateTicketStatus}
+                onAccept={undefined}
                 onCancel={handleToggleEditMode}
                 showSaveButton={false}
               />
@@ -57,6 +57,7 @@ const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
           />
           <Box mb={2} width="100%">
             <Select
+              label="Status"
               value={status}
               onChange={(e) => handleUpdateTicketStatus(e.target.value as TicketStatus)}
             >
@@ -73,8 +74,6 @@ const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
             {status !== "completed" && (
               <Button
                 fullWidth
-                variant="outlined"
-                size="small"
                 sx={{ mt: 2 }}
                 onClick={() => handleUpdateTicketStatus("completed")}
               >

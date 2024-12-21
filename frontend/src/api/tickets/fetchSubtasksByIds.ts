@@ -7,7 +7,7 @@ import ApiResponseWrapper from "../../types/ApiResponseWrapper";
 const fetchSubtasksByIds = async (subtaskIds: string[]): Promise<Subtask[]> => {
   try {
     const response = await axios.post<ApiResponseWrapper<Subtask[]>>(
-      `${SERVER_API_URL}/v1/subtasks/bulk-retrieve`,
+      `${SERVER_API_URL}/api/v1/subtasks/bulk-retrieve`,
       {
         subtaskIds,
       },

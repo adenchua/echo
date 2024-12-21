@@ -1,14 +1,15 @@
-import ArrowRightIcon from "@mui/icons-material/ArrowRightAlt";
-import Alert from "@mui/material/Alert";
-import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { JSX, useState } from "react";
+import { useNavigate } from "react-router";
 
 import login from "../api/authentication/login";
+import BannerError from "../components/common/BannerError";
+import Button from "../components/common/Button";
+import Link from "../components/common/Link";
+import TextField from "../components/common/TextField";
+import RightArrowIcon from "../components/icons/RightArrowIcon";
 import useLoad from "../hooks/useLoad";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
@@ -28,8 +29,7 @@ const LoginPage = (): JSX.Element => {
 
     try {
       handleSetLoadingState("LOADING");
-      const user = await login(usernameInput, passwordInput);
-      const { _id: userId } = user;
+      const userId = await login(usernameInput, passwordInput);
       setValueInStorage(userId);
       navigate("/home"); // redirect to homepage upon login
     } catch (error) {
@@ -50,43 +50,37 @@ const LoginPage = (): JSX.Element => {
           alignItems: "center",
         }}
       >
-        <Typography variant="h6" sx={{ mb: 2 }}>
+        <Typography variant="h5" sx={{ mb: 2 }}>
           Login to echo.yl
         </Typography>
-        {errorMessage && (
-          <Alert severity="error" sx={{ width: "100%", mb: 2 }}>
-            Error: {errorMessage}
-          </Alert>
-        )}
+        {errorMessage && <BannerError sx={{ mb: 2, width: '100%' }}>{errorMessage}</BannerError>}
         <form onSubmit={handleLogin}>
           <TextField
-            autoFocus
-            fullWidth
-            variant="filled"
-            placeholder="Username"
+            label="Username"
             value={usernameInput}
             onChange={(e) => setUsernameInput(e.target.value)}
-            sx={{ mb: 3 }}
+            sx={{ mb: 2 }}
           />
           <TextField
-            variant="filled"
             fullWidth
-            placeholder="Password"
+            label="Password"
             type="password"
             value={passwordInput}
             onChange={(e) => setPasswordInput(e.target.value)}
-            sx={{ mb: 4 }}
+            sx={{ mb: 2 }}
           />
           <Button
             fullWidth
-            variant="contained"
-            endIcon={<ArrowRightIcon />}
+            endIcon={<RightArrowIcon />}
             type="submit"
-            disabled={currentLoadState === "LOADING" || !usernameInput || !passwordInput}
+            state={currentLoadState === "LOADING" ? "loading" : "default"}
           >
-            {currentLoadState === "LOADING" ? "Logging in..." : "Login"}
+            Login
           </Button>
         </form>
+        <Link onClick={() => navigate("/sign-up")} mt={2}>
+          New to echo? Register here
+        </Link>
       </Paper>
     );
   };

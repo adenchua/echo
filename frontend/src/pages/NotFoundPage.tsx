@@ -1,9 +1,12 @@
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { JSX } from "react";
+import { useNavigate } from "react-router";
+
+import Button from "../components/common/Button";
 
 const NotFoundPage = (): JSX.Element => {
+  const navigate = useNavigate();
   return (
     <Container
       sx={{
@@ -16,9 +19,7 @@ const NotFoundPage = (): JSX.Element => {
       }}
     >
       <Typography variant="h2">404. Page Not Found.</Typography>
-      <Button component={Link} to="/home" sx={{ fontSize: 24 }}>
-        Take me home
-      </Button>
+      <Button onClick={() => navigate("/home")}>Take me home</Button>
     </Container>
   );
 };

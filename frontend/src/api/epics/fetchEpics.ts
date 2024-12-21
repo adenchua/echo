@@ -7,7 +7,7 @@ import ApiResponseWrapper from "../../types/ApiResponseWrapper";
 const fetchEpics = async (epicIds: string[]): Promise<Epic[]> => {
   try {
     const response = await axios.post<ApiResponseWrapper<Epic[]>>(
-      `${SERVER_API_URL}/v1/epics/bulk-retrieve`,
+      `${SERVER_API_URL}/api/v1/epics/bulk-retrieve`,
       {
         epicIds,
       },

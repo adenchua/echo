@@ -1,18 +1,13 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { differenceInBusinessDays, format } from "date-fns";
-import { useContext, useMemo, useState } from "react";
+import { JSX, useContext, useMemo, useState } from "react";
 
-import OfflineBacklogGenerator from "../../classes/OfflineBacklogGenerator";
 import { ActiveSprintContext } from "../../contexts/ActiveSprintContextProvider";
-import { EpicsContext } from "../../contexts/EpicsContextProvider";
-import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
 import { TicketsContext } from "../../contexts/TicketsContextProvider";
 import useSprintBacklog from "../../hooks/useSprintBacklog";
 import Project from "../../types/Project";
 import { TICKET_DRAWER_WIDTH } from "../../utils/constants";
-import download from "../../utils/downloadHtmlDoc";
 import getFilteredTickets from "../../utils/getFilteredTickets";
 import getSortedTickets from "../../utils/getSortedTickets";
 import getTicketsByEpics from "../../utils/getTicketsByEpics";
@@ -24,10 +19,10 @@ import TicketFilter, { TicketFilterType } from "../TicketFilter";
 import TicketNavbarWrapper from "../TicketNavbarWrapper";
 import TicketSection from "../TicketSection";
 import TicketSortSelectDropdown, { TicketSortType } from "../TicketSortSelectDropdown";
+import Button from "../common/Button";
 import SearchBar from "../common/SearchBar";
 import SecondaryText from "../common/SecondaryText";
 import TypographySprintInformation from "../common/TypographySprintInformation";
-import DownloadIcon from "../icons/DownloadIcon";
 import EndSprintIcon from "../icons/EndSprintIcon";
 import StartSprintIcon from "../icons/StartSprintIcon";
 
@@ -39,8 +34,6 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   const { project } = props;
   const { _id: projectId } = project;
   const { tickets } = useContext(TicketsContext);
-  const { usersMap } = useContext(ProjectMembersContext);
-  const { epicsMap } = useContext(EpicsContext);
   const { activeSprint } = useContext(ActiveSprintContext);
   const { onStartSprint, onEndSprint } = useSprintBacklog();
   const [searchInput, setSearchInput] = useState<string>("");
@@ -61,8 +54,6 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
 
   const displayedTicketsByEpics = useMemo(() => {
     return getTicketsByEpics(sortedTickets);
-    //temp fix to get sort working
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortSelection, sortedTickets]);
 
   const handleFilterSelection = (newFilter: TicketFilterType): void => {
@@ -73,7 +64,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
     setSortSelection(e.target.value as TicketSortType);
   };
 
-  const handleSetSelectedTicket = (ticketId: string) => {
+  const handleSetSelectedTicket = (ticketId: string): void => {
     if (!selectedTicketId) {
       setSelectedTicketId(ticketId);
       return;
@@ -86,7 +77,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
     setSelectedTicketId(ticketId);
   };
 
-  const renderSprintDetails = (): JSX.Element => {
+  const renderSprintDetails = (): JSX.Element | null => {
     if (!activeSprint) {
       return (
         <TypographySprintInformation>
@@ -117,7 +108,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
     );
   };
 
-  const renderDrawer = () => {
+  const renderDrawer = (): JSX.Element | null => {
     if (!selectedTicketId) {
       return null;
     }
@@ -145,7 +136,6 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
         <Box flexGrow={1} />
         {(!activeSprint || activeSprint.hasEnded) && (
           <Button
-            size="small"
             startIcon={<StartSprintIcon />}
             sx={{ whiteSpace: "nowrap" }}
             onClick={() => setShowStartSprintDialog(true)}
@@ -155,9 +145,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
         )}
         {activeSprint && !activeSprint.hasEnded && (
           <Button
-            size="small"
             startIcon={<EndSprintIcon />}
-            color="error"
             sx={{ whiteSpace: "nowrap" }}
             onClick={() => setShowEndSprintDialog(true)}
           >
@@ -178,30 +166,10 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
     </div>
   );
 
-  const getHtmlString = (): string => {
-    const offlineBacklogGenerator = new OfflineBacklogGenerator(
-      displayedTicketsByEpics,
-      project.title,
-      false,
-      usersMap,
-      epicsMap,
-    );
-
-    return offlineBacklogGenerator.generateHtmlDocument();
-  };
-
   return (
     <Box sx={{ mr: selectedTicketId ? `${TICKET_DRAWER_WIDTH}px` : "" }}>
       {renderTicketNavbar()}
-      <Box p={3} mt={5}>
-        {sprintTickets && sprintTickets.length > 0 && (
-          <Button
-            onClick={() => download(`${project.title}-sprint-backlog.html`, getHtmlString())}
-            startIcon={<DownloadIcon />}
-          >
-            Download for offline (.html)
-          </Button>
-        )}
+      <Box p={3} mt={8}>
         {sprintTickets && sprintTickets.length === 0 && (
           <SecondaryText>There are no tickets in the backlog.</SecondaryText>
         )}

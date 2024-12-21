@@ -1,6 +1,6 @@
 import _ from "lodash";
-import { useContext, useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { JSX, useContext, useEffect, useState } from "react";
+import { Navigate, useParams } from "react-router";
 
 import fetchEpics from "../api/epics/fetchEpics";
 import fetchProject from "../api/projects/fetchProject";
@@ -14,7 +14,7 @@ import SettingsTab from "../components/DetailedProject/SettingsTab";
 import SprintBacklogTab from "../components/DetailedProject/SprintBacklogTab";
 import TeamObjectivesTab from "../components/DetailedProject/TeamObjectivesTab";
 import ToolbarContent from "../components/DetailedProject/ToolbarContent";
-import ErrorBanner from "../components/common/ErrorBanner";
+import BannerError from "../components/common/BannerError";
 import Loading from "../components/common/Loading";
 import PageLayoutWrapper from "../components/common/PageLayoutWrapper";
 import { ActiveSprintContext } from "../contexts/ActiveSprintContextProvider";
@@ -73,13 +73,12 @@ const DetailedProjectPage = (): JSX.Element => {
         setProject(response);
 
         handleSetLoadingState("DEFAULT");
-      } catch (error) {
+      } catch {
         handleSetLoadingState("ERROR");
       }
     };
 
     getProject();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const handleUpdateProjectFields = (updatedFields: ProjectUpdateFieldsType): void => {
@@ -98,7 +97,7 @@ const DetailedProjectPage = (): JSX.Element => {
   if (currentLoadState === "ERROR" || project == null) {
     return (
       <PageLayoutWrapper>
-        <ErrorBanner />
+        <BannerError>Something went wrong, please try again later </BannerError>
       </PageLayoutWrapper>
     );
   }

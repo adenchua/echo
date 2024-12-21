@@ -1,28 +1,29 @@
-import { SelectProps, Select as MuiSelect } from "@mui/material";
+import MuiSelect, { SelectProps as MuiSelectProps } from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import { JSX } from "react";
+
+interface SelectProps extends Omit<MuiSelectProps, "label"> {
+  label: string;
+}
 
 const Select = (props: SelectProps): JSX.Element => {
+  const { label, ...rest } = props;
   return (
-    <MuiSelect
-      fullWidth
-      variant="filled"
-      SelectDisplayProps={{
-        style: {
-          padding: 7,
-          display: "flex",
-          alignItems: "center",
-        },
-      }}
-      MenuProps={{
-        slotProps: {
-          paper: {
-            sx: {
-              maxHeight: 240,
-            },
+    <FormControl fullWidth>
+      <InputLabel>{label}</InputLabel>
+      <MuiSelect
+        SelectDisplayProps={{
+          style: {
+            display: "flex",
+            flexWrap: "nowrap",
           },
-        },
-      }}
-      {...props}
-    />
+        }}
+        label={label}
+        fullWidth
+        {...rest}
+      />
+    </FormControl>
   );
 };
 

@@ -1,7 +1,7 @@
 import DialogContentText from "@mui/material/DialogContentText";
 import Typography from "@mui/material/Typography";
 import { differenceInCalendarDays, format, isValid } from "date-fns";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 
 import { DateCalendar } from "@mui/x-date-pickers";
 import useLoad from "../hooks/useLoad";
@@ -45,7 +45,7 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
       setNewSprint(response);
       handleClose();
       handleSetLoadingState("SUCCESS");
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -133,7 +133,6 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
       <ActionDialog
         isOpen={showStartSprintDialog}
         onClose={handleClose}
-        acceptButtonText="Start sprint"
         onAccept={handleStartSprint}
         disableActionButton={!endDateInput || !isValid(endDateInput) || sprintTicketsCount === 0}
         dialogContent={renderDialogContent()}

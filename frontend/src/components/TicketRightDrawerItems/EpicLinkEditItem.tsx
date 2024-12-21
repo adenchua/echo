@@ -1,14 +1,14 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
-import { useContext, useState } from "react";
+import { JSX, useContext, useState } from "react";
 
 import { EpicsContext } from "../../contexts/EpicsContextProvider";
 import useLoad from "../../hooks/useLoad";
 import useProductBacklog from "../../hooks/useProductBacklog";
+import Button from "../common/Button";
 import Select from "../common/Select";
 import SnackbarError from "../common/SnackbarError";
 import EditButton from "./EditButton";
@@ -35,7 +35,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
     try {
       await onAddTicketToEpic(ticketId, newEpicLinkId);
       handleToggleEditMode();
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -44,7 +44,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
     try {
       await onRemoveTicketFromEpic(ticketId, epicId);
       handleToggleEditMode();
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -52,7 +52,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
   const renderEpicTypography = (): JSX.Element => {
     if (!epicId) {
       return (
-        <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
+        <Typography color="textSecondary" sx={{ mb: 2 }}>
           None
         </Typography>
       );
@@ -62,14 +62,14 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
 
     if (!epicToDisplay) {
       return (
-        <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
+        <Typography color="textSecondary" sx={{ mb: 2 }}>
           Invalid Epic
         </Typography>
       );
     }
 
     return (
-      <Typography variant="body2" color="textSecondary" maxWidth="100%" noWrap sx={{ mb: 2 }}>
+      <Typography color="textSecondary" maxWidth="100%" noWrap sx={{ mb: 2 }}>
         {epicToDisplay.title}
       </Typography>
     );
@@ -83,7 +83,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
             title="Epic"
             actionButton={
               <UpdateButton
-                onAccept={handleUpdateTicketEpicLink}
+                onAccept={undefined}
                 onCancel={handleToggleEditMode}
                 showSaveButton={false}
               />
@@ -91,6 +91,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
           />
           <Box mb={2} width="100%">
             <Select
+              label="Select epic"
               value={epicId ? epicId : ""}
               onChange={(e) => {
                 handleUpdateTicketEpicLink(e.target.value as string);
@@ -103,14 +104,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
               ))}
             </Select>
             {epicId && (
-              <Button
-                fullWidth
-                color="warning"
-                variant="outlined"
-                size="small"
-                sx={{ mt: 2 }}
-                onClick={() => handleDeleteTicketEpicLink()}
-              >
+              <Button fullWidth sx={{ mt: 2 }} onClick={() => handleDeleteTicketEpicLink()}>
                 Remove Link
               </Button>
             )}

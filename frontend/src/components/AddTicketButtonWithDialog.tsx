@@ -1,14 +1,13 @@
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import { useEffect, useState } from "react";
+import Grid from "@mui/material/Grid2";
+import { JSX, useEffect, useState } from "react";
 
-import { DialogContentText } from "@mui/material";
 import useLoad from "../hooks/useLoad";
 import useProductBacklog from "../hooks/useProductBacklog";
 import { TicketPriority, TicketType } from "../types/Ticket";
 import ActionDialog from "./common/ActionDialog";
+import Button from "./common/Button";
 import DialogErrorText from "./common/DialogErrorText";
+import TextField from "./common/TextField";
 import TicketPriorityDropdown from "./common/TicketPriorityDropdown";
 import TicketTypeDropdown from "./common/TicketTypeDropdown";
 import AddTicketIcon from "./icons/AddTicketIcon";
@@ -45,18 +44,14 @@ const AddTicketButtonWithDialog = (props: AddTicketButtonWithDialogProps): JSX.E
       await onAddTicket(titleInput, projectId, priority, ticketType);
       handleSetLoadingState("SUCCESS");
       setShowDialog(false); //close dialog upon creation
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
 
   return (
     <>
-      <Button
-        startIcon={<AddTicketIcon fontSize="small" />}
-        onClick={() => setShowDialog(true)}
-        size="small"
-      >
+      <Button startIcon={<AddTicketIcon />} onClick={() => setShowDialog(true)}>
         Add Ticket
       </Button>
       <ActionDialog
@@ -68,28 +63,26 @@ const AddTicketButtonWithDialog = (props: AddTicketButtonWithDialogProps): JSX.E
         disableActionButton={currentLoadState === "LOADING" || titleInput.length === 0}
         dialogContent={
           <>
-            <DialogContentText>Title</DialogContentText>
             <TextField
-              variant="filled"
-              fullWidth
-              autoFocus
+              sx={{ mt: 1, mb: 2 }}
+              label="Ticket title"
               placeholder="As a user, I want to add an item to my cart"
               value={titleInput}
               onChange={(e) => setTitleInput(e.target.value)}
             />
             <Grid container spacing={2} mt={1}>
-              <Grid item xs={6}>
-                <DialogContentText>Ticket type</DialogContentText>
+              <Grid size={6}>
                 <TicketTypeDropdown
+                  label="Ticket type"
                   selectedValue={ticketType}
-                  onChange={(event, child) => setTicketType(event.target.value as TicketType)}
+                  onChange={(event) => setTicketType(event.target.value as TicketType)}
                 />
               </Grid>
-              <Grid item xs={6}>
-                <DialogContentText>Priority</DialogContentText>
+              <Grid size={6}>
                 <TicketPriorityDropdown
+                  label="Priority"
                   selectedValue={priority}
-                  onChange={(event, child) => setPriority(event.target.value as TicketPriority)}
+                  onChange={(event) => setPriority(event.target.value as TicketPriority)}
                 />
               </Grid>
             </Grid>
@@ -98,7 +91,6 @@ const AddTicketButtonWithDialog = (props: AddTicketButtonWithDialogProps): JSX.E
             )}
           </>
         }
-        acceptButtonText="Add ticket"
       />
     </>
   );

@@ -2,8 +2,8 @@ import Ticket from "../types/Ticket";
 import { TicketsByEpic } from "../types/TicketsByEpic";
 
 const getTicketsByEpics = (tickets: Ticket[]): TicketsByEpic[] => {
-  let ticketsByEpics: TicketsByEpic[] = [];
-  let temp: { [key: string]: Ticket[] } = {
+  const ticketsByEpics: TicketsByEpic[] = [];
+  const temp: { [key: string]: Ticket[] } = {
     others: [], // others as default key for tickets without any epic
   };
 

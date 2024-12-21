@@ -1,5 +1,6 @@
 import Paper from "@mui/material/Paper";
 import AppBar from "@mui/material/AppBar";
+import { JSX } from "react";
 
 import { DRAWER_WIDTH, TICKET_DRAWER_WIDTH } from "../utils/constants";
 
@@ -31,7 +32,7 @@ const TicketNavbarWrapper = (props: TicketNavbarWrapperProps): JSX.Element => {
           alignItems: "center",
           borderBottom: "1px solid",
           borderColor: "divider",
-          gap: 2,
+          gap: 1,
         }}
         elevation={0}
         square

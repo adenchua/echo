@@ -1,4 +1,5 @@
 import Chip from "@mui/material/Chip";
+import { JSX } from "react";
 
 import { StoryPoints } from "../types/Ticket";
 import Tooltip from "./common/Tooltip";

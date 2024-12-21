@@ -1,15 +1,16 @@
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { ReactNode } from "react";
+import { JSX, ReactNode } from "react";
+
+import Button from "./Button";
 
 interface DangerActionDialogProps {
   isOpen: boolean;
-  onClose: () => void;
-  onAccept: (...args: any[]) => void;
+  onClose: React.MouseEventHandler<HTMLButtonElement>;
+  onAccept: React.MouseEventHandler<HTMLButtonElement>;
   dialogContent: ReactNode;
   title: string;
   titleIcon: ReactNode;
@@ -47,10 +48,14 @@ const DangerActionDialog = (props: DangerActionDialogProps): JSX.Element => {
       </DialogTitle>
       <DialogContent>{dialogContent}</DialogContent>
       <DialogActions>
-        <Button sx={{ color: "grey.600", borderColor: "grey.600" }} onClick={onClose}>
+        <Button color="secondary" onClick={onClose}>
           Cancel
         </Button>
-        <Button disabled={disableActionButton} onClick={onAccept} color="error">
+        <Button
+          state={disableActionButton ? "disabled" : "default"}
+          onClick={onAccept}
+          color="danger"
+        >
           {acceptButtonText}
         </Button>
       </DialogActions>

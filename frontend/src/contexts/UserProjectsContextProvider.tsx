@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode, useCallback } from "react";
+import { createContext, useState, ReactNode, useCallback, JSX } from "react";
 import _ from "lodash";
 
 import Project, { ProjectUpdateFieldsType } from "../types/Project";

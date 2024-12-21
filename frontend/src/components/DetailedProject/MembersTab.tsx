@@ -8,7 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import { useContext, useMemo, useState } from "react";
+import { JSX, useContext, useMemo, useState } from "react";
 
 import promoteMemberToAdmin from "../../api/projects/promoteMemberToAdmin";
 import removeMemberFromProject from "../../api/projects/removeMemberFromProject";
@@ -62,7 +62,7 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
       await removeMemberFromProject(projectId, member._id);
       handleSetLoadingState("DEFAULT");
       handleRemoveMemberInContext(member);
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -73,7 +73,7 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
       await promoteMemberToAdmin(projectId, member._id);
       handleSetLoadingState("DEFAULT");
       handlePromoteMemberInContext(member);
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -120,12 +120,8 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
                         avatar={<UserAvatar username={username} displayName={displayName} />}
                         title={
                           <>
+                            <Typography display="inline">{`${displayName} `}</Typography>{" "}
                             <Typography
-                              variant="body2"
-                              display="inline"
-                            >{`${displayName} `}</Typography>{" "}
-                            <Typography
-                              variant="body2"
                               color="grey.500"
                               display="inline"
                             >{`@${username}`}</Typography>
@@ -135,15 +131,11 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
                       />
                     </TableCell>
                     <TableCell align="left">
-                      <Typography variant="body2">{title}</Typography>
+                      <Typography>{title}</Typography>
                     </TableCell>
                     <TableCell align="left">
-                      {isAdmin && (
-                        <Typography color="error" variant="body2">
-                          Admin
-                        </Typography>
-                      )}
-                      {!isAdmin && <Typography variant="body2">Member</Typography>}
+                      {isAdmin && <Typography color="error">Admin</Typography>}
+                      {!isAdmin && <Typography>Member</Typography>}
                     </TableCell>
                     {isLoggedInUserAnAdmin && (
                       <TableCell align="center">

@@ -1,13 +1,12 @@
-import AddIcon from "@mui/icons-material/AddOutlined";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { useContext, useState } from "react";
+import { JSX, useContext, useState } from "react";
 
 import { EpicsContext } from "../../contexts/EpicsContextProvider";
 import Project from "../../types/Project";
 import EpicCreationForm from "../EpicCreationForm";
 import EpicSummaryAccordion from "../EpicSummaryAccordion";
-import CTAButton from "../common/CTAButton";
+import Button from "../common/Button";
 
 interface TeamObjectivesTabProps {
   project: Project;
@@ -27,15 +26,15 @@ const TeamObjectivesTab = (props: TeamObjectivesTabProps): JSX.Element => {
       </Typography>
       <Typography mb={4} sx={{ maxWidth: 640 }} color="textSecondary">
         Epics represent a collection of user stories that share a broader strategic objective. They
-        can be used to organize tasks in the project's backlog
+        can be used to organize tasks in the project&apos;s backlog
       </Typography>
-      <CTAButton icon={<AddIcon />} onClick={() => setShowCreationForm(true)} text="Add Epic" />
+      <Button onClick={() => setShowCreationForm(true)}>Add Epic</Button>
       <Box mb={3} />
       {showCreationForm && (
         <EpicCreationForm onClose={() => setShowCreationForm(false)} projectId={projectId} />
       )}
       {epics.length === 0 && (
-        <Typography variant="body2" color="textSecondary" fontStyle="italic">
+        <Typography color="textSecondary" fontStyle="italic">
           There are no epics created.
         </Typography>
       )}

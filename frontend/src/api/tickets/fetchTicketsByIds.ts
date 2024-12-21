@@ -7,7 +7,7 @@ import ApiResponseWrapper from "../../types/ApiResponseWrapper";
 const fetchTicketsByIds = async (ticketIds: string[]): Promise<Ticket[]> => {
   try {
     const response = await axios.post<ApiResponseWrapper<Ticket[]>>(
-      `${SERVER_API_URL}/v1/tickets/bulk-retrieve`,
+      `${SERVER_API_URL}/api/v1/tickets/bulk-retrieve`,
       {
         ticketIds,
       },

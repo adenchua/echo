@@ -1,5 +1,6 @@
 import ChevronUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Box from "@mui/material/Box";
+import { JSX } from "react";
 
 import Tooltip from "../common/Tooltip";
 

@@ -1,8 +1,8 @@
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid2";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { useContext } from "react";
+import { JSX, useContext } from "react";
 
 import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
 import Project from "../../types/Project";
@@ -27,7 +27,7 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
         <Paper sx={{ p: 1, display: "flex", alignItems: "center", gap: 1 }} elevation={0}>
           <UserAvatar username={username} displayName={displayName} />
           <Box width="160px">
-            <Typography noWrap variant="body2" component="div">
+            <Typography noWrap component="div">
               {displayName}
             </Typography>
             <Typography noWrap variant="caption" component="div" color="grey.500">
@@ -53,14 +53,10 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
       </Box>
       <Grid container spacing={2}>
         {admins.map((admin) => (
-          <Grid item key={admin._id}>
-            {renderMemberCard(admin)}
-          </Grid>
+          <Grid key={admin._id}>{renderMemberCard(admin)}</Grid>
         ))}
         {members.map((member) => (
-          <Grid item key={member._id}>
-            {renderMemberCard(member)}
-          </Grid>
+          <Grid key={member._id}>{renderMemberCard(member)}</Grid>
         ))}
       </Grid>
     </Box>

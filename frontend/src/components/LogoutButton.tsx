@@ -1,11 +1,11 @@
 import LogoutIcon from "@mui/icons-material/LogoutOutlined";
-import Button from "@mui/material/Button";
-import { useState } from "react";
+import { JSX, useState } from "react";
+import { useNavigate } from "react-router";
 
-import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import ActionDialog from "./common/ActionDialog";
+import Button from "./common/Button";
 
 const LogoutButton = (): JSX.Element => {
   const [isDialogOpened, setIsDialogOpened] = useState<boolean>(false);
@@ -20,14 +20,9 @@ const LogoutButton = (): JSX.Element => {
   return (
     <>
       <Button
-        variant="outlined"
+        color="secondary"
         onClick={() => setIsDialogOpened(true)}
         fullWidth
-        sx={{
-          color: "#FFF",
-          borderColor: "#FFF",
-          "&:hover": { borderColor: "#FFF", bgcolor: "#FFF", color: "#111" },
-        }}
         startIcon={<LogoutIcon />}
       >
         Logout
@@ -40,7 +35,6 @@ const LogoutButton = (): JSX.Element => {
         titleIcon={<LogoutIcon />}
         onAccept={handleLogout}
         disableActionButton={false}
-        acceptButtonText="Logout"
       />
     </>
   );

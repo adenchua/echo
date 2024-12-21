@@ -3,7 +3,8 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import ProjectIcon from "@mui/icons-material/GitHub";
 import Link from "@mui/material/Link";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink } from "react-router";
+import { JSX } from "react";
 
 import Project from "../../types/Project";
 import useQuery from "../../hooks/useQuery";
@@ -26,7 +27,6 @@ const ToolbarContent = (props: ToolbarContentProps): JSX.Element => {
         underline="none"
       >
         <Typography
-          variant="body2"
           color={isTabSelected ? "primary.main" : "grey.500"}
           sx={{
             "&:hover": {

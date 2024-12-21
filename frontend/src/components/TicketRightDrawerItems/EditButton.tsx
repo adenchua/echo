@@ -1,16 +1,18 @@
-import Button from "@mui/material/Button";
+import { JSX } from "react";
+
+import ButtonText from "../common/ButtonText";
 
 interface EditButtonProps {
-  onStartEdit: any;
+  onStartEdit: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const EditButton = (props: EditButtonProps): JSX.Element => {
   const { onStartEdit } = props;
 
   return (
-    <Button variant="text" size="small" color="primary" onClick={onStartEdit}>
+    <ButtonText color="primary" onClick={onStartEdit}>
       Edit
-    </Button>
+    </ButtonText>
   );
 };
 

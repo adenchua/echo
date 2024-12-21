@@ -1,4 +1,5 @@
 import Chip from "@mui/material/Chip";
+import { JSX } from "react";
 
 import { TicketStatus } from "../types/Ticket";
 

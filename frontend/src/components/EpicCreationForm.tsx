@@ -1,14 +1,14 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useContext, useEffect, useState } from "react";
+import { JSX, useContext, useEffect, useState } from "react";
 
 import createEpic from "../api/epics/createEpic";
 import { EpicsContext } from "../contexts/EpicsContextProvider";
 import useLoad from "../hooks/useLoad";
+import Button from "./common/Button";
 
 interface EpicCreationFormProps {
   onClose: () => void;
@@ -37,7 +37,7 @@ const EpicCreationForm = (props: EpicCreationFormProps): JSX.Element => {
       addEpic(newEpic);
       handleSetLoadingState("DEFAULT");
       onClose();
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -50,13 +50,11 @@ const EpicCreationForm = (props: EpicCreationFormProps): JSX.Element => {
       <form onSubmit={handleFormSubmit}>
         <Box mb={3}>
           {currentLoadState === "ERROR" && (
-            <Typography variant="body2" paragraph color="error">
+            <Typography paragraph color="error">
               Something went wrong. Please try again later.
             </Typography>
           )}
-          <Typography variant="body2" gutterBottom>
-            New Epic
-          </Typography>
+          <Typography gutterBottom>New Epic</Typography>
           <TextField
             size="small"
             margin="none"
@@ -69,12 +67,12 @@ const EpicCreationForm = (props: EpicCreationFormProps): JSX.Element => {
           />
         </Box>
         <Box display="flex" justifyContent="flex-end">
-          <Button color="inherit" sx={{ color: "grey.500" }} onClick={onClose}>
+          <Button color="secondary" onClick={onClose}>
             Cancel
           </Button>
           <Button
             type="submit"
-            disabled={!titleInput || currentLoadState === "LOADING"}
+            state={!titleInput || currentLoadState === "LOADING" ? "disabled" : "default"}
             startIcon={
               currentLoadState === "LOADING" && (
                 <CircularProgress sx={{ color: "inherit" }} size={14} />

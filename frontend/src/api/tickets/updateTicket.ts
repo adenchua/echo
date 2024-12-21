@@ -10,7 +10,7 @@ const updateTicket = async (
 ): Promise<Ticket> => {
   try {
     const response = await axios.patch<ApiResponseWrapper<Ticket>>(
-      `${SERVER_API_URL}/v1/tickets/id/${ticketId}`,
+      `${SERVER_API_URL}/api/v1/tickets/id/${ticketId}`,
       fieldsToUpdate,
     );
     return response.data.data;

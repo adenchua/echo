@@ -7,7 +7,7 @@ import ApiResponseWrapper from "../../types/ApiResponseWrapper";
 const fetchSprintsByIds = async (sprintIds: string[]): Promise<Sprint[]> => {
   try {
     const response = await axios.post<ApiResponseWrapper<Sprint[]>>(
-      `${SERVER_API_URL}/v1/sprints/bulk-retrieve`,
+      `${SERVER_API_URL}/api/v1/sprints/bulk-retrieve`,
       {
         sprintIds,
       },

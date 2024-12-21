@@ -1,6 +1,7 @@
 import DoneIcon from "@mui/icons-material/DoneOutlineOutlined";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import { JSX } from "react";
 
 interface FeatureCardProps {
   title: string;
@@ -23,7 +24,7 @@ const FeatureCard = (props: FeatureCardProps): JSX.Element => {
       }}
     >
       <DoneIcon fontSize="large" sx={{ mb: 2 }} color="primary" />
-      <Typography variant="h6" paragraph color="primary" align="center">
+      <Typography variant="h6" color="primary" align="center" mb={1}>
         {title}
       </Typography>
       <Typography align="justify">{secondaryTitle}</Typography>

@@ -1,20 +1,22 @@
 import MenuItem from "@mui/material/MenuItem";
 import { SelectChangeEvent } from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
+import { JSX } from "react";
 
 import TicketTypeIcon from "../icons/TicketTypeIcon";
 import Select from "./Select";
 
 interface TicketTypeDropdownProps {
+  label: string;
   selectedValue: string;
   onChange: (event: SelectChangeEvent<unknown>, child: React.ReactNode) => void;
 }
 
 const TicketTypeDropdown = (props: TicketTypeDropdownProps): JSX.Element => {
-  const { selectedValue, onChange } = props;
+  const { selectedValue, onChange, label } = props;
 
   return (
-    <Select value={selectedValue} onChange={onChange}>
+    <Select label={label} value={selectedValue} onChange={onChange}>
       <MenuItem value="task">
         <TicketTypeIcon type="task" />
         <Typography ml={1}>Task</Typography>

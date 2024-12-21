@@ -1,6 +1,6 @@
 import { HighlightOffOutlined as DeleteIcon } from "@mui/icons-material";
 import { Box, DialogContentText, Typography } from "@mui/material";
-import { useState } from "react";
+import { JSX, useState } from "react";
 
 import Subtask from "../types/Subtask";
 import DangerActionDialog from "./common/DangerActionDialog";
@@ -35,7 +35,7 @@ const TicketSubtaskDeletable = (props: TicketSubtaskDeletableProps): JSX.Element
           }}
         >
           <DeleteIcon fontSize="small" color="inherit" />
-          <Typography variant="body2" noWrap color="inherit">
+          <Typography noWrap color="inherit">
             {title}
           </Typography>
         </Box>

@@ -1,13 +1,12 @@
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
-import { useContext, useEffect, useState } from "react";
+import { JSX, useContext, useEffect, useState } from "react";
 
 import fetchUsersByIds from "../../api/users/fetchUsersByIds";
 import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
@@ -18,6 +17,7 @@ import User from "../../types/User";
 import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
 import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
 import { sliceLongString } from "../../utils/stringUtils";
+import Button from "../common/Button";
 import Select from "../common/Select";
 import SnackbarError from "../common/SnackbarError";
 import UserAvatar from "../common/UserAvatar";
@@ -43,7 +43,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
   useEffect(() => {
     let isMounted = true;
 
-    const getAssigneeDetails = async () => {
+    const getAssigneeDetails = async (): Promise<void> => {
       if (!assigneeId) {
         setAssignee(null);
         return;
@@ -56,7 +56,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
 
     getAssigneeDetails();
 
-    return () => {
+    return (): void => {
       isMounted = false;
     };
   }, [assigneeId]);
@@ -71,7 +71,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
       await onUpdateTicket(ticketId, { assigneeId: newAssigneeId ? newAssigneeId : null }); // if no assignee, newAssigneeId will be empty string
       handleSetLoadingState("SUCCESS");
       handleToggleEditMode();
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -98,7 +98,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
             title="Assignee"
             actionButton={
               <UpdateButton
-                onAccept={handleUpdateTicketAssignee}
+                onAccept={undefined}
                 onCancel={handleToggleEditMode}
                 showSaveButton={false}
               />
@@ -106,6 +106,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
           />
           <Box mb={2} width="100%">
             <Select
+              label="Select assignee"
               onChange={(e) => handleUpdateTicketAssignee(e.target.value as string)}
               value={assigneeId ? assigneeId : ""}
             >
@@ -123,8 +124,6 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
             </Select>
             <Button
               fullWidth
-              variant="outlined"
-              size="small"
               sx={{ mt: 2 }}
               onClick={() => {
                 if (loggedInUserId) {
@@ -137,10 +136,8 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
             {assigneeId && (
               <Button
                 fullWidth
-                color="warning"
-                variant="outlined"
-                size="small"
                 sx={{ mt: 2 }}
+                color="secondary"
                 onClick={() => handleUpdateTicketAssignee("")}
               >
                 Remove Assignee

@@ -2,7 +2,7 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 
 import fetchUsersByIds from "../api/users/fetchUsersByIds";
 import Ticket from "../types/Ticket";
@@ -25,7 +25,7 @@ const EpicSummaryAccordionTicket = (props: EpicSummaryAccordionTicketProps): JSX
   const [assignee, setAssignee] = useState<User | null>(null);
 
   useEffect(() => {
-    const getAssigneeDetails = async () => {
+    const getAssigneeDetails = async (): Promise<void> => {
       if (!assigneeId) {
         setAssignee(null);
         return;
@@ -71,9 +71,7 @@ const EpicSummaryAccordionTicket = (props: EpicSummaryAccordionTicketProps): JSX
       <Typography variant="caption" color="grey.500" noWrap sx={{ flexShrink: 0 }}>
         {`#${ticketNumber}`}
       </Typography>
-      <Typography variant="body2" noWrap>
-        {title}
-      </Typography>
+      <Typography noWrap>{title}</Typography>
       <Box flexGrow={1} />
       {assignee && (
         <Avatar

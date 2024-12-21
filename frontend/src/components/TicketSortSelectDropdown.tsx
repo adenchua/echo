@@ -4,6 +4,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import PriorityIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
 import TimeIcon from "@mui/icons-material/AccessTime";
+import { JSX } from "react";
 
 export type TicketSortType = "priority-dsc" | "creation-asc";
 
@@ -35,26 +36,16 @@ const TicketSortSelectDropdown = (props: TicketSortSelectDropdownProps): JSX.Ele
       onChange={onChangeHandler}
       SelectDisplayProps={{
         style: {
-          fontSize: 14,
-          color: "#9e9e9e",
+          backgroundColor: "#E0E0E0",
+          borderRadius: 100,
         },
       }}
       sx={{
-        borderRadius: 0,
-        "& .MuiSelect-select": {
-          padding: "3px 6px",
-        },
         "& .MuiOutlinedInput-notchedOutline": {
           border: "none",
         },
-        "& .MuiSelect-iconOutlined": {
-          color: "#9e9e9e",
-        },
       }}
       MenuProps={{
-        PaperProps: {
-          elevation: 2,
-        },
         MenuListProps: {
           dense: true,
         },

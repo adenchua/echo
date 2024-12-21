@@ -1,14 +1,14 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { compareAsc, format } from "date-fns";
-import { useState } from "react";
+import { JSX, useState } from "react";
 
 import useLoad from "../../hooks/useLoad";
 import useProductBacklog from "../../hooks/useProductBacklog";
+import Button from "../common/Button";
 import SnackbarError from "../common/SnackbarError";
 import EditButton from "./EditButton";
 import RightDrawerTitle from "./RightDrawerTitle";
@@ -37,7 +37,7 @@ const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
       await onUpdateTicket(ticketId, { dueDate: dueDateInputInISOString });
       handleToggleEditMode();
       handleSetLoadingState("SUCCESS");
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -50,7 +50,7 @@ const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
             title="Due date"
             actionButton={
               <UpdateButton
-                onAccept={handleUpdateTicketDueDate}
+                onAccept={undefined}
                 onCancel={handleToggleEditMode}
                 showSaveButton={false}
               />
@@ -66,13 +66,7 @@ const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
               reduceAnimations
             />
             {dueDate && (
-              <Button
-                onClick={() => handleUpdateTicketDueDate(null)}
-                fullWidth
-                variant="outlined"
-                size="small"
-                color="warning"
-              >
+              <Button onClick={() => handleUpdateTicketDueDate(null)} fullWidth>
                 Remove Due Date
               </Button>
             )}

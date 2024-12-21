@@ -1,7 +1,7 @@
 import SprintEndIcon from "@mui/icons-material/EventRepeatOutlined";
 import DialogContentText from "@mui/material/DialogContentText";
 import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 
 import useLoad from "../hooks/useLoad";
 import Sprint from "../types/Sprint";
@@ -48,7 +48,7 @@ const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
       setCompletedSprint(response);
       handleClose();
       handleSetLoadingState("SUCCESS");
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -73,7 +73,7 @@ const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
           <Typography component="span" color="primary">
             {completedSprint?.number}
           </Typography>
-          ! Here's a quick breakdown on the sprint:
+          ! Here&apos;s a quick breakdown on the sprint:
         </DialogContentText>
         <DialogContentText>
           Completed tickets:{" "}
@@ -125,7 +125,7 @@ const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
         dialogContent={renderSuccessDialogContent()}
         isOpen={currentLoadState === "SUCCESS"}
         onClose={() => handleSetLoadingState("DEFAULT")}
-        title="Succcessfully ended sprint!"
+        title="Successfully ended sprint!"
         titleIcon={<SprintEndIcon />}
       />
     </>

@@ -1,6 +1,7 @@
 import LowPriorityIcon from "@mui/icons-material/KeyboardArrowDown";
 import HighPriorityIcon from "@mui/icons-material/KeyboardArrowUp";
 import MediumPriorityIcon from "@mui/icons-material/Remove";
+import { JSX } from "react";
 
 import { TicketPriority } from "../../types/Ticket";
 import HighestPriorityIcon from "./HighestPriorityIcon";

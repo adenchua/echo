@@ -1,4 +1,5 @@
 import { Snackbar } from "@mui/material";
+import { JSX } from "react";
 
 interface SnackbarErrorProps {
   isOpen: boolean;

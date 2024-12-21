@@ -1,6 +1,7 @@
 import BugIcon from "@mui/icons-material/BugReportOutlined";
 import UserStoryIcon from "@mui/icons-material/HistoryEduOutlined";
 import TaskIcon from "@mui/icons-material/TaskOutlined";
+import { JSX } from "react";
 
 import { TicketType } from "../../types/Ticket";
 import Tooltip from "../common/Tooltip";

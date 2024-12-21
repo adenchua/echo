@@ -1,5 +1,6 @@
 import { CheckCircleOutlined } from "@mui/icons-material";
 import { Typography, Box } from "@mui/material";
+import { JSX } from "react";
 
 import Subtask from "../types/Subtask";
 import Tooltip from "./common/Tooltip";
@@ -30,7 +31,7 @@ const TicketSubtask = (props: TicketSubtaskProps): JSX.Element => {
         onClick={() => onToggleCompletion(id)}
       >
         {<CheckCircleOutlined fontSize="small" color="inherit" />}
-        <Typography variant="body2" noWrap color="inherit">
+        <Typography noWrap color="inherit">
           {title}
         </Typography>
       </Box>

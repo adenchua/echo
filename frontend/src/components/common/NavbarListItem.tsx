@@ -2,8 +2,8 @@ import Avatar from "@mui/material/Avatar";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { JSX, ReactNode } from "react";
+import { Link } from "react-router";
 
 interface NavbarListItemProps {
   isSelected: boolean;
@@ -24,7 +24,7 @@ const NavbarListItem = (props: NavbarListItemProps): JSX.Element => {
       sx={{
         "&.Mui-selected": {
           bgcolor: "primary.main",
-          borderRadius: 0.5,
+          borderRadius: 100,
           "&:hover": { bgcolor: "primary.main" },
         },
       }}
@@ -37,7 +37,9 @@ const NavbarListItem = (props: NavbarListItemProps): JSX.Element => {
       <ListItemText
         primary={buttonText}
         sx={{ color: "#FFF" }}
-        primaryTypographyProps={{ noWrap: true }}
+        slotProps={{
+          primary: { noWrap: true },
+        }}
       />
     </ListItemButton>
   );

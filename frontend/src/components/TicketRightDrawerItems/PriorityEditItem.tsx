@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
-import { useState } from "react";
+import { JSX, useState } from "react";
 
 import useLoad from "../../hooks/useLoad";
 import useProductBacklog from "../../hooks/useProductBacklog";
@@ -39,7 +39,7 @@ const PriorityEditItem = (props: PriorityEditItemProps): JSX.Element => {
       await onUpdateTicket(ticketId, { priority: newPriority });
       handleSetLoadingState("SUCCESS");
       handleToggleEditMode();
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -52,15 +52,16 @@ const PriorityEditItem = (props: PriorityEditItemProps): JSX.Element => {
             title="Priority"
             actionButton={
               <UpdateButton
-                onAccept={handleChangePriority}
+                onAccept={undefined}
                 onCancel={handleToggleEditMode}
                 showSaveButton={false}
               />
             }
           />
           <TicketPriorityDropdown
+            label="Select priority"
             selectedValue={priority}
-            onChange={(event, child) => handleChangePriority(event.target.value as TicketPriority)}
+            onChange={(event) => handleChangePriority(event.target.value as TicketPriority)}
           />
           <Divider flexItem sx={{ mt: 2 }} />
         </ListItem>

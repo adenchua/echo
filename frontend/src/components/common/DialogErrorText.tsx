@@ -1,4 +1,5 @@
 import DialogContentText, { DialogContentTextProps } from "@mui/material/DialogContentText";
+import { JSX } from "react";
 
 interface DialogErrorTextProps extends DialogContentTextProps {
   text: string;

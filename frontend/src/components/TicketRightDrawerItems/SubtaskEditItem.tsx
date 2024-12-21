@@ -1,5 +1,5 @@
 import { Box, Divider, ListItem, ListItemText, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 
 import fetchSubtasksByIds from "../../api/tickets/fetchSubtasksByIds";
 import updateSubtask from "../../api/tickets/updateSubtask";
@@ -36,7 +36,7 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
   useEffect(() => {
     let isMounted = true;
 
-    const getSubtasks = async () => {
+    const getSubtasks = async (): Promise<void> => {
       try {
         handleSetLoadingState("LOADING");
         const response = await fetchSubtasksByIds(subtaskIds);
@@ -51,7 +51,7 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
 
     getSubtasks();
 
-    return () => {
+    return (): void => {
       isMounted = false;
     };
   }, [subtaskIds, handleSetLoadingState]);
@@ -70,7 +70,7 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
       await onAddSubtaskToTicket(ticketId, titleInput);
       handleSetLoadingState("DEFAULT");
       setTitleInput(""); // reset title input upon creation
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -93,7 +93,7 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
         }),
       );
       handleSetLoadingState("DEFAULT");
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };

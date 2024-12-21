@@ -1,6 +1,6 @@
 import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { DialogContentText } from "@mui/material";
-import { useEffect } from "react";
+import { JSX, useEffect } from "react";
 
 import useProductBacklog from "../hooks/useProductBacklog";
 import Ticket from "../types/Ticket";
@@ -33,7 +33,7 @@ const DeleteTicketDialog = (props: DeleteTicketDialogProps): JSX.Element => {
       handleSetLoadingState("LOADING");
       await onDeleteTicket(ticketId, projectId, epicId);
       handleSetLoadingState("SUCCESS");
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };

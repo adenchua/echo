@@ -7,7 +7,7 @@ import ApiResponseWrapper from "../../types/ApiResponseWrapper";
 const fetchProject = async (id: string): Promise<Project> => {
   try {
     const response = await axios.get<ApiResponseWrapper<Project>>(
-      `${SERVER_API_URL}/v1/projects/id/${id}`,
+      `${SERVER_API_URL}/api/v1/projects/id/${id}`,
     );
     return response.data.data;
   } catch (error) {

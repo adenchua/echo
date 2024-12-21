@@ -1,11 +1,11 @@
-import IconButton from "@mui/material/IconButton";
 import PromoteAdminIcon from "@mui/icons-material/AddModeratorOutlined";
-import { useState } from "react";
+import IconButton from "@mui/material/IconButton";
+import { JSX, useState } from "react";
 
-import Tooltip from "../common/Tooltip";
+import { DialogContentText } from "@mui/material";
 import User from "../../types/User";
 import ActionDialog from "../common/ActionDialog";
-import { DialogContentText } from "@mui/material";
+import Tooltip from "../common/Tooltip";
 
 interface PromoteMemberIconButtonProps {
   member: User;
@@ -28,16 +28,13 @@ const PromoteMemberIconButton = (props: PromoteMemberIconButtonProps): JSX.Eleme
         dialogContent={
           <>
             <DialogContentText mb={4}>
-              This action will allow this member to manage members and project settings:
-            </DialogContentText>
-            <DialogContentText>
-              {member.displayName} (@{member.username})
+              This action will allow @{member.username} to manage members and project settings
             </DialogContentText>
           </>
         }
         onAccept={() => onConfirm(member)}
         onClose={() => setIsDialogOpened(false)}
-        title="Promote member to administrator"
+        title={`Promote @${member.username} to administrator`}
         titleIcon={<PromoteAdminIcon />}
         disableActionButton={false}
       />

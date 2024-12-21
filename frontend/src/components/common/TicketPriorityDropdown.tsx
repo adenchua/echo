@@ -1,20 +1,22 @@
 import MenuItem from "@mui/material/MenuItem";
 import { SelectChangeEvent } from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
+import { JSX } from "react";
 
-import Select from "./Select";
 import PriorityIcon from "../icons/PriorityIcon";
+import Select from "./Select";
 
 interface TicketPriorityDropdownProps {
+  label: string;
   selectedValue: string;
   onChange: (event: SelectChangeEvent<unknown>, child: React.ReactNode) => void;
 }
 
 const TicketPriorityDropdown = (props: TicketPriorityDropdownProps): JSX.Element => {
-  const { selectedValue, onChange } = props;
+  const { selectedValue, onChange, label } = props;
 
   return (
-    <Select value={selectedValue} onChange={onChange}>
+    <Select value={selectedValue} onChange={onChange} label={label}>
       <MenuItem value="low">
         <PriorityIcon priority="low" />
         <Typography ml={1}>Low</Typography>

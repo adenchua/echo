@@ -7,7 +7,7 @@ import ApiResponseWrapper from "../../types/ApiResponseWrapper";
 const endSprint = async (projectId: string, sprintId: string): Promise<Sprint> => {
   try {
     const response = await axios.post<ApiResponseWrapper<Sprint>>(
-      `${SERVER_API_URL}/v1/sprints/end`,
+      `${SERVER_API_URL}/api/v1/sprints/end`,
       {
         projectId,
         sprintId,

@@ -1,9 +1,11 @@
-import Button from "@mui/material/Button";
+import { JSX } from "react";
+
+import ButtonText from "../common/ButtonText";
 
 interface UpdateButtonProps {
   showSaveButton: boolean;
-  onAccept: any;
-  onCancel: any;
+  onAccept: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  onCancel: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const UpdateButton = (props: UpdateButtonProps): JSX.Element => {
@@ -11,14 +13,8 @@ const UpdateButton = (props: UpdateButtonProps): JSX.Element => {
 
   return (
     <>
-      <Button variant="text" onClick={onCancel} size="small">
-        Cancel
-      </Button>
-      {showSaveButton && (
-        <Button variant="text" onClick={onAccept} size="small">
-          Save
-        </Button>
-      )}
+      <ButtonText onClick={onCancel}>Cancel</ButtonText>
+      {showSaveButton && <ButtonText onClick={onAccept}>Save</ButtonText>}
     </>
   );
 };

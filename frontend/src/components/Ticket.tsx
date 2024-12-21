@@ -4,7 +4,7 @@ import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { compareAsc, format } from "date-fns";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 
 import fetchUsersByIds from "../api/users/fetchUsersByIds";
 import useLoad from "../hooks/useLoad";
@@ -48,7 +48,7 @@ const Ticket = (props: TicketProps): JSX.Element => {
   const isDue = dueDate && compareAsc(new Date(), new Date(dueDate)) === 1 ? true : false;
 
   useEffect(() => {
-    const getAssigneeDetails = async () => {
+    const getAssigneeDetails = async (): Promise<void> => {
       if (!assigneeId) {
         setAssignee(null); // prevent avatar from still showing on the ticket when assignee is removed
         return;
@@ -60,13 +60,15 @@ const Ticket = (props: TicketProps): JSX.Element => {
     getAssigneeDetails();
   }, [assigneeId]);
 
-  const handleToggleTicketInSprint = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleToggleTicketInSprint = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): Promise<void> => {
     const updatedIsInSprintStatus = event.target.checked;
     try {
       handleSetLoadingState("LOADING");
       await onUpdateTicket(id, { isInSprint: updatedIsInSprintStatus });
       handleSetLoadingState("SUCCESS");
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
@@ -108,9 +110,7 @@ const Ticket = (props: TicketProps): JSX.Element => {
         <Typography variant="caption" color="grey.500" noWrap sx={{ minWidth: 24 }}>
           {`#${ticketNumber}`}
         </Typography>
-        <Typography variant="body2" noWrap>
-          {title}
-        </Typography>
+        <Typography noWrap>{title}</Typography>
         <Box flexGrow={1} />
         {status !== "completed" && (
           <Tooltip title="Due date">

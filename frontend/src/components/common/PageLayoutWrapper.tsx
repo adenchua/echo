@@ -1,13 +1,13 @@
-import { useState } from "react";
+import MenuIcon from "@mui/icons-material/Menu";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
+import { JSX, useState } from "react";
 
-import Navbar from "./Navbar";
 import { DRAWER_WIDTH } from "../../utils/constants";
+import Navbar from "./Navbar";
 
 interface PageLayoutWrapperProps {
   children: React.ReactNode;
@@ -19,7 +19,7 @@ const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
   const { children, toolbarContent, disablePadding = false } = props;
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const handleDrawerToggle = () => {
+  const handleDrawerToggle = (): void => {
     setDrawerOpen(!drawerOpen);
   };
 

@@ -2,10 +2,9 @@ import ProjectIcon from "@mui/icons-material/GitHub";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
-import Hidden from "@mui/material/Hidden";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 
 import fetchSprintsByIds from "../api/sprints/fetchSprintsByIds";
 import fetchTicketsByIds from "../api/tickets/fetchTicketsByIds";
@@ -28,22 +27,26 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
   const [activeSprintProgressPercentage, setActiveSprintProgressPercentage] = useState<number>(0);
 
   useEffect(() => {
-    const getSprintsAndProgress = async () => {
+    const getSprintsAndProgress = async (): Promise<void> => {
       try {
         const response = await fetchSprintsByIds(sprintIds);
         setSprints(response);
         getActiveSprintProgressPercentage(response);
-      } catch (error) {}
+      } catch {
+        // do nothing
+      }
     };
 
-    const getUsers = async () => {
+    const getUsers = async (): Promise<void> => {
       try {
         const response = await fetchUsersByIds([...adminIds, ...memberIds]);
         setUsers(response);
-      } catch (error) {}
+      } catch {
+        // do nothing
+      }
     };
 
-    const getActiveSprintProgressPercentage = async (sprints: Sprint[]) => {
+    const getActiveSprintProgressPercentage = async (sprints: Sprint[]): Promise<void> => {
       try {
         const activeSprint = sprints.find((sprint) => sprint.hasEnded === false);
         if (!activeSprint) {
@@ -63,7 +66,9 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
           Math.floor((completedTicketCount / ticketsInSprint.length) * 100).toFixed(),
         );
         setActiveSprintProgressPercentage(result);
-      } catch (error) {}
+      } catch {
+        // do nothing
+      }
     };
 
     getSprintsAndProgress();
@@ -95,10 +100,11 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
           "& .MuiAvatar-root": { width: 32, height: 32, fontSize: 16 },
         }}
       >
-        {users.map((user) => {
-          const { username, _id: userId, displayName } = user;
-          return <UserAvatar key={userId} username={username} displayName={displayName} />;
-        })}
+        {users &&
+          users.map((user) => {
+            const { username, _id: userId, displayName } = user;
+            return <UserAvatar key={userId} username={username} displayName={displayName} />;
+          })}
       </AvatarGroup>
     );
   };
@@ -114,20 +120,18 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
           <ProjectIcon />
         </Avatar>
         <Box sx={{ width: "200px" }}>
-          <Typography variant="body2" noWrap lineHeight="16px">
+          <Typography noWrap lineHeight="16px">
             {title} <br /> <span style={{ fontSize: 12, color: "#969892" }}>{type}</span>
           </Typography>
         </Box>
       </Box>
-      <Typography variant="body2" sx={{ width: "64px" }} noWrap>
+      <Typography sx={{ width: "64px" }} noWrap>
         {renderSprintStatusSpan(sprints)}
       </Typography>
-      <Hidden smDown>
-        <Box sx={{ width: "160px" }}>
-          <ProgressBarWithPercentage value={activeSprintProgressPercentage} />
-        </Box>
-        {renderAvatarGroups(users)}
-      </Hidden>
+      <Box sx={{ width: "160px" }}>
+        <ProgressBarWithPercentage value={activeSprintProgressPercentage} />
+      </Box>
+      {renderAvatarGroups(users)}
     </Paper>
   );
 };

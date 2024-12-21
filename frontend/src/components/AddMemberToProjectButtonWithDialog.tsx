@@ -1,30 +1,23 @@
-import AddIcon from "@mui/icons-material/Add";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
-import Checkbox from "@mui/material/Checkbox";
-import Chip from "@mui/material/Chip";
+import Grid from "@mui/material/Grid2";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
-import Typography from "@mui/material/Typography";
-import { useContext, useEffect, useState } from "react";
+import { JSX, useContext, useMemo, useState } from "react";
 
-import { ListItemAvatar } from "@mui/material";
 import addMembersToProject from "../api/projects/addMembersToProject";
-import fetchAllUsers from "../api/users/fetchAllUsers";
+import fetchUsers from "../api/users/fetchUsers";
 import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
 import useLoad from "../hooks/useLoad";
 import User from "../types/User";
-import getUserAvatarSVG from "../utils/getUserAvatarSVG";
-import { matchString } from "../utils/stringUtils";
-import ActionDialog from "./common/ActionDialog";
-import CTAButton from "./common/CTAButton";
-import DialogErrorText from "./common/DialogErrorText";
+import BannerError from "./common/BannerError";
+import Button from "./common/Button";
+import ConfirmationDialog from "./common/ConfirmationDialog";
 import SearchBar from "./common/SearchBar";
 import SnackbarSuccess from "./common/SnackbarSuccess";
 import UserAvatar from "./common/UserAvatar";
+import Typography from "@mui/material/Typography";
 
 interface AddMemberToProjectButtonWithDialogProps {
   projectId: string;
@@ -34,154 +27,127 @@ const AddMemberToProjectButtonWithDialog = (
   props: AddMemberToProjectButtonWithDialogProps,
 ): JSX.Element => {
   const { projectId } = props;
+  const [searchInput, setSearchInput] = useState<string>("");
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [availableMembers, setAvailableMembers] = useState<User[]>([]);
-  const [selectedMembers, setSelectedMembers] = useState<User[]>([]);
   const { currentLoadState, handleSetLoadingState } = useLoad();
-  const [searchInput, setSearchInput] = useState<string>("");
   const { handleAddMembers, members, admins } = useContext(ProjectMembersContext);
 
-  useEffect(() => {
-    let isComponentMounted = true;
-    const getUsers = async () => {
-      handleSetLoadingState("LOADING");
-      try {
-        const currentMemberIdsInProject = [...admins, ...members].map((member) => member._id);
-        const response = await fetchAllUsers();
-        const filteredMembers = response.filter(
-          (member) => !currentMemberIdsInProject.includes(member._id),
-        );
-        if (isComponentMounted) {
-          setAvailableMembers(filteredMembers);
-        }
-        handleSetLoadingState("DEFAULT");
-      } catch (error) {
-        handleSetLoadingState("ERROR");
-      }
-    };
+  const projectMemberIds = useMemo(() => {
+    const result: string[] = [];
 
-    if (isDialogOpen) {
-      getUsers();
-    }
+    members.forEach((member) => result.push(member._id));
+    admins.forEach((admin) => result.push(admin._id));
 
-    return () => {
-      isComponentMounted = false;
-    };
-  }, [isDialogOpen, admins, members, handleSetLoadingState]);
+    return result;
+  }, [members, admins]);
 
   const handleCloseDialog = (): void => {
-    setSelectedMembers([]);
     setSearchInput("");
     setIsDialogOpen(false);
   };
 
-  const handleToggleSelectedMember = (user: User): void => {
-    if (selectedMembers.includes(user)) {
-      setSelectedMembers((prevState) => prevState.filter((member) => member._id !== user._id));
-    } else {
-      setSelectedMembers((prevState) => [...prevState, user]);
+  const handleSearch = async (event: React.SyntheticEvent): Promise<void> => {
+    event.preventDefault();
+    handleSetLoadingState("LOADING");
+    try {
+      const members = await fetchUsers(searchInput);
+      setAvailableMembers(members);
+    } catch {
+      handleSetLoadingState("ERROR");
     }
   };
 
-  const handleAddUsers = async (): Promise<void> => {
-    handleSetLoadingState("LOADING");
+  const handleAddUser = async (newMember: User): Promise<void> => {
+    handleSetLoadingState("DEFAULT");
     try {
-      const memberIds = selectedMembers.map((member) => member._id);
-      await addMembersToProject(projectId, memberIds);
-      handleAddMembers(selectedMembers);
+      await addMembersToProject(projectId, [newMember._id]);
+      handleAddMembers([newMember]);
       handleSetLoadingState("SUCCESS");
-      handleCloseDialog();
-    } catch (error) {
+    } catch {
       handleSetLoadingState("ERROR");
     }
   };
 
   return (
     <>
-      <CTAButton icon={<AddIcon />} onClick={() => setIsDialogOpen(true)} text="Add Member" />
-      <ActionDialog
+      <Button onClick={() => setIsDialogOpen(true)}>Add Member</Button>
+      <ConfirmationDialog
         isOpen={isDialogOpen}
         onClose={handleCloseDialog}
-        onAccept={handleAddUsers}
         title="Add team members"
         titleIcon={<ManageAccountsIcon />}
-        acceptButtonText="Add members"
-        disableActionButton={selectedMembers.length === 0 || currentLoadState !== "DEFAULT"}
         dialogContent={
           <>
             {currentLoadState === "ERROR" && (
-              <DialogErrorText text="Sorry, something went wrong. Please try again later" />
+              <BannerError sx={{ mb: 1 }}>
+                Sorry, something went wrong. Please try again later
+              </BannerError>
             )}
-            {currentLoadState !== "ERROR" && (
-              <>
-                <Box display="flex" gap={1} flexWrap="wrap" mb={2}>
-                  {selectedMembers.map((member) => (
-                    <Chip
-                      key={member._id}
-                      avatar={<Avatar src={getUserAvatarSVG(member.username)} />}
-                      label={member.displayName}
-                      onDelete={() => handleToggleSelectedMember(member)}
+            <form onSubmit={handleSearch}>
+              <Grid container justifyContent="space-between" spacing={1} mb={2}>
+                <Grid flexGrow={1}>
+                  <SearchBar
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    fullWidth
+                    placeholder="Search members"
+                  />
+                </Grid>
+                <Grid>
+                  <Button type="submit" state={searchInput.length === 0 ? "disabled" : "default"}>
+                    Search
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+            <List
+              dense
+              disablePadding
+              sx={{
+                height: "300px",
+                overflowY: "auto",
+                backgroundColor: "#FAFAFA",
+                borderRadius: "6px",
+                p: 2,
+              }}
+            >
+              {availableMembers.length === 0 && (
+                <Typography>No members match the search criteria</Typography>
+              )}
+              {availableMembers?.map((member: User) => {
+                return (
+                  <ListItem
+                    key={member._id}
+                    disablePadding
+                    disableGutters
+                    sx={{ borderBottom: "1px solid #E8E8E8", display: "flex" }}
+                  >
+                    <ListItemAvatar>
+                      <UserAvatar username={member.username} displayName={member.displayName} />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={member.displayName}
+                      secondary={`@${member.username}`}
+                      sx={{ flexGrow: 1 }}
                     />
-                  ))}
-                </Box>
-                <SearchBar
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  fullWidth
-                  placeholder="Search members"
-                />
-                <List dense disablePadding>
-                  {availableMembers && availableMembers.length === 0 && (
-                    <Typography variant="body2" fontStyle="italic" color="GrayText" mt={2}>
-                      No available members to add to the project
-                    </Typography>
-                  )}
-                  <List sx={{ maxHeight: "300px", overflowY: "auto" }}>
-                    {availableMembers?.map((member: User) => {
-                      if (
-                        matchString(searchInput, member.username) ||
-                        matchString(searchInput, member.displayName)
-                      ) {
-                        return (
-                          <ListItem key={member._id} disablePadding disableGutters>
-                            <ListItemButton
-                              role={undefined}
-                              dense
-                              onClick={() => handleToggleSelectedMember(member)}
-                              selected={selectedMembers.includes(member)}
-                            >
-                              <Checkbox
-                                edge="start"
-                                checked={selectedMembers.includes(member)}
-                                size="small"
-                              />
-                              <ListItemAvatar>
-                                <UserAvatar
-                                  username={member.username}
-                                  displayName={member.displayName}
-                                />
-                              </ListItemAvatar>
-                              <ListItemText
-                                primary={member.displayName}
-                                secondary={`@${member.username}`}
-                              />
-                            </ListItemButton>
-                          </ListItem>
-                        );
-                      }
-                      return null;
-                    })}
-                  </List>
-                </List>
-              </>
-            )}
+                    <Button
+                      onClick={() => handleAddUser(member)}
+                      state={projectMemberIds.includes(member._id) ? "disabled" : "default"}
+                    >
+                      Add
+                    </Button>
+                  </ListItem>
+                );
+              })}
+            </List>
           </>
         }
       />
       <SnackbarSuccess
         onClose={() => handleSetLoadingState("DEFAULT")}
         isOpen={currentLoadState === "SUCCESS"}
-        message="Successfully added selected members to the project"
+        message="Successfully added selected member to the project"
       />
     </>
   );

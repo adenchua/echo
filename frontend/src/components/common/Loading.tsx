@@ -1,4 +1,5 @@
 import LinearProgress from "@mui/material/LinearProgress";
+import { JSX } from "react";
 
 import PageLayoutWrapper from "./PageLayoutWrapper";
 
