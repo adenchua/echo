@@ -1,8 +1,9 @@
-import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid2";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { JSX, useState } from "react";
 import { useNavigate } from "react-router";
+import LoginPageImage from "../assets/login_page_image.svg";
 
 import login from "../api/authentication/login";
 import BannerError from "../components/common/BannerError";
@@ -43,17 +44,18 @@ const LoginPage = (): JSX.Element => {
     return (
       <Paper
         sx={{
-          width: "100%",
+          maxWidth: 400,
           padding: 4,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
+        elevation={0}
       >
-        <Typography variant="h5" sx={{ mb: 2 }}>
+        <Typography variant="h5" sx={{ mb: 3 }}>
           Login to echo.yl
         </Typography>
-        {errorMessage && <BannerError sx={{ mb: 2, width: '100%' }}>{errorMessage}</BannerError>}
+        {errorMessage && <BannerError sx={{ mb: 2, width: "100%" }}>{errorMessage}</BannerError>}
         <form onSubmit={handleLogin}>
           <TextField
             label="Username"
@@ -67,7 +69,7 @@ const LoginPage = (): JSX.Element => {
             type="password"
             value={passwordInput}
             onChange={(e) => setPasswordInput(e.target.value)}
-            sx={{ mb: 2 }}
+            sx={{ mb: 4 }}
           />
           <Button
             fullWidth
@@ -86,12 +88,23 @@ const LoginPage = (): JSX.Element => {
   };
 
   return (
-    <Container
-      maxWidth="xs"
-      sx={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh" }}
-    >
-      {renderLoginForm()}
-    </Container>
+    <Grid container sx={{ height: "100vh", p: 2 }} spacing={2}>
+      <Grid
+        size={6}
+        sx={{
+          backgroundColor: "#84b7b2",
+          borderRadius: 2,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <img src={LoginPageImage} height="400px" alt="login" />
+      </Grid>
+      <Grid size={6} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+        {renderLoginForm()}
+      </Grid>
+    </Grid>
   );
 };
 

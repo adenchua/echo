@@ -1,6 +1,7 @@
 import { Celebration } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import Paper from "@mui/material/Paper";
 import { JSX, useMemo, useState, useTransition } from "react";
 import { useNavigate } from "react-router";
 import BackgroundImage from "../assets/wait_in_line.svg";
@@ -72,80 +73,88 @@ const UserSignUpPage = (): JSX.Element => {
         >
           <img src={BackgroundImage} height="360px" alt="sign up" />
         </Grid>
-        <Grid size={6} sx={{ p: 12 }}>
-          <form onSubmit={handleSubmit}>
-            <Typography variant="h4" mb={6}>
-              Register an account with echo
-            </Typography>
-            {showError && (
-              <BannerError sx={{ mb: 4 }}>Failed to register, please try again</BannerError>
-            )}
-            <TextField
-              label="Username"
-              value={usernameInput}
-              onChange={(e) => setUsernameInput(e.target.value)}
-              helperText="minimum 4 characters"
-              sx={{ mb: 2 }}
-              error={usernameError}
-            />
-            <Grid container spacing={1} mb={6}>
-              <Grid size={6}>
-                <TextField
-                  label="Password"
-                  type="password"
-                  value={passwordInput}
-                  onChange={(e) => setPasswordInput(e.target.value)}
-                  helperText="minimum 8 characters"
-                  error={passwordError}
-                />
-              </Grid>
-              <Grid size={6}>
-                <TextField
-                  label="Confirm password"
-                  type="password"
-                  value={confirmPasswordInput}
-                  onChange={(e) => setConfirmPasswordInput(e.target.value)}
-                  helperText={confirmPasswordError ? "Password must match" : ""}
-                  error={confirmPasswordError}
-                />
-              </Grid>
-            </Grid>
-            <Box sx={{ display: "flex" }}>
-              <Box flexGrow={1} />
-              <Button
-                color="secondary"
-                sx={{ mr: 1 }}
-                state={isLoading ? "disabled" : "default"}
-                onClick={() => navigate("/")}
-              >
-                Return to login
-              </Button>
-              <Button
-                state={(function (): "disabled" | "default" | "loading" {
-                  if (
-                    usernameInput.length === 0 ||
-                    passwordInput.length === 0 ||
-                    confirmPasswordInput.length === 0 ||
-                    usernameError ||
-                    passwordError ||
-                    confirmPasswordError
-                  ) {
-                    return "disabled";
-                  }
+        <Grid size={6} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <Paper
+            sx={{
+              maxWidth: 480,
+              padding: 4,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              textAlign: "center",
+            }}
+            elevation={0}
+          >
+            <form onSubmit={handleSubmit}>
+              <Typography variant="h5" mb={4}>
+                Register an account with echo
+              </Typography>
+              {showError && (
+                <BannerError sx={{ mb: 2 }}>Failed to register, please try again</BannerError>
+              )}
+              <TextField
+                label="Username"
+                value={usernameInput}
+                onChange={(e) => setUsernameInput(e.target.value)}
+                helperText="minimum 4 characters"
+                sx={{ mb: 1 }}
+                error={usernameError}
+              />
 
-                  if (isLoading) {
-                    return "loading";
-                  }
+              <TextField
+                label="Password"
+                type="password"
+                value={passwordInput}
+                onChange={(e) => setPasswordInput(e.target.value)}
+                helperText="minimum 8 characters"
+                error={passwordError}
+                sx={{ mb: 1 }}
+              />
+              <TextField
+                label="Confirm password"
+                type="password"
+                value={confirmPasswordInput}
+                onChange={(e) => setConfirmPasswordInput(e.target.value)}
+                helperText={confirmPasswordError ? "Password must match" : ""}
+                error={confirmPasswordError}
+              />
+              <Box sx={{ display: "flex", mt: 6 }}>
+                <Box flexGrow={1} />
+                <Button
+                  color="secondary"
+                  sx={{ mr: 1 }}
+                  state={isLoading ? "disabled" : "default"}
+                  onClick={() => navigate("/")}
+                >
+                  Return to login
+                </Button>
+                <Button
+                  state={(function (): "disabled" | "default" | "loading" {
+                    if (
+                      usernameInput.length === 0 ||
+                      passwordInput.length === 0 ||
+                      confirmPasswordInput.length === 0 ||
+                      usernameError ||
+                      passwordError ||
+                      confirmPasswordError
+                    ) {
+                      return "disabled";
+                    }
 
-                  return "default";
-                })()}
-                type="submit"
-                endIcon={<RightArrowIcon />}
-              >
-                Register
-              </Button>
-            </Box>
-          </form>
+                    if (isLoading) {
+                      return "loading";
+                    }
+
+                    return "default";
+                  })()}
+                  type="submit"
+                  endIcon={<RightArrowIcon />}
+                >
+                  Register
+                </Button>
+              </Box>
+            </form>
+          </Paper>
         </Grid>
       </Grid>
       <ConfirmationDialog

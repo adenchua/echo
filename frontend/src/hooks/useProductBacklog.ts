@@ -17,6 +17,7 @@ interface HookResponse {
     projectId: string,
     priority: TicketPriority,
     type: TicketType,
+    epicId?: string,
   ) => Promise<void>;
   onUpdateTicket: (ticketId: string, updatedFields: TicketUpdateFields) => Promise<void>;
   onDeleteTicket: (ticketId: string, projectId: string, epicId: string) => Promise<void>;
@@ -41,10 +42,16 @@ const useProductBacklog = (): HookResponse => {
     projectId: string,
     priority: TicketPriority,
     type: TicketType,
+    epicId?: string,
   ): Promise<void> => {
     try {
       const newTicket = await createTicket(title, projectId, priority, type);
       addTicket(newTicket);
+
+      // if epic id provided, link ticket with epic
+      if (epicId) {
+        await onAddTicketToEpic(newTicket._id, epicId);
+      }
     } catch {
       throw new Error("Failed to create ticket");
     }

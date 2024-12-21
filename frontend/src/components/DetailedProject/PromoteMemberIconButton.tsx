@@ -1,4 +1,4 @@
-import PromoteAdminIcon from "@mui/icons-material/AddModeratorOutlined";
+import PromoteAdminIcon from "@mui/icons-material/AdminPanelSettings";
 import IconButton from "@mui/material/IconButton";
 import { JSX, useState } from "react";
 

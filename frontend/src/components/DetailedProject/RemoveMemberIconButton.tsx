@@ -1,4 +1,4 @@
-import DeleteIcon from "@mui/icons-material/PersonRemoveAlt1Outlined";
+import DeleteIcon from "@mui/icons-material/PersonOff";
 import IconButton from "@mui/material/IconButton";
 import { JSX, useState } from "react";
 
@@ -36,7 +36,7 @@ const RemoveMemberIconButton = (props: RemoveMemberIconButtonProps): JSX.Element
         isOpen={isDialogOpened}
         dialogContent={
           <>
-            <DialogContentText mb={4} color="error">
+            <DialogContentText mb={4}>
               This action will prevent @{member.username} from viewing or editing the project
             </DialogContentText>
           </>

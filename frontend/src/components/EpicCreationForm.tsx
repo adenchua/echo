@@ -8,6 +8,7 @@ import { JSX, useContext, useEffect, useState } from "react";
 import createEpic from "../api/epics/createEpic";
 import { EpicsContext } from "../contexts/EpicsContextProvider";
 import useLoad from "../hooks/useLoad";
+import BannerError from "./common/BannerError";
 import Button from "./common/Button";
 
 interface EpicCreationFormProps {
@@ -50,9 +51,7 @@ const EpicCreationForm = (props: EpicCreationFormProps): JSX.Element => {
       <form onSubmit={handleFormSubmit}>
         <Box mb={3}>
           {currentLoadState === "ERROR" && (
-            <Typography paragraph color="error">
-              Something went wrong. Please try again later.
-            </Typography>
+            <BannerError>Something went wrong. Please try again later</BannerError>
           )}
           <Typography gutterBottom>New Epic</Typography>
           <TextField

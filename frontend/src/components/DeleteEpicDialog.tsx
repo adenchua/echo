@@ -36,7 +36,7 @@ const DeleteEpicDialog = (props: DeleteEpicDialogProps): JSX.Element => {
       onClose={onClose}
       dialogContent={
         <>
-          <DialogContentText mb={4} color="error">
+          <DialogContentText mb={4}>
             Are you sure you want to delete the following epic? This action also will move
             unfinished tickets to &quot;Others&quot;:
           </DialogContentText>
