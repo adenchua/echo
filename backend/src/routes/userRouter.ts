@@ -1,6 +1,5 @@
 import { Router } from "express";
 
-import createUser, { createUserValidationChains } from "../controllers/user/createUser";
 import getUserById, { getUserByIdValidationChains } from "../controllers/user/getUserById";
 import getUsers from "../controllers/user/getUsers";
 import getUsersByIds, { getUsersByIdsValidationChains } from "../controllers/user/getUsersByIds";
@@ -17,6 +16,5 @@ userRouter.post(
   validationErrorMiddleware,
   getUsersByIds,
 );
-userRouter.post("/", createUserValidationChains, validationErrorMiddleware, createUser);
 
 export default userRouter;

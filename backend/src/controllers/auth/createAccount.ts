@@ -3,7 +3,7 @@ import { ValidationChain, body } from "express-validator";
 
 import UserService from "../../services/UserService";
 
-export const createUserValidationChains: ValidationChain[] = [
+export const createAccountValidationChains: ValidationChain[] = [
   body("username").trim().isString().toLowerCase().notEmpty(),
   body("password").trim().isString().notEmpty(),
 ];
@@ -13,7 +13,7 @@ interface RequestBody {
   password: string;
 }
 
-export default async function createUser(request: Request, response: Response): Promise<void> {
+export default async function createAccount(request: Request, response: Response): Promise<void> {
   const { username, password } = <RequestBody>request.body;
   const userService = new UserService();
 
