@@ -3,10 +3,12 @@ import axios from "axios";
 import Ticket from "../../types/Ticket";
 import { SERVER_API_URL } from "../../utils/constants";
 import ApiResponseWrapper from "../../types/ApiResponseWrapper";
+import getAxiosInstance from "../getAxiosInstance";
 
 const fetchTicketsByIds = async (ticketIds: string[]): Promise<Ticket[]> => {
   try {
-    const response = await axios.post<ApiResponseWrapper<Ticket[]>>(
+    const axiosInstance = getAxiosInstance();
+    const response = await axiosInstance.post<ApiResponseWrapper<Ticket[]>>(
       `${SERVER_API_URL}/api/v1/tickets/bulk-retrieve`,
       {
         ticketIds,

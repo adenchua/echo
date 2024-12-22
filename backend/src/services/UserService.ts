@@ -62,7 +62,11 @@ class UserService {
   async fetchUserByUsername(username: string): Promise<IUser | null> {
     const result = await User.findOne({ username: username.toLowerCase() });
 
-    return result;
+    if (!result) {
+      return null;
+    }
+
+    return result.toObject();
   }
 
   /** Retrieves a list of users matching the given username or displayname */

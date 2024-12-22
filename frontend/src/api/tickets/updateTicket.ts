@@ -3,13 +3,15 @@ import axios from "axios";
 import Ticket, { TicketUpdateFields } from "../../types/Ticket";
 import { SERVER_API_URL } from "../../utils/constants";
 import ApiResponseWrapper from "../../types/ApiResponseWrapper";
+import getAxiosInstance from "../getAxiosInstance";
 
 const updateTicket = async (
   ticketId: string,
   fieldsToUpdate: TicketUpdateFields,
 ): Promise<Ticket> => {
   try {
-    const response = await axios.patch<ApiResponseWrapper<Ticket>>(
+    const axiosInstance = getAxiosInstance();
+    const response = await axiosInstance.patch<ApiResponseWrapper<Ticket>>(
       `${SERVER_API_URL}/api/v1/tickets/id/${ticketId}`,
       fieldsToUpdate,
     );

@@ -1,3 +1,4 @@
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import session from "express-session";
@@ -21,7 +22,13 @@ const PORT = process.env.SERVER_PORT_NUMBER || 5084;
 const DATABASE_URL = process.env.DATABASE_URL || "mongodb://0.0.0.0:27017/echo";
 const API_PREPEND = "/api";
 
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    origin: true,
+  }),
+);
+app.use(cookieParser());
 app.use(express.json()); // parses incoming requests with JSON payloads
 app.use(express.urlencoded({ extended: true })); // parses urlencoded bodies with qs library
 app.use(morgan("dev")); // logging middleware
@@ -32,7 +39,7 @@ app.use(
     saveUninitialized: true,
     resave: false,
     cookie: {
-      maxAge: 60000 * 60, // one hour session
+      maxAge: 60000 * 60, // one hour session,
     },
   }),
 );

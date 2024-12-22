@@ -3,10 +3,12 @@ import Subtask from "../../types/Subtask";
 
 import { SERVER_API_URL } from "../../utils/constants";
 import ApiResponseWrapper from "../../types/ApiResponseWrapper";
+import getAxiosInstance from "../getAxiosInstance";
 
 const addTicketSubtask = async (ticketId: string, title: string): Promise<Subtask> => {
   try {
-    const response = await axios.post<ApiResponseWrapper<Subtask>>(
+    const axiosInstance = getAxiosInstance();
+    const response = await axiosInstance.post<ApiResponseWrapper<Subtask>>(
       `${SERVER_API_URL}/api/v1/subtasks`,
       {
         ticketId,
