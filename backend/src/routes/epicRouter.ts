@@ -1,13 +1,11 @@
 import { Router } from "express";
 
-import {
-  addTicketToEpic,
-  createEpic,
-  deleteEpic,
-  getEpics,
-  removeTicketFromEpic,
-  updateEpic,
-} from "../controllers/epic";
+import addTicketToEpic from "../controllers/epic/addTicketToEpic";
+import createEpic from "../controllers/epic/createEpic";
+import deleteEpic from "../controllers/epic/deleteEpic";
+import getEpics from "../controllers/epic/getEpics";
+import removeTicketFromEpic from "../controllers/epic/removeTicketFromEpic";
+import updateEpic from "../controllers/epic/updateEpic";
 import {
   addTicketToEpicValidationChain,
   createEpicValidationChain,

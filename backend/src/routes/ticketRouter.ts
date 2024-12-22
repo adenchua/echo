@@ -1,12 +1,10 @@
 import { Router } from "express";
 
-import {
-  createTicket,
-  deleteTicket,
-  getTicket,
-  getTickets,
-  updateTicket,
-} from "../controllers/ticket";
+import createTicket from "../controllers/ticket/createTicket";
+import deleteTicket from "../controllers/ticket/deleteTicket";
+import getTicket from "../controllers/ticket/getTicket";
+import getTickets from "../controllers/ticket/getTickets";
+import updateTicket from "../controllers/ticket/updateTicket";
 import {
   createTicketValidationChain,
   deleteTicketValidationChain,
@@ -16,18 +14,20 @@ import {
 } from "../middlewares/ticketValidationMiddleware";
 import validationErrorMiddleware from "../middlewares/validationErrorHandlingMiddleware";
 
-const router = Router();
+const ticketRouter = Router();
 
-router.route("/").post(createTicketValidationChain, validationErrorMiddleware, createTicket);
-router
+ticketRouter.route("/").post(createTicketValidationChain, validationErrorMiddleware, createTicket);
+ticketRouter
   .route("/id/:ticketId")
   .patch(updateTicketValidationChain, validationErrorMiddleware, updateTicket);
-router
+ticketRouter
   .route("/id/:ticketId")
   .post(deleteTicketValidationChain, validationErrorMiddleware, deleteTicket);
-router.route("/id/:ticketId").get(getTicketValidationChain, validationErrorMiddleware, getTicket);
-router
+ticketRouter
+  .route("/id/:ticketId")
+  .get(getTicketValidationChain, validationErrorMiddleware, getTicket);
+ticketRouter
   .route("/bulk-retrieve")
   .post(getTicketsValidationChain, validationErrorMiddleware, getTickets);
 
-export default router;
+export default ticketRouter;

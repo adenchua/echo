@@ -9,11 +9,11 @@ import passport from "passport";
 import authenticationMiddleware from "./middlewares/authenticationMiddleware";
 import errorHandler from "./middlewares/errorHandler";
 import authRouter from "./routes/authRouter";
-import epicRouter from "./routes/epic";
-import projectRouter from "./routes/project";
-import sprintRouter from "./routes/sprint";
-import subtaskRouter from "./routes/subtask";
-import ticketRouter from "./routes/ticket";
+import epicRouter from "./routes/epicRouter";
+import projectRouter from "./routes/projectRouter";
+import sprintRouter from "./routes/sprintRouter";
+import subtaskRouter from "./routes/subtaskRouter";
+import ticketRouter from "./routes/ticketRouter";
 import userRouter from "./routes/userRouter";
 
 const app = express();

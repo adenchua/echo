@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { ValidationChain, body } from "express-validator";
 
 import UserService from "../../services/UserService";
+import { wrapResponse } from "../../utils/responseUtils";
 
 export const createAccountValidationChains: ValidationChain[] = [
   body("username").trim().isString().toLowerCase().notEmpty(),
@@ -19,5 +20,5 @@ export default async function createAccount(request: Request, response: Response
 
   const user = await userService.createUser(username, password);
 
-  response.send({ data: user });
+  response.send(wrapResponse(user));
 }
