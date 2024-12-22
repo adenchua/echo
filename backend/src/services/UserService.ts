@@ -1,7 +1,7 @@
-import { compare, hash } from "bcrypt";
 import { HydratedDocument } from "mongoose";
 
 import User, { IUser } from "../models/user";
+import { hashPassword } from "../utils/credentialsUtils";
 
 const SALT_ROUNDS = 10;
 
@@ -15,21 +15,13 @@ class UserService {
     return rest;
   }
 
-  /** Match a plain text password against a hashed password */
-  private async comparePassword(
-    plainTextPassword: string,
-    hashedPassword: string,
-  ): Promise<boolean> {
-    return await compare(plainTextPassword, hashedPassword);
-  }
-
   /** Creates a new user in the database */
   async createUser(
     username: string,
     password: string,
     displayName?: string,
   ): Promise<Partial<IUser>> {
-    const hashedPassword = await hash(password, SALT_ROUNDS);
+    const hashedPassword = await hashPassword(password, SALT_ROUNDS);
     const newUser = new User({
       username,
       password: hashedPassword,
@@ -66,6 +58,13 @@ class UserService {
     return result;
   }
 
+  /** Retrieves a user by username */
+  async fetchUserByUsername(username: string): Promise<IUser | null> {
+    const result = await User.findOne({ username: username.toLowerCase() });
+
+    return result;
+  }
+
   /** Retrieves a list of users matching the given username or displayname */
   async fetchUsers(queryString: string): Promise<Partial<IUser>[]> {
     const regexp = new RegExp(queryString, "i");
@@ -76,23 +75,6 @@ class UserService {
     const result = matchedUsers.map((user) => this.sanitizePassword(user));
 
     return result;
-  }
-
-  /** Checks if the user with the credentials exists in the database */
-  async login(username: string, password: string): Promise<string> {
-    const user = await User.findOne({ username });
-
-    if (user == null) {
-      throw new Error("Invalid username or password");
-    }
-
-    const passwordMatched = await this.comparePassword(password, user.password);
-
-    if (!passwordMatched) {
-      throw new Error("Invalid username or password");
-    }
-
-    return user._id as unknown as string;
   }
 }
 
