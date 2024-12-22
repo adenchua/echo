@@ -1,6 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
 
+import checkSession from "../controllers/auth/checkSession";
 import createAccount, { createAccountValidationChains } from "../controllers/auth/createAccount";
 import login from "../controllers/auth/login";
 import logout from "../controllers/auth/logout";
@@ -19,5 +20,6 @@ authRouter.post(
   validationErrorMiddleware,
   createAccount,
 );
+authRouter.get("/me", checkSession);
 
 export default authRouter;

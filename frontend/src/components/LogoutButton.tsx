@@ -6,15 +6,21 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import ActionDialog from "./common/ActionDialog";
 import Button from "./common/Button";
+import logout from "../api/authentication/logout";
 
 const LogoutButton = (): JSX.Element => {
   const [isDialogOpened, setIsDialogOpened] = useState<boolean>(false);
   const navigate = useNavigate();
   const { removeKeyValue } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
 
-  const handleLogout = (): void => {
-    removeKeyValue();
-    navigate("/"); //returns to login screen
+  const handleLogout = async (): Promise<void> => {
+    try {
+      await logout();
+      removeKeyValue();
+      navigate("/"); //returns to login screen
+    } catch {
+      // do nothing
+    }
   };
 
   return (
