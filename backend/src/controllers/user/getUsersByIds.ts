@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { ValidationChain, body } from "express-validator";
 
 import UserService from "../../services/UserService";
+import { wrapResponse } from "../../utils/responseUtils";
 
 export const getUsersByIdsValidationChains: ValidationChain[] = [
   body("userIds").notEmpty(),
@@ -18,5 +19,5 @@ export default async function getUsersByIds(request: Request, response: Response
 
   const users = await userService.fetchUsersByIds(userIds);
 
-  response.send({ data: users });
+  response.send(wrapResponse(users));
 }

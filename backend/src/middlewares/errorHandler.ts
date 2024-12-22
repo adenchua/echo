@@ -10,7 +10,7 @@ const errorHandler = (
 ) => {
   const errorStatusCode = error.statusCode || 500;
   const errorMessage = error.message || "Something went wrong";
-  const errorCode = error.errorCode || "INTERNAL_SERVER_ERROR";
+  const errorCode = error.statusCode === 500 ? "INTERNAL_SERVER_ERROR" : error.errorCode;
   const errorResponse = {
     timestamp: new Date().toISOString(),
     statusCode: errorStatusCode,

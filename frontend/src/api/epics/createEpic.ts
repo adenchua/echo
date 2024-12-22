@@ -3,13 +3,18 @@ import axios from "axios";
 import Epic from "../../types/Epic";
 import { SERVER_API_URL } from "../../utils/constants";
 import ApiResponseWrapper from "../../types/ApiResponseWrapper";
+import getAxiosInstance from "../getAxiosInstance";
 
 const createEpic = async (title: string, projectId: string): Promise<Epic> => {
   try {
-    const response = await axios.post<ApiResponseWrapper<Epic>>(`${SERVER_API_URL}/api/v1/epics`, {
-      title,
-      projectId,
-    });
+    const axiosInstance = getAxiosInstance();
+    const response = await axiosInstance.post<ApiResponseWrapper<Epic>>(
+      `${SERVER_API_URL}/api/v1/epics`,
+      {
+        title,
+        projectId,
+      },
+    );
 
     return response.data.data;
   } catch (error) {

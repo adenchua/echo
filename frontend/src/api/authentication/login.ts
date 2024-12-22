@@ -2,11 +2,13 @@ import axios from "axios";
 
 import ApiResponseWrapper from "../../types/ApiResponseWrapper";
 import { SERVER_API_URL } from "../../utils/constants";
+import getAxiosInstance from "../getAxiosInstance";
 
 const login = async (username: string, password: string): Promise<string> => {
   try {
-    const response = await axios.post<ApiResponseWrapper<string>>(
-      `${SERVER_API_URL}/api/v1/users/login`,
+    const axiosInstance = getAxiosInstance();
+    const response = await axiosInstance.post<ApiResponseWrapper<string>>(
+      `${SERVER_API_URL}/api/auth/login`,
       {
         username,
         password,
