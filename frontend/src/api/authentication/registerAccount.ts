@@ -4,12 +4,15 @@ import ApiResponseWrapper from "../../types/ApiResponseWrapper";
 import User from "../../types/User";
 import { SERVER_API_URL } from "../../utils/constants";
 
-const registerUser = async (username: string, password: string): Promise<User> => {
+const registerAccount = async (username: string, password: string): Promise<User> => {
   try {
-    const response = await axios.post<ApiResponseWrapper<User>>(`${SERVER_API_URL}/api/v1/users`, {
-      username,
-      password,
-    });
+    const response = await axios.post<ApiResponseWrapper<User>>(
+      `${SERVER_API_URL}/api/auth/create-account`,
+      {
+        username,
+        password,
+      },
+    );
     return response.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -20,4 +23,4 @@ const registerUser = async (username: string, password: string): Promise<User> =
   }
 };
 
-export default registerUser;
+export default registerAccount;

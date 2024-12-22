@@ -6,7 +6,7 @@ import { JSX, useMemo, useState, useTransition } from "react";
 import { useNavigate } from "react-router";
 import BackgroundImage from "../assets/wait_in_line.svg";
 
-import registerUser from "../api/users/registerUser";
+import registerAccount from "../api/authentication/registerAccount";
 import BannerError from "../components/common/BannerError";
 import Button from "../components/common/Button";
 import ConfirmationDialog from "../components/common/ConfirmationDialog";
@@ -43,7 +43,7 @@ const UserSignUpPage = (): JSX.Element => {
     startTransition(async () => {
       try {
         setShowError(false);
-        const newUser = await registerUser(usernameInput, passwordInput);
+        const newUser = await registerAccount(usernameInput, passwordInput);
         setUser(newUser);
       } catch {
         setShowError(true);

@@ -6,7 +6,7 @@ import { SERVER_API_URL } from "../../utils/constants";
 const login = async (username: string, password: string): Promise<string> => {
   try {
     const response = await axios.post<ApiResponseWrapper<string>>(
-      `${SERVER_API_URL}/api/v1/users/login`,
+      `${SERVER_API_URL}/api/auth/login`,
       {
         username,
         password,
