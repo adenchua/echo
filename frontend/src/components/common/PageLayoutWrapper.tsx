@@ -27,7 +27,6 @@ const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
     return (
       <IconButton
         color="inherit"
-        aria-label="open drawer"
         edge="start"
         onClick={handleDrawerToggle}
         sx={{ mr: 2, display: { lg: "none" } }}

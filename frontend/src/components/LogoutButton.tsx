@@ -1,12 +1,12 @@
-import LogoutIcon from "@mui/icons-material/LogoutOutlined";
 import { JSX, useState } from "react";
 import { useNavigate } from "react-router";
 
+import logout from "../api/authentication/logout";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import ActionDialog from "./common/ActionDialog";
 import Button from "./common/Button";
-import logout from "../api/authentication/logout";
+import LogoutIcon from "./icons/LogoutIcon";
 
 const LogoutButton = (): JSX.Element => {
   const [isDialogOpened, setIsDialogOpened] = useState<boolean>(false);
