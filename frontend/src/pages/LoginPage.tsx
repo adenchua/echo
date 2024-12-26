@@ -1,15 +1,17 @@
 import Grid from "@mui/material/Grid2";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { JSX, useState } from "react";
-import { useNavigate } from "react-router";
+import { JSX, useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router";
 import LoginPageImage from "../assets/login_page_image.svg";
 
 import login from "../api/authentication/login";
 import BannerError from "../components/common/BannerError";
 import Button from "../components/common/Button";
+import ConfirmationDialog from "../components/common/ConfirmationDialog";
 import Link from "../components/common/Link";
 import TextField from "../components/common/TextField";
+import LogoutIcon from "../components/icons/LogoutIcon";
 import RightArrowIcon from "../components/icons/RightArrowIcon";
 import useLoad from "../hooks/useLoad";
 import { useLocalStorage } from "../hooks/useLocalStorage";
@@ -19,10 +21,20 @@ import { loginErrorCodeToMessageHelper } from "../utils/loginErrorCodeToMessageH
 const LoginPage = (): JSX.Element => {
   const [usernameInput, setUsernameInput] = useState<string>("");
   const [passwordInput, setPasswordInput] = useState<string>("");
+  const [showSessionLogoutDialog, setShowSessionLogoutDialog] = useState<boolean>(false);
   const { currentLoadState, handleSetLoadingState } = useLoad();
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [searchParams] = useSearchParams();
   const { setValueInStorage } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const hasRedirectFlag = searchParams.get("redirect") === "1";
+
+    if (hasRedirectFlag) {
+      setShowSessionLogoutDialog(true);
+    }
+  }, []);
 
   const handleLogin = async (e: React.SyntheticEvent): Promise<void> => {
     e.preventDefault();
@@ -88,23 +100,32 @@ const LoginPage = (): JSX.Element => {
   };
 
   return (
-    <Grid container sx={{ height: "100vh", p: 2 }} spacing={2}>
-      <Grid
-        size={6}
-        sx={{
-          backgroundColor: "#84b7b2",
-          borderRadius: 2,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <img src={LoginPageImage} height="400px" alt="login" />
+    <>
+      <ConfirmationDialog
+        isOpen={showSessionLogoutDialog}
+        onClose={() => setShowSessionLogoutDialog(false)}
+        title="Session timed out"
+        dialogContent="Your session has expired, please login again"
+        titleIcon={<LogoutIcon />}
+      />
+      <Grid container sx={{ height: "100vh", p: 2 }} spacing={2}>
+        <Grid
+          size={6}
+          sx={{
+            backgroundColor: "#84b7b2",
+            borderRadius: 2,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <img src={LoginPageImage} height="400px" alt="login" />
+        </Grid>
+        <Grid size={6} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+          {renderLoginForm()}
+        </Grid>
       </Grid>
-      <Grid size={6} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-        {renderLoginForm()}
-      </Grid>
-    </Grid>
+    </>
   );
 };
 

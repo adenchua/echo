@@ -25,8 +25,9 @@ const ProtectedRoute = (props: ProtectedRouteProps): JSX.Element => {
   }, [location]);
 
   // session expired, redirect to login page
+  // redirect flag to show timed out dialog
   if (!isAuthenticated) {
-    return <Navigate to="/" />;
+    return <Navigate to="/?redirect=1" />;
   }
 
   return children;
