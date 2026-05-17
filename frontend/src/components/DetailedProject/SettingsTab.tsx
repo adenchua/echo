@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { JSX, useContext, useState } from "react";
 import { useNavigate } from "react-router";
@@ -62,16 +62,16 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
   };
 
   return (
-    <Box p={3}>
+    <Box sx={{ p: 3 }}>
       <Typography variant="h5">Project Settings</Typography>
       <Divider sx={{ mb: 3 }} />
 
-      <Grid container mb={4} spacing={3}>
+      <Grid container spacing={3} sx={{ mb: 4 }}>
         <Grid size={{ xs: 12, md: 4 }}>
           <Typography variant="h6" gutterBottom>
             Details
           </Typography>
-          <Typography color="textSecondary">
+          <Typography sx={{ color: "text.secondary" }}>
             Customize project title, description and logo.
           </Typography>
         </Grid>
@@ -109,12 +109,12 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
       <Divider sx={{ mb: 3 }} />
 
       {isLoggedInUserAdmin && (
-        <Grid container mb={4} alignItems="flex-start" spacing={3}>
+        <Grid container spacing={3} sx={{ mb: 4, alignItems: "flex-start" }}>
           <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="h6" gutterBottom color="error">
               Delete Project
             </Typography>
-            <Typography color="textSecondary">
+            <Typography sx={{ color: "text.secondary" }}>
               Once you delete this project, all tickets and sprint information will be lost forever.
             </Typography>
           </Grid>
@@ -129,7 +129,7 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
 
             <Grid size={12}>
               {deletionInput === title && (
-                <Typography color="error" mb={1}>
+                <Typography color="error" sx={{ mb: 1 }}>
                   Warning! There is no turning back now...
                 </Typography>
               )}

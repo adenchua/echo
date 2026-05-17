@@ -104,7 +104,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
               />
             }
           />
-          <Box mb={2} width="100%">
+          <Box sx={{ mb: 2, width: "100%" }}>
             <Select
               label="Select assignee"
               onChange={(e) => handleUpdateTicketAssignee(e.target.value as string)}
@@ -160,7 +160,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
         title="Assignee"
         actionButton={<EditButton onStartEdit={handleToggleEditMode} />}
       />
-      <Box mb={2}>{renderAssigneeChip()}</Box>
+      <Box sx={{ mb: 2 }}>{renderAssigneeChip()}</Box>
       <Divider flexItem />
     </ListItem>
   );

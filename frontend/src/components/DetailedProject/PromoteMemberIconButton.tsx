@@ -27,7 +27,7 @@ const PromoteMemberIconButton = (props: PromoteMemberIconButtonProps): JSX.Eleme
         isOpen={isDialogOpened}
         dialogContent={
           <>
-            <DialogContentText mb={4}>
+            <DialogContentText sx={{ mb: 4 }}>
               This action will allow @{member.username} to manage members and project settings
             </DialogContentText>
           </>

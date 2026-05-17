@@ -93,7 +93,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
           Product Backlog <span>&#8729;</span>{" "}
           {`${tickets.length} ${pluralize("ticket", "tickets", tickets.length)}`}
         </TypographySprintInformation>
-        <Box flexGrow={1} />
+        <Box sx={{ flexGrow: 1 }} />
         <AddTicketButtonWithDialog projectId={projectId} />
         <TicketFilter onSelectHandler={handleFilterSelection} />
         <TicketSortSelectDropdown
@@ -113,7 +113,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
     <>
       <Box sx={{ mr: selectedTicketId ? `${TICKET_DRAWER_WIDTH}px` : "" }}>
         {renderTicketNavbar()}
-        <Box p={3} mt={8}>
+        <Box sx={{ p: 3, mt: 8 }}>
           {displayedTicketsByEpics &&
             displayedTicketsByEpics.map((displayedTicketsByEpic) => {
               const { epicId, tickets: displayedTickets } = displayedTicketsByEpic;
@@ -123,7 +123,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
               }
 
               return (
-                <Box mb={5} key={epicId}>
+                <Box sx={{ mb: 5 }} key={epicId}>
                   <TicketSection
                     tickets={displayedTickets}
                     searchInput={searchInput}

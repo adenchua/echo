@@ -75,7 +75,7 @@ const CreateProjectButtonWithDialog = (): JSX.Element => {
               value={projectTitle}
               onChange={(e) => setProjectTitle(e.target.value)}
             />
-            <Box mb={4}>
+            <Box sx={{ mb: 4 }}>
               <Select
                 label="Project type"
                 value={projectType}

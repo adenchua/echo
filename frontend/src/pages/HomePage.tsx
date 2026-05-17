@@ -1,6 +1,6 @@
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import teal from "@mui/material/colors/teal";
+import { teal } from "@mui/material/colors";
 import { JSX } from "react";
 import { Navigate, useNavigate } from "react-router";
 import BackgroundImage from "../assets/landing_collab.svg";
@@ -23,7 +23,7 @@ const HomePage = (): JSX.Element => {
 
   return (
     <PageLayoutWrapper>
-      <Grid container justifyContent="space-around" spacing={4} mb={12} mt={2}>
+      <Grid container spacing={4} sx={{ justifyContent: "space-around", mb: 12, mt: 2 }}>
         <Grid>
           <Slide direction="right">
             <Typography variant="h4" gutterBottom>
@@ -31,7 +31,7 @@ const HomePage = (): JSX.Element => {
             </Typography>
           </Slide>
           <Slide direction="right">
-            <Typography align="justify" mb={4}>
+            <Typography align="justify" sx={{ mb: 4 }}>
               Designed for software development teams working on multiple products.{" "}
               <span style={{ color: teal[300] }}>echo</span> facilitates better planning,
               communication and workflow among teams. Built with passion and coffee.
@@ -47,7 +47,7 @@ const HomePage = (): JSX.Element => {
           </Slide>
         </Grid>
       </Grid>
-      <Grid container spacing={1} alignItems="stretch">
+      <Grid container spacing={1} sx={{ alignItems: "stretch" }}>
         <Grid>
           <Grow>
             <div style={{ height: "100%" }}>

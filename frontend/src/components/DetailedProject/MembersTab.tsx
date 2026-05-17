@@ -84,11 +84,11 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
   );
 
   return (
-    <Box p={3}>
-      <Typography variant="h5" paragraph>
+    <Box sx={{ p: 3 }}>
+      <Typography variant="h5" component="p" sx={{ mb: 2 }}>
         Team Members
       </Typography>
-      <Box display="flex" alignItems="center" gap={2} mb={2}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
         <SearchBar value={searchInput} onChange={(event) => setSearchInput(event.target.value)} />
         <AddMemberToProjectButtonWithDialog projectId={projectId} />
       </Box>
@@ -120,10 +120,9 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
                         avatar={<UserAvatar username={username} displayName={displayName} />}
                         title={
                           <>
-                            <Typography display="inline">{`${displayName} `}</Typography>{" "}
+                            <Typography sx={{ display: "inline" }}>{`${displayName} `}</Typography>{" "}
                             <Typography
-                              color="grey.500"
-                              display="inline"
+                              sx={{ color: "grey.500", display: "inline" }}
                             >{`@${username}`}</Typography>
                           </>
                         }

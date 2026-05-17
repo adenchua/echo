@@ -1,5 +1,5 @@
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
@@ -85,8 +85,8 @@ const AddMemberToProjectButtonWithDialog = (
               </BannerError>
             )}
             <form onSubmit={handleSearch}>
-              <Grid container justifyContent="space-between" spacing={1} mb={2}>
-                <Grid flexGrow={1}>
+              <Grid container spacing={1} sx={{ justifyContent: "space-between", mb: 2 }}>
+                <Grid sx={{ flexGrow: 1 }}>
                   <SearchBar
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}

@@ -93,7 +93,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
     const dayDifference = differenceInBusinessDays(new Date(endDate), new Date());
 
     return (
-      <Box display="flex" alignItems="baseline" gap={1}>
+      <Box sx={{ display: "flex", alignItems: "baseline", gap: 1 }}>
         <TypographySprintInformation>Sprint {number}</TypographySprintInformation>
         <TypographySprintInformation>
           <span>&#8729;</span> {formattedStartDate} to {formattedEndDate}
@@ -133,7 +133,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
     <div>
       <TicketNavbarWrapper isTicketSelected={!!selectedTicketId}>
         {renderSprintDetails()}
-        <Box flexGrow={1} />
+        <Box sx={{ flexGrow: 1 }} />
         {(!activeSprint || activeSprint.hasEnded) && (
           <Button
             startIcon={<StartSprintIcon />}
@@ -169,7 +169,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   return (
     <Box sx={{ mr: selectedTicketId ? `${TICKET_DRAWER_WIDTH}px` : "" }}>
       {renderTicketNavbar()}
-      <Box p={3} mt={8}>
+      <Box sx={{ p: 3, mt: 8 }}>
         {sprintTickets && sprintTickets.length === 0 && (
           <SecondaryText>There are no tickets in the backlog.</SecondaryText>
         )}
@@ -182,7 +182,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
             }
 
             return (
-              <Box mb={5} key={epicId}>
+              <Box sx={{ mb: 5 }} key={epicId}>
                 <TicketSection
                   tickets={displayedTickets}
                   searchInput={searchInput}

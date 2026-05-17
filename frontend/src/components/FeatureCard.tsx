@@ -24,7 +24,7 @@ const FeatureCard = (props: FeatureCardProps): JSX.Element => {
       }}
     >
       <DoneIcon fontSize="large" sx={{ mb: 2 }} color="primary" />
-      <Typography variant="h6" color="primary" align="center" mb={1}>
+      <Typography variant="h6" color="primary" align="center" sx={{ mb: 1 }}>
         {title}
       </Typography>
       <Typography align="justify">{secondaryTitle}</Typography>

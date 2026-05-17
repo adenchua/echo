@@ -49,7 +49,10 @@ const DeleteTicketDialog = (props: DeleteTicketDialogProps): JSX.Element => {
         <>
           <DialogContentText>{title}</DialogContentText>
           {currentLoadState === "ERROR" && (
-            <DialogErrorText text="Failed to delete ticket. Please try again later." mt={4} />
+            <DialogErrorText
+              text="Failed to delete ticket. Please try again later."
+              sx={{ mt: 4 }}
+            />
           )}
         </>
       }

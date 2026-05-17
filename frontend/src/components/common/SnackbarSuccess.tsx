@@ -16,9 +16,11 @@ const SnackbarSuccess = (props: SnackbarSuccessProps): JSX.Element => {
       open={isOpen}
       message={message}
       autoHideDuration={4000}
-      ContentProps={{
-        sx: {
-          backgroundColor: "success.main",
+      slotProps={{
+        content: {
+          sx: {
+            backgroundColor: "success.main",
+          },
         },
       }}
     />

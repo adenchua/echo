@@ -1,5 +1,5 @@
-import NotInSprintIcon from "@mui/icons-material/PauseCircleOutline";
-import PersonIcon from "@mui/icons-material/PersonOutline";
+import NotInSprintIcon from "@mui/icons-material/PauseCircleOutlined";
+import PersonIcon from "@mui/icons-material/PersonOutlined";
 import CloseIcon from "@mui/icons-material/RestartAltOutlined";
 import RuleIcon from "@mui/icons-material/RuleOutlined";
 import Avatar from "@mui/material/Avatar";

@@ -111,7 +111,7 @@ const Ticket = (props: TicketProps): JSX.Element => {
           {`#${ticketNumber}`}
         </Typography>
         <Typography noWrap>{title}</Typography>
-        <Box flexGrow={1} />
+        <Box sx={{ flexGrow: 1 }} />
         {status !== "completed" && (
           <Tooltip title="Due date">
             <Chip

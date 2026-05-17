@@ -55,7 +55,7 @@ const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
               />
             }
           />
-          <Box mb={2} width="100%">
+          <Box sx={{ mb: 2, width: "100%" }}>
             <Select
               label="Status"
               value={status}
@@ -97,7 +97,7 @@ const StatusEditItem = (props: StatusEditItemProps): JSX.Element => {
         title="Status"
         actionButton={<EditButton onStartEdit={handleToggleEditMode} />}
       />
-      <Box mb={2}>
+      <Box sx={{ mb: 2 }}>
         <StatusChipButton status={status} size="medium" />
       </Box>
       <Divider flexItem />

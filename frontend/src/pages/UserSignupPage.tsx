@@ -1,6 +1,6 @@
 import { Celebration } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { JSX, useMemo, useState, useTransition } from "react";
 import { useNavigate } from "react-router";
@@ -86,7 +86,7 @@ const UserSignUpPage = (): JSX.Element => {
             elevation={0}
           >
             <form onSubmit={handleSubmit}>
-              <Typography variant="h5" mb={4}>
+              <Typography variant="h5" sx={{ mb: 4 }}>
                 Register an account with echo
               </Typography>
               {showError && (
@@ -119,7 +119,7 @@ const UserSignUpPage = (): JSX.Element => {
                 error={confirmPasswordError}
               />
               <Box sx={{ display: "flex", mt: 6 }}>
-                <Box flexGrow={1} />
+                <Box sx={{ flexGrow: 1 }} />
                 <Button
                   color="secondary"
                   sx={{ mr: 1 }}

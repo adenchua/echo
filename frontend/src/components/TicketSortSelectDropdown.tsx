@@ -46,8 +46,10 @@ const TicketSortSelectDropdown = (props: TicketSortSelectDropdownProps): JSX.Ele
         },
       }}
       MenuProps={{
-        MenuListProps: {
-          dense: true,
+        slotProps: {
+          list: {
+            dense: true,
+          },
         },
       }}
       renderValue={(value) => `Sort: ${sortDisplayMapping[value]}`}

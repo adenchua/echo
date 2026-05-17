@@ -20,10 +20,10 @@ const TicketSubtaskDeletable = (props: TicketSubtaskDeletableProps): JSX.Element
     <>
       <Tooltip title="Delete subtask">
         <Box
-          display="flex"
-          alignItems="center"
-          gap={1}
           sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
             "&:hover": {
               cursor: "pointer",
               color: "error.dark",

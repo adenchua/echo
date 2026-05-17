@@ -1,4 +1,4 @@
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
 import { JSX, useContext, useEffect, useState } from "react";
 
@@ -81,7 +81,7 @@ const AddTicketButtonWithDialog = (props: AddTicketButtonWithDialogProps): JSX.E
               value={titleInput}
               onChange={(e) => setTitleInput(e.target.value)}
             />
-            <Grid container spacing={2} mt={1} mb={3}>
+            <Grid container spacing={2} sx={{ mt: 1, mb: 3 }}>
               <Grid size={6}>
                 <TicketTypeDropdown
                   label="Ticket type"

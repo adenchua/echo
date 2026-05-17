@@ -52,7 +52,7 @@ const StoryPointsEditItem = (props: StoryPointsEditItemProps): JSX.Element => {
               />
             }
           />
-          <Box mb={2} display="flex" gap={1}>
+          <Box sx={{ mb: 2, display: "flex", gap: 1 }}>
             {[0, 1, 2, 3, 5, 8, 13, 20].map((point) => (
               <Chip
                 key={point}
@@ -85,7 +85,7 @@ const StoryPointsEditItem = (props: StoryPointsEditItemProps): JSX.Element => {
         title="Estimated story points"
         actionButton={<EditButton onStartEdit={handleToggleEditMode} />}
       />
-      <Box mb={2}>
+      <Box sx={{ mb: 2 }}>
         <Chip label={storyPoints} />
       </Box>
       <Divider flexItem />

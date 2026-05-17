@@ -72,7 +72,7 @@ const EpicSummaryAccordionTicket = (props: EpicSummaryAccordionTicketProps): JSX
         {`#${ticketNumber}`}
       </Typography>
       <Typography noWrap>{title}</Typography>
-      <Box flexGrow={1} />
+      <Box sx={{ flexGrow: 1 }} />
       {assignee && (
         <Avatar
           style={{

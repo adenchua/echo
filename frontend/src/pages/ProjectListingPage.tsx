@@ -28,7 +28,7 @@ const ProjectListingPage = (): JSX.Element => {
 
   const renderTitleHeaders = (): JSX.Element => {
     return (
-      <Box mb={1} p={1} display="flex" alignItems="center" gap={8}>
+      <Box sx={{ mb: 1, p: 1, display: "flex", alignItems: "center", gap: 8 }}>
         <Typography sx={{ width: "242px" }}>Project</Typography>
         <Typography sx={{ width: "64px" }} noWrap>
           Sprint
@@ -45,10 +45,10 @@ const ProjectListingPage = (): JSX.Element => {
 
   return (
     <PageLayoutWrapper>
-      <Typography variant="h4" mb={2}>
+      <Typography variant="h4" sx={{ mb: 2 }}>
         Projects
       </Typography>
-      <Box display="flex" gap={2}>
+      <Box sx={{ display: "flex", gap: 2 }}>
         <CreateProjectButtonWithDialog />
         <SearchBar
           value={searchInput}

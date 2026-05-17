@@ -2,18 +2,17 @@ import { CircularProgress } from "@mui/material";
 import MuiButton, { ButtonProps as MuiButtonProps } from "@mui/material/Button";
 import { JSX } from "react";
 
-interface ButtonTextProps
-  extends Omit<
-    MuiButtonProps,
-    | "color"
-    | "disabled"
-    | "variant"
-    | "disableElevation"
-    | "disableFocusRipple"
-    | "disableRipple"
-    | "disableTouchRipple"
-    | "size"
-  > {
+interface ButtonTextProps extends Omit<
+  MuiButtonProps,
+  | "color"
+  | "disabled"
+  | "variant"
+  | "disableElevation"
+  | "disableFocusRipple"
+  | "disableRipple"
+  | "disableTouchRipple"
+  | "size"
+> {
   color?: "primary" | "secondary" | "danger";
   state?: "default" | "loading" | "disabled";
 }

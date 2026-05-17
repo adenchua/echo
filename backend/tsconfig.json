@@ -8,8 +8,9 @@
     "strict": true,
     "skipLibCheck": true,
     "outDir": "dist",
-    "moduleResolution": "node",
-    "module": "CommonJS"
+    "moduleResolution": "node10",
+    "module": "CommonJS",
+    "ignoreDeprecations": "6.0"
   },
   "include": ["src/**/*.ts"]
 }

@@ -82,7 +82,7 @@ const PriorityEditItem = (props: PriorityEditItemProps): JSX.Element => {
       <Chip
         label={`${capitalizeFirstLetter(priority)} Priority`}
         icon={
-          <Box display="flex" alignItems="center">
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             <PriorityIcon priority={priority} />
           </Box>
         }

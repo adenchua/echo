@@ -1,5 +1,5 @@
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
-import teal from "@mui/material/colors/teal";
+import { teal } from "@mui/material/colors";
 
 let theme = createTheme({
   palette: {

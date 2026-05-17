@@ -87,7 +87,7 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
       >
         <Typography noWrap>{title}</Typography>
         <Chip label={`${ticketIds.length} tickets`} size="small" />
-        <Box flexGrow={1} />
+        <Box sx={{ flexGrow: 1 }} />
         <Box sx={{ width: 180, flexShrink: 0 }}>
           <Typography variant="caption">Progress:</Typography>
           <ProgressBarWithPercentage value={epicProgressionPercentage} />
@@ -110,14 +110,16 @@ const EpicSummaryAccordion = (props: EpicSummaryAccordionProps): JSX.Element => 
         }}
       >
         {currentLoadState !== "ERROR" && tickets && tickets.length === 0 && (
-          <Box py={1} px={4}>
-            <Typography color="textSecondary">There are no tickets tagged to this epic.</Typography>
+          <Box sx={{ py: 1, px: 4 }}>
+            <Typography sx={{ color: "text.secondary" }}>
+              There are no tickets tagged to this epic.
+            </Typography>
           </Box>
         )}
         {tickets &&
           tickets.map((ticket) => <EpicSummaryAccordionTicket key={ticket._id} ticket={ticket} />)}
         {currentLoadState === "ERROR" && (
-          <Box py={1} px={4}>
+          <Box sx={{ py: 1, px: 4 }}>
             <Typography color="error">
               Unable to retrieve tickets. Please try again later
             </Typography>

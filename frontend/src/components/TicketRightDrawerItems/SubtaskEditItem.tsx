@@ -132,7 +132,7 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
               variant="filled"
               autoFocus
               fullWidth
-              inputProps={{ style: { padding: 7 } }}
+              slotProps={{ htmlInput: { style: { padding: 7 } } }}
               placeholder="Type and press enter to add subtask"
               value={titleInput}
               onChange={(e) => setTitleInput(e.target.value)}
@@ -140,9 +140,9 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
             <input type="submit" hidden />
           </form>
           {subtasks.length > 0 && (
-            <Box maxWidth="100%" mt={2}>
+            <Box sx={{ maxWidth: "100%", mt: 2 }}>
               {subtasks.map((subtask) => (
-                <Box mb={1} key={subtask._id}>
+                <Box sx={{ mb: 1 }} key={subtask._id}>
                   <TicketSubtaskDeletable subtask={subtask} onDeleteSubtask={handleDeleteSubtask} />
                 </Box>
               ))}
@@ -167,9 +167,9 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
         />
         {subtaskIds.length === 0 && <ListItemText secondary="None" sx={{ mt: 0.5 }} />}
         {subtasks.length > 0 && (
-          <Box maxWidth="100%" sx={{ mt: 1 }}>
+          <Box sx={{ maxWidth: "100%", mt: 1 }}>
             {subtasks.map((subtask) => (
-              <Box mb={1} key={subtask._id}>
+              <Box sx={{ mb: 1 }} key={subtask._id}>
                 <TicketSubtask
                   subtask={subtask}
                   onToggleCompletion={handleToggleSubtaskCompletion}

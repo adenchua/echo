@@ -65,7 +65,7 @@ const TitleEditItem = (props: TitleEditItemProps): JSX.Element => {
             fullWidth
             onChange={(e) => setTitleInput(e.target.value)}
             margin="dense"
-            inputProps={{ style: { padding: 7 } }}
+            slotProps={{ htmlInput: { style: { padding: 7 } } }}
             sx={{ mb: 2 }}
             autoFocus
           />

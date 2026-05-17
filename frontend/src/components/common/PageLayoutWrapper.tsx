@@ -50,7 +50,7 @@ const PageLayoutWrapper = (props: PageLayoutWrapperProps): JSX.Element => {
   };
 
   return (
-    <Box display="flex">
+    <Box sx={{ display: "flex" }}>
       <AppBar
         position="fixed"
         sx={{

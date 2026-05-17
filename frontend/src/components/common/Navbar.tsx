@@ -69,7 +69,7 @@ const Navbar = (): JSX.Element => {
         }}
       >
         <Toolbar component={Link} to="/home" sx={{ textDecoration: "none", color: "inherit" }}>
-          <Box display="flex" alignItems="baseline" gap={1}>
+          <Box sx={{ display: "flex", alignItems: "baseline", gap: 1 }}>
             <Typography variant="h4" color="primary.light">
               echo<span style={{ color: "orange" }}>.yl</span>
             </Typography>
@@ -118,8 +118,8 @@ const Navbar = (): JSX.Element => {
             ))}
           </List>
         )}
-        <Box flexGrow={1} />
-        <Box px={2}>
+        <Box sx={{ flexGrow: 1 }} />
+        <Box sx={{ px: 2 }}>
           <LogoutButton />
         </Box>
       </Box>

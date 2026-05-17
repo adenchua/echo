@@ -68,7 +68,7 @@ const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
 
     return (
       <>
-        <DialogContentText mb={3}>
+        <DialogContentText sx={{ mb: 3 }}>
           Congratulations on ending sprint{" "}
           <Typography component="span" color="primary">
             {completedSprint?.number}
@@ -93,7 +93,7 @@ const SprintEndDialog = (props: SprintEndDialogProps): JSX.Element => {
 
   const renderDialogContent = (): JSX.Element => (
     <>
-      <DialogContentText mb={3}>
+      <DialogContentText sx={{ mb: 3 }}>
         <Typography
           component="span"
           color="primary"

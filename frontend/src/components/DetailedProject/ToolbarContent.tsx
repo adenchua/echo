@@ -42,7 +42,7 @@ const ToolbarContent = (props: ToolbarContentProps): JSX.Element => {
   };
 
   return (
-    <Box display="flex" gap={2} alignItems="center" overflow="auto">
+    <Box sx={{ display: "flex", gap: 2, alignItems: "center", overflow: "auto" }}>
       <Avatar variant="rounded">
         <ProjectIcon />
       </Avatar>
@@ -50,7 +50,7 @@ const ToolbarContent = (props: ToolbarContentProps): JSX.Element => {
         <Typography sx={{ maxWidth: 800 }} noWrap variant="h6">
           {title}
         </Typography>
-        <Box display="flex" gap={3} whiteSpace="nowrap">
+        <Box sx={{ display: "flex", gap: 3, whiteSpace: "nowrap" }}>
           {renderTabLink("Overview", "overview")}
           {renderTabLink("Product Backlog", "product-backlog")}
           {renderTabLink("Sprint Backlog", "sprint-backlog")}

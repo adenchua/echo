@@ -1,4 +1,4 @@
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { JSX, useEffect, useState } from "react";
@@ -92,7 +92,7 @@ const LoginPage = (): JSX.Element => {
             Login
           </Button>
         </form>
-        <Link onClick={() => navigate("/sign-up")} mt={2}>
+        <Link onClick={() => navigate("/sign-up")} sx={{ mt: 2 }}>
           New to echo? Register here
         </Link>
       </Paper>

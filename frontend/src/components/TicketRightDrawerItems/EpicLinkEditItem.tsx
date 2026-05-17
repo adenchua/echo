@@ -51,25 +51,17 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
 
   const renderEpicTypography = (): JSX.Element => {
     if (!epicId) {
-      return (
-        <Typography color="textSecondary" sx={{ mb: 2 }}>
-          None
-        </Typography>
-      );
+      return <Typography sx={{ color: "text.secondary", mb: 2 }}>None</Typography>;
     }
 
     const epicToDisplay = epics.find((epic) => epic._id === epicId);
 
     if (!epicToDisplay) {
-      return (
-        <Typography color="textSecondary" sx={{ mb: 2 }}>
-          Invalid Epic
-        </Typography>
-      );
+      return <Typography sx={{ color: "text.secondary", mb: 2 }}>Invalid Epic</Typography>;
     }
 
     return (
-      <Typography color="textSecondary" maxWidth="100%" noWrap sx={{ mb: 2 }}>
+      <Typography noWrap sx={{ color: "text.secondary", mb: 2, maxWidth: "100%" }}>
         {epicToDisplay.title}
       </Typography>
     );
@@ -89,7 +81,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
               />
             }
           />
-          <Box mb={2} width="100%">
+          <Box sx={{ mb: 2, width: "100%" }}>
             <Select
               label="Select epic"
               value={epicId ? epicId : ""}

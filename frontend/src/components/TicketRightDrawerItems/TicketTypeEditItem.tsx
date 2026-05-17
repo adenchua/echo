@@ -82,7 +82,7 @@ const TicketTypeEditItem = (props: TicketTypeEditItemProps): JSX.Element => {
       <Chip
         label={`${capitalizeFirstLetter(type)}`}
         icon={
-          <Box display="flex" alignItems="center">
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             <TicketTypeIcon type={type} />
           </Box>
         }

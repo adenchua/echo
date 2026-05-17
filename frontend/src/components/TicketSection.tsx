@@ -39,7 +39,7 @@ const TicketSection = (props: TicketSectionProps): JSX.Element => {
 
   return (
     <>
-      <Box display="flex" alignItems="center" mb={1} gap={1}>
+      <Box sx={{ display: "flex", alignItems: "center", mb: 1, gap: 1 }}>
         {!showTickets && (
           <IconButton size="small" edge="start" onClick={() => setShowTickets(true)}>
             <ExpandMoreIcon />
@@ -58,7 +58,7 @@ const TicketSection = (props: TicketSectionProps): JSX.Element => {
             if (matchString(searchInput, ticket.title)) {
               return (
                 <Slide key={ticket._id} timeout={400}>
-                  <Box onClick={() => onSelectTicket(ticket._id)} mb={0.5}>
+                  <Box onClick={() => onSelectTicket(ticket._id)} sx={{ mb: 0.5 }}>
                     <Ticket
                       ticket={ticket}
                       showSprintToggleCheckBox

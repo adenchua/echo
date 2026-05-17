@@ -17,10 +17,10 @@ const TicketSubtask = (props: TicketSubtaskProps): JSX.Element => {
   return (
     <Tooltip title={isCompleted ? "Mark as undone" : "Mark as done"}>
       <Box
-        display="flex"
-        alignItems="center"
-        gap={1}
         sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: 1,
           "&:hover": {
             cursor: "pointer",
             textDecoration: isCompleted ? "none" : "line-through",

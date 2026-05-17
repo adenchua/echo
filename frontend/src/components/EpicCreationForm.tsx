@@ -49,7 +49,7 @@ const EpicCreationForm = (props: EpicCreationFormProps): JSX.Element => {
       elevation={0}
     >
       <form onSubmit={handleFormSubmit}>
-        <Box mb={3}>
+        <Box sx={{ mb: 3 }}>
           {currentLoadState === "ERROR" && (
             <BannerError>Something went wrong. Please try again later</BannerError>
           )}
@@ -65,7 +65,7 @@ const EpicCreationForm = (props: EpicCreationFormProps): JSX.Element => {
             placeholder="Increase sales of 25% by Q4"
           />
         </Box>
-        <Box display="flex" justifyContent="flex-end">
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button color="secondary" onClick={onClose}>
             Cancel
           </Button>

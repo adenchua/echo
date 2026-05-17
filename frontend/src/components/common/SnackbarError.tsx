@@ -16,9 +16,11 @@ const SnackbarError = (props: SnackbarErrorProps): JSX.Element => {
       open={isOpen}
       message={text}
       autoHideDuration={4000}
-      ContentProps={{
-        sx: {
-          backgroundColor: "error.main",
+      slotProps={{
+        content: {
+          sx: {
+            backgroundColor: "error.main",
+          },
         },
       }}
     />

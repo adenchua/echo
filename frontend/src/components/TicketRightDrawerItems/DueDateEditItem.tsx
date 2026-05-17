@@ -56,9 +56,9 @@ const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
               />
             }
           />
-          <Box mb={3} width="100%">
+          <Box sx={{ mb: 3, width: "100%" }}>
             <DateCalendar
-              value={isDue ? null : dueDate}
+              value={isDue || !dueDate ? null : new Date(dueDate)}
               onChange={(newSelectedDate) => {
                 handleUpdateTicketDueDate(newSelectedDate ? new Date(newSelectedDate) : null);
               }}
@@ -89,8 +89,8 @@ const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
       />
       <ListItemText
         secondary={!dueDate || dueDate === "" ? "None" : format(new Date(dueDate), "dd MMMM yyyy")}
-        secondaryTypographyProps={{
-          color: isDue ? "crimson" : "textSecondary",
+        slotProps={{
+          secondary: { sx: { color: isDue ? "error.main" : "text.secondary" } },
         }}
         sx={{ mb: 2 }}
       />

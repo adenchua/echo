@@ -36,7 +36,7 @@ const RemoveMemberIconButton = (props: RemoveMemberIconButtonProps): JSX.Element
         isOpen={isDialogOpened}
         dialogContent={
           <>
-            <DialogContentText mb={4}>
+            <DialogContentText sx={{ mb: 4 }}>
               This action will prevent @{member.username} from viewing or editing the project
             </DialogContentText>
           </>

@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { JSX, useContext } from "react";
@@ -26,7 +26,7 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
       <Grow>
         <Paper sx={{ p: 1, display: "flex", alignItems: "center", gap: 1 }} elevation={0}>
           <UserAvatar username={username} displayName={displayName} />
-          <Box width="160px">
+          <Box sx={{ width: "160px" }}>
             <Typography noWrap component="div">
               {displayName}
             </Typography>
@@ -40,14 +40,16 @@ const OverviewTab = (props: OverviewTabProps): JSX.Element => {
   };
 
   return (
-    <Box p={3}>
-      <Typography variant="h5" paragraph>
+    <Box sx={{ p: 3 }}>
+      <Typography variant="h5" component="p" sx={{ mb: 2 }}>
         Description
       </Typography>
-      <Typography color="textSecondary" textAlign="justify" mb={5} sx={{ whiteSpace: "pre-wrap" }}>
+      <Typography
+        sx={{ color: "text.secondary", textAlign: "justify", mb: 5, whiteSpace: "pre-wrap" }}
+      >
         {description ?? "No project description."}
       </Typography>
-      <Box display="flex" alignItems="center" gap={2} mb={2}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
         <Typography variant="h5">Members</Typography>
         <AddMemberToProjectButtonWithDialog projectId={projectId} />
       </Box>

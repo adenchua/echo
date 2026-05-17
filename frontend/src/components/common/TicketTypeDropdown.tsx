@@ -19,15 +19,15 @@ const TicketTypeDropdown = (props: TicketTypeDropdownProps): JSX.Element => {
     <Select label={label} value={selectedValue} onChange={onChange}>
       <MenuItem value="task">
         <TicketTypeIcon type="task" />
-        <Typography ml={1}>Task</Typography>
+        <Typography sx={{ ml: 1 }}>Task</Typography>
       </MenuItem>
       <MenuItem value="story">
         <TicketTypeIcon type="story" />
-        <Typography ml={1}>User story</Typography>
+        <Typography sx={{ ml: 1 }}>User story</Typography>
       </MenuItem>
       <MenuItem value="bug">
         <TicketTypeIcon type="bug" />
-        <Typography ml={1}>Bug</Typography>
+        <Typography sx={{ ml: 1 }}>Bug</Typography>
       </MenuItem>
     </Select>
   );

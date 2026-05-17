@@ -77,14 +77,14 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
 
   const renderSprintStatusSpan = (sprints: Sprint[]): JSX.Element => {
     let span = (
-      <Typography component="span" fontSize="inherit" sx={{ color: "error.main" }}>
+      <Typography component="span" sx={{ fontSize: "inherit", color: "error.main" }}>
         Stopped
       </Typography>
     ); // if no active sprint
     sprints.forEach((sprint) => {
       if (sprint.hasEnded === false) {
         span = (
-          <Typography component="span" fontSize="inherit" sx={{ color: "primary.main" }}>
+          <Typography component="span" sx={{ fontSize: "inherit", color: "primary.main" }}>
             Ongoing
           </Typography>
         );
@@ -115,12 +115,12 @@ const ProjectListingItem = (props: ProjectListingItemProps): JSX.Element => {
       elevation={0}
       key={projectId}
     >
-      <Box display="flex" alignItems="center" gap={1}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
         <Avatar sx={{ height: 40, width: 40 }} variant="rounded">
           <ProjectIcon />
         </Avatar>
         <Box sx={{ width: "200px" }}>
-          <Typography noWrap lineHeight="16px">
+          <Typography noWrap sx={{ lineHeight: "16px" }}>
             {title} <br /> <span style={{ fontSize: 12, color: "#969892" }}>{type}</span>
           </Typography>
         </Box>

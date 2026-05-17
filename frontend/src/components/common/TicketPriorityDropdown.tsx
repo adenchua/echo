@@ -19,19 +19,19 @@ const TicketPriorityDropdown = (props: TicketPriorityDropdownProps): JSX.Element
     <Select value={selectedValue} onChange={onChange} label={label}>
       <MenuItem value="low">
         <PriorityIcon priority="low" />
-        <Typography ml={1}>Low</Typography>
+        <Typography sx={{ ml: 1 }}>Low</Typography>
       </MenuItem>
       <MenuItem value="medium">
         <PriorityIcon priority="medium" />
-        <Typography ml={1}>Medium</Typography>
+        <Typography sx={{ ml: 1 }}>Medium</Typography>
       </MenuItem>
       <MenuItem value="high">
         <PriorityIcon priority="high" />
-        <Typography ml={1}>High</Typography>
+        <Typography sx={{ ml: 1 }}>High</Typography>
       </MenuItem>
       <MenuItem value="highest">
         <PriorityIcon priority="highest" />
-        <Typography ml={1}>Urgent</Typography>
+        <Typography sx={{ ml: 1 }}>Urgent</Typography>
       </MenuItem>
     </Select>
   );
