@@ -3,7 +3,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { JSX, useContext, useEffect, useState } from "react";
+import { JSX, use, useEffect, useState } from "react";
 
 import createEpic from "../api/epics/createEpic";
 import { EpicsContext } from "../contexts/EpicsContextProvider";
@@ -21,7 +21,7 @@ const EpicCreationForm = (props: EpicCreationFormProps): JSX.Element => {
   const [titleInput, setTitleInput] = useState<string>("");
   const { currentLoadState, handleSetLoadingState } = useLoad();
 
-  const { addEpic } = useContext(EpicsContext);
+  const { addEpic } = use(EpicsContext);
 
   useEffect(() => {
     // reset input upon form-reopen

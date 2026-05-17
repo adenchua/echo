@@ -4,7 +4,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
-import { JSX, useContext, useMemo, useState } from "react";
+import { JSX, use, useMemo, useState } from "react";
 
 import addMembersToProject from "../api/projects/addMembersToProject";
 import fetchUsers from "../api/users/fetchUsers";
@@ -31,7 +31,7 @@ const AddMemberToProjectButtonWithDialog = (
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [availableMembers, setAvailableMembers] = useState<User[]>([]);
   const { currentLoadState, handleSetLoadingState } = useLoad();
-  const { handleAddMembers, members, admins } = useContext(ProjectMembersContext);
+  const { handleAddMembers, members, admins } = use(ProjectMembersContext);
 
   const projectMemberIds = useMemo(() => {
     const result: string[] = [];

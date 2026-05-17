@@ -3,7 +3,7 @@ import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
-import { JSX, useContext, useState } from "react";
+import { JSX, use, useState } from "react";
 
 import { EpicsContext } from "../../contexts/EpicsContextProvider";
 import useLoad from "../../hooks/useLoad";
@@ -25,7 +25,7 @@ const EpicLinkEditItem = (props: EpicLinkEditItemProps): JSX.Element => {
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const { onAddTicketToEpic, onRemoveTicketFromEpic } = useProductBacklog();
   const { currentLoadState, handleSetLoadingState } = useLoad();
-  const { epics } = useContext(EpicsContext);
+  const { epics } = use(EpicsContext);
 
   const handleToggleEditMode = (): void => {
     setIsEditModeOn(!isEditModeOn);

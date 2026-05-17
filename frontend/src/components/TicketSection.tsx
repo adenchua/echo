@@ -3,7 +3,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMoreOutlined";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { JSX, useCallback, useContext, useState } from "react";
+import { JSX, useCallback, use, useState } from "react";
 
 import { EpicsContext } from "../contexts/EpicsContextProvider";
 import TicketInterface from "../types/Ticket";
@@ -22,7 +22,7 @@ interface TicketSectionProps {
 const TicketSection = (props: TicketSectionProps): JSX.Element => {
   const { tickets, epicId, searchInput, onSelectTicket, selectedTicketId } = props;
   const [showTickets, setShowTickets] = useState<boolean>(true);
-  const { epics } = useContext(EpicsContext);
+  const { epics } = use(EpicsContext);
 
   const getEpicDisplayTitle = useCallback(
     (epicId: string): string => {

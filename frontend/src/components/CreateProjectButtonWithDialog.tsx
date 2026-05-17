@@ -1,7 +1,7 @@
 import ProjectIcon from "@mui/icons-material/GitHub";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
-import { JSX, useContext, useEffect, useState } from "react";
+import { JSX, use, useEffect, useState } from "react";
 
 import createProject from "../api/projects/createProject";
 import { UserProjectsContext } from "../contexts/UserProjectsContextProvider";
@@ -24,7 +24,7 @@ const CreateProjectButtonWithDialog = (): JSX.Element => {
   const [projectTitle, setProjectTitle] = useState<string>("");
   const [projectType, setProjectType] = useState<ProjectType>(defaultProjectType);
   const { currentLoadState, handleSetLoadingState } = useLoad();
-  const { addProject } = useContext(UserProjectsContext);
+  const { addProject } = use(UserProjectsContext);
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
 
   useEffect(() => {

@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { JSX, useContext, useState } from "react";
+import { JSX, use, useState } from "react";
 import { useNavigate } from "react-router";
 
 import deleteProject from "../../api/projects/deleteProject";
@@ -28,7 +28,7 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
   const [descriptionInput, setDescriptionInput] = useState<string>(description);
   const [deletionInput, setDeletionInput] = useState<string>("");
   const { currentLoadState, handleSetLoadingState } = useLoad();
-  const { updateProject: updateProjectInContext } = useContext(UserProjectsContext);
+  const { updateProject: updateProjectInContext } = use(UserProjectsContext);
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
   const navigate = useNavigate();
   const isLoggedInUserAdmin = loggedInUserId && adminIds.includes(loggedInUserId);

@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { JSX, useContext, useState } from "react";
+import { JSX, use, useState } from "react";
 
 import { EpicsContext } from "../../contexts/EpicsContextProvider";
 import Project from "../../types/Project";
@@ -14,7 +14,7 @@ interface TeamObjectivesTabProps {
 
 const TeamObjectivesTab = (props: TeamObjectivesTabProps): JSX.Element => {
   const [showCreationForm, setShowCreationForm] = useState<boolean>(false);
-  const { epics } = useContext(EpicsContext);
+  const { epics } = use(EpicsContext);
 
   const { project } = props;
   const { _id: projectId } = project;

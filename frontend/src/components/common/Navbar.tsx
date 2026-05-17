@@ -6,7 +6,7 @@ import List from "@mui/material/List";
 import ListSubheader from "@mui/material/ListSubheader";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { JSX, useContext, useEffect } from "react";
+import { JSX, use, useEffect } from "react";
 import { Link, useLocation, useParams } from "react-router";
 
 import fetchAllProjectsByUser from "../../api/projects/fetchAllProjectsByUser";
@@ -35,7 +35,7 @@ const Navbar = (): JSX.Element => {
   const { pathname } = useLocation();
   const { id: selectedProjectId } = useParams<{ id: string }>();
   const { currentLoadState, handleSetLoadingState } = useLoad();
-  const { projects, handleSetProject } = useContext(UserProjectsContext);
+  const { projects, handleSetProject } = use(UserProjectsContext);
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
 
   useEffect(() => {

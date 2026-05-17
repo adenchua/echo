@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { use } from "react";
 
 import addTicketToEpic from "../api/epics/addTicketToEpic";
 import removeTicketFromEpic from "../api/epics/removeTicketFromEpic";
@@ -34,8 +34,8 @@ const useProductBacklog = (): HookResponse => {
     deleteTicket: deleteTicketContext,
     addSubtaskIdToTicket: addSubtaskIdToTicketContext,
     removeSubtaskIdFromTicket: removeSubtaskIdFromTicketContext,
-  } = useContext(TicketsContext);
-  const { addTicketIdToEpic, deleteTicketIdFromEpic } = useContext(EpicsContext);
+  } = use(TicketsContext);
+  const { addTicketIdToEpic, deleteTicketIdFromEpic } = use(EpicsContext);
 
   const onAddTicket = async (
     title: string,

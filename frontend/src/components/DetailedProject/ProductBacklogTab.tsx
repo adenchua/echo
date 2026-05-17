@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import { SelectChangeEvent } from "@mui/material/Select";
-import { JSX, useContext, useMemo, useState } from "react";
+import { JSX, use, useMemo, useState } from "react";
 
 import { TicketsContext } from "../../contexts/TicketsContextProvider";
 import Project from "../../types/Project";
@@ -26,7 +26,7 @@ interface ProductBacklogTabProps {
 const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
   const { project } = props;
   const { _id: projectId } = project;
-  const { tickets } = useContext(TicketsContext);
+  const { tickets } = use(TicketsContext);
   const [searchInput, setSearchInput] = useState<string>("");
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
   const [sortSelection, setSortSelection] = useState<TicketSortType>("priority-dsc");

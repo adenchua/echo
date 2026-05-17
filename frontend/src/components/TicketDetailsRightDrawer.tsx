@@ -3,7 +3,7 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import { JSX, useContext, useState } from "react";
+import { JSX, use, useState } from "react";
 
 import { EpicsContext } from "../contexts/EpicsContextProvider";
 import Ticket from "../types/Ticket";
@@ -46,7 +46,7 @@ const TicketDetailsRightDrawer = (props: TicketDetailsRightDrawerProps): JSX.Ele
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
 
-  const { epics } = useContext(EpicsContext);
+  const { epics } = use(EpicsContext);
 
   return (
     <Drawer

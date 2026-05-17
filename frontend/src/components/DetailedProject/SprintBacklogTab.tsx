@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { differenceInBusinessDays, format } from "date-fns";
-import { JSX, useContext, useMemo, useState } from "react";
+import { JSX, use, useMemo, useState } from "react";
 
 import { ActiveSprintContext } from "../../contexts/ActiveSprintContextProvider";
 import { TicketsContext } from "../../contexts/TicketsContextProvider";
@@ -33,8 +33,8 @@ interface SprintBacklogTabProps {
 const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
   const { project } = props;
   const { _id: projectId } = project;
-  const { tickets } = useContext(TicketsContext);
-  const { activeSprint } = useContext(ActiveSprintContext);
+  const { tickets } = use(TicketsContext);
+  const { activeSprint } = use(ActiveSprintContext);
   const { onStartSprint, onEndSprint } = useSprintBacklog();
   const [searchInput, setSearchInput] = useState<string>("");
   const [showEndSprintDialog, setShowEndSprintDialog] = useState<boolean>(false);

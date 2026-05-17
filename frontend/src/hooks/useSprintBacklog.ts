@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { use } from "react";
 
 import endSprint from "../api/sprints/endSprint";
 import startSprint from "../api/sprints/startSprint";
@@ -12,8 +12,8 @@ interface HookInterface {
 }
 
 const useSprintBacklog = (): HookInterface => {
-  const { removeCompletedTickets } = useContext(TicketsContext);
-  const { handleRemoveActiveSprint, handleSetActiveSprint } = useContext(ActiveSprintContext);
+  const { removeCompletedTickets } = use(TicketsContext);
+  const { handleRemoveActiveSprint, handleSetActiveSprint } = use(ActiveSprintContext);
 
   const onStartSprint = async (projectId: string, endDate: Date | null): Promise<Sprint> => {
     try {

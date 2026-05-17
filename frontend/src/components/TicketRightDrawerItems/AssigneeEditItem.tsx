@@ -6,7 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
-import { JSX, useContext, useEffect, useState } from "react";
+import { JSX, use, useEffect, useState } from "react";
 
 import fetchUsersByIds from "../../api/users/fetchUsersByIds";
 import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
@@ -37,7 +37,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
   const [assignee, setAssignee] = useState<User | null>(null);
 
   const { onUpdateTicket } = useProductBacklog();
-  const { members, admins } = useContext(ProjectMembersContext);
+  const { members, admins } = use(ProjectMembersContext);
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
 
   useEffect(() => {

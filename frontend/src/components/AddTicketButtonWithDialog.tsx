@@ -1,6 +1,6 @@
 import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
-import { JSX, useContext, useEffect, useState } from "react";
+import { JSX, use, useEffect, useState } from "react";
 
 import { EpicsContext } from "../contexts/EpicsContextProvider";
 import useLoad from "../hooks/useLoad";
@@ -31,7 +31,7 @@ const AddTicketButtonWithDialog = (props: AddTicketButtonWithDialogProps): JSX.E
   const [priority, setPriority] = useState<TicketPriority>(DEFAULT_PRIORITY);
   const { onAddTicket } = useProductBacklog();
   const { currentLoadState, handleSetLoadingState } = useLoad();
-  const { epics } = useContext(EpicsContext);
+  const { epics } = use(EpicsContext);
 
   useEffect(() => {
     // reset form state upon opening the dialog

@@ -8,7 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import { JSX, useContext, useMemo, useState } from "react";
+import { JSX, use, useMemo, useState } from "react";
 
 import promoteMemberToAdmin from "../../api/projects/promoteMemberToAdmin";
 import removeMemberFromProject from "../../api/projects/removeMemberFromProject";
@@ -43,7 +43,7 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
     admins,
     handleRemoveMember: handleRemoveMemberInContext,
     handlePromoteMember: handlePromoteMemberInContext,
-  } = useContext(ProjectMembersContext);
+  } = use(ProjectMembersContext);
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
   const [searchInput, setSearchInput] = useState<string>("");
   const isLoggedInUserAnAdmin = admins.map((admin) => admin._id).includes(loggedInUserId ?? "-1");

@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-import { JSX, useContext, useState } from "react";
+import { JSX, use, useState } from "react";
 import { Navigate, useNavigate } from "react-router";
 
 import CreateProjectButtonWithDialog from "../components/CreateProjectButtonWithDialog";
@@ -18,7 +18,7 @@ import { matchString } from "../utils/stringUtils";
 
 const ProjectListingPage = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>("");
-  const { projects } = useContext(UserProjectsContext);
+  const { projects } = use(UserProjectsContext);
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
   const navigate = useNavigate();
 

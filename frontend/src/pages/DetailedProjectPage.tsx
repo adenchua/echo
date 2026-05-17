@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { JSX, useContext, useEffect, useState } from "react";
+import { JSX, use, useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router";
 
 import fetchEpics from "../api/epics/fetchEpics";
@@ -33,10 +33,10 @@ const DetailedProjectPage = (): JSX.Element => {
   const query = useQuery();
   const { currentLoadState, handleSetLoadingState } = useLoad("LOADING");
   const [project, setProject] = useState<Project | null>(null);
-  const { handleSetTickets } = useContext(TicketsContext);
-  const { handleSetMembers, handleSetAdmins } = useContext(ProjectMembersContext);
-  const { handleSetEpics } = useContext(EpicsContext);
-  const { handleSetActiveSprint, handleRemoveActiveSprint } = useContext(ActiveSprintContext);
+  const { handleSetTickets } = use(TicketsContext);
+  const { handleSetMembers, handleSetAdmins } = use(ProjectMembersContext);
+  const { handleSetEpics } = use(EpicsContext);
+  const { handleSetActiveSprint, handleRemoveActiveSprint } = use(ActiveSprintContext);
 
   useEffect(() => {
     const getProject = async (): Promise<void> => {

@@ -10,7 +10,7 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import Popover from "@mui/material/Popover";
-import { JSX, useCallback, useContext, useState } from "react";
+import { JSX, useCallback, use, useState } from "react";
 
 import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
 import { useLocalStorage } from "../hooks/useLocalStorage";
@@ -47,7 +47,7 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [filterText, setFilterText] = useState<string>("");
   const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
-  const { members, admins } = useContext(ProjectMembersContext);
+  const { members, admins } = use(ProjectMembersContext);
 
   const open = Boolean(anchorEl);
   const id = open ? "popover-open" : undefined;
