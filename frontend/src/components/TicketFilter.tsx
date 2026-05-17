@@ -3,6 +3,7 @@ import PersonIcon from "@mui/icons-material/PersonOutlined";
 import CloseIcon from "@mui/icons-material/RestartAltOutlined";
 import RuleIcon from "@mui/icons-material/RuleOutlined";
 import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -121,48 +122,56 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
             <ListItemText>Not in sprint</ListItemText>
           </MenuItem>
           <Divider />
-          <Select
-            label="Status"
-            defaultValue=""
-            onChange={(e) =>
-              handleSelectNewFilter(
-                `status-${e.target.value as TicketStatus}`,
-                statusToTextMapping[e.target.value as TicketStatus],
-              )
-            }
-          >
-            {["todo", "progress", "review", "completed", "stuck", "hold"].map((ticketStatus) => (
-              <MenuItem
-                key={ticketStatus}
-                value={ticketStatus}
-                sx={{ display: "flex", justifyContent: "center" }}
-              >
-                <StatusChipButton status={ticketStatus as TicketStatus} size="small" />
-              </MenuItem>
-            ))}
-          </Select>
-          <Select
-            defaultValue=""
-            label="Assignee"
-            onChange={(e) =>
-              handleSelectNewFilter(
-                `assignee-${e.target.value}`,
-                getUserDisplayName(e.target.value as string),
-              )
-            }
-          >
-            {[...admins, ...members].map((user) => {
-              const { displayName, _id: userId, username } = user;
-              return (
-                <MenuItem key={userId} value={userId} dense>
-                  <ListItemAvatar>
-                    <Avatar sx={{ height: 24, width: 24 }} src={getUserAvatarSVG(username)} />
-                  </ListItemAvatar>
-                  <ListItemText>{displayName}</ListItemText>
+          <Box sx={{ px: 2 }}>
+            <Select
+              label="Status"
+              variant="standard"
+              disableUnderline
+              defaultValue=""
+              onChange={(e) =>
+                handleSelectNewFilter(
+                  `status-${e.target.value as TicketStatus}`,
+                  statusToTextMapping[e.target.value as TicketStatus],
+                )
+              }
+            >
+              {["todo", "progress", "review", "completed", "stuck", "hold"].map((ticketStatus) => (
+                <MenuItem
+                  key={ticketStatus}
+                  value={ticketStatus}
+                  sx={{ display: "flex", justifyContent: "center" }}
+                >
+                  <StatusChipButton status={ticketStatus as TicketStatus} size="small" />
                 </MenuItem>
-              );
-            })}
-          </Select>
+              ))}
+            </Select>
+          </Box>
+          <Box sx={{ px: 2 }}>
+            <Select
+              defaultValue=""
+              label="Assignee"
+              variant="standard"
+              disableUnderline
+              onChange={(e) =>
+                handleSelectNewFilter(
+                  `assignee-${e.target.value}`,
+                  getUserDisplayName(e.target.value as string),
+                )
+              }
+            >
+              {[...admins, ...members].map((user) => {
+                const { displayName, _id: userId, username } = user;
+                return (
+                  <MenuItem key={userId} value={userId} dense>
+                    <ListItemAvatar>
+                      <Avatar sx={{ height: 24, width: 24 }} src={getUserAvatarSVG(username)} />
+                    </ListItemAvatar>
+                    <ListItemText>{displayName}</ListItemText>
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </Box>
 
           <Divider />
           <MenuItem onClick={() => handleSelectNewFilter(null, "")}>
