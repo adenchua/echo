@@ -1,11 +1,11 @@
+import { defineConfig } from "eslint/config";
 import eslintReact from "@eslint-react/eslint-plugin";
 import pluginJs from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
-/** @type {import('eslint').Linter.Config[]} */
-export default [
+export default defineConfig([
   { files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"] },
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
@@ -21,4 +21,4 @@ export default [
       complexity: [1, 20],
     },
   },
-];
+]);
