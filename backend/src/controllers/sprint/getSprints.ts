@@ -12,7 +12,7 @@ export const getSprints = async (request: Request, response: Response): Promise<
 };
 
 export const getSprint = async (request: Request, response: Response): Promise<void> => {
-  const { sprintId } = request.params;
+  const { sprintId } = request.params as Record<string, string>;
 
   const [sprint] = await sprintService.getSprints([sprintId]);
 

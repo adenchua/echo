@@ -4,7 +4,7 @@ import epicService from "../../services/epicService";
 import { EPIC_NOT_FOUND_ERROR } from "./errors";
 
 export default async function deleteEpic(request: Request, response: Response): Promise<void> {
-  const { epicId } = request.params;
+  const { epicId } = request.params as Record<string, string>;
 
   const [epic] = await epicService.getEpics([epicId]);
 

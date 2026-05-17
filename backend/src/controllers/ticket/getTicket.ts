@@ -5,7 +5,7 @@ import { TICKET_NOT_FOUND_ERROR } from "./errors";
 import { wrapResponse } from "../../utils/responseUtils";
 
 export default async function getTicket(request: Request, response: Response): Promise<void> {
-  const { ticketId } = request.params;
+  const { ticketId } = request.params as Record<string, string>;
 
   const [ticket] = await ticketService.getTickets([ticketId]);
 

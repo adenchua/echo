@@ -5,7 +5,7 @@ import { isProjectDeleted } from "../../utils/projectUtils";
 import { PROJECT_NOT_FOUND_ERROR } from "./errors";
 
 export default async function deleteProject(request: Request, response: Response): Promise<void> {
-  const { projectId } = request.params;
+  const { projectId } = request.params as Record<string, string>;
 
   const project = await projectService.getProject(projectId);
 

@@ -4,7 +4,7 @@ import subtaskService from "../../services/subtaskService";
 import { SUBTASK_NOT_FOUND_ERROR } from "./errors";
 
 export default async function updateSubtask(request: Request, response: Response): Promise<void> {
-  const { subtaskId } = request.params;
+  const { subtaskId } = request.params as Record<string, string>;
   const { title, isCompleted } = request.body;
 
   const [subtask] = await subtaskService.getSubtasks([subtaskId]);

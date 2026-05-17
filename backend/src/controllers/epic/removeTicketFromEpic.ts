@@ -9,7 +9,7 @@ export default async function removeTicketFromEpic(
   request: Request,
   response: Response,
 ): Promise<void> {
-  const { epicId } = request.params;
+  const { epicId } = request.params as Record<string, string>;
   const { ticketId } = request.body;
 
   const [epic] = await epicService.getEpics([epicId]);

@@ -6,7 +6,7 @@ import { PROJECT_NOT_FOUND_ERROR } from "./errors";
 import { wrapResponse } from "../../utils/responseUtils";
 
 export default async function getProject(request: Request, response: Response): Promise<void> {
-  const { projectId } = request.params;
+  const { projectId } = request.params as Record<string, string>;
 
   const project = await projectService.getProject(projectId);
   if (isProjectDeleted(project)) {

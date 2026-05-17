@@ -9,7 +9,7 @@ export const getUserByIdValidationChains: ValidationChain[] = [
 ];
 
 export default async function getUserById(request: Request, response: Response): Promise<void> {
-  const { userId } = request.params;
+  const { userId } = request.params as Record<string, string>;
   const userService = new UserService();
 
   const user = await userService.fetchUserById(userId);

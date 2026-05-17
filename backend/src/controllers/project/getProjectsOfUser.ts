@@ -7,7 +7,7 @@ export default async function getProjectsOfUser(
   request: Request,
   response: Response,
 ): Promise<void> {
-  const { userId } = request.params;
+  const { userId } = request.params as Record<string, string>;
 
   const projects = await projectService.getProjectsOfUser(userId);
   response.send(wrapResponse(projects));

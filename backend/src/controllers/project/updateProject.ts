@@ -6,7 +6,7 @@ import { isProjectDeleted } from "../../utils/projectUtils";
 import { PROJECT_NOT_FOUND_ERROR } from "./errors";
 
 export default async function updateProject(request: Request, response: Response): Promise<void> {
-  const { projectId } = request.params;
+  const { projectId } = request.params as Record<string, string>;
   const { title, description, announcement, picture, type } = request.body;
 
   const project = await projectService.getProject(projectId);

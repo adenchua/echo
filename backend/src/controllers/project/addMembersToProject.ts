@@ -8,7 +8,7 @@ export default async function addMembersToProject(
   request: Request,
   response: Response,
 ): Promise<void> {
-  const { projectId } = request.params;
+  const { projectId } = request.params as Record<string, string>;
   const { userIds } = request.body;
 
   const project = await projectService.getProject(projectId);

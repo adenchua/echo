@@ -6,7 +6,7 @@ import { TICKET_NOT_FOUND_ERROR } from "../ticket/errors";
 import { EPIC_NOT_FOUND_ERROR } from "./errors";
 
 export default async function addTicketToEpic(request: Request, response: Response): Promise<void> {
-  const { epicId } = request.params;
+  const { epicId } = request.params as Record<string, string>;
   const { ticketId } = request.body;
 
   const [epic] = await epicService.getEpics([epicId]);
