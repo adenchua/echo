@@ -1,6 +1,6 @@
 export const SERVER_API_URL = "";
 
-export const APP_VERSION = "1.6.0";
+export const APP_VERSION = "1.7.0";
 
 export const TICKET_DRAWER_WIDTH = 480;
 
