@@ -22,7 +22,7 @@ const ProgressBarWithPercentage = (props: ProgressBarWithPercentageProps): JSX.E
           <LinearProgress variant="determinate" sx={{ height: 10, borderRadius: 6 }} {...props} />
         </Box>
         <Box sx={{ minWidth: 35 }}>
-          <Typography color="text.secondary">{`${Math.round(props.value)}%`}</Typography>
+          <Typography sx={{ color: "text.secondary" }}>{`${Math.round(props.value)}%`}</Typography>
         </Box>
       </Box>
     );

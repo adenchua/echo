@@ -70,7 +70,7 @@ const Navbar = (): JSX.Element => {
       >
         <Toolbar component={Link} to="/home" sx={{ textDecoration: "none", color: "inherit" }}>
           <Box sx={{ display: "flex", alignItems: "baseline", gap: 1 }}>
-            <Typography variant="h4" color="primary.light">
+            <Typography variant="h4" sx={{ color: "primary.light" }}>
               echo<span style={{ color: "orange" }}>.yl</span>
             </Typography>
             <Typography variant="caption" sx={{ color: "#FFF" }}>

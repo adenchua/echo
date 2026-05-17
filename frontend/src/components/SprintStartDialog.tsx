@@ -104,7 +104,7 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
         <>
           <DialogContentText>
             Please select an end date:{" "}
-            <Typography component="span" color="primary.main">
+            <Typography component="span" sx={{ color: "primary.main" }}>
               {endDateInput && format(new Date(endDateInput), "dd MMM")}
               {endDateInput &&
                 ` (${differenceInCalendarDays(new Date(endDateInput), new Date())} Days)`}
