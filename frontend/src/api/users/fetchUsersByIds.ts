@@ -15,9 +15,9 @@ const fetchUsersByIds = async (userIds: string[]): Promise<User[]> => {
     return response.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error("Axios Error");
+      throw new Error("Axios Error", { cause: error });
     } else {
-      throw new Error("Unexpected Error");
+      throw new Error("Unexpected Error", { cause: error });
     }
   }
 };

@@ -1,15 +1,13 @@
 import axios from "axios";
 
-import Project from "../../types/Project";
-import { LOADING_DELAY_MS, SERVER_API_URL } from "../../utils/constants";
 import ApiResponseWrapper from "../../types/ApiResponseWrapper";
+import Project from "../../types/Project";
+import { SERVER_API_URL } from "../../utils/constants";
 import getAxiosInstance from "../getAxiosInstance";
-import { sleep } from "../../utils/sleep";
 
 const createProject = async (title: string, adminId: string, type: string): Promise<Project> => {
   try {
     const axiosInstance = getAxiosInstance();
-    await sleep(LOADING_DELAY_MS);
     const response = await axiosInstance.post<ApiResponseWrapper<Project>>(
       `${SERVER_API_URL}/api/v1/projects`,
       {
@@ -21,9 +19,9 @@ const createProject = async (title: string, adminId: string, type: string): Prom
     return response.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error("Axios Error");
+      throw new Error("Axios Error", { cause: error });
     } else {
-      throw new Error("Unexpected Error");
+      throw new Error("Unexpected Error", { cause: error });
     }
   }
 };

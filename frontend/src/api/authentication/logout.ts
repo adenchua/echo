@@ -9,9 +9,9 @@ const logout = async (): Promise<void> => {
     await axiosInstance.post(`${SERVER_API_URL}/api/auth/logout`);
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
-      throw new Error(error.response.status.toString());
+      throw new Error(error.response.status.toString(), { cause: error });
     } else {
-      throw new Error("Unexpected Error");
+      throw new Error("Unexpected Error", { cause: error });
     }
   }
 };
