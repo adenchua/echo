@@ -34,7 +34,7 @@ export const updateTicketValidationChain = [
   body("status", "INVALID_TICKET_STATUS")
     .isIn(["todo", "progress", "review", "completed", "stuck", "hold"])
     .optional(),
-  body("dueDate", "INVALID_TICKET_DUE_DATE").isISO8601().optional(),
+  body("dueDate", "INVALID_TICKET_DUE_DATE").isISO8601().optional({ values: "null" }),
   body("isInSprint", "INVALID_TICKET_IS_IN_SPRINT").isBoolean().optional(),
   body("assigneeId", "INVALID_TICKET_ASSIGNEE_ID")
     .custom((value) => value === null || isValidObjectId(value))

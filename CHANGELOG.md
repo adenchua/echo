@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.7.1] - 2026-05-29
 
+### FIXED
+
+- ticket due date removal throwing validation errors on the backend
+- story point and date calendar overflow in the ticket drawer
+
 ### CHANGED
 
 - update UX of status and assignee filter

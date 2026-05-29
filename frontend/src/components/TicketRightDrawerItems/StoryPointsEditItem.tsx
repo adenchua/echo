@@ -52,7 +52,7 @@ const StoryPointsEditItem = (props: StoryPointsEditItemProps): JSX.Element => {
               />
             }
           />
-          <Box sx={{ mb: 2, display: "flex", gap: 1 }}>
+          <Box sx={{ mb: 2, display: "flex", flexWrap: "wrap", gap: 1 }}>
             {[0, 1, 2, 3, 5, 8, 13, 20].map((point) => (
               <Chip
                 key={point}

@@ -45,7 +45,13 @@ const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
   if (isEditModeOn) {
     return (
       <>
-        <ListItem sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+        <ListItem
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+          }}
+        >
           <RightDrawerTitle
             title="Due date"
             actionButton={
@@ -64,6 +70,7 @@ const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
               }}
               disablePast
               reduceAnimations
+              sx={{ marginLeft: "-24px" }}
             />
             {dueDate && (
               <Button onClick={() => handleUpdateTicketDueDate(null)} fullWidth>
