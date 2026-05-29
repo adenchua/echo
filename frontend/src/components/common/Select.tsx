@@ -9,9 +9,13 @@ interface SelectProps extends Omit<MuiSelectProps, "label"> {
 
 const Select = (props: SelectProps): JSX.Element => {
   const { label, variant, sx, ...rest } = props;
+  const { size } = rest;
+
   return (
     <FormControl fullWidth variant={variant} sx={sx}>
-      <InputLabel>{label}</InputLabel>
+      <InputLabel size={size} sx={{ fontSize: "14px" }}>
+        {label}
+      </InputLabel>
       <MuiSelect
         SelectDisplayProps={{
           style: {

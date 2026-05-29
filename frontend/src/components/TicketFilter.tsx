@@ -3,15 +3,15 @@ import PersonIcon from "@mui/icons-material/PersonOutlined";
 import CloseIcon from "@mui/icons-material/RestartAltOutlined";
 import RuleIcon from "@mui/icons-material/RuleOutlined";
 import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import Popover from "@mui/material/Popover";
-import { JSX, useCallback, use, useState } from "react";
+import { JSX, use, useCallback, useState } from "react";
 
 import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
 import { useLocalStorage } from "../hooks/useLocalStorage";
@@ -122,11 +122,21 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
             <ListItemText>Not in sprint</ListItemText>
           </MenuItem>
           <Divider />
-          <Box sx={{ px: 2 }}>
+          <ListItem>
+            <ListItemIcon>
+              <RuleIcon fontSize="small" />
+            </ListItemIcon>
             <Select
-              label="Status"
-              variant="standard"
-              disableUnderline
+              label="Ticket status"
+              sx={{ marginLeft: "-16px" }}
+              slotProps={{
+                notchedOutline: {
+                  sx: {
+                    border: "none",
+                  },
+                },
+              }}
+              size="small"
               defaultValue=""
               onChange={(e) =>
                 handleSelectNewFilter(
@@ -145,13 +155,23 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
                 </MenuItem>
               ))}
             </Select>
-          </Box>
-          <Box sx={{ px: 2 }}>
+          </ListItem>
+          <ListItem sx={{ mb: 1 }}>
+            <ListItemIcon>
+              <PersonIcon fontSize="small" />
+            </ListItemIcon>
             <Select
+              sx={{ marginLeft: "-16px" }}
+              slotProps={{
+                notchedOutline: {
+                  sx: {
+                    border: "none",
+                  },
+                },
+              }}
+              size="small"
               defaultValue=""
               label="Assignee"
-              variant="standard"
-              disableUnderline
               onChange={(e) =>
                 handleSelectNewFilter(
                   `assignee-${e.target.value}`,
@@ -171,7 +191,7 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
                 );
               })}
             </Select>
-          </Box>
+          </ListItem>
 
           <Divider />
           <MenuItem onClick={() => handleSelectNewFilter(null, "")}>

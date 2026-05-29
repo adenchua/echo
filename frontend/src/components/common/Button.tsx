@@ -20,6 +20,19 @@ interface ButtonProps extends Omit<
 const Button = (props: ButtonProps): JSX.Element => {
   const { color = "primary", state = "default", sx, ...rest } = props;
 
+  function getColor(color: "primary" | "secondary" | "danger"): "primary" | "inherit" | "error" {
+    switch (color) {
+      case "primary":
+        return "primary";
+      case "secondary":
+        return "inherit";
+      case "danger":
+        return "error";
+      default:
+        return "primary";
+    }
+  }
+
   return (
     <MuiButton
       startIcon={state === "loading" && <CircularProgress color="inherit" size={16} />}
@@ -28,18 +41,7 @@ const Button = (props: ButtonProps): JSX.Element => {
       disableFocusRipple
       disableRipple
       disableTouchRipple
-      color={(function (): "primary" | "inherit" | "error" {
-        switch (color) {
-          case "primary":
-            return "primary";
-          case "secondary":
-            return "inherit";
-          case "danger":
-            return "error";
-          default:
-            return "primary";
-        }
-      })()}
+      color={getColor(color)}
       size="large"
       sx={{ height: "40px", textTransform: "none", borderRadius: 100, ...sx, textWrap: "nowrap" }}
       disabled={state === "disabled" || state === "loading"}

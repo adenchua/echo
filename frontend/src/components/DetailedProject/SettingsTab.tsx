@@ -98,7 +98,11 @@ const SettingsTab = (props: SettingsTabProps): JSX.Element => {
             <Button
               onClick={handleUpdateProject}
               state={
-                currentLoadState === "LOADING" || titleInput.length === 0 ? "disabled" : "default"
+                titleInput.length === 0
+                  ? "disabled"
+                  : currentLoadState === "LOADING"
+                    ? "loading"
+                    : "default"
               }
             >
               Update details
