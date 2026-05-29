@@ -1,11 +1,13 @@
 import axios from "axios";
 
-import { SERVER_API_URL } from "../../utils/constants";
+import { LOADING_DELAY_MS, SERVER_API_URL } from "../../utils/constants";
 import getAxiosInstance from "../getAxiosInstance";
+import { sleep } from "../../utils/sleep";
 
 const addMembersToProject = async (projectId: string, userIds: string[]): Promise<void> => {
   try {
     const axiosInstance = getAxiosInstance();
+    await sleep(LOADING_DELAY_MS);
     await axiosInstance.post(`${SERVER_API_URL}/api/v1/projects/members/bulk-add/${projectId}`, {
       userIds,
     });

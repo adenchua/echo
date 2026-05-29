@@ -1,9 +1,10 @@
 import axios from "axios";
 
 import Ticket, { TicketPriority, TicketType } from "../../types/Ticket";
-import { SERVER_API_URL } from "../../utils/constants";
+import { LOADING_DELAY_MS, SERVER_API_URL } from "../../utils/constants";
 import ApiResponseWrapper from "../../types/ApiResponseWrapper";
 import getAxiosInstance from "../getAxiosInstance";
+import { sleep } from "../../utils/sleep";
 
 const createTicket = async (
   title: string,
@@ -13,6 +14,7 @@ const createTicket = async (
 ): Promise<Ticket> => {
   try {
     const axiosInstance = getAxiosInstance();
+    await sleep(LOADING_DELAY_MS);
     const response = await axiosInstance.post<ApiResponseWrapper<Ticket>>(
       `${SERVER_API_URL}/api/v1/tickets`,
       {
