@@ -1,15 +1,13 @@
 import axios from "axios";
 
-import Subtask from "../../types/Subtask";
-import { LOADING_DELAY_MS, SERVER_API_URL } from "../../utils/constants";
 import ApiResponseWrapper from "../../types/ApiResponseWrapper";
+import Subtask from "../../types/Subtask";
+import { SERVER_API_URL } from "../../utils/constants";
 import getAxiosInstance from "../getAxiosInstance";
-import { sleep } from "../../utils/sleep";
 
 const fetchSubtasksByIds = async (subtaskIds: string[]): Promise<Subtask[]> => {
   try {
     const axiosInstance = getAxiosInstance();
-    await sleep(LOADING_DELAY_MS);
     const response = await axiosInstance.post<ApiResponseWrapper<Subtask[]>>(
       `${SERVER_API_URL}/api/v1/subtasks/bulk-retrieve`,
       {
