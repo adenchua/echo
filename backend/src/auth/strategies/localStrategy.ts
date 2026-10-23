@@ -1,26 +1,22 @@
 import passport from "passport";
 import { Strategy } from "passport-local";
 
-import { IUser } from "../../models/user";
 import UserService from "../../services/UserService";
 import { comparePassword } from "../../utils/credentialsUtils";
 
-// after login, store the username in request.user
+// after login, store only the user ID in the session
 passport.serializeUser((user, cb) => {
-  cb(null, (user as IUser).username);
+  cb(null, user.id);
 });
 
-// using the user ID, retrieve the user object
-passport.deserializeUser(async (username: string, cb) => {
+// using the user ID, retrieve the user identity for request.user
+passport.deserializeUser(async (userId: string, cb) => {
   try {
     const userService = new UserService();
-    const foundUser = await userService.fetchUserByUsername(username);
+    const sessionUser = await userService.fetchSessionUser(userId);
 
-    if (!foundUser) {
-      throw new Error("User Not Found");
-    }
-
-    cb(null, foundUser);
+    // false treats the session as logged out instead of failing every request for a deleted user
+    cb(null, sessionUser ?? false);
   } catch (err) {
     cb(err);
   }
@@ -42,7 +38,7 @@ export default passport.use(
         throw new Error("Incorrect username or password");
       }
 
-      cb(null, foundUser);
+      cb(null, { id: foundUser._id.toHexString(), username: foundUser.username });
     } catch (error) {
       cb(error);
     }

@@ -1,4 +1,4 @@
-import { HydratedDocument } from "mongoose";
+import { HydratedDocument, Types, isValidObjectId } from "mongoose";
 
 import User, { IUser } from "../models/user";
 import { hashPassword } from "../utils/credentialsUtils";
@@ -58,8 +58,23 @@ class UserService {
     return result;
   }
 
-  /** Retrieves a user by username */
-  async fetchUserByUsername(username: string): Promise<IUser | null> {
+  /** Retrieves the identity attached to request.user. Returns null if the user no longer exists */
+  async fetchSessionUser(userId: string): Promise<Express.User | null> {
+    if (!isValidObjectId(userId)) {
+      return null;
+    }
+
+    const user = await User.findById(userId, "username");
+
+    if (user == null) {
+      return null;
+    }
+
+    return { id: user._id.toHexString(), username: user.username };
+  }
+
+  /** Retrieves a user by username, including the hashed password */
+  async fetchUserByUsername(username: string): Promise<(IUser & { _id: Types.ObjectId }) | null> {
     const result = await User.findOne({ username: username.toLowerCase() });
 
     if (!result) {
