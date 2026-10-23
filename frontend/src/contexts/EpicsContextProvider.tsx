@@ -90,7 +90,7 @@ const EpicsContextProvider = ({ children }: EpicsContextProviderProps): JSX.Elem
   }, []);
 
   return (
-    <EpicsContext.Provider
+    <EpicsContext
       value={{
         epics,
         epicsMap,
@@ -102,7 +102,7 @@ const EpicsContextProvider = ({ children }: EpicsContextProviderProps): JSX.Elem
       }}
     >
       {children}
-    </EpicsContext.Provider>
+    </EpicsContext>
   );
 };
 

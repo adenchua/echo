@@ -1,7 +1,7 @@
 import ProjectIcon from "@mui/icons-material/GitHub";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
-import { JSX, use, useEffect, useState } from "react";
+import { JSX, use, useState } from "react";
 
 import createProject from "../api/projects/createProject";
 import { UserProjectsContext } from "../contexts/UserProjectsContextProvider";
@@ -25,14 +25,13 @@ const CreateProjectButtonWithDialog = (): JSX.Element => {
   const { currentLoadState, handleSetLoadingState } = useLoad();
   const { addProject } = use(UserProjectsContext);
 
-  useEffect(() => {
+  const handleOpenDialog = (): void => {
     // return dialog to original state upon opening
-    if (isDialogOpen) {
-      handleSetLoadingState("DEFAULT");
-      setProjectTitle("");
-      setProjectType(defaultProjectType);
-    }
-  }, [isDialogOpen, handleSetLoadingState, defaultProjectType]);
+    handleSetLoadingState("DEFAULT");
+    setProjectTitle("");
+    setProjectType(defaultProjectType);
+    setIsDialogOpen(true);
+  };
 
   const handleCloseDialog = (): void => {
     setIsDialogOpen(false);
@@ -56,7 +55,7 @@ const CreateProjectButtonWithDialog = (): JSX.Element => {
 
   return (
     <>
-      <Button onClick={() => setIsDialogOpen(true)}>New project</Button>
+      <Button onClick={handleOpenDialog}>New project</Button>
       <ActionDialog
         dialogContent={
           <div>

@@ -42,7 +42,7 @@ const ProductBacklogTab = (props: ProductBacklogTabProps): JSX.Element => {
 
   const displayedTicketsByEpics = useMemo(() => {
     return getTicketsByEpics(sortedTickets);
-  }, [sortedTickets, sortSelection]);
+  }, [sortedTickets]);
 
   const handleFilterSelection = (newFilter: TicketFilterType): void => {
     setFilterSelection(newFilter);

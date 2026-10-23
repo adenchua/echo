@@ -27,13 +27,6 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
   const { onAddSubtaskToTicket, onDeleteSubtaskFromTicket } = useProductBacklog();
 
   useEffect(() => {
-    if (isEditModeOn) {
-      handleSetLoadingState("DEFAULT");
-      setTitleInput(""); // reset title input upon form activation
-    }
-  }, [isEditModeOn, handleSetLoadingState]);
-
-  useEffect(() => {
     let isMounted = true;
 
     const getSubtasks = async (): Promise<void> => {
@@ -57,6 +50,10 @@ const SubtaskEditItem = (props: SubtaskEditItemProps): JSX.Element => {
   }, [subtaskIds, handleSetLoadingState]);
 
   const handleToggleEditMode = (): void => {
+    if (!isEditModeOn) {
+      handleSetLoadingState("DEFAULT");
+      setTitleInput(""); // reset title input upon form activation
+    }
     setIsEditModeOn(!isEditModeOn);
   };
 

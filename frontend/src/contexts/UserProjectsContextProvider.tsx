@@ -53,9 +53,9 @@ const UserProjectsContextProvider = ({
   );
 
   return (
-    <UserProjectsContext.Provider value={{ projects, addProject, handleSetProject, updateProject }}>
+    <UserProjectsContext value={{ projects, addProject, handleSetProject, updateProject }}>
       {children}
-    </UserProjectsContext.Provider>
+    </UserProjectsContext>
   );
 };
 

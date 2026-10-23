@@ -24,7 +24,8 @@ const DueDateEditItem = (props: DueDateEditItemProps): JSX.Element => {
   const [isEditModeOn, setIsEditModeOn] = useState<boolean>(false);
   const { currentLoadState, handleSetLoadingState } = useLoad();
   const { onUpdateTicket } = useProductBacklog();
-  const isDue = dueDate && compareAsc(new Date(), new Date(dueDate)) === 1 ? true : false;
+  const [now] = useState<Date>(() => new Date()); // keeps render pure; due status is checked against mount time
+  const isDue = dueDate && compareAsc(now, new Date(dueDate)) === 1 ? true : false;
 
   const handleToggleEditMode = (): void => {
     setIsEditModeOn(!isEditModeOn);

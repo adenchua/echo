@@ -81,7 +81,7 @@ const ProjectMembersContextProvider = ({
   );
 
   return (
-    <ProjectMembersContext.Provider
+    <ProjectMembersContext
       value={{
         members,
         admins,
@@ -94,7 +94,7 @@ const ProjectMembersContextProvider = ({
       }}
     >
       {children}
-    </ProjectMembersContext.Provider>
+    </ProjectMembersContext>
   );
 };
 

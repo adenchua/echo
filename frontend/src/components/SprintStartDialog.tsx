@@ -1,7 +1,7 @@
 import DialogContentText from "@mui/material/DialogContentText";
 import Typography from "@mui/material/Typography";
 import { differenceInCalendarDays, format, isValid } from "date-fns";
-import { JSX, useEffect, useState } from "react";
+import { JSX, useState } from "react";
 
 import { DateCalendar } from "@mui/x-date-pickers";
 import useLoad from "../hooks/useLoad";
@@ -25,14 +25,18 @@ const SprintStartDialog = (props: SprintStartDialogProps): JSX.Element => {
   const [endDateInput, setEndDateInput] = useState<Date | null>(null);
   const { currentLoadState, handleSetLoadingState } = useLoad();
   const [newSprint, setNewSprint] = useState<Sprint | null>(null);
+  const [wasDialogOpen, setWasDialogOpen] = useState<boolean>(showStartSprintDialog);
 
-  useEffect(() => {
+  // the parent opens the dialog, so detect the change during render instead of in an effect
+  if (showStartSprintDialog !== wasDialogOpen) {
+    setWasDialogOpen(showStartSprintDialog);
+
     // return dialog to original state upon opening
     if (showStartSprintDialog) {
       handleSetLoadingState("DEFAULT");
       setEndDateInput(null);
     }
-  }, [handleSetLoadingState, showStartSprintDialog]);
+  }
 
   const handleClose = (): void => {
     onClose();

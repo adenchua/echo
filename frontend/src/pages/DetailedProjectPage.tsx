@@ -76,7 +76,16 @@ const DetailedProjectPage = (): JSX.Element => {
     };
 
     getProject();
-  }, [id]);
+  }, [
+    id,
+    handleSetLoadingState,
+    handleSetTickets,
+    handleSetEpics,
+    handleSetActiveSprint,
+    handleRemoveActiveSprint,
+    handleSetMembers,
+    handleSetAdmins,
+  ]);
 
   const handleUpdateProjectFields = (updatedFields: ProjectUpdateFieldsType): void => {
     const updatedProject = _.merge({}, project, updatedFields);

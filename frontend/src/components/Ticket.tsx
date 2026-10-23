@@ -32,6 +32,7 @@ const Ticket = (props: TicketProps): JSX.Element => {
   const [assignee, setAssignee] = useState<User | null>(null);
   const { currentLoadState, handleSetLoadingState } = useLoad();
   const { onUpdateTicket } = useProductBacklog();
+  const [now] = useState<Date>(() => new Date()); // keeps render pure; due status is checked against mount time
   const {
     priority,
     title,
@@ -45,7 +46,7 @@ const Ticket = (props: TicketProps): JSX.Element => {
     storyPoints,
   } = ticket;
   const formattedDueDate = dueDate ? format(new Date(dueDate), "LLL dd") : "";
-  const isDue = dueDate && compareAsc(new Date(), new Date(dueDate)) === 1 ? true : false;
+  const isDue = dueDate && compareAsc(now, new Date(dueDate)) === 1 ? true : false;
 
   useEffect(() => {
     const getAssigneeDetails = async (): Promise<void> => {

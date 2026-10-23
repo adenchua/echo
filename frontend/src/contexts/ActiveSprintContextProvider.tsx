@@ -35,11 +35,9 @@ const ActiveSprintContextProvider = ({
   }, []);
 
   return (
-    <ActiveSprintContext.Provider
-      value={{ activeSprint, handleSetActiveSprint, handleRemoveActiveSprint }}
-    >
+    <ActiveSprintContext value={{ activeSprint, handleSetActiveSprint, handleRemoveActiveSprint }}>
       {children}
-    </ActiveSprintContext.Provider>
+    </ActiveSprintContext>
   );
 };
 

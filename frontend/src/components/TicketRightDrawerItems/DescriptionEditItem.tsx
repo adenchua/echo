@@ -2,7 +2,7 @@ import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import TextField from "@mui/material/TextField";
-import { JSX, useEffect, useState } from "react";
+import { JSX, useState } from "react";
 
 import useLoad from "../../hooks/useLoad";
 import useProductBacklog from "../../hooks/useProductBacklog";
@@ -23,11 +23,11 @@ const DescriptionEditItem = (props: DescriptionEditItemProps): JSX.Element => {
   const [descriptionInput, setDescriptionInput] = useState<string>(description ?? "");
   const { onUpdateTicket } = useProductBacklog();
 
-  useEffect(() => {
-    setDescriptionInput(description);
-  }, [isEditModeOn, description]);
-
   const handleToggleEditMode = (): void => {
+    // start editing from the latest saved description
+    if (!isEditModeOn) {
+      setDescriptionInput(description ?? "");
+    }
     setIsEditModeOn(!isEditModeOn);
   };
 

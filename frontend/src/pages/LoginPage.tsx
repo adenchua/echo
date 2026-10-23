@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { JSX, use, useEffect, useState } from "react";
+import { JSX, use, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import LoginPageImage from "../assets/login_page_image.svg";
 
@@ -20,20 +20,15 @@ import { loginErrorCodeToMessageHelper } from "../utils/loginErrorCodeToMessageH
 const LoginPage = (): JSX.Element => {
   const [usernameInput, setUsernameInput] = useState<string>("");
   const [passwordInput, setPasswordInput] = useState<string>("");
-  const [showSessionLogoutDialog, setShowSessionLogoutDialog] = useState<boolean>(false);
+  const [searchParams] = useSearchParams();
+  // the redirect flag is set when a protected page finds the session has expired
+  const [showSessionLogoutDialog, setShowSessionLogoutDialog] = useState<boolean>(
+    () => searchParams.get("redirect") === "1",
+  );
   const { currentLoadState, handleSetLoadingState } = useLoad();
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [searchParams] = useSearchParams();
   const { refreshCurrentUser } = use(CurrentUserContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const hasRedirectFlag = searchParams.get("redirect") === "1";
-
-    if (hasRedirectFlag) {
-      setShowSessionLogoutDialog(true);
-    }
-  }, []);
 
   const handleLogin = async (e: React.SyntheticEvent): Promise<void> => {
     e.preventDefault();

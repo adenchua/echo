@@ -49,11 +49,9 @@ const CurrentUserContextProvider = ({ children }: CurrentUserContextProviderProp
   }, []);
 
   return (
-    <CurrentUserContext.Provider
-      value={{ currentUser, authStatus, refreshCurrentUser, clearCurrentUser }}
-    >
+    <CurrentUserContext value={{ currentUser, authStatus, refreshCurrentUser, clearCurrentUser }}>
       {children}
-    </CurrentUserContext.Provider>
+    </CurrentUserContext>
   );
 };
 

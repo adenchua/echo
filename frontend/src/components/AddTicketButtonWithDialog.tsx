@@ -1,6 +1,6 @@
 import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
-import { JSX, use, useEffect, useState } from "react";
+import { JSX, use, useState } from "react";
 
 import { EpicsContext } from "../contexts/EpicsContextProvider";
 import useLoad from "../hooks/useLoad";
@@ -33,16 +33,15 @@ const AddTicketButtonWithDialog = (props: AddTicketButtonWithDialogProps): JSX.E
   const { currentLoadState, handleSetLoadingState } = useLoad();
   const { epics } = use(EpicsContext);
 
-  useEffect(() => {
+  const handleOpenDialog = (): void => {
     // reset form state upon opening the dialog
-    if (showDialog) {
-      setTitleInput("");
-      setTicketType(DEFAULT_TICKET_TYPE);
-      setPriority(DEFAULT_PRIORITY);
-      handleSetLoadingState("DEFAULT");
-      setEpicIdInput("");
-    }
-  }, [showDialog, handleSetLoadingState]);
+    setTitleInput("");
+    setTicketType(DEFAULT_TICKET_TYPE);
+    setPriority(DEFAULT_PRIORITY);
+    handleSetLoadingState("DEFAULT");
+    setEpicIdInput("");
+    setShowDialog(true);
+  };
 
   const handleAddTicket = async (): Promise<void> => {
     try {
@@ -57,7 +56,7 @@ const AddTicketButtonWithDialog = (props: AddTicketButtonWithDialogProps): JSX.E
 
   return (
     <>
-      <Button startIcon={<AddTicketIcon />} onClick={() => setShowDialog(true)}>
+      <Button startIcon={<AddTicketIcon />} onClick={handleOpenDialog}>
         Add Ticket
       </Button>
       <ActionDialog

@@ -54,7 +54,7 @@ const SprintBacklogTab = (props: SprintBacklogTabProps): JSX.Element => {
 
   const displayedTicketsByEpics = useMemo(() => {
     return getTicketsByEpics(sortedTickets);
-  }, [sortSelection, sortedTickets]);
+  }, [sortedTickets]);
 
   const handleFilterSelection = (newFilter: TicketFilterType): void => {
     setFilterSelection(newFilter);

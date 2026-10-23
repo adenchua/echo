@@ -89,7 +89,7 @@ const TicketsContextProvider = ({ children }: TicketsContextProviderProps): JSX.
   };
 
   return (
-    <TicketsContext.Provider
+    <TicketsContext
       value={{
         tickets,
         addTicket,
@@ -102,7 +102,7 @@ const TicketsContextProvider = ({ children }: TicketsContextProviderProps): JSX.
       }}
     >
       {children}
-    </TicketsContext.Provider>
+    </TicketsContext>
   );
 };
 
