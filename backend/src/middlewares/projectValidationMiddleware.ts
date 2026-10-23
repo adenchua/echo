@@ -14,10 +14,6 @@ export const COMMON_PROJECT_VALIDATION_CHAIN = {
 
 export const createProjectValidationChain = [
   COMMON_PROJECT_VALIDATION_CHAIN.invalidBodyProjectTitle.notEmpty(),
-  body("adminId", "INVALID_ADMIN_ID")
-    .trim()
-    .notEmpty()
-    .custom((value) => isValidObjectId(value)),
   COMMON_PROJECT_VALIDATION_CHAIN.invalidBodyProjectType.notEmpty(),
 ];
 

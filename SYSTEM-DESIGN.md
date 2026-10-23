@@ -50,6 +50,7 @@ and a user will create 15 tickets a month. Performing some calculations:
 | Key | Field        | Type       | Max field size | Explanation                                                                                         | Required |
 | --- | ------------ | ---------- | -------------- | --------------------------------------------------------------------------------------------------- | -------- |
 | PK  | id           | string     | 64             | Unique identifier of this document                                                                  | Yes      |
+| FK  | projectId    | ObjectID   |                | Project this ticket belongs to. Cannot be changed after creation                                    | Yes      |
 |     | title        | string     | 256            | Short description of this ticket                                                                    | Yes      |
 | FK  | assigneeId   | ObjectID   |                | Assignee of this ticket                                                                             | No       |
 |     | createdDate  | string     | 32             | When the ticket is created in ISO string                                                            | Yes      |
@@ -68,6 +69,7 @@ and a user will create 15 tickets a month. Performing some calculations:
 | Key | Field       | Type       | Max field size | Explanation                                    | Required |
 | --- | ----------- | ---------- | -------------- | ---------------------------------------------- | -------- |
 | PK  | id          | string     | 64             | Unique identifier of this document             | Yes      |
+| FK  | projectId   | ObjectID   |                | Project this epic belongs to. Immutable        | Yes      |
 |     | title       | string     |                | Short description of this epic                 | Yes      |
 |     | description | string     |                | Long description of this epic                  |          |
 | FK  | ticketIds   | ObjectID[] |                | List of tickets under this epic                |          |
@@ -80,6 +82,7 @@ and a user will create 15 tickets a month. Performing some calculations:
 | Key | Field               | Type       | Max field size | Explanation                                                                         | Required |
 | --- | ------------------- | ---------- | -------------- | ----------------------------------------------------------------------------------- | -------- |
 | PK  | id                  | string     | 64             | Unique identifier of this document                                                  | Yes      |
+| FK  | projectId           | ObjectID   |                | Project this sprint belongs to. Cannot be changed after creation                    | Yes      |
 |     | number              | number     |                | Sprint number                                                                       | Yes      |
 |     | startDate           | string     | 32             | Start date of this sprint in ISO string                                             | Yes      |
 |     | endDate             | string     | 32             | End date of this sprint in ISO string                                               | Yes      |
@@ -89,11 +92,26 @@ and a user will create 15 tickets a month. Performing some calculations:
 
 ### Subtask
 
-| Key | Field       | Type   | Max field size | Explanation                                                  | Required |
-| --- | ----------- | ------ | -------------- | ------------------------------------------------------------ | -------- |
-| PK  | id          | string | 64             | Unique identifier of this document                           | Yes      |
-|     | title       | string | 256            | Title of the subtask                                         | Yes      |
-|     | isCompleted | bool   |                | Determines if the subtask has completed. Defaults to `false` | Yes      |
+| Key | Field       | Type     | Max field size | Explanation                                                  | Required |
+| --- | ----------- | -------- | -------------- | ------------------------------------------------------------ | -------- |
+| PK  | id          | string   | 64             | Unique identifier of this document                           | Yes      |
+| FK  | projectId   | ObjectID |                | Project of the parent ticket. Immutable                      | Yes      |
+|     | title       | string   | 256            | Title of the subtask                                         | Yes      |
+|     | isCompleted | bool     |                | Determines if the subtask has completed. Defaults to `false` | Yes      |
+
+## Permissions
+
+Every route under `/api/v1` requires a logged-in user. Routes that touch a project or anything inside it (tickets, epics, sprints, subtasks) also check the user's role in that project, using `requireProjectRole` in `backend/src/middlewares/projectAuthorizationMiddleware.ts`. All resources referenced by a single request must belong to the same project.
+
+| Action                                                          | Allowed for                                             |
+| --------------------------------------------------------------- | ------------------------------------------------------- |
+| Create a project                                                | Any logged-in user, who becomes its first administrator |
+| List a user's projects                                          | That user only                                          |
+| View a project, edit its title and description                  | Members and administrators of the project               |
+| Add members                                                     | Members and administrators of the project               |
+| Remove members, promote, demote, delete the project             | Administrators of the project                           |
+| View, create, edit and delete tickets, epics, sprints, subtasks | Members and administrators of the project               |
+| Search and view users                                           | Any logged-in user                                      |
 
 ## Services
 

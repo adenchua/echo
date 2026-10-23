@@ -6,3 +6,9 @@ export const PROJECT_NOT_FOUND_ERROR = new ErrorResponse(
   "PROJECT_NOT_FOUND",
   404,
 );
+
+export const PROJECT_MISMATCH_ERROR = new ErrorResponse(
+  errorCodeToMessageMap["PROJECT_MISMATCH"],
+  "PROJECT_MISMATCH",
+  400,
+);

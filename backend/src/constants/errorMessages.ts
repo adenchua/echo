@@ -1,5 +1,6 @@
 const errorCodeToMessageMap = {
   PROJECT_NOT_FOUND: "The project with the given project ID does not exist or is deleted",
+  PROJECT_MISMATCH: "The given resources do not belong to the same project",
   SPRINT_NOT_FOUND: "The sprint with the given sprint ID does not exist or is deleted",
   EPIC_NOT_FOUND: "The epic with the given epic ID does not exist or is deleted",
   TICKET_NOT_FOUND: "The ticket with the given ticket ID does not exist or is deleted",

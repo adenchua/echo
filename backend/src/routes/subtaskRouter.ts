@@ -4,6 +4,7 @@ import createSubtask from "../controllers/subtask/createSubtask";
 import deleteSubtask from "../controllers/subtask/deleteSubtask";
 import getSubtasks from "../controllers/subtask/getSubtasks";
 import updateSubtask from "../controllers/subtask/updateSubtask";
+import { projectOf, requireProjectRole } from "../middlewares/projectAuthorizationMiddleware";
 import {
   createSubtaskValidationChain,
   deleteSubtaskValidationChain,
@@ -14,17 +15,39 @@ import validationErrorMiddleware from "../middlewares/validationErrorHandlingMid
 
 const subtaskRouter = Router();
 
+const subtaskFromParams = projectOf("subtask", "params", "subtaskId");
+
 subtaskRouter
   .route("/")
-  .post(createSubtaskValidationChain, validationErrorMiddleware, createSubtask);
+  .post(
+    createSubtaskValidationChain,
+    validationErrorMiddleware,
+    requireProjectRole("member", projectOf("ticket", "body", "ticketId")),
+    createSubtask,
+  );
 subtaskRouter
   .route("/id/:subtaskId")
-  .delete(deleteSubtaskValidationChain, validationErrorMiddleware, deleteSubtask);
+  .delete(
+    deleteSubtaskValidationChain,
+    validationErrorMiddleware,
+    requireProjectRole("member", subtaskFromParams),
+    deleteSubtask,
+  );
 subtaskRouter
   .route("/id/:subtaskId")
-  .patch(updateSubtaskValidationChain, validationErrorMiddleware, updateSubtask);
+  .patch(
+    updateSubtaskValidationChain,
+    validationErrorMiddleware,
+    requireProjectRole("member", subtaskFromParams),
+    updateSubtask,
+  );
 subtaskRouter
   .route("/bulk-retrieve")
-  .post(getSubtasksValidationChain, validationErrorMiddleware, getSubtasks);
+  .post(
+    getSubtasksValidationChain,
+    validationErrorMiddleware,
+    requireProjectRole("member", projectOf("subtask", "body", "subtaskIds")),
+    getSubtasks,
+  );
 
 export default subtaskRouter;

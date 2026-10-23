@@ -10,6 +10,7 @@ import getProjectsOfUser from "../controllers/project/getProjectsOfUser";
 import promoteMemberToAdministrator from "../controllers/project/promoteMemberToAdministrator";
 import removeMemberFromProject from "../controllers/project/removeMemberFromProject";
 import updateProject from "../controllers/project/updateProject";
+import { projectIdIn, requireProjectRole } from "../middlewares/projectAuthorizationMiddleware";
 import {
   addMemberToProjectValidationChain,
   addMembersToProjectValidationChain,
@@ -17,6 +18,7 @@ import {
   deleteProjectValidationChain,
   demoteAdminToMemberValidationChain,
   getProjectValidationChain,
+  getProjectsOfUserValidationChain,
   promoteMemberToAdministratorValidationChain,
   removeMemberFromProjectValidationChain,
   updateProjectValidationChain,
@@ -25,37 +27,64 @@ import validationErrorMiddleware from "../middlewares/validationErrorHandlingMid
 
 const projectRouter = Router();
 
+const projectFromParams = projectIdIn("params", "projectId");
+const requireMember = requireProjectRole("member", projectFromParams);
+const requireAdmin = requireProjectRole("admin", projectFromParams);
+
 projectRouter
   .route("/")
   .post(createProjectValidationChain, validationErrorMiddleware, createProject);
 projectRouter
   .route("/id/:projectId")
-  .get(getProjectValidationChain, validationErrorMiddleware, getProject);
+  .get(getProjectValidationChain, validationErrorMiddleware, requireMember, getProject);
 projectRouter
   .route("/id/:projectId")
-  .patch(updateProjectValidationChain, validationErrorMiddleware, updateProject);
+  .patch(updateProjectValidationChain, validationErrorMiddleware, requireMember, updateProject);
 projectRouter
   .route("/id/:projectId")
-  .delete(deleteProjectValidationChain, validationErrorMiddleware, deleteProject);
+  .delete(deleteProjectValidationChain, validationErrorMiddleware, requireAdmin, deleteProject);
 projectRouter
   .route("/members/add/:projectId")
-  .post(addMemberToProjectValidationChain, validationErrorMiddleware, addMemberToProject);
+  .post(
+    addMemberToProjectValidationChain,
+    validationErrorMiddleware,
+    requireMember,
+    addMemberToProject,
+  );
 projectRouter
   .route("/members/bulk-add/:projectId")
-  .post(addMembersToProjectValidationChain, validationErrorMiddleware, addMembersToProject);
+  .post(
+    addMembersToProjectValidationChain,
+    validationErrorMiddleware,
+    requireMember,
+    addMembersToProject,
+  );
 projectRouter
   .route("/members/remove/:projectId")
-  .post(removeMemberFromProjectValidationChain, validationErrorMiddleware, removeMemberFromProject);
-projectRouter.route("/user/:userId").get(getProjectsOfUser);
+  .post(
+    removeMemberFromProjectValidationChain,
+    validationErrorMiddleware,
+    requireAdmin,
+    removeMemberFromProject,
+  );
+projectRouter
+  .route("/user/:userId")
+  .get(getProjectsOfUserValidationChain, validationErrorMiddleware, getProjectsOfUser);
 projectRouter
   .route("/admins/promote/:projectId")
   .post(
     promoteMemberToAdministratorValidationChain,
     validationErrorMiddleware,
+    requireAdmin,
     promoteMemberToAdministrator,
   );
 projectRouter
   .route("/admins/demote/:projectId")
-  .post(demoteAdminToMemberValidationChain, validationErrorMiddleware, demoteAdminToMember);
+  .post(
+    demoteAdminToMemberValidationChain,
+    validationErrorMiddleware,
+    requireAdmin,
+    demoteAdminToMember,
+  );
 
 export default projectRouter;
