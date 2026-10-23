@@ -56,7 +56,7 @@ const createTicket = async (
     }
   }
 
-  const newTicket = new Ticket({ ...definedKeys, ticketNumber });
+  const newTicket = new Ticket({ ...definedKeys, ticketNumber, projectId });
   await newTicket.save();
   project.backlogIds.push(newTicket._id);
   await project.save();

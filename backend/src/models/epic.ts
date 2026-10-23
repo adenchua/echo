@@ -1,6 +1,7 @@
 import { Schema, model, Types } from "mongoose";
 
 export interface IEpic {
+  projectId: Types.ObjectId;
   title: string;
   description: string;
   ticketIds: Types.ObjectId[];
@@ -11,6 +12,12 @@ export interface IEpic {
 
 const epicSchema = new Schema<IEpic>(
   {
+    projectId: {
+      type: Schema.Types.ObjectId,
+      ref: "Project",
+      required: true,
+      immutable: true,
+    },
     title: {
       type: String,
       required: true,

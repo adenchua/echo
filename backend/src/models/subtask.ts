@@ -1,12 +1,19 @@
-import { Schema, model } from "mongoose";
+import { Schema, Types, model } from "mongoose";
 
 export interface ISubtask {
+  projectId: Types.ObjectId;
   title: string;
   isCompleted: boolean;
 }
 
 const subtaskSchema = new Schema<ISubtask>(
   {
+    projectId: {
+      type: Schema.Types.ObjectId,
+      ref: "Project",
+      required: true,
+      immutable: true,
+    },
     title: {
       type: String,
       required: true,

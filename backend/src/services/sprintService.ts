@@ -28,7 +28,7 @@ const startSprint = async (projectId: string, sprintFields: Partial<ISprint>): P
     hasEnded,
   });
 
-  const newSprint = new Sprint({ ...definedKeys });
+  const newSprint = new Sprint({ ...definedKeys, projectId });
   await newSprint.save();
   project.sprintIds.push(newSprint._id);
   await project.save();

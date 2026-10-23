@@ -1,6 +1,7 @@
 import { Schema, Types, model } from "mongoose";
 
 export interface ISprint {
+  projectId: Types.ObjectId;
   number: number;
   startDate: Date;
   endDate: Date;
@@ -11,6 +12,12 @@ export interface ISprint {
 
 const sprintSchema = new Schema<ISprint>(
   {
+    projectId: {
+      type: Schema.Types.ObjectId,
+      ref: "Project",
+      required: true,
+      immutable: true,
+    },
     number: {
       type: Number,
     },

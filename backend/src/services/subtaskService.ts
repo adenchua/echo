@@ -1,5 +1,6 @@
 import { HydratedDocument } from "mongoose";
 
+import { TICKET_NOT_FOUND_ERROR } from "../errors/ticketErrors";
 import Subtask, { ISubtask } from "../models/subtask";
 import Ticket from "../models/ticket";
 import objectUtils from "../utils/objectUtils";
@@ -11,14 +12,18 @@ const createSubtask = async (
 ): Promise<HydratedDocument<ISubtask>> => {
   const { title, isCompleted } = subtaskFields;
 
-  const definedKeys = objectUtils.removeUndefinedKeysFromObject({ title, isCompleted });
-  const subtask = new Subtask({ ...definedKeys });
-  await subtask.save();
   const ticket = await Ticket.findById(ticketId);
-  if (ticket != null) {
-    ticket.subtaskIds.push(subtask._id);
-    await ticket.save();
+
+  if (ticket == null) {
+    throw TICKET_NOT_FOUND_ERROR;
   }
+
+  const definedKeys = objectUtils.removeUndefinedKeysFromObject({ title, isCompleted });
+  // subtask inherits the project of its parent ticket
+  const subtask = new Subtask({ ...definedKeys, projectId: ticket.projectId });
+  await subtask.save();
+  ticket.subtaskIds.push(subtask._id);
+  await ticket.save();
 
   return subtask;
 };

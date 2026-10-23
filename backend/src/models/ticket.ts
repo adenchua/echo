@@ -5,6 +5,7 @@ type Priority = "low" | "medium" | "high" | "highest";
 type TicketType = "story" | "task" | "bug";
 
 export interface ITicket {
+  projectId: Types.ObjectId;
   title: string;
   description: string;
   assigneeId: Types.ObjectId;
@@ -22,6 +23,12 @@ export interface ITicket {
 
 const ticketSchema = new Schema<ITicket>(
   {
+    projectId: {
+      type: Schema.Types.ObjectId,
+      ref: "Project",
+      required: true,
+      immutable: true,
+    },
     title: {
       type: String,
       required: true,

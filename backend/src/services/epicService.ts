@@ -31,7 +31,7 @@ const createEpic = async (
 
   const projectEpicIds = project.epicIds || [];
 
-  const epic = new Epic({ ...definedKeys });
+  const epic = new Epic({ ...definedKeys, projectId });
   await epic.save();
 
   // add the new created epic into the project
