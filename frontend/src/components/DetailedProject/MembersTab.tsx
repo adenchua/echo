@@ -12,12 +12,12 @@ import { JSX, use, useMemo, useState } from "react";
 
 import promoteMemberToAdmin from "../../api/projects/promoteMemberToAdmin";
 import removeMemberFromProject from "../../api/projects/removeMemberFromProject";
+import { CurrentUserContext } from "../../contexts/CurrentUserContextProvider";
 import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
 import useLoad from "../../hooks/useLoad";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 import Project from "../../types/Project";
 import User from "../../types/User";
-import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
+import { isProjectAdmin } from "../../utils/projectUtils";
 import { matchString } from "../../utils/stringUtils";
 import AddMemberToProjectButtonWithDialog from "../AddMemberToProjectButtonWithDialog";
 import SearchBar from "../common/SearchBar";
@@ -44,9 +44,10 @@ const MembersTab = (props: MembersTabProps): JSX.Element => {
     handleRemoveMember: handleRemoveMemberInContext,
     handlePromoteMember: handlePromoteMemberInContext,
   } = use(ProjectMembersContext);
-  const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
+  const { currentUser } = use(CurrentUserContext);
+  const loggedInUserId = currentUser?.id;
   const [searchInput, setSearchInput] = useState<string>("");
-  const isLoggedInUserAnAdmin = admins.map((admin) => admin._id).includes(loggedInUserId ?? "-1");
+  const isLoggedInUserAnAdmin = isProjectAdmin(project, loggedInUserId);
   const { currentLoadState, handleSetLoadingState } = useLoad();
 
   const getTableRows = (rows: User[], isAdmin: boolean): RowUserInterface[] => {

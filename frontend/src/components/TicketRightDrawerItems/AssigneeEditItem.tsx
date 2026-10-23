@@ -9,12 +9,11 @@ import MenuItem from "@mui/material/MenuItem";
 import { JSX, use, useEffect, useState } from "react";
 
 import fetchUsersByIds from "../../api/users/fetchUsersByIds";
+import { CurrentUserContext } from "../../contexts/CurrentUserContextProvider";
 import { ProjectMembersContext } from "../../contexts/ProjectMembersContextProvider";
 import useLoad from "../../hooks/useLoad";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 import useProductBacklog from "../../hooks/useProductBacklog";
 import User from "../../types/User";
-import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
 import getUserAvatarSVG from "../../utils/getUserAvatarSVG";
 import { sliceLongString } from "../../utils/stringUtils";
 import Button from "../common/Button";
@@ -38,7 +37,7 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
 
   const { onUpdateTicket } = useProductBacklog();
   const { members, admins } = use(ProjectMembersContext);
-  const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
+  const { currentUser } = use(CurrentUserContext);
 
   useEffect(() => {
     let isMounted = true;
@@ -126,8 +125,8 @@ const AssigneeEditItem = (props: AssigneeEditItemProps): JSX.Element => {
               fullWidth
               sx={{ mt: 2 }}
               onClick={() => {
-                if (loggedInUserId) {
-                  handleUpdateTicketAssignee(loggedInUserId);
+                if (currentUser) {
+                  handleUpdateTicketAssignee(currentUser.id);
                 }
               }}
             >

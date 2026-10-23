@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { JSX, use, useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router";
+import { useParams } from "react-router";
 
 import fetchEpics from "../api/epics/fetchEpics";
 import fetchProject from "../api/projects/fetchProject";
@@ -24,11 +24,8 @@ import { TicketsContext } from "../contexts/TicketsContextProvider";
 import useLoad from "../hooks/useLoad";
 import useQuery from "../hooks/useQuery";
 import Project, { ProjectUpdateFieldsType } from "../types/Project";
-import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 
 const DetailedProjectPage = (): JSX.Element => {
-  // using this instead of useLocalStorage hook because theres a bug where cached value is used
-  const loggedInUserId = window.localStorage.getItem(LOCAL_STORAGE_UID_KEY);
   const { id } = useParams<{ id: string }>();
   const query = useQuery();
   const { currentLoadState, handleSetLoadingState } = useLoad("LOADING");
@@ -85,10 +82,6 @@ const DetailedProjectPage = (): JSX.Element => {
     const updatedProject = _.merge({}, project, updatedFields);
     setProject(updatedProject);
   };
-
-  if (!loggedInUserId) {
-    return <Navigate to="/" />;
-  }
 
   if (currentLoadState === "LOADING") {
     return <Loading />;

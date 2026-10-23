@@ -1,6 +1,7 @@
 import { JSX } from "react";
 import { BrowserRouter, Route, Routes } from "react-router";
 
+import CurrentUserContextProvider from "./contexts/CurrentUserContextProvider";
 import UserProjectsContextProvider from "./contexts/UserProjectsContextProvider";
 import DetailedProjectPageWrapper from "./pages/DetailedProjectPageWrapper";
 import HomePage from "./pages/HomePage";
@@ -12,39 +13,41 @@ import UserSignUpPage from "./pages/UserSignupPage";
 
 function App(): JSX.Element {
   return (
-    <UserProjectsContextProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/sign-up" element={<UserSignUpPage />} />
-          <Route
-            path="/home"
-            element={
-              <ProtectedRoute>
-                <HomePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/projects"
-            element={
-              <ProtectedRoute>
-                <ProjectListingPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/projects/id/:id"
-            element={
-              <ProtectedRoute>
-                <DetailedProjectPageWrapper />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </BrowserRouter>
-    </UserProjectsContextProvider>
+    <CurrentUserContextProvider>
+      <UserProjectsContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/sign-up" element={<UserSignUpPage />} />
+            <Route
+              path="/home"
+              element={
+                <ProtectedRoute>
+                  <HomePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/projects"
+              element={
+                <ProtectedRoute>
+                  <ProjectListingPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/projects/id/:id"
+              element={
+                <ProtectedRoute>
+                  <DetailedProjectPageWrapper />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </BrowserRouter>
+      </UserProjectsContextProvider>
+    </CurrentUserContextProvider>
   );
 }
 

@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { JSX, useEffect, useState } from "react";
+import { JSX, use, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import LoginPageImage from "../assets/login_page_image.svg";
 
@@ -13,9 +13,8 @@ import Link from "../components/common/Link";
 import TextField from "../components/common/TextField";
 import LogoutIcon from "../components/icons/LogoutIcon";
 import RightArrowIcon from "../components/icons/RightArrowIcon";
+import { CurrentUserContext } from "../contexts/CurrentUserContextProvider";
 import useLoad from "../hooks/useLoad";
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import { loginErrorCodeToMessageHelper } from "../utils/loginErrorCodeToMessageHelper";
 
 const LoginPage = (): JSX.Element => {
@@ -25,7 +24,7 @@ const LoginPage = (): JSX.Element => {
   const { currentLoadState, handleSetLoadingState } = useLoad();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [searchParams] = useSearchParams();
-  const { setValueInStorage } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
+  const { refreshCurrentUser } = use(CurrentUserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,8 +41,8 @@ const LoginPage = (): JSX.Element => {
 
     try {
       handleSetLoadingState("LOADING");
-      const userId = await login(usernameInput, passwordInput);
-      setValueInStorage(userId);
+      await login(usernameInput, passwordInput);
+      await refreshCurrentUser(); // load the logged-in user before entering protected pages
       navigate("/home"); // redirect to homepage upon login
     } catch (error) {
       const errorCode = (error as Error).message;

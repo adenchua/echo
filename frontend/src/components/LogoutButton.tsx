@@ -1,9 +1,8 @@
-import { JSX, useState } from "react";
+import { JSX, use, useState } from "react";
 import { useNavigate } from "react-router";
 
 import logout from "../api/authentication/logout";
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
+import { CurrentUserContext } from "../contexts/CurrentUserContextProvider";
 import ActionDialog from "./common/ActionDialog";
 import Button from "./common/Button";
 import LogoutIcon from "./icons/LogoutIcon";
@@ -11,13 +10,13 @@ import LogoutIcon from "./icons/LogoutIcon";
 const LogoutButton = (): JSX.Element => {
   const [isDialogOpened, setIsDialogOpened] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { removeKeyValue } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
+  const { clearCurrentUser } = use(CurrentUserContext);
 
   const handleLogout = async (): Promise<void> => {
     try {
       await logout();
-      removeKeyValue();
       navigate("/"); //returns to login screen
+      clearCurrentUser();
     } catch {
       // do nothing
     }

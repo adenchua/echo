@@ -7,11 +7,11 @@ import { useNavigate } from "react-router";
 
 import deleteProject from "../../api/projects/deleteProject";
 import updateProject from "../../api/projects/updateProject";
+import { CurrentUserContext } from "../../contexts/CurrentUserContextProvider";
 import { UserProjectsContext } from "../../contexts/UserProjectsContextProvider";
 import useLoad from "../../hooks/useLoad";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 import Project, { ProjectUpdateFieldsType } from "../../types/Project";
-import { LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
+import { isProjectAdmin } from "../../utils/projectUtils";
 import Button from "../common/Button";
 import SnackbarError from "../common/SnackbarError";
 import TextField from "../common/TextField";
@@ -23,15 +23,15 @@ interface SettingsTabProps {
 
 const SettingsTab = (props: SettingsTabProps): JSX.Element => {
   const { project, handleUpdateProjectFields } = props;
-  const { title, description, _id: projectId, adminIds } = project;
+  const { title, description, _id: projectId } = project;
   const [titleInput, setTitleInput] = useState<string>(title);
   const [descriptionInput, setDescriptionInput] = useState<string>(description);
   const [deletionInput, setDeletionInput] = useState<string>("");
   const { currentLoadState, handleSetLoadingState } = useLoad();
   const { updateProject: updateProjectInContext } = use(UserProjectsContext);
-  const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
+  const { currentUser } = use(CurrentUserContext);
   const navigate = useNavigate();
-  const isLoggedInUserAdmin = loggedInUserId && adminIds.includes(loggedInUserId);
+  const isLoggedInUserAdmin = isProjectAdmin(project, currentUser?.id);
 
   const handleUpdateProject = async (): Promise<void> => {
     if (!titleInput) {

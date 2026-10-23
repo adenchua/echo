@@ -1,32 +1,30 @@
-import { JSX, useEffect, useState } from "react";
+import { JSX, use, useEffect } from "react";
 
 import { Navigate, useLocation } from "react-router";
-import checkSession from "../api/authentication/checkSession";
+import { CurrentUserContext } from "../contexts/CurrentUserContextProvider";
 
 interface ProtectedRouteProps {
   children: JSX.Element;
 }
 
-const ProtectedRoute = (props: ProtectedRouteProps): JSX.Element => {
+const ProtectedRoute = (props: ProtectedRouteProps): JSX.Element | null => {
   const { children } = props;
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const { authStatus, refreshCurrentUser } = use(CurrentUserContext);
   const location = useLocation();
 
+  // re-validate the session on every navigation so that an expired session is caught
   useEffect(() => {
-    async function fetchSession(): Promise<void> {
-      try {
-        await checkSession();
-        setIsAuthenticated(true);
-      } catch {
-        setIsAuthenticated(false);
-      }
-    }
-    fetchSession();
-  }, [location]);
+    refreshCurrentUser();
+  }, [location, refreshCurrentUser]);
+
+  // wait for the first session check before rendering any protected page
+  if (authStatus === "loading") {
+    return null;
+  }
 
   // session expired, redirect to login page
   // redirect flag to show timed out dialog
-  if (!isAuthenticated) {
+  if (authStatus === "unauthenticated") {
     return <Navigate to="/?redirect=1" />;
   }
 

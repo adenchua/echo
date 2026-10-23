@@ -13,10 +13,9 @@ import MenuList from "@mui/material/MenuList";
 import Popover from "@mui/material/Popover";
 import { JSX, use, useCallback, useState } from "react";
 
+import { CurrentUserContext } from "../contexts/CurrentUserContextProvider";
 import { ProjectMembersContext } from "../contexts/ProjectMembersContextProvider";
-import { useLocalStorage } from "../hooks/useLocalStorage";
 import { TicketStatus } from "../types/Ticket";
-import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import getUserAvatarSVG from "../utils/getUserAvatarSVG";
 import { sliceLongString } from "../utils/stringUtils";
 import StatusChipButton from "./StatusChipButton";
@@ -47,7 +46,7 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
   const { onSelectHandler } = props;
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [filterText, setFilterText] = useState<string>("");
-  const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
+  const { currentUser } = use(CurrentUserContext);
   const { members, admins } = use(ProjectMembersContext);
 
   const open = Boolean(anchorEl);
@@ -102,7 +101,7 @@ const TicketFilter = (props: TicketFilterProps): JSX.Element => {
       >
         <MenuList dense>
           <MenuItem
-            onClick={() => handleSelectNewFilter(`assignee-${loggedInUserId ?? ""}`, "My tickets")}
+            onClick={() => handleSelectNewFilter(`assignee-${currentUser?.id ?? ""}`, "My tickets")}
           >
             <ListItemIcon>
               <PersonIcon fontSize="small" />

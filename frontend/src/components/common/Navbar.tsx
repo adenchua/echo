@@ -10,10 +10,10 @@ import { JSX, use, useEffect } from "react";
 import { Link, useLocation, useParams } from "react-router";
 
 import fetchAllProjectsByUser from "../../api/projects/fetchAllProjectsByUser";
+import { CurrentUserContext } from "../../contexts/CurrentUserContextProvider";
 import { UserProjectsContext } from "../../contexts/UserProjectsContextProvider";
 import useLoad from "../../hooks/useLoad";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
-import { APP_VERSION, LOCAL_STORAGE_UID_KEY } from "../../utils/constants";
+import { APP_VERSION } from "../../utils/constants";
 import LogoutButton from "../LogoutButton";
 import NavbarListItem from "./NavbarListItem";
 import SnackbarError from "./SnackbarError";
@@ -36,7 +36,8 @@ const Navbar = (): JSX.Element => {
   const { id: selectedProjectId } = useParams<{ id: string }>();
   const { currentLoadState, handleSetLoadingState } = useLoad();
   const { projects, handleSetProject } = use(UserProjectsContext);
-  const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
+  const { currentUser } = use(CurrentUserContext);
+  const loggedInUserId = currentUser?.id;
 
   useEffect(() => {
     const getUserProjects = async (): Promise<void> => {

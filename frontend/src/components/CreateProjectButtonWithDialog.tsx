@@ -6,8 +6,7 @@ import { JSX, use, useEffect, useState } from "react";
 import createProject from "../api/projects/createProject";
 import { UserProjectsContext } from "../contexts/UserProjectsContextProvider";
 import useLoad from "../hooks/useLoad";
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import { LOCAL_STORAGE_UID_KEY, PROJECT_TYPES } from "../utils/constants";
+import { PROJECT_TYPES } from "../utils/constants";
 import ActionDialog from "./common/ActionDialog";
 import BannerError from "./common/BannerError";
 import Button from "./common/Button";
@@ -25,7 +24,6 @@ const CreateProjectButtonWithDialog = (): JSX.Element => {
   const [projectType, setProjectType] = useState<ProjectType>(defaultProjectType);
   const { currentLoadState, handleSetLoadingState } = useLoad();
   const { addProject } = use(UserProjectsContext);
-  const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
 
   useEffect(() => {
     // return dialog to original state upon opening
@@ -45,13 +43,9 @@ const CreateProjectButtonWithDialog = (): JSX.Element => {
   };
 
   const handleAddProject = async (): Promise<void> => {
-    if (!loggedInUserId) {
-      return;
-    }
-
     try {
       handleSetLoadingState("LOADING");
-      const project = await createProject(projectTitle, loggedInUserId, projectType);
+      const project = await createProject(projectTitle, projectType);
       addProject(project);
       handleCloseDialog();
       handleSetLoadingState("SUCCESS");

@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import { JSX, use, useState } from "react";
-import { Navigate, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 import CreateProjectButtonWithDialog from "../components/CreateProjectButtonWithDialog";
 import ProjectListingItem from "../components/ProjectListingItem";
@@ -11,20 +11,13 @@ import Link from "../components/common/Link";
 import PageLayoutWrapper from "../components/common/PageLayoutWrapper";
 import SearchBar from "../components/common/SearchBar";
 import { UserProjectsContext } from "../contexts/UserProjectsContextProvider";
-import { useLocalStorage } from "../hooks/useLocalStorage";
 import Project from "../types/Project";
-import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 import { matchString } from "../utils/stringUtils";
 
 const ProjectListingPage = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>("");
   const { projects } = use(UserProjectsContext);
-  const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
   const navigate = useNavigate();
-
-  if (!loggedInUserId) {
-    return <Navigate to="/" />;
-  }
 
   const renderTitleHeaders = (): JSX.Element => {
     return (

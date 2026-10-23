@@ -2,7 +2,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { teal } from "@mui/material/colors";
 import { JSX } from "react";
-import { Navigate, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import BackgroundImage from "../assets/landing_collab.svg";
 
 import FeatureCard from "../components/FeatureCard";
@@ -10,16 +10,9 @@ import Button from "../components/common/Button";
 import Grow from "../components/common/Grow";
 import PageLayoutWrapper from "../components/common/PageLayoutWrapper";
 import Slide from "../components/common/Slide";
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import { LOCAL_STORAGE_UID_KEY } from "../utils/constants";
 
 const HomePage = (): JSX.Element => {
-  const { storedValue: loggedInUserId } = useLocalStorage(LOCAL_STORAGE_UID_KEY, "");
   const navigate = useNavigate();
-
-  if (!loggedInUserId) {
-    return <Navigate to="/" />;
-  }
 
   return (
     <PageLayoutWrapper>
