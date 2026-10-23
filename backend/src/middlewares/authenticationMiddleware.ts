@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
+import { UNAUTHENTICATED_ERROR } from "../controllers/auth/errors";
+
 // checks if there is a user object added to the request object
 export default function authenticationMiddleware(
   request: Request,
@@ -11,5 +13,5 @@ export default function authenticationMiddleware(
     return;
   }
 
-  response.sendStatus(401);
+  next(UNAUTHENTICATED_ERROR);
 }

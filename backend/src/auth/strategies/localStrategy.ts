@@ -2,6 +2,7 @@ import passport from "passport";
 import { Strategy } from "passport-local";
 
 import UserService from "../../services/UserService";
+import { INVALID_CREDENTIALS_ERROR } from "../../controllers/auth/errors";
 import { comparePassword } from "../../utils/credentialsUtils";
 
 // after login, store only the user ID in the session
@@ -29,13 +30,13 @@ export default passport.use(
       const foundUser = await userService.fetchUserByUsername(username);
 
       if (!foundUser) {
-        throw new Error("Incorrect username or password");
+        throw INVALID_CREDENTIALS_ERROR;
       }
 
       const passwordMatches = await comparePassword(password, foundUser.password);
 
       if (!passwordMatches) {
-        throw new Error("Incorrect username or password");
+        throw INVALID_CREDENTIALS_ERROR;
       }
 
       cb(null, { id: foundUser._id.toHexString(), username: foundUser.username });

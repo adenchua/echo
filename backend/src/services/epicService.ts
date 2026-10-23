@@ -1,5 +1,7 @@
 import { HydratedDocument, Types } from "mongoose";
 
+import { EPIC_NOT_FOUND_ERROR } from "../controllers/epic/errors";
+import { PROJECT_NOT_FOUND_ERROR } from "../controllers/project/errors";
 import Epic, { IEpic } from "../models/epic";
 import Project, { IProject } from "../models/project";
 import Ticket from "../models/ticket";
@@ -24,7 +26,7 @@ const createEpic = async (
   const project = (await Project.findById(projectId)) as HydratedDocument<IProject>;
 
   if (isProjectDeleted(project)) {
-    throw new Error("Project not found");
+    throw PROJECT_NOT_FOUND_ERROR;
   }
 
   const projectEpicIds = project.epicIds || [];
@@ -70,7 +72,7 @@ const addTicketToEpic = async (ticketId: string, epicId: string): Promise<void> 
   const epic = await Epic.findById(epicId);
 
   if (epic == null) {
-    throw new Error("Epic not found");
+    throw EPIC_NOT_FOUND_ERROR;
   }
 
   await Epic.updateMany({ ticketIds: ticketId }, { $pullAll: { ticketIds: [ticketId] } }); // remove all instances of this ticketId in other epics
@@ -88,7 +90,7 @@ const removeTicketFromEpic = async (ticketId: string, epicId: string): Promise<v
   const epic = await Epic.findById(epicId);
 
   if (epic == null) {
-    throw new Error("Epic not found");
+    throw EPIC_NOT_FOUND_ERROR;
   }
 
   await Ticket.findByIdAndUpdate(ticketId, { epicId: null }); // remove link from ticket side

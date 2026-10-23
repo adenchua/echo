@@ -1,5 +1,7 @@
 import { HydratedDocument, Types } from "mongoose";
 
+import { PROJECT_NOT_FOUND_ERROR } from "../controllers/project/errors";
+import { SPRINT_NOT_EXIST_ERROR } from "../controllers/sprint/errors";
 import Project, { IProject } from "../models/project";
 import Sprint, { ISprint } from "../models/sprint";
 import Ticket from "../models/ticket";
@@ -11,7 +13,7 @@ const startSprint = async (projectId: string, sprintFields: Partial<ISprint>): P
   const project = (await Project.findById(projectId)) as HydratedDocument<IProject>;
 
   if (isProjectDeleted(project)) {
-    throw new Error("Project not found");
+    throw PROJECT_NOT_FOUND_ERROR;
   }
 
   const { number, startDate, endDate, incompleteTicketIds, completedTicketIds, hasEnded } =
@@ -46,11 +48,11 @@ const endSprint = async (
   const project = (await Project.findById(projectId)) as HydratedDocument<IProject>;
 
   if (isProjectDeleted(project)) {
-    throw new Error("Project not found");
+    throw PROJECT_NOT_FOUND_ERROR;
   }
 
   if (sprint == null) {
-    throw new Error("Sprint not found");
+    throw SPRINT_NOT_EXIST_ERROR;
   }
 
   for (const ticketId of project.backlogIds) {

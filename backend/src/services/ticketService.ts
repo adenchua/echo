@@ -1,5 +1,6 @@
 import { HydratedDocument } from "mongoose";
 
+import { PROJECT_NOT_FOUND_ERROR } from "../controllers/project/errors";
 import Epic from "../models/epic";
 import Project, { IProject } from "../models/project";
 import Ticket, { ITicket } from "../models/ticket";
@@ -43,7 +44,7 @@ const createTicket = async (
   const project = (await Project.findById(projectId)) as HydratedDocument<IProject>;
 
   if (isProjectDeleted(project)) {
-    throw new Error("Project not found");
+    throw PROJECT_NOT_FOUND_ERROR;
   }
 
   // update ticket number to the latest ticket number + 1

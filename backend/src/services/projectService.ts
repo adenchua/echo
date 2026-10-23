@@ -1,5 +1,6 @@
 import { HydratedDocument, Types } from "mongoose";
 
+import { PROJECT_NOT_FOUND_ERROR } from "../controllers/project/errors";
 import Project, { IProject } from "../models/project";
 import objectUtils from "../utils/objectUtils";
 import { isProjectDeleted } from "../utils/projectUtils";
@@ -42,10 +43,10 @@ const createProject = async (
 
 /** Retrieves a project by project ID. Returns null if project by the project ID cannot be found */
 const getProject = async (projectId: string): Promise<HydratedDocument<IProject> | null> => {
-  const project = (await Project.findById(projectId)) as HydratedDocument<IProject>;
+  const project = await Project.findById(projectId);
 
   if (isProjectDeleted(project)) {
-    throw new Error("Project not found");
+    return null;
   }
 
   return project;
@@ -56,7 +57,7 @@ const addMembersToProject = async (memberIds: string[], projectId: string): Prom
   const project = (await Project.findById(projectId)) as HydratedDocument<IProject>;
 
   if (isProjectDeleted(project)) {
-    throw new Error("Project not found");
+    throw PROJECT_NOT_FOUND_ERROR;
   }
   const projectMembers = [...project.adminIds, ...project.memberIds].map((memberId) =>
     memberId.toHexString(),
@@ -80,7 +81,7 @@ const removeMemberFromProject = async (memberId: string, projectId: string): Pro
   const project = (await Project.findById(projectId)) as HydratedDocument<IProject>;
 
   if (isProjectDeleted(project)) {
-    throw new Error("Project not found");
+    throw PROJECT_NOT_FOUND_ERROR;
   }
 
   project.memberIds = project.memberIds.filter((_memberId) => _memberId.toHexString() !== memberId);
@@ -109,7 +110,7 @@ const promoteMemberToAdmin = async (memberId: string, projectId: string): Promis
   const project = (await Project.findById(projectId)) as HydratedDocument<IProject>;
 
   if (isProjectDeleted(project)) {
-    throw new Error("Project not found");
+    throw PROJECT_NOT_FOUND_ERROR;
   }
 
   const adminIds = project.adminIds.map((adminId) => adminId.toHexString());
@@ -129,7 +130,7 @@ const demoteAdminToMember = async (adminId: string, projectId: string): Promise<
   const project = (await Project.findById(projectId)) as HydratedDocument<IProject>;
 
   if (isProjectDeleted(project)) {
-    throw new Error("Project not found");
+    throw PROJECT_NOT_FOUND_ERROR;
   }
 
   // remove user from admin id list

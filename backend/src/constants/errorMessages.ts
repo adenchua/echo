@@ -7,6 +7,9 @@ const errorCodeToMessageMap = {
   LAST_PROJECT_ADMINISTRATOR: "A project needs to have least one administrator",
   EXISTING_ACTIVE_SPRINT: "There is an on-going sprint for this project",
   NO_ACTIVE_SPRINT: "There is no active sprint at the moment",
+  INVALID_CREDENTIALS: "Incorrect username or password",
+  UNAUTHENTICATED: "You need to be logged in to access this resource",
+  FORBIDDEN: "You do not have permission to perform this action",
 };
 
 export default errorCodeToMessageMap;

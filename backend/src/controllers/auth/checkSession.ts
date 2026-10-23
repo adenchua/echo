@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 
 import { wrapResponse } from "../../utils/responseUtils";
+import { UNAUTHENTICATED_ERROR } from "./errors";
 
 export default async function checkSession(request: Request, response: Response): Promise<void> {
   if (!request.user) {
-    response.sendStatus(401);
-    return;
+    throw UNAUTHENTICATED_ERROR;
   }
   response.send(wrapResponse(request.user));
 }
