@@ -1,6 +1,6 @@
 import { HydratedDocument, Types } from "mongoose";
 
-import { PROJECT_NOT_FOUND_ERROR } from "../controllers/project/errors";
+import { PROJECT_NOT_FOUND_ERROR } from "../errors/projectErrors";
 import Project, { IProject } from "../models/project";
 import objectUtils from "../utils/objectUtils";
 import { isProjectDeleted } from "../utils/projectUtils";

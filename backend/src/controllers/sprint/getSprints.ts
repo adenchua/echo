@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import sprintService from "../../services/sprintService";
-import { SPRINT_NOT_EXIST_ERROR } from "./errors";
+import { SPRINT_NOT_EXIST_ERROR } from "../../errors/sprintErrors";
 import { wrapResponse } from "../../utils/responseUtils";
 
 export const getSprints = async (request: Request, response: Response): Promise<void> => {

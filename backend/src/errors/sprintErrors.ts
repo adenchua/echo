@@ -1,5 +1,5 @@
-import errorCodeToMessageMap from "../../constants/errorMessages";
-import ErrorResponse from "../../utils/ErrorResponse";
+import errorCodeToMessageMap from "../constants/errorMessages";
+import ErrorResponse from "../utils/ErrorResponse";
 
 export const EXISTING_ACTIVE_SPRINT_ERROR = new ErrorResponse(
   errorCodeToMessageMap["EXISTING_ACTIVE_SPRINT"],

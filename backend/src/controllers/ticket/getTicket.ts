@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import ticketService from "../../services/ticketService";
-import { TICKET_NOT_FOUND_ERROR } from "./errors";
+import { TICKET_NOT_FOUND_ERROR } from "../../errors/ticketErrors";
 import { wrapResponse } from "../../utils/responseUtils";
 
 export default async function getTicket(request: Request, response: Response): Promise<void> {

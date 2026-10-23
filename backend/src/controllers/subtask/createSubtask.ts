@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import subtaskService from "../../services/subtaskService";
 import ticketService from "../../services/ticketService";
 import { wrapResponse } from "../../utils/responseUtils";
-import { TICKET_NOT_FOUND_ERROR } from "../ticket/errors";
+import { TICKET_NOT_FOUND_ERROR } from "../../errors/ticketErrors";
 
 export default async function createSubtask(request: Request, response: Response): Promise<void> {
   const { ticketId, title } = request.body;

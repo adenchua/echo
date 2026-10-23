@@ -4,7 +4,7 @@ import errorCodeToMessageMap from "../../constants/errorMessages";
 import projectService from "../../services/projectService";
 import ErrorResponse from "../../utils/ErrorResponse";
 import { isProjectDeleted } from "../../utils/projectUtils";
-import { PROJECT_NOT_FOUND_ERROR } from "./errors";
+import { PROJECT_NOT_FOUND_ERROR } from "../../errors/projectErrors";
 
 export default async function demoteAdminToMember(
   request: Request,

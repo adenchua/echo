@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 
 import epicService from "../../services/epicService";
 import ticketService from "../../services/ticketService";
-import { TICKET_NOT_FOUND_ERROR } from "../ticket/errors";
-import { EPIC_NOT_FOUND_ERROR } from "./errors";
+import { TICKET_NOT_FOUND_ERROR } from "../../errors/ticketErrors";
+import { EPIC_NOT_FOUND_ERROR } from "../../errors/epicErrors";
 
 export default async function addTicketToEpic(request: Request, response: Response): Promise<void> {
   const { epicId } = request.params as Record<string, string>;

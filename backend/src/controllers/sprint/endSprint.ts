@@ -3,8 +3,8 @@ import { Request, Response } from "express";
 import projectService from "../../services/projectService";
 import sprintService from "../../services/sprintService";
 import { isProjectDeleted } from "../../utils/projectUtils";
-import { PROJECT_NOT_FOUND_ERROR } from "../project/errors";
-import { SPRINT_NOT_EXIST_ERROR, NO_ACTIVE_SPRINT_ERROR } from "./errors";
+import { PROJECT_NOT_FOUND_ERROR } from "../../errors/projectErrors";
+import { SPRINT_NOT_EXIST_ERROR, NO_ACTIVE_SPRINT_ERROR } from "../../errors/sprintErrors";
 import { wrapResponse } from "../../utils/responseUtils";
 
 export const endSprint = async (request: Request, response: Response): Promise<void> => {

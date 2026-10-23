@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import epicService from "../../services/epicService";
 import projectService from "../../services/projectService";
 import { isProjectDeleted } from "../../utils/projectUtils";
-import { PROJECT_NOT_FOUND_ERROR } from "../project/errors";
+import { PROJECT_NOT_FOUND_ERROR } from "../../errors/projectErrors";
 import { wrapResponse } from "../../utils/responseUtils";
 
 export default async function createEpic(request: Request, response: Response): Promise<void> {

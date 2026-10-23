@@ -1,7 +1,7 @@
 import { HydratedDocument, Types } from "mongoose";
 
-import { PROJECT_NOT_FOUND_ERROR } from "../controllers/project/errors";
-import { SPRINT_NOT_EXIST_ERROR } from "../controllers/sprint/errors";
+import { PROJECT_NOT_FOUND_ERROR } from "../errors/projectErrors";
+import { SPRINT_NOT_EXIST_ERROR } from "../errors/sprintErrors";
 import Project, { IProject } from "../models/project";
 import Sprint, { ISprint } from "../models/sprint";
 import Ticket from "../models/ticket";

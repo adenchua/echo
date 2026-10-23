@@ -2,7 +2,7 @@ import passport from "passport";
 import { Strategy } from "passport-local";
 
 import UserService from "../../services/UserService";
-import { INVALID_CREDENTIALS_ERROR } from "../../controllers/auth/errors";
+import { INVALID_CREDENTIALS_ERROR } from "../../errors/authErrors";
 import { comparePassword } from "../../utils/credentialsUtils";
 
 // after login, store only the user ID in the session

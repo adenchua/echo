@@ -1,7 +1,7 @@
 import { HydratedDocument, Types } from "mongoose";
 
-import { EPIC_NOT_FOUND_ERROR } from "../controllers/epic/errors";
-import { PROJECT_NOT_FOUND_ERROR } from "../controllers/project/errors";
+import { EPIC_NOT_FOUND_ERROR } from "../errors/epicErrors";
+import { PROJECT_NOT_FOUND_ERROR } from "../errors/projectErrors";
 import Epic, { IEpic } from "../models/epic";
 import Project, { IProject } from "../models/project";
 import Ticket from "../models/ticket";

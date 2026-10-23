@@ -1,5 +1,5 @@
-import errorCodeToMessageMap from "../../constants/errorMessages";
-import ErrorResponse from "../../utils/ErrorResponse";
+import errorCodeToMessageMap from "../constants/errorMessages";
+import ErrorResponse from "../utils/ErrorResponse";
 
 export const INVALID_CREDENTIALS_ERROR = new ErrorResponse(
   errorCodeToMessageMap["INVALID_CREDENTIALS"],

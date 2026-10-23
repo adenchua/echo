@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import epicService from "../../services/epicService";
-import { EPIC_NOT_FOUND_ERROR } from "./errors";
+import { EPIC_NOT_FOUND_ERROR } from "../../errors/epicErrors";
 
 export default async function deleteEpic(request: Request, response: Response): Promise<void> {
   const { epicId } = request.params as Record<string, string>;

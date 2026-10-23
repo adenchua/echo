@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import ticketService from "../../services/ticketService";
-import { TICKET_NOT_FOUND_ERROR } from "./errors";
+import { TICKET_NOT_FOUND_ERROR } from "../../errors/ticketErrors";
 
 export default async function updateTicket(request: Request, response: Response): Promise<void> {
   const { ticketId } = request.params as Record<string, string>;
